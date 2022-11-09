@@ -28,9 +28,10 @@ accent = #604c7e
 
 [global/wm]
 margin-top = 0
-margin-bottom = 34
+margin-bottom = 42
 
 [bar/main]
+dpi = 168
 monitor = ${env:MONITOR}
 monitor-strict = true
 enable-ipc = true
@@ -43,7 +44,7 @@ background = ${colors.bg}
 foreground = ${colors.fg}
 
 width = 100%
-height = 34
+height = 42
 offset-x = 0
 offset-y = 0
 bottom = true
@@ -62,7 +63,7 @@ padding-right = 2
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = "Fira Code:pixelsize=9;2"
+font-0 = "Fira Code:pixelsize=10;2"
 font-1 = "Wuncon Siji:pixelsize=12;2"
 font-2 = "Siji:pixelsize=10;2"
 
@@ -75,6 +76,8 @@ modules-right = syncthing redshift wlan pad network-up pad network-down pad batt
 ;tray-padding = 2
 ;tray-transparent = true
 ;tray-background = #0063ff
+;tray-scale = 0.5
+;tray-maxsize = 28
 
 [module/bspwm]
 type = internal/bspwm
@@ -130,8 +133,7 @@ format-prefix-foreground = ${colors.accent}
 [module/fs]
 type = internal/fs
 mount-0 = /
-mount-1 = /mnt/projects  ; for desktops
-mount-2 = /home          ; for laptop
+mount-1 = /home          ; for laptop
 interval = 30
 
 ; Available tags:
@@ -243,7 +245,7 @@ bar-used-empty-foreground = ${colors.fg-alt}
 
 [module/wlan]
 type = internal/network
-interface = ${env:WLP:wlp3s0}
+interface = wlp1s0
 interval = 3.0
 
 format-connected = <ramp-signal>
@@ -267,7 +269,7 @@ ramp-signal-4-foreground = ${colors.fg}
 
 [module/network-up]
 type = internal/network
-interface = ${env:LAN:eno1}
+interface = wlp1s0
 interval = 4.0
 label-connected = "%upspeed%"
 format-connected-prefix = " "
@@ -281,7 +283,7 @@ format-disconnected-foreground = ${colors.alert}
 
 [module/network-down]
 type = internal/network
-interface = ${env:LAN:eno1}
+interface = wlp1s0
 interval = 4.0
 label-connected = "%downspeed%"
 format-connected-prefix = " "

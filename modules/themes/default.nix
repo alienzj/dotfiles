@@ -39,11 +39,11 @@ in {
       # TODO Use submodules
       mono = {
         name = mkOpt str "Monospace";
-        size = mkOpt int 12;
+        size = mkOpt int 15;
       };
       sans = {
         name = mkOpt str "Sans";
-        size = mkOpt int 10;
+        size = mkOpt int 13;
       };
     };
 

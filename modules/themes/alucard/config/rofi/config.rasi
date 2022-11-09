@@ -26,10 +26,10 @@ configuration {
   magenta: #bd93f9;
   blue:    #61bfff;
 
-  text-font:      "Fira Sans 15";
-  text-mono-font: "Fira Code 13";
+  text-font:      "Fira Sans 17";
+  text-mono-font: "Fira Code 15";
   /* icon-font:      "Hurmit Nerd Font Mono 26"; */
-  icon-font:      "FontAwesome 20";
+  icon-font:      "FontAwesome 22";
 
   background-color: transparent;
   text-color: @fg-list;

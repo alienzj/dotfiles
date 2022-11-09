@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# case $HOSTNAME in
-#   kuro)  export LAN=eno1   ;;
-#   shiro) export LAN=wlp3s0 ;;
-# esac
+case $HOSTNAME in
+  yoga)  export WLP=wlp1s0   ;;
+  eniac) export WLP=eno1     ;;
+esac
 
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
 export MONITORS=( $(xrandr -q | grep ' connected' | cut -d' ' -f1) )
