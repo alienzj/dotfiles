@@ -3,7 +3,7 @@ configuration {
   icon-theme:       "Paper";
   cycle:            true;
   disable-history:  false;
-  monitor:          "-4";
+  monitor:          "eDP";
 
   /* Vim-esque C-j/C-k as up/down in rofi */
   kb-accept-entry: "Return,Control+m,KP_Enter";
@@ -26,10 +26,10 @@ configuration {
   magenta: #bd93f9;
   blue:    #61bfff;
 
-  text-font:      "Fira Sans 19";
-  text-mono-font: "Fira Code 17";
+  text-font:      "Fira Sans 20";
+  text-mono-font: "Fira Code 20";
   /* icon-font:      "Hurmit Nerd Font Mono 28"; */
-  icon-font:      "FontAwesome 24";
+  icon-font:      "FontAwesome 20";
 
   background-color: transparent;
   text-color: @fg-list;
@@ -40,8 +40,8 @@ configuration {
 
 /**** Layout ****/
 window {
-  width:    1000px;
-  y-offset: -50px;
+  width:    1200px;
+  y-offset: -20%;
   anchor:   north;
   location: center;
   border: 1px;
@@ -51,19 +51,19 @@ window {
 }
 
 listview {
-  lines: 12;
+  lines: 15;
   fixed-height: false;
   /* reverse: true; */
   columns: 2;
   scrollbar: true;
-  spacing: 1px;
+  spacing: 2px;
   /* Remove strange gap between listview and inputbar */
   margin: -2px 0 0;
 }
 
 /*
   TODO Not supported in stable branch of rofi
-  @media only (max-height: 1080px) {
+  @media only (max-height: 1200px) {
     window {
       y-offset: -30%;
     }
@@ -130,8 +130,13 @@ entry {
 element {
   background-color: @bg;
   text-color: @fg;
+  spacing: 12px;
 }
 element selected {
   background-color: @bg-dark;
   text-color: @accent;
 }
+element-icon {
+  size: 2.4ch;
+}
+
