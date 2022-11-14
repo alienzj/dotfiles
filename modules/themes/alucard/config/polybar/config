@@ -321,7 +321,7 @@ format-muted-foreground = ${colors.alert}
 ;label-muted = 
 label-muted = 
 
-bar-volume-width = 20
+bar-volume-width = 5
 # bar-volume-foreground-0 = ${colors.magenta}
 # bar-volume-foreground-1 = ${colors.magenta}
 # bar-volume-foreground-2 = ${colors.magenta}
