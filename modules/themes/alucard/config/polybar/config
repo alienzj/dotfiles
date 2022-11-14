@@ -269,6 +269,7 @@ interval = 3.0
 # 
 ;format-connected = <ramp-signal>
 format-connected = 
+format-connected-foreground = ${colors.accent}
 format-disconnected =
 format-disconnected-foreground =
 
@@ -424,6 +425,7 @@ exec = ~/.config/polybar/modules/bluetooth
 #exec-if = pgrep -x bluetooth
 tail = true
 click-left = ~/.config/polybar/modules/bluetooth --toggle &
+click-right = exec blueman &
 format = 
 ;format =  
 format-foreground = ${colors.fg}

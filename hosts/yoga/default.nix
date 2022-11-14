@@ -73,6 +73,7 @@
     };
     utils = {
       htop.enable = true;
+      neofetch.enable = true;
     };
     theme.active = "alucard";
   };
