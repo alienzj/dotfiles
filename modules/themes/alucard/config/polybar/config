@@ -25,14 +25,13 @@ bg-dark = #181a23
 alert = ${colors.yellow}
 accent = #604c7e
 
-
 [global/wm]
 margin-top = 0
 margin-bottom = 42
 
 [bar/main]
 dpi = 168
-monitor = ${env:MONITOR}
+monitor = ${env:MONITOR:eDP}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
@@ -66,12 +65,14 @@ module-margin-right = 0
 font-0 = "Fira Code:pixelsize=10;2"
 font-1 = "Wuncon Siji:pixelsize=12;2"
 font-2 = "Siji:pixelsize=12;2"
-font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=20;3"
+font-3 = "Font Awesome 6 Free Solid:style=Solid:pixelsize=11;2"
+font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=11;2"
+font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=11;2"
 
 ; modules-left = volume pad cpu memory pad pkg mail
 modules-left = pulseaudio pad cpu memory pad fs
 modules-center = bspwm
-modules-right = syncthing redshift wlan pad network-up pad network-down pad battery pad date
+modules-right = syncthing redshift wlan pad pad network-up pad network-down pad battery pad date
 
 ;tray-position = center
 ;tray-padding = 2
@@ -91,7 +92,8 @@ enable-click = true
 # ws-icon-3 = 4;
 # ws-icon-4 = 5;
 # ws-icon-5 = 6;
-ws-icon-default = 
+# ws-icon-default = 
+ws-icon-default = 
 
 format = <label-state> <label-mode>
 label-padding = 1
@@ -125,7 +127,8 @@ date = %A, %h %d
 date-alt = %Y-%m-%d
 time = %I:%M %p
 time-alt = %H:%M:%S
-format-prefix = ""
+;format-prefix = ""
+format-prefix = " "
 format-prefix-padding = 1
 ; format-prefix-background = ${colors.bg-alt}
 format-prefix-foreground = ${colors.accent}
@@ -134,7 +137,7 @@ format-prefix-foreground = ${colors.accent}
 [module/fs]
 type = internal/fs
 mount-0 = /
-mount-1 = /home          ; for laptop
+;mount-1 = /home          ; for laptop
 interval = 30
 
 ; Available tags:
@@ -142,7 +145,8 @@ interval = 30
 ;   <bar-free>
 ;   <bar-used>
 ;   <ramp-capacity>
-format-mounted = "<bar-used>"
+;format-mounted = "<bar-used>"
+format-mounted = "<bar-used>"
 format-mounted-foreground = ${colors.accent}
 ; Available tokens:
 ;   %mountpoint%
@@ -205,7 +209,8 @@ label-padding-left = 2
 type = internal/cpu
 interval = 2
 format = <bar-load>
-format-prefix = ""
+;format-prefix = ""
+format-prefix = ""
 format-foreground = ${colors.accent}
 ; format-underline = #f90000
 ; label = %percentage%%
@@ -226,7 +231,8 @@ bar-load-empty-foreground = ${colors.fg-alt}
 type = internal/memory
 interval = 3
 format = <bar-used>
-format-prefix = ""
+;format-prefix = ""
+format-prefix = ""
 format-prefix-foreground = ${colors.accent}
 ; format-underline = #4bffdc
 ; label = %percentage_used%%
@@ -249,7 +255,9 @@ type = internal/network
 interface = wlp1s0
 interval = 3.0
 
-format-connected = <ramp-signal>
+# 
+;format-connected = <ramp-signal>
+format-connected = 
 format-disconnected =
 format-disconnected-foreground =
 
@@ -265,7 +273,8 @@ ramp-signal-2 = 
 ramp-signal-2-foreground = ${colors.yellow}
 ramp-signal-3 = 
 ramp-signal-3-foreground = ${colors.accent}
-ramp-signal-4 = 
+;ramp-signal-4 = 
+ramp-signal-4 = 
 ramp-signal-4-foreground = ${colors.fg}
 
 [module/network-up]
@@ -273,7 +282,8 @@ type = internal/network
 interface = wlp1s0
 interval = 4.0
 label-connected = "%upspeed%"
-format-connected-prefix = " "
+;format-connected-prefix = " "
+format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.accent}
 format-connected-foreground = ${colors.fg}
 format-connected-background =
@@ -287,7 +297,8 @@ type = internal/network
 interface = wlp1s0
 interval = 4.0
 label-connected = "%downspeed%"
-format-connected-prefix = " "
+;format-connected-prefix = " "
+format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.accent}
 format-connected-foreground = ${colors.fg}
 format-connected-background =
@@ -302,11 +313,13 @@ type = internal/pulseaudio
 ; format-volume = <label-volume> <bar-volume>
 format-volume = <ramp-volume> <bar-volume>
 ; label-volume = " "
+label-volume = "  "
 label-volume-foreground = ${colors.accent}
 
 ; format-muted-prefix = " "
 format-muted-foreground = ${colors.alert}
-label-muted = 
+;label-muted = 
+label-muted = 
 
 bar-volume-width = 20
 # bar-volume-foreground-0 = ${colors.magenta}
@@ -327,9 +340,9 @@ bar-volume-empty-font = 3
 bar-volume-empty-foreground = ${colors.fg-alt}
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 [module/battery]
 type = internal/battery
@@ -343,22 +356,33 @@ format-charging-underline = #ffb52a
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.fg-alt}
+;format-full-prefix = " "
+format-full-prefix = ""
+;format-full-prefix-foreground = ${colors.fg-alt}
+format-full-prefix-foreground = ${colors.fg}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
 ramp-capacity-0-foreground = ${colors.red}
 ramp-capacity-1-foreground = #575864
-ramp-capacity-2-foreground = ${colors.fg-alt}
+;ramp-capacity-2-foreground = ${colors.fg-alt}
+ramp-capacity-2-foreground = ${colors.accent}
+;ramp-capacity-3-foreground = ${colors.fg-alt}
+ramp-capacity-3-foreground = ${colors.accent}
+;ramp-capacity-4-foreground = ${colors.fg-alt}
+ramp-capacity-4-foreground = ${colors.fg-accent}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
 animation-charging-framerate = 1000
-animation-charging-foreground = ${colors.fg}
+animation-charging-foreground = ${colors.fg-alt}
 
 
 ;=====================================================
@@ -367,7 +391,7 @@ animation-charging-foreground = ${colors.fg}
 
 [module/pad]
 type = custom/text
-content = "   "
+content = " "
 content-foreground = ${colors.fg-alt}
 
 [module/redshift]
@@ -381,7 +405,8 @@ format-padding = 1
 type = custom/script
 exec = echo 1
 exec-if = systemctl is-active syncthing
-format = ""
+;format = ""
+format = " "
 format-foreground = ${colors.fg}
 interval = 30
 
