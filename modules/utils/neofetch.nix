@@ -9,16 +9,13 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      user.packages = with pkgs; [
-        unstable.neofetch
-      ];
+  config = mkIf cfg.enable {
+    user.packages = with pkgs; [
+      unstable.neofetch
+    ];
 
-
-      home.configFile = {
-        "neofetch/config.conf".source = "${configDir}/neofetch/neofetch.conf";
-      };
-    }
-  ]);
+    home.configFile = {
+      "neofetch/config.conf".source = "${configDir}/neofetch/neofetch.conf";
+    };
+  }
 }

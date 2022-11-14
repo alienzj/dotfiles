@@ -8,11 +8,9 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      user.packages = with pkgs; [
-        unstable.htop
-      ];
-    }
-  ]);
+  config = mkIf cfg.enable {
+    user.packages = with pkgs; [
+      unstable.htop
+    ];
+  }
 }
