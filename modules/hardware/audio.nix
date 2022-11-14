@@ -8,18 +8,25 @@ in {
     enable = mkBoolOpt false;
   };
 
+  # https://nixos.wiki/wiki/PipeWire
+  # read above
   config = mkIf cfg.enable {
     services.pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      # jack.enable = true;
     };
 
     security.rtkit.enable = true;
 
+    hardware.pulseaudio.enable = false;
     environment.systemPackages = with pkgs; [
       easyeffects
+      # helvum
+      pavucontrol
+      # pulseaudio # for pactl
     ];
 
     # HACK Prevents ~/.esd_auth files by disabling the esound protocol module
