@@ -12,5 +12,5 @@ in {
     user.packages = with pkgs; [
       unstable.htop
     ];
-  }
+  };
 }

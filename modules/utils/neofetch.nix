@@ -17,5 +17,5 @@ in {
     home.configFile = {
       "neofetch/config.conf".source = "${configDir}/neofetch/neofetch.conf";
     };
-  }
+  };
 }
