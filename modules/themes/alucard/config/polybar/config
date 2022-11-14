@@ -72,7 +72,7 @@ font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=11;2"
 ; modules-left = volume pad cpu memory pad pkg mail
 modules-left = pulseaudio pad cpu memory pad fs
 modules-center = bspwm
-modules-right = syncthing redshift wlan pad pad network-up pad network-down pad battery pad date
+modules-right = redshift wlan pad pad network-up pad network-down pad battery pad date pad syncthing
 
 ;tray-position = center
 ;tray-padding = 2
@@ -359,28 +359,28 @@ format-discharging-underline = ${self.format-charging-underline}
 ;format-full-prefix = " "
 format-full-prefix = ""
 ;format-full-prefix-foreground = ${colors.fg-alt}
-format-full-prefix-foreground = ${colors.fg}
+format-full-prefix-foreground = ${colors.accent}
 format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
-ramp-capacity-4 = 
+;ramp-capacity-4 = 
 ramp-capacity-0-foreground = ${colors.red}
 ramp-capacity-1-foreground = #575864
-;ramp-capacity-2-foreground = ${colors.fg-alt}
-ramp-capacity-2-foreground = ${colors.accent}
-;ramp-capacity-3-foreground = ${colors.fg-alt}
-ramp-capacity-3-foreground = ${colors.accent}
+ramp-capacity-2-foreground = ${colors.fg-alt}
+;ramp-capacity-2-foreground = ${colors.accent}
+ramp-capacity-3-foreground = ${colors.fg-alt}
+;ramp-capacity-3-foreground = ${colors.accent}
 ;ramp-capacity-4-foreground = ${colors.fg-alt}
-ramp-capacity-4-foreground = ${colors.fg-accent}
+;ramp-capacity-4-foreground = ${colors.fg-accent}
 
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
-animation-charging-4 = 
+;animation-charging-4 = 
 animation-charging-framerate = 1000
 animation-charging-foreground = ${colors.fg-alt}
 
