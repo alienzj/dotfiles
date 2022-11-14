@@ -75,6 +75,7 @@ in {
           jetbrains-mono
           siji
           font-awesome
+	  material-design-icons
         ];
       };
 

@@ -20,8 +20,10 @@ in {
       dunst
       libnotify
       (polybar.override {
+        alsaSupport = true;
         pulseSupport = true;
         nlSupport = true;
+	mpdSupport = true;
       })
     ];
 

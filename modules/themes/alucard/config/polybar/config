@@ -25,9 +25,11 @@ bg-dark = #181a23
 alert = ${colors.yellow}
 accent = #604c7e
 
+
 [global/wm]
 margin-top = 0
 margin-bottom = 42
+
 
 [bar/main]
 dpi = 168
@@ -69,8 +71,9 @@ font-3 = "Font Awesome 6 Free Solid:style=Solid:pixelsize=11;2"
 font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=11;2"
 font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=11;2"
 
-; modules-left = volume pad cpu memory pad pkg mail
-modules-left = pulseaudio pad cpu memory pad fs
+;modules-left = volume pad cpu memory pad pkg mail
+modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
+;modules-left = volume pad bluetooth pad cpu memory pad fs
 modules-center = bspwm
 modules-right = redshift wlan pad pad network-up pad network-down pad battery pad date pad syncthing
 
@@ -80,6 +83,7 @@ modules-right = redshift wlan pad pad network-up pad network-down pad battery pa
 ;tray-background = #0063ff
 ;tray-scale = 0.5
 ;tray-maxsize = 28
+
 
 [module/bspwm]
 type = internal/bspwm
@@ -118,6 +122,7 @@ label-empty = %icon%
 label-empty-foreground = ${colors.fg-alt}
 label-empty-padding = 1
 
+
 [module/date]
 type = internal/date
 interval = 5
@@ -128,11 +133,12 @@ date-alt = %Y-%m-%d
 time = %I:%M %p
 time-alt = %H:%M:%S
 ;format-prefix = ""
-format-prefix = " "
+format-prefix = ""
 format-prefix-padding = 1
 ; format-prefix-background = ${colors.bg-alt}
 format-prefix-foreground = ${colors.accent}
 ; format-underline = ${xrdb:color4}
+
 
 [module/fs]
 type = internal/fs
@@ -176,10 +182,12 @@ bar-used-fill = |
 bar-used-empty = ¦
 bar-used-empty-foreground = ${colors.fg-alt}
 
+
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:80:...%
 label-padding-left = 2
+
 
 ; [module/mpd]
 ; type = internal/mpd
@@ -205,6 +213,7 @@ label-padding-left = 2
 ; toggle-on-foreground = ${colors.fg}
 ; toggle-off-foreground = #66
 
+
 [module/cpu]
 type = internal/cpu
 interval = 2
@@ -226,6 +235,7 @@ bar-load-foreground-4 = ${colors.alert}
 bar-load-fill = |
 bar-load-empty = ¦
 bar-load-empty-foreground = ${colors.fg-alt}
+
 
 [module/memory]
 type = internal/memory
@@ -249,6 +259,7 @@ bar-used-foreground-4 = ${colors.alert}
 bar-used-fill = |
 bar-used-empty = ¦
 bar-used-empty-foreground = ${colors.fg-alt}
+
 
 [module/wlan]
 type = internal/network
@@ -277,6 +288,7 @@ ramp-signal-3-foreground = ${colors.accent}
 ramp-signal-4 = 
 ramp-signal-4-foreground = ${colors.fg}
 
+
 [module/network-up]
 type = internal/network
 interface = wlp1s0
@@ -291,6 +303,7 @@ format-connected-underline =
 format-disconnected-prefix = " "
 format-disconnected-prefix-foreground = ${colors.alert}
 format-disconnected-foreground = ${colors.alert}
+
 
 [module/network-down]
 type = internal/network
@@ -307,9 +320,9 @@ format-disconnected-prefix = " "
 format-disconnected-prefix-foreground = ${colors.alert}
 format-disconnected-foreground = ${colors.alert}
 
-[module/pulseaudio]
-type = internal/pulseaudio
 
+[module/volume]
+type = internal/alsa
 ; format-volume = <label-volume> <bar-volume>
 format-volume = <ramp-volume> <bar-volume>
 ; label-volume = " "
@@ -321,7 +334,7 @@ format-muted-foreground = ${colors.alert}
 ;label-muted = 
 label-muted = 
 
-bar-volume-width = 5
+bar-volume-width = 8
 # bar-volume-foreground-0 = ${colors.magenta}
 # bar-volume-foreground-1 = ${colors.magenta}
 # bar-volume-foreground-2 = ${colors.magenta}
@@ -344,6 +357,45 @@ ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; format-volume = <label-volume> <bar-volume>
+format-volume = <ramp-volume> <bar-volume>
+; label-volume = " "
+label-volume = "  "
+label-volume-foreground = ${colors.accent}
+
+; format-muted-prefix = " "
+format-muted-foreground = ${colors.alert}
+;label-muted = 
+label-muted = 
+
+bar-volume-width = 8
+# bar-volume-foreground-0 = ${colors.magenta}
+# bar-volume-foreground-1 = ${colors.magenta}
+# bar-volume-foreground-2 = ${colors.magenta}
+# bar-volume-foreground-3 = ${colors.magenta}
+# bar-volume-foreground-4 = ${colors.magenta}
+# bar-volume-foreground-5 = ${colors.magenta}
+# bar-volume-foreground-6 = ${colors.magenta}
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 3
+bar-volume-indicator-foreground = #ff
+bar-volume-fill = ─
+bar-volume-fill-font = 3
+bar-volume-empty = ─
+bar-volume-empty-font = 3
+bar-volume-empty-foreground = ${colors.fg-alt}
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+
 [module/battery]
 type = internal/battery
 battery = BAT0
@@ -357,7 +409,7 @@ format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
 ;format-full-prefix = " "
-format-full-prefix = ""
+format-full-prefix = " "
 ;format-full-prefix-foreground = ${colors.fg-alt}
 format-full-prefix-foreground = ${colors.accent}
 format-full-underline = ${self.format-charging-underline}
@@ -394,6 +446,7 @@ type = custom/text
 content = " "
 content-foreground = ${colors.fg-alt}
 
+
 [module/redshift]
 type = custom/script
 exec = ~/.config/polybar/modules/redshift
@@ -401,13 +454,26 @@ exec-if = pgrep -x redshift
 interval = 60
 format-padding = 1
 
+
+[module/bluetooth]
+type = custom/script
+exec = ~/.config/polybar/modules/bluetooth
+#exec-if = pgrep -x bluetooth
+tail = true
+click-left = ~/.config/polybar/modules/bluetooth --toggle &
+format = 
+;format =  
+format-foreground = ${colors.fg}
+
+
 [module/syncthing]
 type = custom/script
 exec = echo 1
 exec-if = systemctl is-active syncthing
 ;format = ""
-format = " "
+format = 
 format-foreground = ${colors.fg}
 interval = 30
+
 
 ; vim:ft=dosini
