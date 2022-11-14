@@ -39,6 +39,9 @@
       vm = {
         qemu.enable = true;
       };
+      noter = {
+	zotero.enable = true;
+      };
     };
     dev = {
       cc.enable = true;
