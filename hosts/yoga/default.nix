@@ -70,6 +70,9 @@
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
     };
+    utils = {
+      htop.enable = true;
+    };
     theme.active = "alucard";
   };
 

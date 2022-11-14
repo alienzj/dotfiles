@@ -8,6 +8,19 @@
   ### A tidy $HOME is a tidy mind
   home-manager.users.${config.user.name}.xdg.enable = true;
 
+  ### https://github.com/nix-community/home-manager/blob/master/modules/misc/xdg-user-dirs.nix
+  home-manager.users.${config.user.name}.xdg.userDirs {
+    enable = true;
+    desktop = "$HOME/desktop";
+    documents = "$HOME/documents";
+    download = "$HOME/downloads";
+    music = "$HOME/music";
+    pictures = "$HOME/pictures";
+    videos = "$HOME/videos";
+    publicShare = "$HOME/public";
+    templates = "$HOME/templates";
+  };
+
   environment = {
     sessionVariables = {
       # These are the defaults, and xdg.enable does set them, but due to load
