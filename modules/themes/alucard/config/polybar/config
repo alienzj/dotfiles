@@ -425,10 +425,9 @@ exec = ~/.config/polybar/modules/bluetooth
 #exec-if = pgrep -x bluetooth
 tail = true
 click-left = ~/.config/polybar/modules/bluetooth --toggle &
-click-right = exec blueman &
-format = 
+;format = 
 ;format =  
-format-foreground = ${colors.fg}
+;format-foreground = ${colors.fg}
 
 
 [module/syncthing]
