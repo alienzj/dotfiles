@@ -80,7 +80,8 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      adb.enable = true;
+      adb.enable = true; # android
+      rdp.enable = true; # remote desktop
     };
     utils = {
       htop.enable = true;
