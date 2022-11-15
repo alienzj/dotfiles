@@ -74,6 +74,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
+      adb.enable = true;
     };
     utils = {
       htop.enable = true;
@@ -134,5 +135,7 @@
   #};
 
   time.timeZone = "Asia/Hong_Kong";
+
+  programs.adb.enable = true;
 
 }
