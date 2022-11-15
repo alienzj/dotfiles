@@ -12,7 +12,7 @@
       apps = {
         rofi.enable = true;
 	skype.enable = true;
-	zoom.enable = true;
+	zoomus.enable = true;
         # godot.enable = true;
       };
       browsers = {
