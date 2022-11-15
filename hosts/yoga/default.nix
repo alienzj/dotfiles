@@ -11,6 +11,8 @@
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
+	skype.enable = true;
+	zoom.enable = true;
         # godot.enable = true;
       };
       browsers = {

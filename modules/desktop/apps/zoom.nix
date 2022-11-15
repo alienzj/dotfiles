@@ -2,16 +2,15 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.apps.skype;
+let cfg = config.modules.desktop.apps.zoom;
 in {
-  options.modules.desktop.apps.skype = {
+  options.modules.desktop.apps.zoom = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      skypeforlinux
-      #skype_call_recorder
+      zoom-us
     ];
   };
 }
