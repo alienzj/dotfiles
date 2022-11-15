@@ -44,6 +44,7 @@
       };
       noter = {
 	zotero.enable = true;
+	calibre.enable = true;
       };
     };
     dev = {
