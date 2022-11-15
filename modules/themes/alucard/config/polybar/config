@@ -375,7 +375,8 @@ format-discharging-underline = ${self.format-charging-underline}
 ;format-full-prefix = " "
 format-full-prefix = " "
 ;format-full-prefix-foreground = ${colors.fg-alt}
-format-full-prefix-foreground = ${colors.accent}
+;format-full-prefix-foreground = ${colors.accent}
+format-full-prefix-foreground = ${colors.fg}
 format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = 
@@ -425,9 +426,9 @@ exec = ~/.config/polybar/modules/bluetooth
 #exec-if = pgrep -x bluetooth
 tail = true
 click-left = ~/.config/polybar/modules/bluetooth --toggle &
-;format = 
+format = 
 ;format =  
-;format-foreground = ${colors.fg}
+format-foreground = ${colors.fg}
 
 
 [module/syncthing]
