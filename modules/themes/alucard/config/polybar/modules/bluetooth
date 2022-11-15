@@ -16,8 +16,11 @@ bluetooth_print() {
 
                     if [ $counter -gt 0 ]; then
                         printf ", %s" "$device_alias"
+			#printf "%{F#66ffffff}"
                     else
                         printf " %s" "$device_alias"
+			#printf "%{F#66ffffff} "
+			#printf "%{F#2193ff}"
                     fi
 
                     counter=$((counter + 1))
@@ -27,6 +30,7 @@ bluetooth_print() {
             printf '\n'
         else
             echo "#2"
+	    #printf "%{F#2193ff}"
         fi
     done
 }
