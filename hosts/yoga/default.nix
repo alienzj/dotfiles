@@ -13,6 +13,7 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
+	libreoffice.enable = true;
         # godot.enable = true;
       };
       browsers = {
