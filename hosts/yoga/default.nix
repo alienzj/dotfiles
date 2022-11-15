@@ -46,6 +46,12 @@
 	zotero.enable = true;
 	calibre.enable = true;
       };
+      im = {
+        matrix.enable = true;
+	tdesktop.enable = true;
+	whatsapp.enable = true;
+	slack.enable = true;
+      };
     };
     dev = {
       cc.enable = true;
