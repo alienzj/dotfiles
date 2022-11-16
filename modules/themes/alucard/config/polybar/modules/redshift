@@ -8,7 +8,8 @@ if [[ $? -eq 0 ]]; then
     temp=${temp//K/}
 fi
 
-icon=""
+#icon=""
+icon=""
 # OPTIONAL: Append ' ${temp}K' after $icon
 if [[ -z $temp ]]; then
     echo "%{F#65737E}$icon"       # Greyed out (not running)

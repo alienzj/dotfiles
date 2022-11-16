@@ -26,7 +26,8 @@ in {
   '';
 
   ## Location config -- since Toronto is my 127.0.0.1
-  time.timeZone = mkDefault "America/Toronto";
+  # time.timeZone = mkDefault "America/Toronto";
+  time.timeZone = mkDefault "Asia/Hong_Kong";
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
   # For redshift, mainly
   location = (if config.time.timeZone == "America/Toronto" then {
@@ -36,6 +37,7 @@ in {
     latitude = 55.88;
     longitude = 12.5;
   } else if config.time.timeZone == "Asia/Hong_Kong" then {
+    provider = "manual";
     latitude = 22.43;
     longitude = 114.21;
   } else {});

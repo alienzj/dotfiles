@@ -75,7 +75,7 @@ font-6 = "Material Icons: style=Regular: pixelsize=11;2"
 modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
 ;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs
 modules-center = bspwm
-modules-right = redshift wlan pad pad network-up pad network-down pad battery pad date pad syncthing
+modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
 
 ;tray-position = center
 ;tray-padding = 2
