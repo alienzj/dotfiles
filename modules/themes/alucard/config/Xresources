@@ -1,11 +1,3 @@
-#Xft.autohint: 0
-#Xft.lcdfilter: lcddefault
-#Xft.hintstyle: hintfull
-#Xft.hinting: 1
-#Xft.antialias: 1
-#Xft.rgba: rgb
-
-
 !! Colors
 *.cursorColor: mag
 ! greys
@@ -23,7 +15,7 @@ st.scratch.font: monospace:pixelsize=16
 
 
 !! xst
-st.font: monospace:pixelsize=13
+st.font: monospace:pixelsize=14
 st.borderpx: 8
 
 
@@ -32,7 +24,7 @@ URxvt*depth:                   32
 URxvt*.borderless:             1
 URxvt*.buffered:               true
 URxvt*.cursorBlink:            true
-URxvt*.font:                   xft:monospace:pixelsize=13
+URxvt*.font:                   xft:monospace:pixelsize=14
 URxvt*.internalBorder:         10
 URxvt*.letterSpace:            0
 URxvt*.lineSpace:              0
