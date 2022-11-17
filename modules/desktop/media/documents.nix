@@ -10,15 +10,23 @@ in {
     enable = mkBoolOpt false;
     pdf.enable = mkBoolOpt false;
     ebook.enable = mkBoolOpt false;
+    file.enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      (mkIf cfg.ebook.enable calibre)
-      (mkIf cfg.pdf.enable   evince)
-      # zathura
-    ];
+  config = mkIf cfg.enable (mkMerge [
+    {
+      user.packages = with pkgs; [
+        (mkIf cfg.ebook.enable calibre)
+        (mkIf cfg.pdf.enable   gnome.evince)
+        (mkIf cfg.file.enable  gnome.nautilus)
+        # zathura
+      ];
+    }
+
+    (mkIf (cfg.file.enable) {
+      services.gvfs.enable = true;
+    })
 
     # TODO calibre/evince/zathura dotfiles
-  };
+  ]);
 }

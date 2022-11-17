@@ -29,7 +29,12 @@
       };
       media = {
         daw.enable = true;
-        documents.enable = true;
+        documents = {
+	  enable = true;
+	  pdf.enable = true;
+	  ebook.enable = true;
+	  file.enable = true;
+	};
         graphics.enable = true;
         mpv.enable = true;
         recording.enable = true;
@@ -45,7 +50,6 @@
       };
       noter = {
 	zotero.enable = true;
-	calibre.enable = true;
       };
       im = {
         matrix.enable = true;
