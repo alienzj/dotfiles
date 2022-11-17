@@ -2,7 +2,7 @@
 
 case $HOSTNAME in
   yoga)  export WLP=wlp1s0   ;;
-  eniac) export WLP=eno1     ;;
+  magic) export WLP=eno1     ;;
 esac
 
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)

@@ -28,12 +28,12 @@ accent = #604c7e
 
 [global/wm]
 margin-top = 0
-margin-bottom = 42
+margin-bottom = 34
 
 
 [bar/main]
-dpi = 168
-monitor = ${env:MONITOR:eDP}
+#dpi = 168
+monitor = ${env:MONITOR:DP-1}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
@@ -45,7 +45,7 @@ background = ${colors.bg}
 foreground = ${colors.fg}
 
 width = 100%
-height = 42
+height = 34
 offset-x = 0
 offset-y = 0
 bottom = true
@@ -263,7 +263,8 @@ bar-used-empty-foreground = ${colors.fg-alt}
 
 [module/wlan]
 type = internal/network
-interface = wlp1s0
+#interface = wlp1s0
+interface = eno1
 interval = 3.0
 
 # 
@@ -292,7 +293,7 @@ ramp-signal-4-foreground = ${colors.fg}
 
 [module/network-up]
 type = internal/network
-interface = wlp1s0
+interface = eno1
 interval = 4.0
 label-connected = "%upspeed%"
 ;format-connected-prefix = " "
@@ -308,7 +309,7 @@ format-disconnected-foreground = ${colors.alert}
 
 [module/network-down]
 type = internal/network
-interface = wlp1s0
+interface = eno1
 interval = 4.0
 label-connected = "%downspeed%"
 ;format-connected-prefix = " "
