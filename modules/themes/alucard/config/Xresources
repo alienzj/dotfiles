@@ -23,8 +23,8 @@ st.scratch.font: monospace:pixelsize=16
 
 
 !! xst
-st.font: monospace:pixelsize=12
-st.borderpx: 10
+st.font: monospace:pixelsize=13
+st.borderpx: 8
 
 
 !! urxvt
@@ -32,7 +32,7 @@ URxvt*depth:                   32
 URxvt*.borderless:             1
 URxvt*.buffered:               true
 URxvt*.cursorBlink:            true
-URxvt*.font:                   xft:monospace:pixelsize=12
+URxvt*.font:                   xft:monospace:pixelsize=13
 URxvt*.internalBorder:         10
 URxvt*.letterSpace:            0
 URxvt*.lineSpace:              0
