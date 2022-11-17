@@ -38,6 +38,7 @@
       term = {
         default = "xst";
         st.enable = true;
+	nnn.enable = true;
       };
       vm = {
         qemu.enable = true;
