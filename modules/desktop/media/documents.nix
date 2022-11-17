@@ -25,6 +25,7 @@ in {
 
     (mkIf (cfg.file.enable) {
       services.gvfs.enable = true;
+      programs.dconf.enable = true;
     })
 
     # TODO calibre/evince/zathura dotfiles
