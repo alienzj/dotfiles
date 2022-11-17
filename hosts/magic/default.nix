@@ -14,6 +14,7 @@
 	skype.enable = true;
 	zoomus.enable = true;
 	libreoffice.enable = true;
+	usbimager.enable = true;
         # godot.enable = true;
       };
       browsers = {
