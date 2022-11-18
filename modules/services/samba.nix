@@ -22,7 +22,7 @@ in {
         enable = true;
         securityType = "user";
         extraConfig = ''
-          workgroup = WORKGROUP
+          workgroup = magic.local
           server string = smbnix
           netbios name = smbnix
           security = user 

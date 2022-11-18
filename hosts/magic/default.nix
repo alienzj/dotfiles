@@ -61,6 +61,9 @@
 	whatsapp.enable = true;
 	slack.enable = true;
       };
+      input = {
+        fcitx.enable = true;
+      };
     };
     dev = {
       cc.enable = true;
