@@ -96,6 +96,10 @@
       rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
+      #lockscreen = {
+      #  enable = true;
+      #	inactiveInterval = 10;
+      #};
     };
     utils = {
       htop.enable = true;
