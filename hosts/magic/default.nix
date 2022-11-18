@@ -95,6 +95,7 @@
       adb.enable = true; # android
       rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
+      printing.enable = true; # RICOH printer
     };
     utils = {
       htop.enable = true;
