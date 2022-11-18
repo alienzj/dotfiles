@@ -20,6 +20,13 @@ in {
     {
       user.packages = with pkgs; [
         betterlockscreen
+
+        (makeDesktopItem {
+          name = "better-lock-display";
+          desktopName = "Better Lock screen";
+          icon = "system-lock-screen";
+          exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --lock";
+        })
       ];
 
       #services.screen-locker = {
