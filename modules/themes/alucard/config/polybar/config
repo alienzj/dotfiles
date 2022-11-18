@@ -73,7 +73,7 @@ font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=11;2"
 font-6 = "Material Icons: style=Regular: pixelsize=11;2"
 
 modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
-;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs
+;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
 modules-center = bspwm
 modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
 
@@ -474,6 +474,13 @@ click-left = ~/.config/polybar/modules/pulseaudio-control --node-type input togm
 click-middle = ~/.config/polybar/modules/pulseaudio-control --node-type input next-node
 scroll-up = ~/.config/polybar/modules/pulseaudio-control --node-type input --volume-max 130 up
 scroll-down = ~/.config/polybar/modules/pulseaudio-control --node-type input --volume-max 130 down
+
+[module/fcitx5]
+type = custom/script
+exec = ~/.config/polybar/modules/fictx5
+tail = true
+interval = 0
+format-prefix = "KBD"
 
 
 ; vim:ft=dosini

@@ -62,7 +62,7 @@
 	slack.enable = true;
       };
       input = {
-        fcitx.enable = true;
+        fcitx5.enable = true;
       };
     };
     dev = {
