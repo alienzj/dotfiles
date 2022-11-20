@@ -25,9 +25,9 @@ in {
         securityType = "user";
         extraConfig = ''
 	  # printer config
-	  load printers = yes
-          printing = cups
-          printcap name = cups
+	  ##load printers = yes
+          ##printing = cups
+          ##printcap name = cups
 
 	  # general config
           workgroup = magic.local
@@ -43,17 +43,17 @@ in {
           map to guest = bad user
         '';
         shares = {
-          printers = {
-            comment = "MagIC Public Printers";
-            path = "/var/spool/samba";
-            public = "yes";
-            browseable = "yes";
-            # to allow user 'guest account' to print.
-            "guest ok" = "yes";
-            writable = "no";
-            printable = "yes";
-            "create mode" = 0700;
-          };
+          ##printers = {
+          ##  comment = "MagIC Public Printers";
+          ##  path = "/var/spool/samba";
+          ##  public = "yes";
+          ##  browseable = "yes";
+          ##  # to allow user 'guest account' to print.
+          ##  "guest ok" = "yes";
+          ##  writable = "no";
+          ##  printable = "yes";
+          ##  "create mode" = 0700;
+          ##};
           public = {
             path = "/mnt/store/share/public";
             browseable = "yes";
@@ -76,9 +76,9 @@ in {
           };
         };
       };
-      systemd.tmpfiles.rules = [
-        "d /var/spool/samba 1777 root root -"
-      ];
+      ##systemd.tmpfiles.rules = [
+      ##  "d /var/spool/samba 1777 root root -"
+      ##];
     }
   ]);
 }
