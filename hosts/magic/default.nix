@@ -67,9 +67,12 @@
     };
     dev = {
       cc.enable = true;
+      #lua.enable = true;
       node.enable = true;
       rust.enable = true;
       python.enable = true;
+      shell.enable = true;
+      scala.enable = true;
     };
     editors = {
       default = "nvim";
@@ -87,12 +90,13 @@
       zsh.enable    = true;
     };
     services = {
+      adb.enable = true; # android
+      #calibre.enable = true;
       syncthing.enable = true;
       ssh.enable = true;
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      adb.enable = true; # android
       rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
