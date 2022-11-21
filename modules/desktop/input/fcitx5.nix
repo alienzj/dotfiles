@@ -3,6 +3,7 @@
 with lib;
 with lib.my;
 let cfg = config.modules.desktop.input.fcitx5;
+    configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.input.fcitx5 = with types; {
     enable = mkBoolOpt false;
@@ -20,6 +21,13 @@ in {
           fcitx5-chinese-addons
           fcitx5-gtk
         ];
+      };
+
+      home.configFile = {
+        "fcitx5" = {
+          source = "${configDir}/fcitx5";
+	  recursive = true;
+	};
       };
     }
   ]);
