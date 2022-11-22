@@ -79,6 +79,7 @@
       emacs.enable = true;
       vim.enable = true;
       vscode.enable = true;
+      rstudio.enable = true;
     };
     shell = {
       adl.enable = true;
