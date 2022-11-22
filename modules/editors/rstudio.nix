@@ -3,7 +3,7 @@
 with lib;
 with lib.my;
 let cfg = config.modules.editors.rstudio;
-    #zj-R-with-packages = rWrapper.override {
+    #R-with-packages = rWrapper.override {
     #  packages = with rPackages; [
     #    tidyverse
     #    tidymodels
@@ -28,40 +28,44 @@ let cfg = config.modules.editors.rstudio;
     #  ];
     #};
 
-    #zj-RStudio-with-packages = rstudioWrapper.override{
-    #  packages = with rPackages; [
-    #    tidyverse
-    #    tidymodels
-    #    vegan
-    #    quarto
-    #    shiny
-    #    leaflet
-    #    robservable
-    #    ggtree
-    #    ggtreeExtra
-    #    MicrobiotaProcess
-    #    dada2
-    #    DECIPHER
-    #    ggpubr
-    #    ggplotify
-    #    ggalluvial
-    #    ggstar
-    #    forcats
-    #    tidytree
-    #    readxl
-    #    writexl
-    #  ];
-    #};
+    RStudio-with-packages = pkgs.unstable.rstudioWrapper.override{
+      packages = with pkgs.unstable.rPackages; [
+        tidyverse
+        tidymodels
+        vegan
+        quarto
+        shiny
+        ggtree
+        ggtreeExtra
+        MicrobiotaProcess
+        dada2
+        DECIPHER
+        ggpubr
+        ggplotify
+        ggalluvial
+        ggstar
+        forcats
+        tidytree
+        readxl
+        writexl
+	flextable
+        randomForest	
+	tinytex
+	ymlthis
+	knitr
+	rmarkdown
+      ];
+    };
 in {
   options.modules.editors.rstudio = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      unstable.rstudio
-      #zj-R-with-packages
-      #zj-RStudio-with-packages
+    user.packages = [
+      #unstable.rstudio
+      #R-with-packages
+      RStudio-with-packages
     ];
   };
 }
