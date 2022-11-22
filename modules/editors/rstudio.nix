@@ -54,6 +54,7 @@ let cfg = config.modules.editors.rstudio;
 	ymlthis
 	knitr
 	rmarkdown
+	markdown
       ];
     };
 in {

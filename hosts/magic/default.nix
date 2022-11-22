@@ -109,6 +109,7 @@
     utils = {
       htop.enable = true;
       neofetch.enable = true;
+      pandoc.enable = true;
     };
     theme.active = "alucard";
   };
