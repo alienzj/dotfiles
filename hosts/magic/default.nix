@@ -66,13 +66,31 @@
       };
     };
     dev = {
-      cc.enable = true;
+      cc = {
+        enable = true;
+	xdg.enable = true;
+      };
       #lua.enable = true;
-      node.enable = true;
-      rust.enable = true;
-      python.enable = true;
-      shell.enable = true;
-      scala.enable = true;
+      node = {
+        enable = true;
+        xdg.enable = true;
+      };
+      rust = {
+        enable = true;
+	xdg.enable = true;
+      };
+      python = {
+        enable = true;
+	xdg.enable = true;
+      };
+      shell = {
+        enable = true;
+	xdg.enable = true;
+      };
+      scala = {
+        enable = true;
+	xdg.enable = true;
+      };
     };
     editors = {
       default = "nvim";
