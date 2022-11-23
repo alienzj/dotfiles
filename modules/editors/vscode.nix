@@ -3,88 +3,94 @@
 with lib;
 with lib.my;
 let cfg = config.modules.editors.vscode;
+    jsonFormat = pkgs.formats.json { };
+    vscodeUserSettings = {
+      "workbench.iconTheme" = "material-icon-theme";
+      "workbench.colorTheme" = "Catppuccin Macchiato";
+      "catppuccin.accentColor" = "mauve";
+      "editor.fontFamily" = "JetBrainsMono Nerd Font, Material Design Icons";
+      "editor.fontSize" = 16;
+      "editor.fontLigatures" = true;
+      "workbench.fontAliasing" = "antialiased";
+      "files.trimTrailingWhitespace" = true;
+      "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font Mono";
+      "window.titleBarStyle" = "custom";
+      "terminal.integrated.automationShell.linux" = "nix-shell";
+      "terminal.integrated.defaultProfile.linux" = "zsh";
+      "terminal.integrated.cursorBlinking" = true;
+      "terminal.integrated.enableBell" = false;
+      "editor.defaultFormatter" = "xaver.clang-format";
+      "editor.formatOnPaste" = true;
+      "editor.formatOnSave" = true;
+      "editor.formatOnType" = false;
+      "editor.minimap.enabled" = false;
+      "editor.minimap.renderCharacters" = false;
+      "editor.overviewRulerBorder" = false;
+      "editor.renderLineHighlight" = "all";
+      "editor.inlineSuggest.enabled" = true;
+      "editor.smoothScrolling" = true;
+      "editor.suggestSelection" = "first";
+      "editor.guides.indentation" = false;
+      "window.nativeTabs" = true;
+      "window.restoreWindows" = "all";
+      "window.menuBarVisibility" = "toggle";
+      "workbench.panel.defaultLocation" = "right";
+      "workbench.editor.tabCloseButton" = "left";
+      "workbench.startupEditor" = "none";
+      "workbench.list.smoothScrolling" = true;
+      "security.workspace.trust.enabled" = false;
+      "explorer.confirmDelete" = false;
+      "breadcrumbs.enabled" = true;
+      "update.mode" = "none";
+      "extensions.autoCheckUpdates" = false;
+    };
 in {
   options.modules.editors.vscode = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-
-    #user.packages = with pkgs; [
-    #  unstable.vscode
-    #];
-
-    #programs.vscode = {
-    #  enable = true;
-    #  #package = pkgs.vscodium;
-    #  extensions = with pkgs.vscode-extensions; [
-    #    ms-python.python
-    #  ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-    #    {
-    #      name = "remote-ssh-edit";
-    #      publisher = "";
-    #      version = "";
-    #      sha256 = "";
-    #    }
-    #    {
-    #      name = "snakemake-lang";
-    #      publisher = "";
-    #      version = "";
-    #      sha256 = "";
-    #    }
-    #    {
-    #      name = "snakefmt";
-    #      publisher = "";
-    #      version = "";
-    #      sha256 = "";
-    #    }
-    #  ];
-    #  userSettings = {
-    #    "[nix]" = {
-    #      "editor.tabSize" = 2;
-    #     };
-    #  };
-    #  "workbench.colorTheme" = "One Dark Pro";
-    #};
-
-    user.packages = with pkgs; [
+    user.packages = with pkgs.unstable; [
       (vscode-with-extensions.override {
         vscodeExtensions = with vscode-extensions; [
-	  # nix
+          pkief.material-icon-theme
+	  catppuccin.catppuccin-vsc
+
+          naumovs.color-highlight
+          oderwat.indent-rainbow
+          ibm.output-colorizer
+          shardulm94.trailing-spaces
+          usernamehw.errorlens
+          eamodio.gitlens
+	  christian-kohler.path-intellisense
+	  formulahendry.code-runner
+
           bbenoist.nix
-	  # python
+	  kamadorueda.alejandra
+
           ms-python.python
-	  # jupyter
 	  ms-toolsai.jupyter
-	  # c/c++
+
 	  ms-vscode.cpptools
-	  # rust
+
 	  matklad.rust-analyzer
-	  bungcip.better-toml
-	  # docker
+
           ms-azuretools.vscode-docker
-	  # remote development
           ms-vscode-remote.remote-ssh
-	  # keybindings
+
 	  vscodevim.vim
-	  # theme
-	  zhuangtongfa.material-theme
-	  # csv
+
+	  bungcip.better-toml
 	  mechatroner.rainbow-csv
-          # yaml
           redhat.vscode-yaml
-          # haskell
+          yzhang.markdown-all-in-one
+          james-yu.latex-workshop
+
           haskell.haskell
           justusadam.language-haskell
-          # latex
-          james-yu.latex-workshop
-          # go
+
           golang.go
-          # markdown
-          yzhang.markdown-all-in-one
-	  # code runner
-	  formulahendry.code-runner
-        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        ] ++ pkgs.unstable.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "remote-ssh-edit";
             publisher = "ms-vscode-remote";
@@ -106,5 +112,9 @@ in {
         ];
       })
     ];
+    
+    home.configFile = {
+      "Code/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
+    };
   };
 }
