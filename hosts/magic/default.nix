@@ -76,7 +76,15 @@
     };
     editors = {
       default = "nvim";
-      emacs.enable = true;
+      emacs = rec {
+        enable = true;
+	doom = {
+          enable = true;
+	  forgeUrl = "https://github.com";
+	  repoUrl = "https://github.com/doomemacs/doomemacs";
+	  configRepoUrl = "https://github.com/alienzj/doom.d";
+	};
+      };
       vim.enable = true;
       vscode.enable = true;
       rstudio.enable = true;
