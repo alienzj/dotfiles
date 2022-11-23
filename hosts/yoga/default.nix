@@ -14,13 +14,14 @@
 	skype.enable = true;
 	zoomus.enable = true;
 	libreoffice.enable = true;
+	usbimager.enable = true;
         # godot.enable = true;
       };
       browsers = {
         default = "brave";
         brave.enable = true;
         firefox.enable = true;
-        qutebrowser.enable = true;
+        #qutebrowser.enable = true;
       };
       gaming = {
         steam.enable = true;
@@ -29,7 +30,12 @@
       };
       media = {
         daw.enable = true;
-        documents.enable = true;
+        documents = {
+	  enable = true;
+	  pdf.enable = true;
+	  ebook.enable = true;
+	  file.enable = true;
+	};
         graphics.enable = true;
         mpv.enable = true;
         recording.enable = true;
@@ -38,13 +44,16 @@
       term = {
         default = "xst";
         st.enable = true;
+	nnn.enable = true;
       };
       vm = {
+        lxd.enable = true;
         qemu.enable = true;
+	virtualbox.enable = true;
+	virt-manager.enable = true;
       };
       noter = {
 	zotero.enable = true;
-	calibre.enable = true;
       };
       im = {
         matrix.enable = true;
@@ -52,12 +61,18 @@
 	whatsapp.enable = true;
 	slack.enable = true;
       };
+      input = {
+        fcitx5.enable = true;
+      };
     };
     dev = {
       cc.enable = true;
+      #lua.enable = true;
       node.enable = true;
       rust.enable = true;
       python.enable = true;
+      shell.enable = true;
+      scala.enable = true;
     };
     editors = {
       default = "nvim";
@@ -75,13 +90,20 @@
       zsh.enable    = true;
     };
     services = {
+      adb.enable = true; # android
+      #calibre.enable = true;
       syncthing.enable = true;
       ssh.enable = true;
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      adb.enable = true; # android
       rdp.enable = true; # remote desktop
+      samba.enable = true; # share folders
+      printing.enable = true; # RICOH printer
+      lockscreen = {
+        enable = true;
+      	#inactiveInterval = 10;
+      };
     };
     utils = {
       htop.enable = true;

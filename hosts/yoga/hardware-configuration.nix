@@ -10,7 +10,7 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" "tun" "virtio" ];
   boot.extraModulePackages = [ ];
 
 
@@ -27,7 +27,8 @@
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 8;
-  powerManagement.cpuFreqGovernor = "performance";
+  #powerManagement.cpuFreqGovernor = "performance";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = true;
 
   networking.wireless.interfaces = [ "wlp1s0" ];

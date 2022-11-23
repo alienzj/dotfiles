@@ -28,12 +28,12 @@ accent = #604c7e
 
 [global/wm]
 margin-top = 0
-margin-bottom = 34
+margin-bottom = 42
 
 
 [bar/main]
-#dpi = 168
-monitor = ${env:MONITOR:DP-1}
+dpi = 168
+monitor = ${env:MONITOR:eDP}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
@@ -45,7 +45,7 @@ background = ${colors.bg}
 foreground = ${colors.fg}
 
 width = 100%
-height = 34
+height = 42
 offset-x = 0
 offset-y = 0
 bottom = true

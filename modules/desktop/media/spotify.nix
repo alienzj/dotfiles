@@ -17,8 +17,8 @@ in {
       # spotify-tui is fine for selecting and playing music, but incomplete. We
       # still occasionally need the official client for more sophisticated
       # search and the "made for you" playlists.
-      #(spotify.override { deviceScaleFactor = 1.8; })
-      spotify
+      (spotify.override { deviceScaleFactor = 1.8; })
+      #spotify
 
       # # services.spotifyd doesn't work so we'll have to roll our own spotifyd +
       # # spotify-tui solution. The dbus interface doesn't work, though, so we
