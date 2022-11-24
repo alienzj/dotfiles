@@ -19,7 +19,6 @@ let cfg = config.modules.editors.vscode;
       "terminal.integrated.defaultProfile.linux" = "zsh";
       "terminal.integrated.cursorBlinking" = true;
       "terminal.integrated.enableBell" = false;
-      "editor.defaultFormatter" = "xaver.clang-format";
       "editor.formatOnPaste" = true;
       "editor.formatOnSave" = true;
       "editor.formatOnType" = false;
