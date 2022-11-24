@@ -54,6 +54,7 @@
       };
       noter = {
 	zotero.enable = true;
+	notion.enable = true;
       };
       im = {
         matrix.enable = true;
