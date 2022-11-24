@@ -14,6 +14,7 @@
 	skype.enable = true;
 	zoomus.enable = true;
 	libreoffice.enable = true;
+	wpsoffice.enable = true;
 	usbimager.enable = true;
         # godot.enable = true;
       };
@@ -64,6 +65,10 @@
       };
       input = {
         fcitx5.enable = true;
+      };
+      science = {
+        cytoscape.enable = true;
+	igv.enable = true;
       };
     };
     dev = {
