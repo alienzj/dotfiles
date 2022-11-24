@@ -21,11 +21,30 @@ in {
       user.packages = with pkgs; [
         python310
         python310Packages.pip
-        python310Packages.ipython
         python310Packages.black
         python310Packages.setuptools
         python310Packages.pylint
         python310Packages.poetry
+	#python310Packages.flask
+	#python310Packages.django
+	#python310Packages.dash
+	#python310Packages.plotly
+	#python310Packages.requests
+        #python310Packages.ipython
+        #python310Packages.jupyter
+        #python310Packages.jupyterlab
+	#python310Packages.pandas
+	#python310Packages.numpy
+	#python310Packages.matplotlib
+	#python310Packages.seaborn
+	#python310Packages.scipy
+	#python310Packages.scikitimage
+	#python310Packages.scikit-learn
+	##python310Packages.scikit-bio
+	##python310Packages.biopython
+	#python310Packages.hmmlearn
+	#python310Packages.hdbscan
+	#python310Packages.networkx
       ];
 
       environment.shellAliases = {
