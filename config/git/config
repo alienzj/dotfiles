@@ -1,7 +1,7 @@
 [user]
 	name = Jie Zhu
 	email = alienchuj@gmail.com
-	#signingKey = FA1FADD9440B688CAA75A057B60957CA074D39A3
+	signingKey = 1A7FAEC84991EEC157FA17F015B5ABE8CFC16E30
 [commit]
 	gpgSign = true
 [tag]
