@@ -41,6 +41,7 @@
         mpv.enable = true;
         recording.enable = true;
         spotify.enable = true;
+	sayonara.enable = true;
       };
       term = {
         default = "xst";
