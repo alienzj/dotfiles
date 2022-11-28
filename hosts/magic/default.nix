@@ -46,6 +46,7 @@
       term = {
         default = "xst";
         st.enable = true;
+	wezterm.enable = true;
 	nnn.enable = true;
       };
       vm = {
