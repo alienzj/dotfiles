@@ -17,9 +17,10 @@ in {
     {
       user.packages = with pkgs; [
         (mkIf cfg.ebook.enable calibre)
-        (mkIf cfg.pdf.enable   gnome.evince)
-        (mkIf cfg.file.enable  gnome.nautilus)
-        # zathura
+        (mkIf cfg.pdf.enable   gnome3.evince)
+        (mkIf cfg.file.enable  gnome3.nautilus)
+	gsettings-desktop-schemas
+        zathura
       ];
     }
 
