@@ -14,14 +14,16 @@
 	skype.enable = true;
 	zoomus.enable = true;
 	libreoffice.enable = true;
+	wpsoffice.enable = true;
 	usbimager.enable = true;
+	scrcpy.enable = true;
         # godot.enable = true;
       };
       browsers = {
         default = "brave";
         brave.enable = true;
         firefox.enable = true;
-        #qutebrowser.enable = true;
+        qutebrowser.enable = true;
       };
       gaming = {
         steam.enable = true;
@@ -40,10 +42,12 @@
         mpv.enable = true;
         recording.enable = true;
         spotify.enable = true;
+	sayonara.enable = true;
       };
       term = {
         default = "xst";
         st.enable = true;
+	wezterm.enable = true;
 	nnn.enable = true;
       };
       vm = {
@@ -54,6 +58,7 @@
       };
       noter = {
 	zotero.enable = true;
+	notion.enable = true;
       };
       im = {
         matrix.enable = true;
@@ -64,21 +69,52 @@
       input = {
         fcitx5.enable = true;
       };
+      science = {
+        cytoscape.enable = true;
+	igv.enable = true;
+      };
     };
     dev = {
-      cc.enable = true;
+      cc = {
+        enable = true;
+	xdg.enable = true;
+      };
       #lua.enable = true;
-      node.enable = true;
-      rust.enable = true;
-      python.enable = true;
-      shell.enable = true;
-      scala.enable = true;
+      node = {
+        enable = true;
+	xdg.enable = true;
+      };
+      rust = {
+        enable = true;
+	xdg.enable = true;
+      };
+      python = {
+        enable = true;
+	xdg.enable = true;
+      };
+      shell = {
+        enable = true;
+	xdg.enable = true;
+      };
+      scala = {
+        enable = true;
+	xdg.enable = true;
+      };
     };
     editors = {
       default = "nvim";
-      emacs.enable = true;
+      emacs = {
+        enable = true;
+	doom = {
+          enable = true;
+	  forgeUrl = "https://github.com";
+	  repoUrl = "https://github.com/doomemacs/doomemacs";
+	  configRepoUrl = "https://github.com/alienzj/doom.d";
+	};
+      };
       vim.enable = true;
       vscode.enable = true;
+      rstudio.enable = true;
     };
     shell = {
       adl.enable = true;
@@ -108,6 +144,7 @@
     utils = {
       htop.enable = true;
       neofetch.enable = true;
+      pandoc.enable = true;
     };
     theme.active = "alucard";
   };
