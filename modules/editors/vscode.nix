@@ -1,3 +1,7 @@
+      #"editor.formatOnPaste" = true;
+      #"editor.formatOnSave" = true;
+      #"editor.formatOnType" = false;
+ 
 { config, options, lib, pkgs, ... }:
 
 with lib;
@@ -19,9 +23,6 @@ let cfg = config.modules.editors.vscode;
       "terminal.integrated.defaultProfile.linux" = "zsh";
       "terminal.integrated.cursorBlinking" = true;
       "terminal.integrated.enableBell" = false;
-      "editor.formatOnPaste" = true;
-      "editor.formatOnSave" = true;
-      "editor.formatOnType" = false;
       "editor.minimap.enabled" = false;
       "editor.minimap.renderCharacters" = false;
       "editor.overviewRulerBorder" = false;
