@@ -139,6 +139,7 @@
         enable = true;
       	#inactiveInterval = 10;
       };
+      flameshot.enable = true;
     };
     utils = {
       htop.enable = true;
