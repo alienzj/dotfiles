@@ -19,40 +19,49 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
-    user.packages = with pkgs; [ 
-      flameshot
-    ];
+  config = mkIf cfg.enable (mkMerge [
+    {
+      user.packages = with pkgs; [ 
+        flameshot
 
-    home.configFile = {
-      "flameshot/flameshot.ini".source = iniFile;
-    };
+        (makeDesktopItem {
+          name = "Flameshot Screen";
+          desktopName = "Flameshot Screen";
+          icon = "flameshot";
+          exec = "${pkgs.flameshot}/bin/flameshot gui";
+        })
+      ];
 
-    #systemd.user.services.flameshot = {
-    #  Unit = {
-    #    Description = "Flameshot screenshot tool";
-    #    Requires = [ "tray.target" ];
-    #    After = [ "graphical-session-pre.target" "tray.target" ];
-    #    PartOf = [ "graphical-session.target" ];
-    #    X-Restart-Triggers = [ "${iniFile}" ];
-    #  };
+      home.configFile = {
+        "flameshot/flameshot.ini".source = iniFile;
+      };
 
-    #  Install = { WantedBy = [ "graphical-session.target" ]; };
+      #systemd.user.services.flameshot = {
+      #  Unit = {
+      #    Description = "Flameshot screenshot tool";
+      #    Requires = [ "tray.target" ];
+      #    After = [ "graphical-session-pre.target" "tray.target" ];
+      #    PartOf = [ "graphical-session.target" ];
+      #    X-Restart-Triggers = [ "${iniFile}" ];
+      #  };
 
-    #  Service = {
-    #    Environment = "PATH=${config.home.profileDirectory}/bin";
-    #    ExecStart = "${pkgs.flameshot}/bin/flameshot";
-    #    Restart = "on-abort";
+      #  Install = { WantedBy = [ "graphical-session.target" ]; };
 
-    #    # Sandboxing.
-    #    LockPersonality = true;
-    #    MemoryDenyWriteExecute = true;
-    #    NoNewPrivileges = true;
-    #    PrivateUsers = true;
-    #    RestrictNamespaces = true;
-    #    SystemCallArchitectures = "native";
-    #    SystemCallFilter = "@system-service";
-    #  };
-    #};
-  };
+      #  Service = {
+      #    Environment = "PATH=${config.home.profileDirectory}/bin";
+      #    ExecStart = "${pkgs.flameshot}/bin/flameshot";
+      #    Restart = "on-abort";
+
+      #    # Sandboxing.
+      #    LockPersonality = true;
+      #    MemoryDenyWriteExecute = true;
+      #    NoNewPrivileges = true;
+      #    PrivateUsers = true;
+      #    RestrictNamespaces = true;
+      #    SystemCallArchitectures = "native";
+      #    SystemCallFilter = "@system-service";
+      #  };
+      #};
+    }
+  ]);
 }
