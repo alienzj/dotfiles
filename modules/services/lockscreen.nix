@@ -25,7 +25,7 @@ in {
           name = "better-lock-display";
           desktopName = "Better Lock screen";
           icon = "system-lock-screen";
-          exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --lock";
+          exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --blur --lock";
         })
       ];
 
