@@ -114,6 +114,9 @@
       vim.enable = true;
       vscode.enable = true;
       rstudio.enable = true;
+      pycharm.enable = true;
+      idea.enable = true;
+      as.enable = true;
     };
     shell = {
       adl.enable = true;
