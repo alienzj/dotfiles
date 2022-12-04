@@ -114,6 +114,9 @@
       vim.enable = true;
       vscode.enable = true;
       rstudio.enable = true;
+      pycharm.enable = true;
+      idea.enable = true;
+      as.enable = true;
     };
     shell = {
       adl.enable = true;
@@ -139,11 +142,13 @@
         enable = true;
       	#inactiveInterval = 10;
       };
+      flameshot.enable = true;
     };
     utils = {
       htop.enable = true;
       neofetch.enable = true;
       pandoc.enable = true;
+      ghostscript.enable = true;
     };
     theme.active = "alucard";
   };

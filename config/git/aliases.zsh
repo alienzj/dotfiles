@@ -23,7 +23,7 @@ alias gll='git log --pretty="format:%C(yellow)%h%Creset %C(red)%G?%Creset%C(gree
 alias gL='gl --stat'
 alias gp='git push'
 alias gpl='git pull --rebase --autostash'
-alias gs='git status --short .'
+alias gso='git status --short .'
 alias gss='git status'
 alias gst='git stash'
 alias gr='git reset HEAD'
