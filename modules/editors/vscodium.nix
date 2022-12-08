@@ -1,7 +1,8 @@
       #"editor.formatOnPaste" = true;
       #"editor.formatOnSave" = true;
       #"editor.formatOnType" = false;
- 
+      #"terminal.integrated.automationShell.linux" = "nix-shell";
+
 { config, options, lib, pkgs, ... }:
 
 with lib;
@@ -19,7 +20,6 @@ let cfg = config.modules.editors.vscodium;
       "files.trimTrailingWhitespace" = true;
       "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font Mono";
       "window.titleBarStyle" = "custom";
-      "terminal.integrated.automationShell.linux" = "nix-shell";
       "terminal.integrated.defaultProfile.linux" = "zsh";
       "terminal.integrated.cursorBlinking" = true;
       "terminal.integrated.enableBell" = false;
