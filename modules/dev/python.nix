@@ -42,20 +42,15 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = [
-        python-with-my-packages
-        #python310
-        #python310Packages.pip
-        #python310Packages.black
-        #python310Packages.setuptools
-        #python310Packages.pylint
-        #python310Packages.poetry
-	#python310Packages.flask
-	#python310Packages.django
-	#python310Packages.dash
-	#python310Packages.plotly
-	#python310Packages.requests
-        #python310Packages.ipython
+      user.packages = with pkgs; [
+        #python-with-my-packages
+        python310
+        python310Packages.pip
+        python310Packages.black
+        python310Packages.setuptools
+        python310Packages.pylint
+        python310Packages.poetry
+        python310Packages.ipython
       ];
 
       environment.shellAliases = {
