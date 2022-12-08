@@ -112,7 +112,8 @@
 	};
       };
       vim.enable = true;
-      vscode.enable = true;
+      #vscode.enable = true;
+      vscodium.enable = true;
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
