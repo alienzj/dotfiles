@@ -17,6 +17,7 @@
 	wpsoffice.enable = true;
 	usbimager.enable = true;
         # godot.enable = true;
+	transmission.enable = true;
       };
       browsers = {
         default = "brave";
@@ -144,6 +145,7 @@
       	#inactiveInterval = 10;
       };
       flameshot.enable = true;
+      #transmission.enable = true;
     };
     utils = {
       htop.enable = true;
