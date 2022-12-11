@@ -44,6 +44,8 @@
         recording.enable = true;
         spotify.enable = true;
 	sayonara.enable = true;
+	podcasts.enable = true;
+	shortwave.enable = true;
       };
       term = {
         default = "xst";
@@ -66,6 +68,7 @@
 	tdesktop.enable = true;
 	whatsapp.enable = true;
 	slack.enable = true;
+	discord.enable = true;
       };
       input = {
         fcitx5.enable = true;
