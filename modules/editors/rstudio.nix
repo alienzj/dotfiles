@@ -3,8 +3,8 @@
 with lib;
 with lib.my;
 let cfg = config.modules.editors.rstudio;
-    R-with-packages = rWrapper.override {
-      packages = with rPackages; [
+    R-with-packages = pkgs.unstable.rWrapper.override {
+      packages = with pkgs.unstable.rPackages; [
         tidyverse
         tidymodels
         vegan

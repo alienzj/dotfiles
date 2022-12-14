@@ -24,6 +24,7 @@ in {
         bear
         gdb
         cmake
+	ccls
         llvmPackages.libcxx
       ];
     })

@@ -15,8 +15,10 @@
 	zoomus.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
+	onlyoffice.enable = true;
 	usbimager.enable = true;
         # godot.enable = true;
+	transmission.enable = true;
       };
       browsers = {
         default = "brave";
@@ -42,6 +44,8 @@
         recording.enable = true;
         spotify.enable = true;
 	sayonara.enable = true;
+	podcasts.enable = true;
+	shortwave.enable = true;
       };
       term = {
         default = "xst";
@@ -64,6 +68,7 @@
 	tdesktop.enable = true;
 	whatsapp.enable = true;
 	slack.enable = true;
+	discord.enable = true;
       };
       input = {
         fcitx5.enable = true;
@@ -113,6 +118,7 @@
       };
       vim.enable = true;
       vscode.enable = true;
+      vscodium.enable = true;
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
@@ -143,6 +149,16 @@
       	#inactiveInterval = 10;
       };
       flameshot.enable = true;
+      #transmission.enable = true;
+      shadowsocks-client = {
+        enable = true;
+	remotePort = 33708;
+	localAddress = "127.0.0.1";
+	localPort = 1080;
+	remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
+	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
+        encryptionMethod = "chacha20-ietf-poly1305";
+      };
     };
     utils = {
       htop.enable = true;

@@ -7,7 +7,7 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.editors.vscode;
+let cfg = config.modules.editors.vscodium;
     jsonFormat = pkgs.formats.json { };
     vscodeUserSettings = {
       "workbench.iconTheme" = "material-icon-theme";
@@ -45,13 +45,14 @@ let cfg = config.modules.editors.vscode;
       "extensions.autoCheckUpdates" = false;
     };
 in {
-  options.modules.editors.vscode = {
+  options.modules.editors.vscodium = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs.unstable; [
       (vscode-with-extensions.override {
+        vscode = vscodium;
         vscodeExtensions = with vscode-extensions; [
 
           # ui
@@ -162,7 +163,7 @@ in {
     ];
  
     home.configFile = {
-      "Code/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
+      "VSCodium/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
     };
   };
 }
