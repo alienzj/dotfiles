@@ -61,7 +61,7 @@
               font_size = 12.0,
               color_scheme = "myCoolTheme",
               hide_tab_bar_if_only_one_tab = true,
-              default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
+              -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
               keys = {
                 {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
               }
