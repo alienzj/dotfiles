@@ -3,7 +3,7 @@ configuration {
   icon-theme:       "Paper";
   cycle:            true;
   disable-history:  false;
-  monitor:          "DP-1";
+  monitor:          "DP1";
 
   /* Vim-esque C-j/C-k as up/down in rofi */
   kb-accept-entry: "Return,Control+m,KP_Enter";
@@ -26,8 +26,8 @@ configuration {
   magenta: #bd93f9;
   blue:    #61bfff;
 
-  text-font:      "Fira Sans 15";
-  text-mono-font: "Fira Code 13";
+  text-font:      "Fira Sans 20";
+  text-mono-font: "Fira Code 20";
   /* icon-font:      "Hurmit Nerd Font Mono 26"; */
   icon-font:      "FontAwesome 20";
 
@@ -40,7 +40,7 @@ configuration {
 
 /**** Layout ****/
 window {
-  width:    1000px;
+  width:    1500px;
   y-offset: -30%;
   anchor:   north;
   location: center;
@@ -51,7 +51,7 @@ window {
 }
 
 listview {
-  lines: 12;
+  lines: 18;
   fixed-height: false;
   /* reverse: true; */
   columns: 2;
@@ -138,5 +138,5 @@ element selected {
 }
 
 element-icon {
-  size: 2.0ch;
+  size: 2.4ch;
 }

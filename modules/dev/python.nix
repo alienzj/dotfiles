@@ -44,13 +44,13 @@ in {
     (mkIf cfg.enable {
       user.packages = with pkgs; [
         #python-with-my-packages
-        python310
-        python310Packages.pip
-        python310Packages.black
-        python310Packages.setuptools
-        python310Packages.pylint
-        python310Packages.poetry
-        python310Packages.ipython
+        python39
+        python39Packages.pip
+        python39Packages.black
+        python39Packages.setuptools
+        python39Packages.pylint
+        #python39Packages.poetry
+        python39Packages.ipython
       ];
 
       environment.shellAliases = {

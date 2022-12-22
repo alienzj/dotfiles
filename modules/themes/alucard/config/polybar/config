@@ -28,12 +28,12 @@ accent = #604c7e
 
 [global/wm]
 margin-top = 0
-margin-bottom = 34
+margin-bottom = 50
 
 
 [bar/main]
 #dpi = 168
-monitor = ${env:MONITOR:DP-1}
+monitor = ${env:MONITOR:DP1}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
@@ -45,7 +45,7 @@ background = ${colors.bg}
 foreground = ${colors.fg}
 
 width = 100%
-height = 34
+height = 50
 offset-x = 0
 offset-y = 0
 bottom = true
@@ -64,16 +64,16 @@ padding-right = 2
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = "Fira Code:pixelsize=10;2"
-font-1 = "Wuncon Siji:pixelsize=12;2"
-font-2 = "Siji:pixelsize=12;2"
-font-3 = "Font Awesome 6 Free Solid:style=Solid:pixelsize=11;2"
-font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=11;2"
-font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=11;2"
-font-6 = "Material Icons: style=Regular: pixelsize=11;2"
+font-0 = "Fira Code:pixelsize=18;2"
+font-1 = "Wuncon Siji:pixelsize=18;2"
+font-2 = "Siji:pixelsize=18;2"
+font-3 = "Font Awesome 6 Free Solid:style=Solid:pixelsize=18;2"
+font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=18;2"
+font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=18;2"
+font-6 = "Material Icons: style=Regular: pixelsize=18;2"
 
 modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
-;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
+#modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
 modules-center = bspwm
 modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
 

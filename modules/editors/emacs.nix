@@ -26,7 +26,9 @@ in {
       ## Emacs itself
       binutils       # native-comp needs 'as', provided by this
       # 28.2 + native-comp
-      ((emacsPackagesFor emacsNativeComp).emacsWithPackages
+      #((emacsPackagesFor emacsNativeComp).emacsWithPackages
+      ((emacsPackagesFor emacsUnstable).emacsWithPackages
+      #((emacsPackagesFor emacs).emacsWithPackages
         (epkgs: [ epkgs.vterm ]))
 
       ## Doom dependencies
@@ -49,7 +51,8 @@ in {
       # :tools lookup & :lang org +roam
       sqlite
       # :lang latex & :lang org (latex previews)
-      texlive.combined.scheme-medium
+      #texlive.combined.scheme-medium
+      texlive.combined.scheme-small
       # :lang beancount
       beancount
       unstable.fava  # HACK Momentarily broken on nixos-unstable

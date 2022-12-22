@@ -26,8 +26,8 @@ in {
       home.configFile = {
         "fcitx5" = {
           source = "${configDir}/fcitx5";
-	  recursive = true;
-	};
+      	  recursive = true;
+      	};
       };
     }
   ]);
