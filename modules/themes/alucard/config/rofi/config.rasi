@@ -3,7 +3,7 @@ configuration {
   icon-theme:       "Paper";
   cycle:            true;
   disable-history:  false;
-  monitor:          "DP-1";
+  monitor:          "DP1";
 
   /* Vim-esque C-j/C-k as up/down in rofi */
   kb-accept-entry: "Return,Control+m,KP_Enter";

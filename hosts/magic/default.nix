@@ -19,6 +19,9 @@
 	usbimager.enable = true;
         # godot.enable = true;
 	transmission.enable = true;
+	filezilla.enable = true;
+	scrcpy.enable = true;
+	thunderbird.enable = true;
       };
       browsers = {
         default = "brave";
@@ -107,6 +110,7 @@
 	discord.enable = true;
       };
       input = {
+        #ibus.enable = true;
         fcitx5.enable = true;
       };
       science = {
@@ -140,6 +144,7 @@
         enable = true;
 	xdg.enable = true;
       };
+      zeal.enable = true;
     };
     editors = {
       default = "nvim";

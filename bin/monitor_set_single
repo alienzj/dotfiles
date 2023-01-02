@@ -2,5 +2,5 @@
 
 xrandr \
     --dpi 168 \
-    --output DP-1 --mode 3840x2160 --rate 60 --pos 0x0 --primary \
-    --output DP-2 --off
+    --output DP1 --mode 3840x2160 --rate 60 --pos 0x0 --primary \
+    --output DP2 --off

@@ -2,5 +2,5 @@
 
 xrandr \
     --dpi 168 \
-    --output DP-2 --mode 2560x1440 --rate 59.95 --pos 3840x0 --scale 1.5x1.5 --rotate inverted --rotate left \
-    --output DP-1 --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary
+    --output DP2 --mode 2560x1440 --rate 59.95 --pos 3840x0 --scale 1.5x1.5 --rotate inverted --rotate left \
+    --output DP1 --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary

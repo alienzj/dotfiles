@@ -33,7 +33,7 @@ margin-bottom = 50
 
 [bar/main]
 #dpi = 168
-monitor = ${env:MONITOR:DP-1}
+monitor = ${env:MONITOR:DP1}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
