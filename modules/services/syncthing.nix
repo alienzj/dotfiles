@@ -13,6 +13,7 @@ in {
       enable = true;
       openDefaultPorts = true;
       user = config.user.name;
+      group = "users";
       configDir = "${config.user.home}/.config/syncthing";
       dataDir = "${config.user.home}/.local/share/syncthing";
     };
