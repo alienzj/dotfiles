@@ -30,7 +30,8 @@
   # Displays
   services.xserver = {
     enable = true;
-    videoDrivers = [ "modesetting" ];
+    #videoDrivers = [ "modesetting" ];
+    videoDrivers = [ "intel" ];
     #dpi = 168;
     exportConfiguration = true;
     layout = "us";
