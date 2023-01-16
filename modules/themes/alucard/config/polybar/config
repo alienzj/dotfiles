@@ -33,7 +33,7 @@ margin-bottom = 50
 
 [bar/main]
 #dpi = 168
-monitor = ${env:MONITOR:DP1}
+monitor = ${env:MONITOR:HDMI-0}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
@@ -75,7 +75,8 @@ font-6 = "Material Icons: style=Regular: pixelsize=18;2"
 modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
 ;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
 modules-center = bspwm
-modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
+#modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
+modules-right = redshift pad wlan pad pad network-up pad network-down pad pad date pad syncthing
 
 ;tray-position = center
 ;tray-padding = 2
@@ -264,7 +265,8 @@ bar-used-empty-foreground = ${colors.fg-alt}
 [module/wlan]
 type = internal/network
 #interface = wlp1s0
-interface = eno1
+#interface = eno1
+interface = enp4s0
 interval = 3.0
 
 # 
@@ -293,7 +295,7 @@ ramp-signal-4-foreground = ${colors.fg}
 
 [module/network-up]
 type = internal/network
-interface = eno1
+interface = enp4s0
 interval = 4.0
 label-connected = "%upspeed%"
 ;format-connected-prefix = " "
@@ -309,7 +311,7 @@ format-disconnected-foreground = ${colors.alert}
 
 [module/network-down]
 type = internal/network
-interface = eno1
+interface = enp4s0
 interval = 4.0
 label-connected = "%downspeed%"
 ;format-connected-prefix = " "

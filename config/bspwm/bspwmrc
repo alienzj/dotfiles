@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 case $HOSTNAME in
-  yoga)  export WLP=wlp1s0   ;;
-  magic) export WLP=eno1     ;;
+  yoga)  export WLP=wlp1s0     ;;
+  magic) export WLP=eno1       ;;
+  eniac) export WLP=enp4s0     ;;
 esac
 
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
