@@ -13,6 +13,7 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
+	teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -44,7 +45,7 @@
 	};
         graphics.enable = true;
         mpv.enable = true;
-        recording.enable = true;
+        #recording.enable = true;
         spotify.enable = true;
 	sayonara.enable = true;
 	podcasts.enable = true;
@@ -182,7 +183,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      rdp.enable = true; # remote desktop
+      #rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {
@@ -265,4 +266,7 @@
 
   programs.adb.enable = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "python-2.7.18.6"
+  ];
 }

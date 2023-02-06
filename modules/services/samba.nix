@@ -20,7 +20,7 @@ in {
 
       services.samba = {
         enable = true;
-	package = pkgs.sambaFull; # support printer
+	#package = pkgs.sambaFull; # support printer
 	openFirewall = true; # Automatically open firewall ports
         securityType = "user";
         extraConfig = ''

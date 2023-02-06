@@ -9,9 +9,23 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
+  #boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" "tun" "virtio" ];
   boot.extraModulePackages = [ ];
+
+
+  hardware.opengl.enable = true; 
+  environment.variables = {
+    VDPAU_DRIVER = "va_gl";
+  };
+
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiIntel
+    libvdpau-va-gl
+    intel-media-driver
+  ];
+
+  services.fwupd.enable = true;
 
   modules.hardware = {
     audio.enable = true;
@@ -25,14 +39,13 @@
 
   nix.settings.max-jobs = lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = "performance";
-  hardware.cpu.intel.updateMicrocode = true;
 
   # Displays
   services.xserver = {
     enable = true;
     #videoDrivers = [ "modesetting" ];
     videoDrivers = [ "intel" ];
-    #dpi = 168;
+    dpi = 168;
     exportConfiguration = true;
     layout = "us";
     #xkbOptions = "compose:caps";
@@ -50,7 +63,7 @@
   #console.font =
   #  "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
   #environment.variables = {
-  #  # QT_SCALE_FACTOR = "2";
+  ##  # QT_SCALE_FACTOR = "2";
   #  GDK_SCALE = "2";
   #  GDK_DPI_SCALE = "0.5";
   #  _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
@@ -85,5 +98,5 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  #hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
