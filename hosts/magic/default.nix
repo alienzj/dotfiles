@@ -23,6 +23,10 @@
 	filezilla.enable = true;
 	scrcpy.enable = true;
 	thunderbird.enable = true;
+	anydesk.enable = true;
+	rustdesk.enable = true;
+	ventoy.enable = true;
+	unetbootin.enable = true;
       };
       browsers = {
         default = "brave";
@@ -57,15 +61,51 @@
 	wezterm = {
 	  enable = true;
 	  extraConfig = ''
+
             -- Your lua code / config here
             -- local mylib = require 'mylib';
+
+            -- The filled in variant of the < symbol
+            local SOLID_LEFT_ARROW = utf8.char(0xe0b2);
+
+            -- The filled in variant of the > symbol
+            local SOLID_RIGHT_ARROW = utf8.char(0xe0b0);
+
             return {
               -- usemylib = mylib.do_fun();
               font = wezterm.font("JetBrains Mono"),
-              font_size = 12.0,
+              font_size = 20.0,
               color_scheme = "myCoolTheme",
+	      -- color_scheme = "Doom One",
+	      -- color_scheme = "Darcula",
+	      -- color_scheme = "MaterialDark",
               hide_tab_bar_if_only_one_tab = true,
-              -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
+	      tab_max_width = 25,
+	      -- tab_bar_at_bottom = true,
+              use_fancy_tab_bar = false,
+              tab_bar_style = {
+                active_tab_left = wezterm.format {
+                  { Background = { Color = '#0b0022' } },
+                  { Foreground = { Color = '#2b2042' } },
+                  { Text = SOLID_LEFT_ARROW },
+                },
+                active_tab_right = wezterm.format {
+                  { Background = { Color = '#0b0022' } },
+                  { Foreground = { Color = '#2b2042' } },
+                  { Text = SOLID_RIGHT_ARROW },
+                },
+	        inactive_tab_left = wezterm.format {
+		  { Background = { Color = '#0b0022' } },
+		  { Foreground = { Color = '#1b1032' } },
+		  { Text = SOLID_LEFT_ARROW },
+		},
+		inactive_tab_right = wezterm.format {
+		  { Background = { Color = '#0b0022' } },
+		  { Foreground = { Color = '#1b1032' } },
+		  { Text = SOLID_RIGHT_ARROW },
+		},
+	      },
+	      -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
               keys = {
                 {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
               }
@@ -112,7 +152,15 @@
       };
       input = {
         #ibus.enable = true;
-        fcitx5.enable = true;
+        fcitx5 = {
+	  enable = true;
+	  #addons = [
+          #  pkgs.fcitx5-rime
+	  #  pkgs.fcitx5-mozc
+	  #  pkgs.fcitx5-chinese-addons
+	  #  pkgs.fcitx5-gtk
+	  #];
+	};
       };
       science = {
         cytoscape.enable = true;
@@ -152,7 +200,7 @@
       emacs = rec {
         enable = true;
 	doom = {
-          enable = true;
+          enable = false;
 	  forgeUrl = "https://github.com";
 	  repoUrl = "https://github.com/doomemacs/doomemacs";
 	  configRepoUrl = "https://github.com/alienzj/doom.d";

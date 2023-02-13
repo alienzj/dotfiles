@@ -9,7 +9,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
-  #boot.initrd.kernelModules = [ "i915" ];
+  boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" "tun" "virtio" ];
   boot.extraModulePackages = [ ];
 
@@ -60,14 +60,25 @@
     };
   };
 
-  #console.font =
-  #  "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-  #environment.variables = {
-  ##  # QT_SCALE_FACTOR = "2";
-  #  GDK_SCALE = "2";
-  #  GDK_DPI_SCALE = "0.5";
-  #  _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
-  #};
+  console.font =
+    "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+
+  # reference
+  # https://wiki.archlinuxcn.org/zh-hans/HiDPI
+  environment.variables = {
+    # QT method: manually
+    ##QT_SCALE_FACTOR = "2";
+    QT_SCREEN_SCALE_FACTORS = "2;2";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "0";
+
+    # QT method: automatically
+    #QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+
+    # GTK
+    GDK_SCALE = "2";
+    GDK_DPI_SCALE = "0.5";
+    _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+  };
 
 
   fileSystems."/" =

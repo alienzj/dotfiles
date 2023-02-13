@@ -29,7 +29,12 @@ in {
       #((emacsPackagesFor emacsNativeComp).emacsWithPackages
       #((emacsPackagesFor emacs).emacsWithPackages
       ((emacsPackagesFor emacsUnstable).emacsWithPackages
-        (epkgs: [ epkgs.vterm epkgs.pdf-tools ]))
+        (epkgs: [
+	  epkgs.vterm
+	  epkgs.pdf-tools
+	  ##epkgs.melpaPackages.pdf-tools
+	]))
+      poppler
 
       ## Doom dependencies
       git
