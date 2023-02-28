@@ -17,10 +17,10 @@ let devCfg = config.modules.dev;
       black
       setuptools
       pylint
-      poetry
+      poetry-core
       flask
       django
-      dash
+      #dash
       plotly
       requests
       ipython
@@ -43,14 +43,14 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [
-        #python-with-my-packages
-        python39
-        python39Packages.pip
-        python39Packages.black
-        python39Packages.setuptools
-        python39Packages.pylint
+        python-with-my-packages
+        #python39
+        #python39Packages.pip
+        #python39Packages.black
+        #python39Packages.setuptools
+        #python39Packages.pylint
         #python39Packages.poetry
-        python39Packages.ipython
+        #python39Packages.ipython
       ];
 
       environment.shellAliases = {

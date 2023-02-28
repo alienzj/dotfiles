@@ -13,7 +13,7 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = true;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -26,7 +26,7 @@
 	anydesk.enable = true;
 	rustdesk.enable = true;
 	ventoy.enable = true;
-	unetbootin.enable = true;
+	#unetbootin.enable = true;
       };
       browsers = {
         default = "brave";
@@ -49,7 +49,7 @@
 	};
         graphics.enable = true;
         mpv.enable = true;
-        #recording.enable = true;
+        recording.enable = true;
         spotify.enable = true;
 	sayonara.enable = true;
 	podcasts.enable = true;
@@ -172,7 +172,7 @@
         enable = true;
 	xdg.enable = true;
       };
-      #lua.enable = true;
+      lua.enable = true;
       node = {
         enable = true;
         xdg.enable = true;
@@ -193,6 +193,7 @@
         enable = true;
 	xdg.enable = true;
       };
+      r.enable = true;
       zeal.enable = true;
     };
     editors = {
@@ -231,7 +232,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      #rdp.enable = true; # remote desktop
+      rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {
@@ -255,6 +256,8 @@
       neofetch.enable = true;
       pandoc.enable = true;
       ghostscript.enable = true;
+      disk.enable = true;
+      youdl.enable = true;
     };
     theme.active = "alucard";
   };
@@ -313,8 +316,4 @@
   time.timeZone = "Asia/Hong_Kong";
 
   programs.adb.enable = true;
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "python-2.7.18.6"
-  ];
 }
