@@ -133,10 +133,10 @@
 	nnn.enable = true;
       };
       vm = {
-        lxd.enable = true;
-        qemu.enable = true;
+        #lxd.enable = true;
+        #qemu.enable = true;
 	virtualbox.enable = true;
-	virt-manager.enable = true;
+	#virt-manager.enable = true;
       };
       noter = {
 	zotero.enable = true;
