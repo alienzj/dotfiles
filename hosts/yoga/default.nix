@@ -230,15 +230,15 @@
       };
       flameshot.enable = true;
       #transmission.enable = true;
-      #shadowsocks-client = {
-      #  enable = true;
-      # remotePort = 33708;
-      #	localAddress = "127.0.0.1";
-      #	localPort = 1080;
-      # remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
-      #	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
-      # encryptionMethod = "chacha20-ietf-poly1305";
-      #};
+      shadowsocks-client = {
+      	enable = true;
+        remotePort = 33708;
+        localAddress = "127.0.0.1";
+        localPort = 1080;
+        remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
+        passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
+        encryptionMethod = "chacha20-ietf-poly1305";
+      };
     };
     utils = {
       htop.enable = true;
