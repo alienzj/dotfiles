@@ -1,7 +1,8 @@
-      #"editor.formatOnPaste" = true;
-      #"editor.formatOnSave" = true;
-      #"editor.formatOnType" = false;
-      #"terminal.integrated.automationShell.linux" = "nix-shell";
+#"editor.formatOnPaste" = true;
+#"editor.formatOnSave" = true;
+#"editor.formatOnType" = false;
+#"terminal.integrated.automationShell.linux" = "nix-shell";
+#"terminal.integrated.defaultProfile.linux" = "zsh";
 
 { config, options, lib, pkgs, ... }:
 
@@ -20,7 +21,7 @@ let cfg = config.modules.editors.vscodium;
       "files.trimTrailingWhitespace" = false;
       "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font Mono";
       "window.titleBarStyle" = "custom";
-      "terminal.integrated.defaultProfile.linux" = "zsh";
+      "terminal.integrated.defaultProfile.linux" = "fish";
       "terminal.integrated.cursorBlinking" = true;
       "terminal.integrated.enableBell" = false;
       "editor.minimap.enabled" = false;
@@ -129,10 +130,34 @@ in {
 
         ] ++ pkgs.unstable.vscode-utils.extensionsFromVscodeMarketplace [
           {
+            name = "r";
+            publisher = "REditorSupport";
+            version = "2.7.0";
+	    sha256 = "385a57ebc52093b209d3eba9a66b9c2f069e7b7223e7a82e1af46b1c30337825";
+          }
+          {
+            name = "r-debugger";
+            publisher = "RDebugger";
+            version = "0.5.2";
+	    sha256 = "456ee140e8dd662d4cad4b2624de932f29dc7f3fedf28247ebf6072db9b1d433";
+          }
+          {
             name = "remote-ssh-edit";
             publisher = "ms-vscode-remote";
             version = "0.84.0";
 	    sha256 = "df78c7582f0ad135891b9e26e85aa7604a2d2aa37191c77f0f5e13173e9d8267";
+          }
+          {
+            name = "remote-explorer";
+            publisher = "ms-vscode";
+            version = "0.2.0";
+	    sha256 = "6cda73cec1d50f86c889c14909df9f5974e9b6c207e8e696799ace9d970a7315";
+          }
+          {
+            name = "remote-server";
+            publisher = "ms-vscode";
+            version = "1.1.2023020609";
+	    sha256 = "6718a79cec417309dcc9736541586618d6d8264107c8cc7fa73fbfb0c94ba0bf";
           }
           {
 	    name = "snakemake-lang";
@@ -167,3 +192,4 @@ in {
     };
   };
 }
+

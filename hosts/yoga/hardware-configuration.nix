@@ -10,9 +10,42 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" "tun" "virtio" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-amd" "tun" "virtio" "acpi_call" ];
 
+  ## https://kvark.github.io/linux/framework/2021/10/17/framework-nixos.html
+  #boot.kernelParams = [ "mem_sleep_default=deep" ];
+  ## energy savings
+  boot.kernelParams = ["mem_sleep_default=deep" "pcie_aspm.policy=powersupersave"];
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+  #boot.supportedFilesystems = [ "ntfs" ];
+
+  #https://discourse.nixos.org/t/laptop-suspend-fails/4739
+  services.fwupd.enable = true;
+
+  # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
+
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiVdpau
+    libvdpau-va-gl
+    rocm-opencl-icd
+    rocm-opencl-runtime
+    amdvlk
+  ];
+
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+
+  hardware.opengl = {
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  environment.variables.AMD_VULKAN_ICD = lib.mkDefault "RADV";
+
+  # ssd
+  services.fstrim.enable = lib.mkDefault true;
 
   # Modules
   modules.hardware = {
@@ -28,8 +61,34 @@
   # CPU
   nix.settings.max-jobs = lib.mkDefault 8;
   #powerManagement.cpuFreqGovernor = "performance";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.amd.updateMicrocode = true;
+  #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  ## https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/power-management.nix
+  ## https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
+  boot.extraModprobeConfig = lib.mkMerge [
+    # idle audio card after one second
+    "options snd_hda_intel power_save=1"
+    # enable wifi power saving (keep uapsd off to maintain low latencies)
+    "options iwlwifi power_save=1 uapsd_disable=1"
+  ];
+
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+    };
+  };
+  services.upower.enable = true;
+
+  ## https://github.com/kvark/dotfiles/blob/master/nix/hardware-configuration.nix
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+    cpuFreqGovernor = lib.mkDefault "ondemand";
+  };
+
+  #hardware.cpu.amd.updateMicrocode = true;
 
   networking.wireless.interfaces = [ "wlp1s0" ];
 
@@ -52,15 +111,26 @@
     };
   };
 
+
   console.font =
     "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+
+  # reference
+  # https://wiki.archlinuxcn.org/zh-hans/HiDPI
   environment.variables = {
-    # QT_SCALE_FACTOR = "2";
+    # QT method: manually
+    ##QT_SCALE_FACTOR = "2";
+    QT_SCREEN_SCALE_FACTORS = "2;2";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "0";
+
+    # QT method: automatically
+    #QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+
+    # GTK
     GDK_SCALE = "2";
     GDK_DPI_SCALE = "0.5";
     _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
   };
-
 
   # Storage
   fileSystems."/" =
@@ -92,7 +162,5 @@
 
   # high-resolution display
   hardware.video.hidpi.enable = true;
-
   hardware.sensor.iio.enable = true;
-
 }

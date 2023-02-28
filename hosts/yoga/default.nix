@@ -1,6 +1,7 @@
 { pkgs, config, lib, ... }:
 {
   imports = [
+    #<nixos-hardware/lenovo/yoga/6/13ALC6>
     ../home.nix
     ./hardware-configuration.nix
   ];
@@ -11,7 +12,7 @@
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
-	skype.enable = true;
+	#skype.enable = true;
 	zoomus.enable = true;
 	libreoffice.enable = true;
 	onlyoffice.enable = true;
@@ -22,12 +23,15 @@
 	filezilla.enable = true;
 	scrcpy.enable = true;
 	thunderbird.enable = true;
+	anydesk.enable = true;
+	rustdesk.enable = true;
+	ventoy.enable = true;
       };
       browsers = {
-        default = "brave";
+        default = "firefox";
         brave.enable = true;
         firefox.enable = true;
-        qutebrowser.enable = true;
+        #qutebrowser.enable = true;
       };
       gaming = {
         steam.enable = true;
@@ -56,15 +60,51 @@
 	wezterm = {
 	  enable = true;
 	  extraConfig = ''
+
             -- Your lua code / config here
             -- local mylib = require 'mylib';
+
+            -- The filled in variant of the < symbol
+            local SOLID_LEFT_ARROW = utf8.char(0xe0b2);
+
+            -- The filled in variant of the > symbol
+            local SOLID_RIGHT_ARROW = utf8.char(0xe0b0);
+
             return {
               -- usemylib = mylib.do_fun();
               font = wezterm.font("JetBrains Mono"),
-              font_size = 12.0,
+              font_size = 20.0,
               color_scheme = "myCoolTheme",
+	      -- color_scheme = "Doom One",
+	      -- color_scheme = "Darcula",
+	      -- color_scheme = "MaterialDark",
               hide_tab_bar_if_only_one_tab = true,
-              -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
+	      tab_max_width = 25,
+	      -- tab_bar_at_bottom = true,
+              use_fancy_tab_bar = false,
+              tab_bar_style = {
+                active_tab_left = wezterm.format {
+                  { Background = { Color = '#0b0022' } },
+                  { Foreground = { Color = '#2b2042' } },
+                  { Text = SOLID_LEFT_ARROW },
+                },
+                active_tab_right = wezterm.format {
+                  { Background = { Color = '#0b0022' } },
+                  { Foreground = { Color = '#2b2042' } },
+                  { Text = SOLID_RIGHT_ARROW },
+                },
+	        inactive_tab_left = wezterm.format {
+		  { Background = { Color = '#0b0022' } },
+		  { Foreground = { Color = '#1b1032' } },
+		  { Text = SOLID_LEFT_ARROW },
+		},
+		inactive_tab_right = wezterm.format {
+		  { Background = { Color = '#0b0022' } },
+		  { Foreground = { Color = '#1b1032' } },
+		  { Text = SOLID_RIGHT_ARROW },
+		},
+	      },
+	      -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
               keys = {
                 {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
               }
@@ -122,7 +162,7 @@
         enable = true;
 	xdg.enable = true;
       };
-      #lua.enable = true;
+      lua.enable = true;
       node = {
         enable = true;
         xdg.enable = true;
@@ -178,32 +218,34 @@
       #calibre.enable = true;
       syncthing.enable = true;
       ssh.enable = true;
-      docker.enable = true;
+      #docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
       rdp.enable = true; # remote desktop
-      samba.enable = true; # share folders
-      printing.enable = true; # RICOH printer
+      #samba.enable = true; # share folders
+      #printing.enable = true; # RICOH printer
       lockscreen = {
         enable = true;
       	#inactiveInterval = 10;
       };
       flameshot.enable = true;
       #transmission.enable = true;
-      shadowsocks-client = {
-        enable = true;
-	remotePort = 33708;
-	localAddress = "127.0.0.1";
-	localPort = 1080;
-	remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
-	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
-        encryptionMethod = "chacha20-ietf-poly1305";
-      };
+      #shadowsocks-client = {
+      #  enable = true;
+      # remotePort = 33708;
+      #	localAddress = "127.0.0.1";
+      #	localPort = 1080;
+      # remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
+      #	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
+      # encryptionMethod = "chacha20-ietf-poly1305";
+      #};
     };
     utils = {
       htop.enable = true;
       neofetch.enable = true;
       pandoc.enable = true;
+      youdl.enable = true;
+      disk.enable = true;
     };
     theme.active = "alucard";
   };
@@ -262,5 +304,4 @@
   time.timeZone = "Asia/Hong_Kong";
 
   programs.adb.enable = true;
-
 }
