@@ -27,6 +27,8 @@
 	rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
+	etcher.enable = true;
+	authenticator.enable = true;
       };
       browsers = {
         default = "brave";
@@ -195,6 +197,8 @@
       };
       r.enable = true;
       zeal.enable = true;
+      conda.enable = true;
+      mamba.enable = true;
     };
     editors = {
       default = "nvim";
@@ -223,6 +227,7 @@
       gnupg.enable  = true;
       tmux.enable   = true;
       zsh.enable    = true;
+      zellij.enable = true;
     };
     services = {
       adb.enable = true; # android
@@ -250,6 +255,10 @@
 	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
+      rathole-client = {
+        enable = true;
+	configFile = "/home/alienzj/projects/configuration/rathole/magic_c.toml";
+      };
     };
     utils = {
       htop.enable = true;
@@ -269,6 +278,15 @@
 
   networking.networkmanager.enable = true;
 
+  # firewall
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 1993 80 443 2223 3389 8080 8888 8787 ];
+    allowedUDPPortRanges = [
+      { from = 4000; to = 4007; }
+      { from = 8000; to = 8010; }
+    ];
+  };
 
   ## Personal backups
   # Syncthing is a bit heavy handed for my needs, so rsync to my NAS instead.

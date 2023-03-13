@@ -11,8 +11,11 @@ in {
   config = mkIf cfg.enable {
     services.openssh = {
       enable = true;
-      settings.kbdInteractiveAuthentication = false;
-      settings.passwordAuthentication = true;
+      # require public key authentication for better security
+      settings.PasswordAuthentication = true;
+      settings.KbdInteractiveAuthentication = false;
+      settings.PermitRootLogin = "no";
+      settings.X11Forwarding = true;
     };
 
     user.openssh.authorizedKeys.keys =

@@ -31,11 +31,11 @@ let cfg = config.modules.dev.r;
       pkgs.unstable.rPackages.DirichletMultinomial
     ];
     nativeBuildInputs = [
-      pkgs.unstable.rPackages.rlang
-      pkgs.unstable.rPackages.knitr
-      pkgs.unstable.pkg-config
-      pkgs.unstable.gsl
-      pkgs.unstable.make
+      pkgs.unstable.R
+    #  pkgs.unstable.rPackages.knitr
+    #  pkgs.unstable.pkg-config
+    #  pkgs.unstable.gsl
+    #  pkgs.unstable.make
     ];
     buildInputs = [ pkgs.unstable.gsl ];
   };
@@ -72,7 +72,8 @@ let cfg = config.modules.dev.r;
       ymlthis
       knitr
       rmarkdown
-      #curatedMetagenomicData_
+      curatedMetagenomicData_
+      #curatedMetagenomicData
       SummarizedExperiment
     ];
   };
