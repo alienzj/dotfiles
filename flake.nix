@@ -36,7 +36,10 @@
         config.allowUnfree = true;  # forgive me Stallman senpai
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
 	config = {
-            permittedInsecurePackages = [ "python-2.7.18.6" ];
+            permittedInsecurePackages = [ 
+	      "python-2.7.18.6"
+	      "electron-12.2.3"
+	    ];
         };
       };
       pkgs  = mkPkgs nixpkgs [ self.overlay ];

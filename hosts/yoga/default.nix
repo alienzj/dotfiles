@@ -26,12 +26,13 @@
 	anydesk.enable = true;
 	rustdesk.enable = true;
 	ventoy.enable = true;
+	etcher.enable = true;
       };
       browsers = {
         default = "firefox";
         brave.enable = true;
         firefox.enable = true;
-        #qutebrowser.enable = true;
+        qutebrowser.enable = true;
       };
       gaming = {
         steam.enable = true;
@@ -133,10 +134,11 @@
 	nnn.enable = true;
       };
       vm = {
-        #lxd.enable = true;
-        #qemu.enable = true;
+        lxd.enable = true;
+        qemu.enable = true;
 	virtualbox.enable = true;
-	#virt-manager.enable = true;
+	virt-manager.enable = true;
+	osx.enable = true;
       };
       noter = {
 	zotero.enable = true;
@@ -184,6 +186,9 @@
 	xdg.enable = true;
       };
       zeal.enable = true;
+      r.enable = true;
+      conda.enable = true;
+      mamba.enable = true;
     };
     editors = {
       default = "nvim";
@@ -218,12 +223,12 @@
       #calibre.enable = true;
       syncthing.enable = true;
       ssh.enable = true;
-      #docker.enable = true;
+      docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
       rdp.enable = true; # remote desktop
       #samba.enable = true; # share folders
-      #printing.enable = true; # RICOH printer
+      printing.enable = true; # RICOH printer
       lockscreen = {
         enable = true;
       	#inactiveInterval = 10;

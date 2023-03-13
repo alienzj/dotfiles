@@ -18,6 +18,19 @@
   boot.kernelParams = ["mem_sleep_default=deep" "pcie_aspm.policy=powersupersave"];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+
+  boot.extraModprobeConfig = lib.mkMerge [
+    # idle audio card after one second
+    "options snd_hda_intel power_save=1"
+    # enable wifi power saving (keep uapsd off to maintain low latencies)
+    "options iwlwifi power_save=1 uapsd_disable=1"
+
+    # OSX-KVM
+    "options kvm_intel nested=1"
+    "options kvm_intel emulate_invalid_guest_state=0"
+    "options kvm ignore_msrs=1"
+  ];
+
   #boot.supportedFilesystems = [ "ntfs" ];
 
   #https://discourse.nixos.org/t/laptop-suspend-fails/4739
@@ -65,13 +78,6 @@
 
   ## https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/power-management.nix
   ## https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
-  boot.extraModprobeConfig = lib.mkMerge [
-    # idle audio card after one second
-    "options snd_hda_intel power_save=1"
-    # enable wifi power saving (keep uapsd off to maintain low latencies)
-    "options iwlwifi power_save=1 uapsd_disable=1"
-  ];
-
   services.tlp = {
     enable = true;
     settings = {

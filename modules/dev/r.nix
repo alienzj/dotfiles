@@ -2,7 +2,7 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.editors.rstudio;
+let cfg = config.modules.dev.r;
 
   curatedMetagenomicData_ = pkgs.rPackages.buildRPackage {
     name = "curatedMetagenomicData";
@@ -33,11 +33,14 @@ let cfg = config.modules.editors.rstudio;
     #nativeBuildInputs = [
     #  pkgs.unstable.rPackages.rlang
     #  pkgs.unstable.rPackages.knitr
+    #  pkgs.unstable.pkg-config
+    #  pkgs.unstable.gsl
+    #  pkgs.unstable.make
     #];
     buildInputs = [ pkgs.unstable.gsl ];
   };
 
-  RStudio-with-packages = pkgs.unstable.rstudioWrapper.override{
+  R-with-packages = pkgs.unstable.rWrapper.override{
     packages = with pkgs.unstable.rPackages; [
       devtools
       remotes
@@ -74,14 +77,14 @@ let cfg = config.modules.editors.rstudio;
     ];
   };
 in {
-  options.modules.editors.rstudio = {
+  options.modules.dev.r = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = [
-      #pkgs.unstable.rstudio
-      RStudio-with-packages
+      #pkgs.unstable.R
+      R-with-packages
     ];
   };
 }
