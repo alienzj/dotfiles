@@ -17,8 +17,8 @@ in {
     tools.enable   = mkBoolOpt true;
     raster.enable  = mkBoolOpt true;
     vector.enable  = mkBoolOpt true;
-    sprites.enable = mkBoolOpt true;
-    models.enable  = mkBoolOpt false;
+    sprites.enable = mkBoolOpt false;
+    models.enable  = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable {
@@ -37,7 +37,7 @@ in {
       (if cfg.raster.enable then [
         krita
         gimp
-        gimpPlugins.resynthesizer  # content-aware scaling in gimp
+        #gimpPlugins.resynthesizer  # content-aware scaling in gimp
       ] else []) ++
 
       # Sprite sheets & animation

@@ -13,8 +13,13 @@
   boot.kernelModules = [ "kvm-amd" "tun" "virtio" ];
   boot.extraModulePackages = [ ];
 
+  boot.extraModprobeConfig = ''
+    options kvm_intel nested=1
+    options kvm_intel emulate_invalid_guest_state=0
+    options kvm ignore_msrs=1
+  '';
+
   services.fwupd.enable = true;
-  services.fstrim.enable = true;
 
   modules.hardware = {
     audio.enable = true;
@@ -50,14 +55,22 @@
     };
   };
 
-  #console.font =
-  #  "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-  #environment.variables = {
-  #  # QT_SCALE_FACTOR = "2";
-  #  GDK_SCALE = "2";
-  #  GDK_DPI_SCALE = "0.5";
-  #  _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
-  #};
+  console.font =
+    "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+
+  environment.variables = {
+    # QT method manually
+    QT_SCALE_FACTOR = "2";
+    QT_SCREEN_SCALE_FACTORS = "2;2";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "0";
+
+    # QT method automatically:
+    #QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+
+    GDK_SCALE = "2";
+    GDK_DPI_SCALE = "0.5";
+    _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+  };
 
 
   fileSystems."/" =

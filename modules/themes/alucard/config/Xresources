@@ -1,5 +1,7 @@
-*.dpi: 168
-Xft.dpi: 168
+!!*.dpi: 168
+!!Xft.dpi: 168
+
+
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
 Xft.hintstyle: hintfull
@@ -22,11 +24,11 @@ Xcursor.size: 32
 
 
 !! general
-st.scratch.font: monospace:pixelsize=20
+st.scratch.font: monospace:pixelsize=28
 
 
 !! xst
-st.font: monospace:pixelsize=25
+st.font: monospace:pixelsize=28
 st.borderpx: 8
 
 
@@ -35,7 +37,7 @@ URxvt*depth:                   32
 URxvt*.borderless:             1
 URxvt*.buffered:               true
 URxvt*.cursorBlink:            true
-URxvt*.font:                   xft:monospace:pixelsize=25
+URxvt*.font:                   xft:monospace:pixelsize=28
 URxvt*.internalBorder:         10
 URxvt*.letterSpace:            0
 URxvt*.lineSpace:              0

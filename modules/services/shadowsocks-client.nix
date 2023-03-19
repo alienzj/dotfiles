@@ -156,6 +156,11 @@ in
 
   ###### implementation
   config = mkIf cfg.enable {
+    user.packages = with pkgs; [
+      shadowsocks-rust
+      shadowsocks-v2ray-plugin
+    ];
+
     assertions = singleton
       { assertion = cfg.password == null || cfg.passwordFile == null;
         message = "Cannot use both password and passwordFile for shadowsocks-libev";

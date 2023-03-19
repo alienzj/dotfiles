@@ -22,6 +22,12 @@
 	filezilla.enable = true;
 	scrcpy.enable = true;
 	thunderbird.enable = true;
+	anydesk.enable = true;
+	rustdesk.enable = true;
+	ventoy.enable = true;
+	#unetbootin.enable = true;
+	etcher.enable = true;
+	authenticator.enable = true;
       };
       browsers = {
         default = "brave";
@@ -56,15 +62,51 @@
 	wezterm = {
 	  enable = true;
 	  extraConfig = ''
+
             -- Your lua code / config here
             -- local mylib = require 'mylib';
+
+            -- The filled in variant of the < symbol
+            local SOLID_LEFT_ARROW = utf8.char(0xe0b2);
+
+            -- The filled in variant of the > symbol
+            local SOLID_RIGHT_ARROW = utf8.char(0xe0b0);
+
             return {
               -- usemylib = mylib.do_fun();
               font = wezterm.font("JetBrains Mono"),
-              font_size = 12.0,
+              font_size = 20.0,
               color_scheme = "myCoolTheme",
+	      -- color_scheme = "Doom One",
+	      -- color_scheme = "Darcula",
+	      -- color_scheme = "MaterialDark",
               hide_tab_bar_if_only_one_tab = true,
-              -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
+	      tab_max_width = 25,
+	      -- tab_bar_at_bottom = true,
+              use_fancy_tab_bar = false,
+              tab_bar_style = {
+                active_tab_left = wezterm.format {
+                  { Background = { Color = '#0b0022' } },
+                  { Foreground = { Color = '#2b2042' } },
+                  { Text = SOLID_LEFT_ARROW },
+                },
+                active_tab_right = wezterm.format {
+                  { Background = { Color = '#0b0022' } },
+                  { Foreground = { Color = '#2b2042' } },
+                  { Text = SOLID_RIGHT_ARROW },
+                },
+	        inactive_tab_left = wezterm.format {
+		  { Background = { Color = '#0b0022' } },
+		  { Foreground = { Color = '#1b1032' } },
+		  { Text = SOLID_LEFT_ARROW },
+		},
+		inactive_tab_right = wezterm.format {
+		  { Background = { Color = '#0b0022' } },
+		  { Foreground = { Color = '#1b1032' } },
+		  { Text = SOLID_RIGHT_ARROW },
+		},
+	      },
+	      -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
               keys = {
                 {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
               }
@@ -123,7 +165,7 @@
         enable = true;
 	xdg.enable = true;
       };
-      #lua.enable = true;
+      lua.enable = true;
       node = {
         enable = true;
         xdg.enable = true;
@@ -134,7 +176,7 @@
       };
       python = {
         enable = true;
-      	xdg.enable = true;
+	xdg.enable = true;
       };
       shell = {
         enable = true;
@@ -144,18 +186,21 @@
         enable = true;
 	xdg.enable = true;
       };
+      r.enable = true;
       zeal.enable = true;
+      conda.enable = true;
+      mamba.enable = true;
     };
     editors = {
       default = "nvim";
       emacs = rec {
         enable = true;
-      	doom = {
-          enable = true;
-      	  forgeUrl = "https://github.com";
-      	  repoUrl = "https://github.com/doomemacs/doomemacs";
-      	  configRepoUrl = "https://github.com/alienzj/doom.d";
-      	};
+	doom = {
+          enable = false;
+	  forgeUrl = "https://github.com";
+	  repoUrl = "https://github.com/doomemacs/doomemacs";
+	  configRepoUrl = "https://github.com/alienzj/doom.d";
+	};
       };
       vim.enable = true;
       vscode.enable = true;
@@ -173,6 +218,7 @@
       gnupg.enable  = true;
       tmux.enable   = true;
       zsh.enable    = true;
+      zellij.enable = true;
     };
     services = {
       adb.enable = true; # android
@@ -182,7 +228,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      #rdp.enable = true; # remote desktop
+      rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {
@@ -193,12 +239,16 @@
       #transmission.enable = true;
       shadowsocks-client = {
         enable = true;
-      	remotePort = 33708;
-      	localAddress = "127.0.0.1";
-      	localPort = 1080;
-      	remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
-      	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
+	remotePort = 33708;
+	localAddress = "127.0.0.1";
+	localPort = 1080;
+	remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
+	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
         encryptionMethod = "chacha20-ietf-poly1305";
+      };
+      rathole-client = {
+        enable = true;
+	configFile = "/home/alienzj/projects/configuration/rathole/eniac_c.toml";
       };
     };
     utils = {
@@ -206,6 +256,8 @@
       neofetch.enable = true;
       pandoc.enable = true;
       ghostscript.enable = true;
+      disk.enable = true;
+      youdl.enable = true;
     };
     theme.active = "alucard";
   };
@@ -216,6 +268,16 @@
   services.openssh.startWhenNeeded = true;
 
   networking.networkmanager.enable = true;
+
+  # firewall
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 2323 3389 8080 8888 8787 ];
+    allowedUDPPortRanges = [
+      { from = 4000; to = 4007; }
+      { from = 8000; to = 8010; }
+    ];
+  };
 
 
   ## Personal backups
@@ -265,8 +327,11 @@
 
   programs.adb.enable = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "python-2.7.18.6"
-  ];
-}
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # networking.proxy.default = "socks5://127.0.0.1:1080/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost";
 
+  nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+}
