@@ -70,7 +70,10 @@ module Hey
     end
   end
   def self.rebuild(*args, sudo: false)
-    sh ["nixos-rebuild",
+    sh ["env",
+        "http_proxy=socks5h://127.0.0.1:1080",
+        "https_proxy=socks5h://127.0.0.1:1080",
+        "nixos-rebuild",
         "--flake", "#{@@opts[:flake]}##{@@opts[:host]}",
         "--option", "pure-eval", "no",
         *args], sudo: sudo
