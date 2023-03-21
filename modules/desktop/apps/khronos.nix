@@ -2,17 +2,15 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.editors.as;
+let cfg = config.modules.desktop.apps.khronos;
 in {
-  options.modules.editors.as = {
+  options.modules.desktop.apps.khronos = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      android-tools
-      android-file-transfer
-      android-studio
+      khronos
     ];
   };
 }

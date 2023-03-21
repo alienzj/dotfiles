@@ -29,6 +29,10 @@
 	#unetbootin.enable = true;
 	etcher.enable = true;
 	authenticator.enable = true;
+	backups.enable = true;
+	khronos.enable = true;
+	solanum.enable = true;
+	suckit.enable = true;
       };
       browsers = {
         default = "brave";
@@ -56,6 +60,8 @@
 	sayonara.enable = true;
 	podcasts.enable = true;
 	shortwave.enable = true;
+	amberol.enable = true;
+	cozy.enable = true;
       };
       term = {
         default = "xst";
@@ -145,6 +151,13 @@
 	zotero.enable = true;
 	notion.enable = true;
       };
+      reader = {
+	newsflash.enable = true;
+	wike.enable = true;
+      };
+      logger = {
+	qjournalctl.enable = true;
+      };
       im = {
         matrix.enable = true;
 	tdesktop.enable = true;
@@ -163,6 +176,7 @@
 	  #  pkgs.fcitx5-gtk
 	  #];
 	};
+	translate.enable = true;
       };
       science = {
         cytoscape.enable = true;
@@ -217,7 +231,9 @@
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
-      as.enable = true;
+      android-studio.enable = true;
+      gaphor.enable = true;
+      textpieces.enable = true;
     };
     shell = {
       adl.enable = true;
