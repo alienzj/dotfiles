@@ -31,9 +31,9 @@ margin-top = 0
 margin-bottom = 50
 
 
-[bar/main]
+[bar/bar1]
 #dpi = 168
-monitor = ${env:MONITOR:DP1}
+monitor = DP1
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
@@ -76,6 +76,60 @@ modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
 ;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
 modules-center = bspwm
 modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
+
+;tray-position = center
+;tray-padding = 2
+;tray-transparent = true
+;tray-background = #0063ff
+;tray-scale = 0.5
+;tray-maxsize = 28
+
+
+[bar/bar2]
+#dpi = 168
+monitor = DP2
+monitor-strict = true
+enable-ipc = true
+wm-restack = bspwm
+# REQUIRED to move the window with hideit.sh
+override-redirect = true
+fixed-center = true
+
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+width = 100%
+height = 50
+offset-x = 0
+offset-y = 0
+bottom = true
+
+overline-size = 0
+overline-color = #f00
+underline-size = 0
+underline-color = #00f
+
+border-bottom-size = 0
+border-top-size = 1
+border-color = ${colors.bg-dark}
+
+padding-left = 2
+padding-right = 2
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = "Fira Code:pixelsize=18;2"
+font-1 = "Wuncon Siji:pixelsize=18;2"
+font-2 = "Siji:pixelsize=18;2"
+font-3 = "Font Awesome 6 Free Solid:style=Solid:pixelsize=18;2"
+font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=18;2"
+font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=18;2"
+font-6 = "Material Icons: style=Regular: pixelsize=18;2"
+
+;modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
+;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
+modules-center = bspwm
+;modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
 
 ;tray-position = center
 ;tray-padding = 2

@@ -33,6 +33,7 @@
 	khronos.enable = true;
 	solanum.enable = true;
 	suckit.enable = true;
+	netapplet.enable = true;
       };
       browsers = {
         default = "brave";
@@ -62,6 +63,7 @@
 	shortwave.enable = true;
 	amberol.enable = true;
 	cozy.enable = true;
+	netease-cloud-music.enable = true;
       };
       term = {
         default = "xst";
@@ -292,15 +294,28 @@
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-fortisslvpn
+      networkmanager-iodine
+      networkmanager-l2tp
+      networkmanager-openconnect
+      networkmanager-openvpn
+      networkmanager-vpnc
+      networkmanager-sstp
+    ];
+  };
 
   # firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 1993 80 443 2223 3389 8080 8888 8787 ];
+    allowedTCPPorts = [ 1993 80 443 2223 3389 8080 8888 8787 8891 8791 8892 8792 8893 8793 8894 8794 ];
     allowedUDPPortRanges = [
       { from = 4000; to = 4007; }
       { from = 8000; to = 8010; }
+      { from = 8891; to = 8894; }
+      { from = 8791; to = 8794; }
     ];
   };
 

@@ -116,6 +116,11 @@ in {
       export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
     '';
 
+    ## https://github.com/NixOS/nixpkgs/issues/30796
+    services.xserver.displayManager.setupCommands = ''
+    ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output DP2 --mode 2560x1440 --rate 59.95 --pos 3840x0 --scale 1.2x1.2 --rotate inverted --rotate left --output DP1 --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary
+    '';
+
     # Clean up leftovers, as much as we can
     system.userActivationScripts.cleanupHome = ''
       pushd "${config.user.home}"
