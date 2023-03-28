@@ -21,6 +21,7 @@ in {
 
       user.packages = with pkgs; [
         remmina
+	gnome-connections
       ];
     }
   ]);

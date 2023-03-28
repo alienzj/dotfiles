@@ -167,6 +167,7 @@
   #hardware.cpu.amd.updateMicrocode = true;
 
   # high-resolution display
-  hardware.video.hidpi.enable = true;
+  #hardware.video.hidpi.enable = true;
+  fonts.optimizeForVeryHighDPI = false;
   hardware.sensor.iio.enable = true;
 }

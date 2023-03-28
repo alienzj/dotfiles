@@ -53,14 +53,6 @@ in {
         icon = "system-lock-screen";
         exec = "${config.dotfiles.binDir}/zzz";
       })
-
-      (makeDesktopItem {
-        name = "sleep";
-        desktopName = "Laptop sleep";
-        icon = "systemctl-suspend";
-        exec = "${config.dotfiles.binDir}/zzz -f";
-      })
- 
     ];
   };
 }

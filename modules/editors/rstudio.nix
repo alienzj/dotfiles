@@ -30,10 +30,11 @@ let cfg = config.modules.editors.rstudio;
       pkgs.unstable.rPackages.tidyselect
       pkgs.unstable.rPackages.DirichletMultinomial
     ];
-    #nativeBuildInputs = [
-    #  pkgs.unstable.rPackages.rlang
-    #  pkgs.unstable.rPackages.knitr
-    #];
+    nativeBuildInputs = [
+      pkgs.unstable.R
+      #pkgs.unstable.rPackages.rlang
+      #pkgs.unstable.rPackages.knitr
+    ];
     buildInputs = [ pkgs.unstable.gsl ];
   };
 

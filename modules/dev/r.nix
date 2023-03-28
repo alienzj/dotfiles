@@ -30,13 +30,9 @@ let cfg = config.modules.dev.r;
       pkgs.unstable.rPackages.tidyselect
       pkgs.unstable.rPackages.DirichletMultinomial
     ];
-    #nativeBuildInputs = [
-    #  pkgs.unstable.rPackages.rlang
-    #  pkgs.unstable.rPackages.knitr
-    #  pkgs.unstable.pkg-config
-    #  pkgs.unstable.gsl
-    #  pkgs.unstable.make
-    #];
+    nativeBuildInputs = [
+      pkgs.unstable.R
+    ];
     buildInputs = [ pkgs.unstable.gsl ];
   };
 

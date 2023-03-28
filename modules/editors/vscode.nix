@@ -21,7 +21,7 @@ let cfg = config.modules.editors.vscode;
       "files.trimTrailingWhitespace" = false;
       "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font Mono";
       "window.titleBarStyle" = "custom";
-      "terminal.integrated.defaultProfile.linux" = "fish";
+      "terminal.integrated.defaultProfile.linux" = "zsh";
       "terminal.integrated.cursorBlinking" = true;
       "terminal.integrated.enableBell" = false;
       "editor.minimap.enabled" = false;
@@ -59,12 +59,13 @@ in {
           pkief.material-icon-theme
 	  catppuccin.catppuccin-vsc
 
+          esbenp.prettier-vscode
+
           naumovs.color-highlight
           oderwat.indent-rainbow
           ibm.output-colorizer
           shardulm94.trailing-spaces
           usernamehw.errorlens
-          eamodio.gitlens
 	  christian-kohler.path-intellisense
 	  formulahendry.code-runner
 		
@@ -114,6 +115,12 @@ in {
 	  # markdown
           yzhang.markdown-all-in-one
 
+	  # svg
+	  jock.svg
+
+	  # pdf
+	  tomoki1207.pdf
+
 	  # tex
           james-yu.latex-workshop
 
@@ -126,6 +133,11 @@ in {
 
 	  # github
 	  github.codespaces
+	  github.vscode-pull-request-github
+
+	  # git
+          eamodio.gitlens
+	  donjayamanne.githistory
 
         ] ++ pkgs.unstable.vscode-utils.extensionsFromVscodeMarketplace [
           {

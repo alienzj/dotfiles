@@ -12,13 +12,14 @@
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
-	#skype.enable = true;
+	skype.enable = true;
 	zoomus.enable = true;
+	teams.enable = true;
 	libreoffice.enable = true;
-	onlyoffice.enable = true;
 	wpsoffice.enable = true;
+	onlyoffice.enable = true;
 	usbimager.enable = true;
-        # godot.enable = true;
+        godot.enable = true;
 	transmission.enable = true;
 	filezilla.enable = true;
 	scrcpy.enable = true;
@@ -26,7 +27,13 @@
 	anydesk.enable = true;
 	rustdesk.enable = true;
 	ventoy.enable = true;
+	#unetbootin.enable = true;
 	etcher.enable = true;
+	authenticator.enable = true;
+	backups.enable = true;
+	khronos.enable = true;
+	solanum.enable = true;
+	suckit.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -54,6 +61,8 @@
 	sayonara.enable = true;
 	podcasts.enable = true;
 	shortwave.enable = true;
+	amberol.enable = true;
+	cozy.enable = true;
       };
       term = {
         default = "xst";
@@ -144,6 +153,13 @@
 	zotero.enable = true;
 	notion.enable = true;
       };
+      reader = {
+	newsflash.enable = true;
+	wike.enable = true;
+      };
+      logger = {
+	qjournalctl.enable = true;
+      };
       im = {
         matrix.enable = true;
 	tdesktop.enable = true;
@@ -153,6 +169,7 @@
       };
       input = {
         fcitx5.enable = true;
+	translate.enable = true;
       };
       science = {
         cytoscape.enable = true;
@@ -207,7 +224,9 @@
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
-      as.enable = true;
+      android-studio.enable = true;
+      gaphor.enable = true;
+      textpieces.enable = true;
     };
     shell = {
       adl.enable = true;
@@ -217,6 +236,7 @@
       gnupg.enable  = true;
       tmux.enable   = true;
       zsh.enable    = true;
+      zellij.enable = true;
     };
     services = {
       adb.enable = true; # android
@@ -244,13 +264,18 @@
         passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
+      rathole-client = {
+        enable = true;
+	configFile = "/home/alienzj/projects/configuration/rathole/yoga_c.toml";
+      };
     };
     utils = {
       htop.enable = true;
       neofetch.enable = true;
       pandoc.enable = true;
-      youdl.enable = true;
+      ghostscript.enable = true;
       disk.enable = true;
+      youdl.enable = true;
     };
     theme.active = "alucard";
   };
@@ -261,6 +286,16 @@
   services.openssh.startWhenNeeded = true;
 
   networking.networkmanager.enable = true;
+
+  # firewall
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 80 443 2323 3389 8080 8888 8787 ];
+    allowedUDPPortRanges = [
+      { from = 4000; to = 4007; }
+      { from = 8000; to = 8010; }
+    ];
+  };
 
 
   ## Personal backups
