@@ -26,6 +26,7 @@ in {
     user.packages = with pkgs; [ 
       flameshot
       scrot
+      shutter
 
       (makeDesktopItem {
         name = "Flameshot Screen";
@@ -33,11 +34,18 @@ in {
           icon = "flameshot";
           exec = "${pkgs.flameshot}/bin/flameshot gui";
       })
+
+      (makeDesktopItem {
+        name = "Flameshot Capture";
+        desktopName = "Flameshot Capture";
+          icon = "flameshot";
+          exec = "env QT_SCREEN_SCALE_FACTORS=\"1;1\" ${pkgs.flameshot}/bin/flameshot gui";
+      })
     ];
 
-    home.configFile = {
-      "flameshot/flameshot.ini".source = iniFile;
-    };
+    #home.configFile = {
+    #  "flameshot/flameshot.ini".source = iniFile;
+    #};
 
     #systemd.user.services.flameshot = {
     #  description = "flameshot daemon";
