@@ -2,16 +2,16 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.science.igv;
+let cfg = config.modules.science.cytoscape;
 in {
-  options.modules.desktop.science.igv = with types; {
+  options.modules.science.cytoscape = with types; {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        unstable.igv
+        unstable.cytoscape
       ];
     }
   ]);

@@ -13,18 +13,18 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
-	#teams.enable = true;
+	teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
 	usbimager.enable = true;
-        # godot.enable = true;
+        godot.enable = true;
 	transmission.enable = true;
 	filezilla.enable = true;
 	scrcpy.enable = true;
 	thunderbird.enable = true;
 	anydesk.enable = true;
-	rustdesk.enable = true;
+	#rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
 	etcher.enable = true;
@@ -34,6 +34,9 @@
 	solanum.enable = true;
 	suckit.enable = true;
 	netapplet.enable = true;
+	#geph.enable = true;
+	synology-drive-client.enable = true;
+	cryptowatch.enable = true;
       };
       browsers = {
         default = "brave";
@@ -43,8 +46,14 @@
       };
       gaming = {
         steam.enable = true;
-        #emulators.enable = true;
-        #emulators.psx.enable = true;
+        emulators = {
+	  #psx.enable = true;
+	  ds.enable = true;
+	  gb.enable = true;
+	  gba.enable = true;
+	  snes.enable = true;
+	};
+	games.enable = true;
       };
       media = {
         daw.enable = true;
@@ -56,6 +65,8 @@
 	};
         graphics.enable = true;
         mpv.enable = true;
+	vlc.enable = true;
+	youtube-tui.enable = true;
         recording.enable = true;
         spotify.enable = true;
 	sayonara.enable = true;
@@ -152,6 +163,7 @@
       noter = {
 	zotero.enable = true;
 	notion.enable = true;
+	xournalpp.enable = true;
       };
       reader = {
 	newsflash.enable = true;
@@ -180,9 +192,13 @@
 	};
 	translate.enable = true;
       };
-      science = {
-        cytoscape.enable = true;
-	igv.enable = true;
+    };
+    science = {
+      cytoscape.enable = true;
+      bioinfo.enable = true;
+      math = {
+	tools.enable = true;
+	mathematica.enable = true;
       };
     };
     dev = {

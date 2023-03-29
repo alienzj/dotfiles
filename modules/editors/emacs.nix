@@ -31,8 +31,8 @@ in {
       ((emacsPackagesFor emacsUnstable).emacsWithPackages
         (epkgs: [
 	  epkgs.vterm
-	  epkgs.pdf-tools
-	  ##epkgs.melpaPackages.pdf-tools
+	  ##epkgs.pdf-tools
+	  epkgs.melpaStablePackages.pdf-tools
 	]))
       poppler
 

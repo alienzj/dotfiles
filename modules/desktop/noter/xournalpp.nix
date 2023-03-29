@@ -2,16 +2,16 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.science.cytoscape;
+let cfg = config.modules.desktop.noter.xournalpp;
 in {
-  options.modules.desktop.science.cytoscape = with types; {
+  options.modules.desktop.noter.xournalpp = with types; {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        unstable.cytoscape
+        unstable.xournalpp
       ];
     }
   ]);
