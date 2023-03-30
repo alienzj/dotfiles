@@ -25,7 +25,7 @@
 	scrcpy.enable = true;
 	thunderbird.enable = true;
 	anydesk.enable = true;
-	rustdesk.enable = true;
+	#rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
 	etcher.enable = true;
@@ -34,6 +34,10 @@
 	khronos.enable = true;
 	solanum.enable = true;
 	suckit.enable = true;
+	cryptowatch.enable = true;
+	#geph.enable = true;
+	netapplet.enable = true;
+	synology-drive-client.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -45,6 +49,7 @@
         steam.enable = true;
         #emulators.enable = true;
         #emulators.psx.enable = true;
+	games.enable = true;
       };
       media = {
         daw.enable = true;
@@ -56,6 +61,8 @@
 	};
         graphics.enable = true;
         mpv.enable = true;
+	vlc.enable = true;
+	youtube-tui.enable = true;
         recording.enable = true;
         spotify.enable = true;
 	sayonara.enable = true;
@@ -63,6 +70,7 @@
 	shortwave.enable = true;
 	amberol.enable = true;
 	cozy.enable = true;
+	netease-cloud-music.enable = true;
       };
       term = {
         default = "xst";
@@ -171,9 +179,13 @@
         fcitx5.enable = true;
 	translate.enable = true;
       };
-      science = {
-        cytoscape.enable = true;
-	igv.enable = true;
+    };
+    science = {
+      cytoscape.enable = true;
+      bioinfo.enable = true;
+      math = {
+        tools.enable = true;
+	mathematica.enable = true;
       };
     };
     dev = {

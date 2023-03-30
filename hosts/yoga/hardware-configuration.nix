@@ -168,6 +168,6 @@
 
   # high-resolution display
   #hardware.video.hidpi.enable = true;
-  fonts.optimizeForVeryHighDPI = false;
+  #fonts.optimizeForVeryHighDPI = false;
   hardware.sensor.iio.enable = true;
 }

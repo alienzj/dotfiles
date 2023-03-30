@@ -32,6 +32,10 @@ let cfg = config.modules.dev.r;
     ];
     nativeBuildInputs = [
       pkgs.unstable.R
+    #  pkgs.unstable.rPackages.knitr
+    #  pkgs.unstable.pkg-config
+    #  pkgs.unstable.gsl
+    #  pkgs.unstable.make
     ];
     buildInputs = [ pkgs.unstable.gsl ];
   };
@@ -69,6 +73,7 @@ let cfg = config.modules.dev.r;
       knitr
       rmarkdown
       curatedMetagenomicData_
+      #curatedMetagenomicData
       SummarizedExperiment
     ];
   };

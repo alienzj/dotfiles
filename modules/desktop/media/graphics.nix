@@ -18,7 +18,7 @@ in {
     raster.enable  = mkBoolOpt true;
     vector.enable  = mkBoolOpt true;
     sprites.enable = mkBoolOpt true;
-    models.enable  = mkBoolOpt false;
+    models.enable  = mkBoolOpt true; 
   };
 
   config = mkIf cfg.enable {
@@ -37,6 +37,7 @@ in {
 
       # Replaces photoshop
       (if cfg.raster.enable then [
+        darktable
         drawing
         krita
         gimp
