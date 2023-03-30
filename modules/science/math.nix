@@ -24,17 +24,18 @@ in {
       ] else []) ++
 
       (if cfg.mathematica.enable then [
-	(unstalbe.mathematica.override {
-	  source = pkgs.requireFile {
-	    name = "Mathematica_13.2.1_LINUX_CN.sh";
-	    sha256 = "1661ra9c9lidswp9f2nps7iz9kq7fsgxd0x6kl7lv4d142fwkhdk";
-	    message = ''
-	      Hello, Mathematica
-	    '';
-	    hashMode = "recursive";
-	  };
+        #mathematica
+	(unstable.mathematica.override {
+	  #source = pkgs.requireFile {
+	  #  name = "Mathematica_13.2.1_LINUX.sh";
+	  #  sha256 = "sha256:1661ra9c9lidswp9f2nps7iz9kq7fsgxd0x6kl7lv4d142fwkhdk";
+	  #  message = ''
+	  #    Hello, Mathematica!
+	  #  '';
+	  #  hashMode = "recursive";
+	  #};
 	  cudaSupport = false;
-	  lang = "en";
+	  lang = "English";
 	  webdoc = false;
 	  version = "13.2.1";
 	})

@@ -79,79 +79,7 @@
       term = {
         default = "xst";
         st.enable = true;
-	wezterm = {
-	  enable = true;
-	  extraConfig = ''
-
-            -- Your lua code / config here
-            -- local mylib = require 'mylib';
-
-            -- The filled in variant of the < symbol
-            local SOLID_LEFT_ARROW = utf8.char(0xe0b2);
-
-            -- The filled in variant of the > symbol
-            local SOLID_RIGHT_ARROW = utf8.char(0xe0b0);
-
-            return {
-              -- usemylib = mylib.do_fun();
-              font = wezterm.font("JetBrains Mono"),
-              font_size = 20.0,
-              color_scheme = "myCoolTheme",
-	      -- color_scheme = "Doom One",
-	      -- color_scheme = "Darcula",
-	      -- color_scheme = "MaterialDark",
-              hide_tab_bar_if_only_one_tab = true,
-	      tab_max_width = 25,
-	      -- tab_bar_at_bottom = true,
-              use_fancy_tab_bar = false,
-              tab_bar_style = {
-                active_tab_left = wezterm.format {
-                  { Background = { Color = '#0b0022' } },
-                  { Foreground = { Color = '#2b2042' } },
-                  { Text = SOLID_LEFT_ARROW },
-                },
-                active_tab_right = wezterm.format {
-                  { Background = { Color = '#0b0022' } },
-                  { Foreground = { Color = '#2b2042' } },
-                  { Text = SOLID_RIGHT_ARROW },
-                },
-	        inactive_tab_left = wezterm.format {
-		  { Background = { Color = '#0b0022' } },
-		  { Foreground = { Color = '#1b1032' } },
-		  { Text = SOLID_LEFT_ARROW },
-		},
-		inactive_tab_right = wezterm.format {
-		  { Background = { Color = '#0b0022' } },
-		  { Foreground = { Color = '#1b1032' } },
-		  { Text = SOLID_RIGHT_ARROW },
-		},
-	      },
-	      -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
-              keys = {
-                {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
-              }
-            }
-          '';
-          colorSchemes = {
-            myCoolTheme = {
-              ansi = [
-              "#222222" "#D14949" "#48874F" "#AFA75A"
-              "#599797" "#8F6089" "#5C9FA8" "#8C8C8C"
-              ];
-              brights = [
-                "#444444" "#FF6D6D" "#89FF95" "#FFF484"
-                "#97DDFF" "#FDAAF2" "#85F5DA" "#E9E9E9"
-              ];
-              background = "#1B1B1B";
-              cursor_bg = "#BEAF8A";
-              cursor_border = "#BEAF8A";
-              cursor_fg = "#1B1B1B";
-              foreground = "#BEAF8A";
-              selection_bg = "#444444";
-              selection_fg = "#E9E9E9";
-            };
-	  };
-	};
+	wezterm.enable = true;
 	nnn.enable = true;
       };
       vm = {
@@ -261,6 +189,7 @@
       gnupg.enable  = true;
       tmux.enable   = true;
       zsh.enable    = true;
+      fish.enable   = true;
       zellij.enable = true;
     };
     services = {
