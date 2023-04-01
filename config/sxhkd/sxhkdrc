@@ -109,6 +109,10 @@ super + Print
 # screencast region to gif
 super + ctrl + Print
 	scrrec -s ~/videos/recordings/$(date +%F-%T).gif
+# screenshot
+super + shift + s
+        flameshot gui
+
 
 XF86MonBrightnessUp
 	light -A 5

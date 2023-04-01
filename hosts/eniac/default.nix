@@ -5,7 +5,8 @@
     ./hardware-configuration.nix
   ];
 
-  ## Modules
+
+  # Modules
   modules = {
     desktop = {
       bspwm.enable = true;
@@ -13,6 +14,7 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -28,6 +30,10 @@
 	#unetbootin.enable = true;
 	etcher.enable = true;
 	authenticator.enable = true;
+	backups.enable = true;
+	khronos.enable = true;
+	solanum.enable = true;
+	suckit.enable = true;
       };
       browsers = {
         default = "brave";
@@ -55,6 +61,9 @@
 	sayonara.enable = true;
 	podcasts.enable = true;
 	shortwave.enable = true;
+	amberol.enable = true;
+	cozy.enable = true;
+	netease-cloud-music.enable = true;
       };
       term = {
         default = "xst";
@@ -144,6 +153,13 @@
 	zotero.enable = true;
 	notion.enable = true;
       };
+      reader = {
+	newsflash.enable = true;
+	wike.enable = true;
+      };
+      logger = {
+	qjournalctl.enable = true;
+      };
       im = {
         matrix.enable = true;
 	tdesktop.enable = true;
@@ -153,7 +169,16 @@
       };
       input = {
         #ibus.enable = true;
-        fcitx5.enable = true;
+        fcitx5 = {
+	  enable = true;
+	  #addons = [
+          #  pkgs.fcitx5-rime
+	  #  pkgs.fcitx5-mozc
+	  #  pkgs.fcitx5-chinese-addons
+	  #  pkgs.fcitx5-gtk
+	  #];
+	};
+	translate.enable = true;
       };
       science = {
         cytoscape.enable = true;
@@ -208,7 +233,9 @@
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
-      as.enable = true;
+      android-studio.enable = true;
+      gaphor.enable = true;
+      textpieces.enable = true;
     };
     shell = {
       adl.enable = true;
@@ -333,5 +360,5 @@
   # networking.proxy.default = "socks5://127.0.0.1:1080/";
   # networking.proxy.noProxy = "127.0.0.1,localhost";
 
-  nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  #nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
 }

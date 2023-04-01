@@ -17,8 +17,8 @@ in {
     tools.enable   = mkBoolOpt true;
     raster.enable  = mkBoolOpt true;
     vector.enable  = mkBoolOpt true;
-    sprites.enable = mkBoolOpt false;
-    models.enable  = mkBoolOpt true;
+    sprites.enable = mkBoolOpt true;
+    models.enable  = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
@@ -26,6 +26,8 @@ in {
       (if cfg.tools.enable then [
         font-manager   # so many damned fonts...
         imagemagick    # for image manipulation from the shell
+	eyedropper
+	gnome-obfuscate
       ] else []) ++
 
       # replaces illustrator & indesign
@@ -35,9 +37,11 @@ in {
 
       # Replaces photoshop
       (if cfg.raster.enable then [
+        drawing
         krita
         gimp
         #gimpPlugins.resynthesizer  # content-aware scaling in gimp
+	curtail
       ] else []) ++
 
       # Sprite sheets & animation

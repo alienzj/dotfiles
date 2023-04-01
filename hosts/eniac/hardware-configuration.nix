@@ -60,7 +60,7 @@
 
   environment.variables = {
     # QT method manually
-    QT_SCALE_FACTOR = "2";
+    ##QT_SCALE_FACTOR = "2";
     QT_SCREEN_SCALE_FACTORS = "2;2";
     QT_AUTO_SCREEN_SCALE_FACTOR = "0";
 
@@ -108,5 +108,6 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display
-  hardware.video.hidpi.enable = lib.mkDefault true;
+  #hardware.video.hidpi.enable = lib.mkDefault true;
+  #fonts.optimizeForVeryHighDPI = false;
 }
