@@ -11,9 +11,9 @@
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
-	skype.enable = true;
+	#skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = true;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -125,6 +125,7 @@
       cytoscape.enable = true;
       bioinfo.enable = true;
       math = {
+        enable = true;
 	tools.enable = true;
 	mathematica.enable = true;
       };
@@ -172,7 +173,8 @@
 	};
       };
       vim.enable = true;
-      vscode.enable = true;
+      #vscode.enable = true;
+      vscode_fhs.enable = true;
       vscodium.enable = true;
       rstudio.enable = true;
       pycharm.enable = true;
