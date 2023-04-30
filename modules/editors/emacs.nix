@@ -31,8 +31,8 @@ in {
       ((emacsPackagesFor emacsUnstable).emacsWithPackages
         (epkgs: [
 	  epkgs.vterm
-	  epkgs.pdf-tools
-	  ##epkgs.melpaPackages.pdf-tools
+	  ##epkgs.pdf-tools
+	  epkgs.melpaStablePackages.pdf-tools
 	]))
       poppler
 
@@ -56,8 +56,8 @@ in {
       # :tools lookup & :lang org +roam
       sqlite
       # :lang latex & :lang org (latex previews)
-      #texlive.combined.scheme-medium
-      texlive.combined.scheme-small
+      texlive.combined.scheme-medium
+      #texlive.combined.scheme-small
       # :lang beancount
       beancount
       unstable.fava  # HACK Momentarily broken on nixos-unstable

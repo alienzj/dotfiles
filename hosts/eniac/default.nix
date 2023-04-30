@@ -14,18 +14,18 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
-	#teams.enable = true;
+	teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
 	usbimager.enable = true;
-        # godot.enable = true;
+        godot.enable = true;
 	transmission.enable = true;
 	filezilla.enable = true;
 	scrcpy.enable = true;
 	thunderbird.enable = true;
 	anydesk.enable = true;
-	rustdesk.enable = true;
+	#rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
 	etcher.enable = true;
@@ -34,6 +34,9 @@
 	khronos.enable = true;
 	solanum.enable = true;
 	suckit.enable = true;
+	netapplet.enable = true;
+	synology-drive-client.enable = true;
+	cryptowatch.enable = true;
       };
       browsers = {
         default = "brave";
@@ -43,8 +46,12 @@
       };
       gaming = {
         steam.enable = true;
-        #emulators.enable = true;
-        #emulators.psx.enable = true;
+        emulators = {
+	  ds.enable = true;
+	  gb.enable = true;
+	  gba.enable = true;
+	  snes.enable = true;
+	};
       };
       media = {
         daw.enable = true;
@@ -56,6 +63,8 @@
 	};
         graphics.enable = true;
         mpv.enable = true;
+	vlc.enable = true;
+	youtube-tui.enable = true;
         recording.enable = true;
         spotify.enable = true;
 	sayonara.enable = true;
@@ -68,79 +77,7 @@
       term = {
         default = "xst";
         st.enable = true;
-	wezterm = {
-	  enable = true;
-	  extraConfig = ''
-
-            -- Your lua code / config here
-            -- local mylib = require 'mylib';
-
-            -- The filled in variant of the < symbol
-            local SOLID_LEFT_ARROW = utf8.char(0xe0b2);
-
-            -- The filled in variant of the > symbol
-            local SOLID_RIGHT_ARROW = utf8.char(0xe0b0);
-
-            return {
-              -- usemylib = mylib.do_fun();
-              font = wezterm.font("JetBrains Mono"),
-              font_size = 20.0,
-              color_scheme = "myCoolTheme",
-	      -- color_scheme = "Doom One",
-	      -- color_scheme = "Darcula",
-	      -- color_scheme = "MaterialDark",
-              hide_tab_bar_if_only_one_tab = true,
-	      tab_max_width = 25,
-	      -- tab_bar_at_bottom = true,
-              use_fancy_tab_bar = false,
-              tab_bar_style = {
-                active_tab_left = wezterm.format {
-                  { Background = { Color = '#0b0022' } },
-                  { Foreground = { Color = '#2b2042' } },
-                  { Text = SOLID_LEFT_ARROW },
-                },
-                active_tab_right = wezterm.format {
-                  { Background = { Color = '#0b0022' } },
-                  { Foreground = { Color = '#2b2042' } },
-                  { Text = SOLID_RIGHT_ARROW },
-                },
-	        inactive_tab_left = wezterm.format {
-		  { Background = { Color = '#0b0022' } },
-		  { Foreground = { Color = '#1b1032' } },
-		  { Text = SOLID_LEFT_ARROW },
-		},
-		inactive_tab_right = wezterm.format {
-		  { Background = { Color = '#0b0022' } },
-		  { Foreground = { Color = '#1b1032' } },
-		  { Text = SOLID_RIGHT_ARROW },
-		},
-	      },
-	      -- default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
-              keys = {
-                {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
-              }
-            }
-          '';
-          colorSchemes = {
-            myCoolTheme = {
-              ansi = [
-              "#222222" "#D14949" "#48874F" "#AFA75A"
-              "#599797" "#8F6089" "#5C9FA8" "#8C8C8C"
-              ];
-              brights = [
-                "#444444" "#FF6D6D" "#89FF95" "#FFF484"
-                "#97DDFF" "#FDAAF2" "#85F5DA" "#E9E9E9"
-              ];
-              background = "#1B1B1B";
-              cursor_bg = "#BEAF8A";
-              cursor_border = "#BEAF8A";
-              cursor_fg = "#1B1B1B";
-              foreground = "#BEAF8A";
-              selection_bg = "#444444";
-              selection_fg = "#E9E9E9";
-            };
-	  };
-	};
+	wezterm.enable = true;
 	nnn.enable = true;
       };
       vm = {
@@ -152,6 +89,7 @@
       noter = {
 	zotero.enable = true;
 	notion.enable = true;
+	xournalpp.enable = true;
       };
       reader = {
 	newsflash.enable = true;
@@ -180,9 +118,14 @@
 	};
 	translate.enable = true;
       };
-      science = {
-        cytoscape.enable = true;
-	igv.enable = true;
+    };
+    science = {
+      cytoscape.enable = true;
+      bioinfo.enable = true;
+      math = {
+	enable = true;
+	tools.enable = true;
+	mathematica.enable = true;
       };
     };
     dev = {
@@ -245,6 +188,7 @@
       gnupg.enable  = true;
       tmux.enable   = true;
       zsh.enable    = true;
+      fish.enable   = true;
       zellij.enable = true;
     };
     services = {
@@ -294,7 +238,18 @@
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-fortisslvpn
+      networkmanager-iodine
+      networkmanager-l2tp
+      networkmanager-openconnect
+      networkmanager-openvpn
+      networkmanager-vpnc
+      networkmanager-sstp
+    ];
+  };
 
   # firewall
   networking.firewall = {

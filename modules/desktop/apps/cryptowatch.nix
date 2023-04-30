@@ -2,16 +2,16 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.apps.ventoy;
+let cfg = config.modules.desktop.apps.cryptowatch;
+    configDir = config.dotfiles.configDir;
 in {
-  options.modules.desktop.apps.ventoy = {
+  options.modules.desktop.apps.cryptowatch = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      ventoy-full
-      #ventoy-bin
+      cryptowatch-desktop
     ];
   };
 }
