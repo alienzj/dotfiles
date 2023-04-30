@@ -9,9 +9,12 @@ in {
   };
 
   config = mkIf cfg.enable {
+    #programs.nm-applet.enable = true;
     user.packages = with pkgs; [
       networkmanagerapplet
+      networkmanager_dmenu
       rofi-vpn
     ];
+    user.extraGroups = [ "networkmanager" ];
   };
 }

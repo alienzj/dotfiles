@@ -51,7 +51,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs.unstable; [
+    ##user.packages = with pkgs.unstable; [
+    user.packages = with pkgs; [
       (vscode-with-extensions.override {
         vscodeExtensions = with vscode-extensions; [
 
@@ -139,7 +140,8 @@ in {
           eamodio.gitlens
 	  donjayamanne.githistory
 
-        ] ++ pkgs.unstable.vscode-utils.extensionsFromVscodeMarketplace [
+        #] ++ pkgs.unstable.vscode-utils.extensionsFromVscodeMarketplace [
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "r";
             publisher = "REditorSupport";
