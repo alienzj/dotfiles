@@ -12,7 +12,7 @@
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
-	skype.enable = true;
+	#skype.enable = true;
 	zoomus.enable = true;
 	teams.enable = true;
 	libreoffice.enable = true;
@@ -35,6 +35,7 @@
 	solanum.enable = true;
 	suckit.enable = true;
 	netapplet.enable = true;
+	#geph.enable = true;
 	synology-drive-client.enable = true;
 	cryptowatch.enable = true;
       };
@@ -52,6 +53,7 @@
 	  gba.enable = true;
 	  snes.enable = true;
 	};
+	games.enable = true;
       };
       media = {
         daw.enable = true;
@@ -125,7 +127,7 @@
       math = {
 	enable = true;
 	tools.enable = true;
-	mathematica.enable = true;
+	mathematica.enable = false;
       };
     };
     dev = {
@@ -171,7 +173,8 @@
 	};
       };
       vim.enable = true;
-      vscode.enable = true;
+      #vscode.enable = true;
+      vscode_fhs.enable = true;
       vscodium.enable = true;
       rstudio.enable = true;
       pycharm.enable = true;
