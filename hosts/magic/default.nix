@@ -225,6 +225,10 @@
         enable = true;
 	configFile = "/home/alienzj/projects/configuration/rathole/magic_c.toml";
       };
+      boinc.enable = true;
+      slurm.enable = true;
+      earlyoom.enable = true;
+      home-assistant.enable = true;
     };
     utils = {
       htop.enable = true;
@@ -258,7 +262,7 @@
   # firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 1993 80 443 2223 3389 8080 8888 8787 8891 8791 8892 8792 8893 8793 8894 8794 ];
+    allowedTCPPorts = [ 1993 80 443 2223 3389 8080 8888 8787 8891 8791 8892 8792 8893 8793 8894 8794 8123 ];
     allowedUDPPortRanges = [
       { from = 4000; to = 4007; }
       { from = 8000; to = 8010; }
