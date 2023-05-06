@@ -12,6 +12,7 @@
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" "tun" "virtio" ];
   boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   boot.extraModprobeConfig = ''
     options kvm_intel nested=1

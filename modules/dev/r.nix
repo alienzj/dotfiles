@@ -72,8 +72,8 @@ let cfg = config.modules.dev.r;
       ymlthis
       knitr
       rmarkdown
-      curatedMetagenomicData_
-      #curatedMetagenomicData
+      #curatedMetagenomicData_
+      curatedMetagenomicData
       SummarizedExperiment
     ];
   };

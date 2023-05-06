@@ -70,7 +70,7 @@ let cfg = config.modules.editors.rstudio;
       ymlthis
       knitr
       rmarkdown
-      curatedMetagenomicData_
+      curatedMetagenomicData
       SummarizedExperiment
     ];
   };

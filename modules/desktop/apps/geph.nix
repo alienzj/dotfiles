@@ -3,7 +3,6 @@
 with lib;
 with lib.my;
 let cfg = config.modules.desktop.apps.geph;
-    configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.apps.geph = {
     enable = mkBoolOpt false;
@@ -11,10 +10,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      geph-meta
-      geph4-client
-      geph-gui
-      gephgui-wry
+      geph
     ];
   };
 }

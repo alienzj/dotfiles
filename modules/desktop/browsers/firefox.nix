@@ -20,6 +20,9 @@ in {
     extraConfig = mkOpt' lines "" ''
       Extra lines to add to <filename>user.js</filename>
     '';
+    proxyConfig = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+      Firefox preferences to set in <filename>prefs.js</filename>
+    '';
 
     userChrome  = mkOpt' lines "" "CSS Styles for Firefox's interface";
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
@@ -35,6 +38,22 @@ in {
           genericName = "Open a private Firefox window";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox --private-window";
+          categories = [ "Network" ];
+        })
+        (makeDesktopItem {
+          name = "firefox-proxy";
+          desktopName = "Firefox (Proxy)";
+          genericName = "Open a Firefox window with proxy";
+          icon = "firefox";
+          exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
+          categories = [ "Network" ];
+        })
+        (makeDesktopItem {
+          name = "firefox-private-proxy";
+          desktopName = "Firefox (Private Proxy)";
+          genericName = "Open a private Firefox window with proxy";
+          icon = "firefox";
+          exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
           categories = [ "Network" ];
         })
       ];
@@ -197,6 +216,14 @@ in {
         "extensions.formautofill.heuristics.enabled" = false;
       };
 
+      modules.desktop.browsers.firefox.proxyConfig = {
+        "network.proxy.no_proxies_on" = "127.0.0.1,localhost,192.168.50.84,aliyundrive.com,aliyun.com,jd.com,taobao.com,mi.com,.bilibili.com";
+        "network.proxy.socks" = "127.0.0.1";
+        "network.proxy.socks_port" = 1080;
+        "network.proxy.socks_remote_dns" = true;
+        "network.proxy.type" = 1;
+      };
+
       # Use a stable profile name so we can target it in themes
       home.file = let cfgPath = ".mozilla/firefox"; in {
         "${cfgPath}/profiles.ini".text = ''
@@ -206,11 +233,18 @@ in {
           Path=${cfg.profileName}.default
           Default=1
 
+          [Profile1]
+          Name=proxy
+          IsRelative=1
+          Path=proxy.default
+	  Default=0
+
           [General]
           StartWithLastProfile=1
           Version=2
         '';
 
+	## alienzj.default profile
         "${cfgPath}/${cfg.profileName}.default/user.js" =
           mkIf (cfg.settings != {} || cfg.extraConfig != "") {
             text = ''
@@ -227,6 +261,39 @@ in {
           };
 
         "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css" =
+          mkIf (cfg.userContent != "") {
+            text = cfg.userContent;
+          };
+
+	## proxy.default profile
+        "${cfgPath}/proxy.default/user.js" =
+          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+            text = ''
+              ${concatStrings (mapAttrsToList (name: value: ''
+                user_pref("${name}", ${builtins.toJSON value});
+              '') cfg.settings)}
+	      ${cfg.extraConfig}
+              ${concatStrings(mapAttrsToList (name: value: ''
+                user_pref("${name}", ${builtins.toJSON value});
+              '') cfg.proxyConfig)}
+            '';
+          };
+
+        #"${cfgPath}/proxy.default/prefs.js" =
+        #  mkIf (cfg.proxyConfig != {}) {
+        #    text = ''
+        #      ${concatStrings (mapAttrsToList (name: value: ''
+        #        user_pref("${name}", ${builtins.toJSON value});
+        #      '') cfg.proxyConfig)}
+        #    '';
+        #  };
+
+        "${cfgPath}/proxy.default/chrome/userChrome.css" =
+          mkIf (cfg.userChrome != "") {
+            text = cfg.userChrome;
+          };
+
+        "${cfgPath}/proxy.default/chrome/userContent.css" =
           mkIf (cfg.userContent != "") {
             text = cfg.userContent;
           };
