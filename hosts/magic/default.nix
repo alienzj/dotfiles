@@ -13,7 +13,7 @@
         rofi.enable = true;
 	#skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = true;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
