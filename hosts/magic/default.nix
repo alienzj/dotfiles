@@ -24,7 +24,7 @@
 	scrcpy.enable = true;
 	thunderbird.enable = true;
 	anydesk.enable = true;
-	#rustdesk.enable = true;
+	rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
 	etcher.enable = true;
