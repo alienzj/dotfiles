@@ -81,8 +81,8 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      #pkgs.unstable.rstudio
-      RStudio-with-packages
+      pkgs.unstable.rstudio
+      #RStudio-with-packages
     ];
   };
 }

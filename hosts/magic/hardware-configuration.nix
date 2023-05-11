@@ -12,7 +12,8 @@
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" "tun" "virtio" ];
   boot.extraModulePackages = [ ];
-  boot.supportedFilesystems = [ "ntfs" ];
+  #boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
 
   boot.extraModprobeConfig = ''
     options kvm_intel nested=1
