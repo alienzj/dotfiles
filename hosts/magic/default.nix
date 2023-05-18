@@ -38,6 +38,8 @@
 	synology-drive-client.enable = true;
 	cryptowatch.enable = true;
 	vpn.enable = true;
+	file-manager.enable = true;
+	rdp.enable = true;
       };
       browsers = {
         default = "brave";
@@ -205,7 +207,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      rdp.enable = true; # remote desktop
+      rdp.enable = false; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {
@@ -215,7 +217,7 @@
       flameshot.enable = true;
       #transmission.enable = true;
       shadowsocks-client = {
-        enable = true;
+        enable = false;
 	remotePort = 33708;
 	localAddress = "127.0.0.1";
 	localPort = 1080;
@@ -227,10 +229,15 @@
         enable = true;
 	configFile = "/home/alienzj/projects/configuration/rathole/magic_c.toml";
       };
+      rathole-client-aws = {
+        enable = false;
+	configFile = "/home/alienzj/projects/configuration/rathole/aws_magic_c.toml";
+      };
       boinc.enable = true;
       slurm.enable = true;
       earlyoom.enable = true;
       home-assistant.enable = true;
+      onedrive.enable = true;
     };
     utils = {
       htop.enable = true;

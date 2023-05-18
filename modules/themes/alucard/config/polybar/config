@@ -103,6 +103,7 @@ height = 50
 offset-x = 0
 offset-y = 0
 bottom = true
+#bottom = right
 
 overline-size = 0
 overline-color = #f00

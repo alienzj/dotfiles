@@ -75,6 +75,7 @@ with lib.my;
     wget
     gnumake
     unzip
+    bc
   ];
 
   # ??
