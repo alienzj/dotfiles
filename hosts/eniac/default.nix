@@ -38,12 +38,14 @@
 	#geph.enable = true;
 	synology-drive-client.enable = true;
 	cryptowatch.enable = true;
+	vpn.enable = true;
       };
       browsers = {
         default = "brave";
         brave.enable = true;
         firefox.enable = true;
         qutebrowser.enable = true;
+	chromium.enable = true;
       };
       gaming = {
         steam.enable = true;
@@ -202,7 +204,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      rdp.enable = true; # remote desktop
+      rdp.enable = false; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {
@@ -224,6 +226,8 @@
         enable = true;
 	configFile = "/home/alienzj/projects/configuration/rathole/eniac_c.toml";
       };
+      boinc.enable = true;
+      slurm.enable = true;
     };
     utils = {
       htop.enable = true;

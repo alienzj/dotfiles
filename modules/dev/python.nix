@@ -20,7 +20,7 @@ let devCfg = config.modules.dev;
       poetry-core
       flask
       django
-      #dash
+      dash
       plotly
       requests
       ipython
@@ -31,8 +31,10 @@ let devCfg = config.modules.dev;
       matplotlib
       seaborn
       scipy
+      openai
+      openaiauth
     ]; 
-    python-with-my-packages = pkgs.python3.withPackages my-python-packages;
+    python-with-my-packages = pkgs.python311.withPackages my-python-packages;
 
 in {
   options.modules.dev.python = {
@@ -43,14 +45,34 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [
-        python-with-my-packages
-        #python39
-        #python39Packages.pip
-        #python39Packages.black
-        #python39Packages.setuptools
-        #python39Packages.pylint
-        #python39Packages.poetry
-        #python39Packages.ipython
+        #python-with-my-packages
+
+        python311
+        python311Packages.pip
+        python311Packages.black
+        python311Packages.setuptools
+        python311Packages.pylint
+        python311Packages.poetry-core
+        python311Packages.ipython
+        #python311Packages.flask
+        #python311Packages.django
+      	#python311Packages.dash
+        #python311Packages.plotly
+        #python311Packages.requests
+        #python311Packages.jupyter
+        #python311Packages.jupyterlab
+        #python311Packages.pandas
+        #python311Packages.numpy
+        #python311Packages.matplotlib
+        #python311Packages.seaborn
+        #python311Packages.scipy
+        #python311Packages.openai
+        #python311Pacakges.openaiauth
+	#python311Packages.tiktoken
+	#python311Packages.openai-whisper
+	#python311Packages.torch
+	#python311Packages.tensorflow
+	#python311Packages.keras
       ];
 
       environment.shellAliases = {

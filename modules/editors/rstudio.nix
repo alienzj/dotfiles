@@ -70,7 +70,7 @@ let cfg = config.modules.editors.rstudio;
       ymlthis
       knitr
       rmarkdown
-      curatedMetagenomicData_
+      curatedMetagenomicData
       SummarizedExperiment
     ];
   };
@@ -81,8 +81,8 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      #pkgs.unstable.rstudio
-      RStudio-with-packages
+      pkgs.unstable.rstudio
+      #RStudio-with-packages
     ];
   };
 }
