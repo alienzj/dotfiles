@@ -10,7 +10,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      unstable.htop
+      #unstable.htop
       unstable.hydra-check
       unstable.bandwhich
       unstable.zenith
