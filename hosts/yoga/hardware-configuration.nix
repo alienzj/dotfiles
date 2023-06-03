@@ -11,6 +11,7 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" "tun" "virtio" "acpi_call" ];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   ## https://kvark.github.io/linux/framework/2021/10/17/framework-nixos.html
   #boot.kernelParams = [ "mem_sleep_default=deep" ];

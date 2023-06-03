@@ -72,8 +72,8 @@ let cfg = config.modules.dev.r;
       ymlthis
       knitr
       rmarkdown
-      curatedMetagenomicData_
-      #curatedMetagenomicData
+      #curatedMetagenomicData_
+      curatedMetagenomicData
       SummarizedExperiment
     ];
   };
@@ -84,8 +84,8 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      #pkgs.unstable.R
-      R-with-packages
+      pkgs.unstable.R
+      #R-with-packages
     ];
   };
 }

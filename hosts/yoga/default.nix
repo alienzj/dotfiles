@@ -38,12 +38,14 @@
 	#geph.enable = true;
 	netapplet.enable = true;
 	synology-drive-client.enable = true;
+	vpn.enable = true;
       };
       browsers = {
         default = "firefox";
         brave.enable = true;
         firefox.enable = true;
         qutebrowser.enable = true;
+	chromium.enable = true;
       };
       gaming = {
         steam.enable = true;
@@ -109,12 +111,13 @@
       };
     };
     science = {
+      ai.enable = true;
       cytoscape.enable = true;
       bioinfo.enable = true;
       math = {
         enable = true;
         tools.enable = true;
-	mathematica.enable = true;
+	mathematica.enable = false;
       };
     };
     dev = {
@@ -211,6 +214,10 @@
         enable = true;
 	configFile = "/home/alienzj/projects/configuration/rathole/yoga_c.toml";
       };
+      earlyoom.enable = true;
+      home-assistant.enable = true;
+      boinc.enable = true;
+      slurm.enable = true;
     };
     utils = {
       htop.enable = true;
