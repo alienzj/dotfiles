@@ -12,9 +12,9 @@
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
-	skype.enable = true;
+	#skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = true;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -25,7 +25,7 @@
 	scrcpy.enable = true;
 	thunderbird.enable = true;
 	anydesk.enable = true;
-	#rustdesk.enable = true;
+	rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
 	etcher.enable = true;
@@ -39,6 +39,9 @@
 	netapplet.enable = true;
 	synology-drive-client.enable = true;
 	vpn.enable = true;
+	file-manager.enable = true;
+	rdp.enable = true;
+	sniffnet.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -49,8 +52,13 @@
       };
       gaming = {
         steam.enable = true;
-        #emulators.enable = true;
-        #emulators.psx.enable = true;
+	emulators = {
+	  #psx.enable = true;
+	  ds.enable = true;
+	  gb.enable = true;
+	  gba.enable = true;
+	  snes.enable = true;
+	};
 	games.enable = true;
       };
       media = {
@@ -90,6 +98,7 @@
       noter = {
 	zotero.enable = true;
 	notion.enable = true;
+	xournalpp.enable = true;
       };
       reader = {
 	newsflash.enable = true;
@@ -192,7 +201,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = false;
-      rdp.enable = true; # remote desktop
+      rdp.enable = false; # remote desktop
       #samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {
@@ -214,11 +223,12 @@
         enable = true;
 	configFile = "/home/alienzj/projects/configuration/rathole/yoga_c.toml";
       };
-      earlyoom.enable = true;
-      home-assistant.enable = true;
       boinc.enable = true;
       slurm.enable = true;
-    };
+      earlyoom.enable = true;
+      home-assistant.enable = true;
+      onedrive.enable = true;
+   };
     utils = {
       htop.enable = true;
       neofetch.enable = true;
@@ -235,7 +245,19 @@
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-fortisslvpn
+      networkmanager-iodine
+      networkmanager-l2tp
+      networkmanager-openconnect
+      networkmanager-openvpn
+      networkmanager-vpnc
+      networkmanager-sstp
+    ];
+  };
+
 
   # firewall
   networking.firewall = {

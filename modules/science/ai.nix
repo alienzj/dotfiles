@@ -12,9 +12,9 @@ in {
     {
       user.packages = with pkgs; [
         unstable.aichat
-        unstable.shell_gpt
         unstable.chatgpt-cli
-        unstable.chatblade
+	unstable.shell_gpt
+	unstable.chatblade
       ];
     }
   ]);

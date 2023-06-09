@@ -15,7 +15,7 @@ in {
       settings.PasswordAuthentication = true;
       settings.KbdInteractiveAuthentication = false;
       settings.PermitRootLogin = "no";
-      settings.X11Forwarding = true;
+      settings.X11Forwarding = false;
     };
 
     user.openssh.authorizedKeys.keys =

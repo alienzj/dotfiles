@@ -4,7 +4,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.science.math;
 in {
-  options.modules.science.math = {
+  options.modules.science.math = with types; {
     enable = mkBoolOpt false;
     tools.enable = mkBoolOpt true;
     worlframengine.enable = mkBoolOpt false;
@@ -24,29 +24,12 @@ in {
       ] else []) ++
 
       (if cfg.mathematica.enable then [
-        (unstable.mathematica.override {
+	(unstable.mathematica.override {
 	  cudaSupport = false;
 	  lang = "en";
-          webdoc = false;
+	  webdoc = false;
 	  version = "13.2.1";
 	})
-
-	#(unstable.mathematica.override {
-	#  #source = pkgs.requireFile {
-	#  #  name = "Mathematica_13.2.1_BNDL_LINUX.sh";
-	#  #  #sha256 = "sha256:1661ra9c9lidswp9f2nps7iz9kq7fsgxd0x6kl7lv4d142fwkhdk";
-	#  #  #sha256 = "sha256:070ybhgskk3fw8c6fgqs4lq9252ds6585cqdd5as94hj55vjibmq";
-	#  #  message = ''
-	#  #    Hello, Mathematica!
-	#  #  '';
-	#  #  hashMode = "recursive";
-	#  #};
-	#  cudaSupport = false;
-	#  lang = "en";
-	#  webdoc = false;
-	#  version = "13.2.1";
-	#})
-
       ] else []) ++
 
       (if cfg.cplex.enable then [

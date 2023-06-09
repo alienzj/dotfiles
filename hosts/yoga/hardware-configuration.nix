@@ -165,7 +165,12 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  #hardware.cpu.amd.updateMicrocode = true;
+  hardware.cpu.amd.updateMicrocode = true;
+
+  security.tpm2.enable = true;
+  security.tpm2.pkcs11.enable = true;
+  security.tpm2.tctiEnvironment.enable = true;
+  users.users.alienzj.extraGroups = [ "tss" ];
 
   # high-resolution display
   #hardware.video.hidpi.enable = true;

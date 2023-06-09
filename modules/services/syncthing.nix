@@ -9,13 +9,19 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.syncthing = rec {
+    services.syncthing = {
       enable = true;
+
+      #settings = {
+
       openDefaultPorts = true;
       user = config.user.name;
       group = "users";
       configDir = "${config.user.home}/.config/syncthing";
       dataDir = "${config.user.home}/.local/share/syncthing";
+
+      #};
+
     };
   };
 }
