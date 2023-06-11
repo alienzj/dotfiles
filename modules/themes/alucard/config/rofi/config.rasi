@@ -3,7 +3,7 @@ configuration {
   icon-theme:       "Paper";
   cycle:            true;
   disable-history:  false;
-  monitor:          "HDMI-0";
+  monitor:          "DP1";
 
   /* Vim-esque C-j/C-k as up/down in rofi */
   kb-accept-entry: "Return,Control+m,KP_Enter";
@@ -13,15 +13,15 @@ configuration {
 }
 
 * {
-  accent:   #bd93f9;
-  bg:       #1E2029FA;
-  bg-light: #1c1c1c;
-  bg-focus: #282a36;
-  bg-dark:  #181a23;
-  fg:       #bbc2cf;
-  fg-list:  #bbc2cf;
-  on:       #8BD49C;
-  off:      #cc6666;
+  accent:    #bd93f9;
+  bg:        #1E2029FA;
+  bg-light:  #1c1c1c;
+  bg-focus:  #282a36;
+  bg-dark:   #181a23;
+  fg:        #bbc2cf;
+  fg-list:   #bbc2cf;
+  on:        #8BD49C;
+  off:       #cc6666;
 
   magenta: #bd93f9;
   blue:    #61bfff;

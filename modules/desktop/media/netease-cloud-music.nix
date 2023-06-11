@@ -10,7 +10,6 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      unstable.netease-music-tui
       unstable.netease-cloud-music-gtk
     ];
   };

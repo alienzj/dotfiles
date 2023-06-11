@@ -17,6 +17,9 @@ in {
 
     services.xserver.videoDrivers = [ "nvidia" ];
 
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
+
     environment.systemPackages = with pkgs; [
       # Respect XDG conventions, damn it!
       (writeScriptBin "nvidia-settings" ''

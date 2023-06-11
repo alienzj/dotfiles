@@ -26,7 +26,7 @@ in {
       client.enable = true;
 
       controlMachine = "eniac";
-      clusterName = "NixENIAC";
+      clusterName = "NixEniac";
       #nodeName = [ "magic CPUs=8 RealMemory=60000 SocketsPerBoard=1 CoresPerSocket=4 ThreadsPerCore=2 State=UNKNOWN" ];
       #nodeName = [ "magic CPUs=12 RealMemory=120000 SocketsPerBoard=1 CoresPerSocket=6 ThreadsPerCore=2 State=UNKNOWN" ];
       #nodeName = [ "magic CPUs=8 RealMemory=60000 SocketsPerBoard=1 CoresPerSocket=6 ThreadsPerCore=2 State=UNKNOWN" ];

@@ -10,7 +10,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      ventoy-full
+      ventoy-bin-full
       #ventoy-bin
     ];
   };

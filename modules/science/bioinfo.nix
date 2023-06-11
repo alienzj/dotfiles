@@ -25,7 +25,7 @@ in {
 	unstable.samtools
 	unstable.seqtk
 	unstable.seqkit
-	#unstable.spades
+	unstable.SPAdes
 	unstable.sratoolkit
 	unstable.star
         unstable.vcftools

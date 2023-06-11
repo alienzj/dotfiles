@@ -18,11 +18,6 @@ in {
       services.xrdp.defaultWindowManager = "none+bspwm";
       networking.firewall.allowedTCPPorts = [ 3389 ];
       # Soon: services.xrdp.openFirewall = true;
-
-      user.packages = with pkgs; [
-        remmina
-	gnome-connections
-      ];
     }
   ]);
 }

@@ -43,17 +43,17 @@ in {
       })
     ];
 
-    #home.configFile = {
-    #  "flameshot/flameshot.ini".source = iniFile;
-    #};
+    home.configFile = {
+      "flameshot/flameshot.ini".source = iniFile;
+    };
 
-    #systemd.user.services.flameshot = {
-    #  description = "flameshot daemon";
-    #  after = [ "graphical-session-pre.target" "tray.target" ];
-    #  path = [ pkgs.flameshot ];
-    #  script = ''
-    #    exec flameshot 
-    #  '';
-    #};
+    systemd.user.services.flameshot = {
+      description = "flameshot daemon";
+      after = [ "graphical-session-pre.target" "tray.target" ];
+      path = [ pkgs.flameshot ];
+      script = ''
+        exec flameshot 
+      '';
+    };
   };
 }

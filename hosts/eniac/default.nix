@@ -14,7 +14,7 @@
         rofi.enable = true;
 	#skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = true;
+	teams.enable = false;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -38,7 +38,9 @@
 	#geph.enable = true;
 	synology-drive-client.enable = true;
 	cryptowatch.enable = true;
-	vpn.enable = true;
+	vpn_client.enable = true;
+	file-manager.enable = true;
+	rdp.enable = true;
       };
       browsers = {
         default = "brave";
@@ -87,7 +89,7 @@
       vm = {
         lxd.enable = true;
         qemu.enable = true;
-	virtualbox.enable = true;
+	virtualbox.enable = false;
 	virt-manager.enable = true;
       };
       noter = {
@@ -228,6 +230,9 @@
       };
       boinc.enable = true;
       slurm.enable = true;
+      earlyoom.enable = true;
+      home-assistant.enable = true;
+      onedrive.enable = true;
     };
     utils = {
       htop.enable = true;

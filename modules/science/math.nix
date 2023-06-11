@@ -24,8 +24,8 @@ in {
       ] else []) ++
 
       (if cfg.mathematica.enable then [
-        (unstable.mathematica.override {
-	  cudaSupport = true;
+	(unstable.mathematica.override {
+	  cudaSupport = false;
 	  lang = "en";
 	  webdoc = false;
 	  version = "13.2.1";
