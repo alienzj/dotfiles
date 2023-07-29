@@ -28,7 +28,7 @@ in {
       # 28.2 + native-comp
       #((emacsPackagesFor emacsNativeComp).emacsWithPackages
       #((emacsPackagesFor emacs).emacsWithPackages
-      ((emacsPackagesFor emacsUnstable).emacsWithPackages
+      ((emacsPackagesFor emacs-unstable).emacsWithPackages
         (epkgs: [
 	  epkgs.vterm
 	  ##epkgs.pdf-tools

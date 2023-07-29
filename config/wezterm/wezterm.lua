@@ -7,6 +7,29 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+
+-- https://wezfurlong.org/wezterm/config/lua/keyassignment/MoveTab.html
+config.keys = {}
+
+for i = 1, 8 do
+  -- CTRL+ALT + number to move to that position
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'CTRL|ALT',
+    action = wezterm.action.MoveTab(i - 1),
+  })
+end
+
+
+-- https://wezfurlong.org/wezterm/config/lua/keyassignment/MoveTabRelative.html
+local act = wezterm.action
+
+config.keys = {
+  { key = '{', mods = 'SHIFT|ALT', action = act.MoveTabRelative(-1) },
+  { key = '}', mods = 'SHIFT|ALT', action = act.MoveTabRelative(1) },
+}
+
+
 -- config.color_scheme = 'Adventure'
 -- config.color_scheme = 'One Dark (Gogh)'
 config.color_scheme = 'DoomOne'

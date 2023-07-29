@@ -11,9 +11,9 @@
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
-	#skype.enable = true;
+	skype.enable = true;
 	zoomus.enable = true;
-	#teams.enable = true;
+	teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -186,7 +186,7 @@
       idea.enable = true;
       android-studio.enable = true;
       gaphor.enable = true;
-      textpieces.enable = true;
+      textpieces.enable = false;
     };
     shell = {
       adl.enable = true;

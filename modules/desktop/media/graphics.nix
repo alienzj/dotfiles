@@ -52,7 +52,7 @@ in {
 
       # 3D modelling
       (if cfg.models.enable then [
-        blender
+        unstable.blender
       ] else []);
 
     home.configFile = mkIf cfg.raster.enable {
