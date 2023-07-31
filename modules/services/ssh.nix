@@ -1,4 +1,4 @@
-{ options, config, lib, ... }:
+{ options, config, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
@@ -17,6 +17,10 @@ in {
       settings.PermitRootLogin = "no";
       settings.X11Forwarding = false;
     };
+
+    environment.systemPackages = with pkgs; [
+      autossh
+    ];
 
     user.openssh.authorizedKeys.keys =
       if config.user.name == "hlissner"

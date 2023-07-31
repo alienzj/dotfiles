@@ -32,7 +32,6 @@
     "options kvm ignore_msrs=1"
   ];
 
-  #boot.supportedFilesystems = [ "ntfs" ];
 
   #https://discourse.nixos.org/t/laptop-suspend-fails/4739
   services.fwupd.enable = true;
@@ -73,20 +72,20 @@
   };
 
   # CPU
-  nix.settings.max-jobs = lib.mkDefault 8;
+  #nix.settings.max-jobs = lib.mkDefault 8;
   #powerManagement.cpuFreqGovernor = "performance";
   #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   ## https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/power-management.nix
   ## https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-    };
-  };
-  services.upower.enable = true;
+  #services.tlp = {
+  #  enable = true;
+  #  settings = {
+  #    CPU_SCALING_GOVERNOR_ON_AC = "performance";
+  #    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+  #  };
+  #};
+  #services.upower.enable = true;
 
   ## https://github.com/kvark/dotfiles/blob/master/nix/hardware-configuration.nix
   powerManagement = {
@@ -94,8 +93,6 @@
     powertop.enable = true;
     cpuFreqGovernor = lib.mkDefault "ondemand";
   };
-
-  #hardware.cpu.amd.updateMicrocode = true;
 
   networking.wireless.interfaces = [ "wlp1s0" ];
 
