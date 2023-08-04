@@ -18,6 +18,8 @@ in {
       unstable.ctop
       #unstable.bpytop
       unstable.btop
+      unstable.visidata
+      unstable.sniffnet
     ];
   };
 }

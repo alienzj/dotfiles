@@ -16,6 +16,7 @@ in {
       tailscale
       headscale
       trayscale
+      globalprotect-openconnect
     ];
   };
 }

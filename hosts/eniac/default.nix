@@ -38,7 +38,7 @@
 	#geph.enable = true;
 	synology-drive-client.enable = true;
 	cryptowatch.enable = true;
-	vpn_client.enable = true;
+	vpn.enable = true;
 	file-manager.enable = true;
 	rdp.enable = true;
       };
@@ -89,7 +89,7 @@
       vm = {
         lxd.enable = true;
         qemu.enable = true;
-	virtualbox.enable = false;
+	virtualbox.enable = true;
 	virt-manager.enable = true;
       };
       noter = {
@@ -185,7 +185,7 @@
       idea.enable = true;
       android-studio.enable = true;
       gaphor.enable = true;
-      textpieces.enable = true;
+      textpieces.enable = false;
     };
     shell = {
       adl.enable = true;
