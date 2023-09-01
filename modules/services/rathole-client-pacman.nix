@@ -3,11 +3,11 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.rathole-client-aws;
+  cfg = config.modules.services.rathole-client-pacman;
   configFile = cfg.configFile;
 in
 {
-  options.modules.services.rathole-client-aws = {
+  options.modules.services.rathole-client-pacman = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -26,7 +26,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.services.rathole-client-aws = {
+    systemd.services.rathole-client-pacman = {
       description = "rathole client Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];

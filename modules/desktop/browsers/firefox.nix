@@ -20,7 +20,13 @@ in {
     extraConfig = mkOpt' lines "" ''
       Extra lines to add to <filename>user.js</filename>
     '';
-    proxyConfig = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+    proxyConfigPacman = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+      Firefox preferences to set in <filename>prefs.js</filename>
+    '';
+    proxyConfigSuperman = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+      Firefox preferences to set in <filename>prefs.js</filename>
+    '';
+    proxyConfigAwsman = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
       Firefox preferences to set in <filename>prefs.js</filename>
     '';
 
@@ -41,16 +47,48 @@ in {
           categories = [ "Network" ];
         })
         (makeDesktopItem {
-          name = "firefox-proxy";
-          desktopName = "Firefox (Proxy)";
+          name = "firefox-proxy-pacman";
+          desktopName = "Firefox (Proxy pacman)";
           genericName = "Open a Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
           categories = [ "Network" ];
         })
         (makeDesktopItem {
-          name = "firefox-private-proxy";
-          desktopName = "Firefox (Private Proxy)";
+          name = "firefox-proxy-superman";
+          desktopName = "Firefox (Proxy superman)";
+          genericName = "Open a Firefox window with proxy";
+          icon = "firefox";
+          exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
+          categories = [ "Network" ];
+        })
+        (makeDesktopItem {
+          name = "firefox-proxy-awsman";
+          desktopName = "Firefox (Proxy awsman)";
+          genericName = "Open a Firefox window with proxy";
+          icon = "firefox";
+          exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
+          categories = [ "Network" ];
+        })
+        (makeDesktopItem {
+          name = "firefox-private-proxy-pacman";
+          desktopName = "Firefox (Private Proxy pacman)";
+          genericName = "Open a private Firefox window with proxy";
+          icon = "firefox";
+          exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
+          categories = [ "Network" ];
+        })
+        (makeDesktopItem {
+          name = "firefox-private-proxy-superman";
+          desktopName = "Firefox (Private Proxy superman)";
+          genericName = "Open a private Firefox window with proxy";
+          icon = "firefox";
+          exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
+          categories = [ "Network" ];
+        })
+        (makeDesktopItem {
+          name = "firefox-private-proxy-awsman";
+          desktopName = "Firefox (Private Proxy awsman)";
           genericName = "Open a private Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
@@ -216,13 +254,28 @@ in {
         "extensions.formautofill.heuristics.enabled" = false;
       };
 
-      modules.desktop.browsers.firefox.proxyConfig = {
+      modules.desktop.browsers.firefox.proxyConfigPacman = {
         "network.proxy.no_proxies_on" = "127.0.0.1,localhost,192.168.50.84,aliyundrive.com,aliyun.com,jd.com,taobao.com,mi.com,.bilibili.com";
         "network.proxy.socks" = "127.0.0.1";
         "network.proxy.socks_port" = 1080;
         "network.proxy.socks_remote_dns" = true;
         "network.proxy.type" = 1;
       };
+      modules.desktop.browsers.firefox.proxyConfigSuperman = {
+        "network.proxy.no_proxies_on" = "127.0.0.1,localhost,192.168.50.84,aliyundrive.com,aliyun.com,jd.com,taobao.com,mi.com,.bilibili.com";
+        "network.proxy.socks" = "127.0.0.1";
+        "network.proxy.socks_port" = 1081;
+        "network.proxy.socks_remote_dns" = true;
+        "network.proxy.type" = 1;
+      };
+      modules.desktop.browsers.firefox.proxyConfigAwsman = {
+        "network.proxy.no_proxies_on" = "127.0.0.1,localhost,192.168.50.84,aliyundrive.com,aliyun.com,jd.com,taobao.com,mi.com,.bilibili.com";
+        "network.proxy.socks" = "127.0.0.1";
+        "network.proxy.socks_port" = 1082;
+        "network.proxy.socks_remote_dns" = true;
+        "network.proxy.type" = 1;
+      };
+
 
       # Use a stable profile name so we can target it in themes
       home.file = let cfgPath = ".mozilla/firefox"; in {
@@ -236,7 +289,19 @@ in {
           [Profile1]
           Name=proxy
           IsRelative=1
-          Path=proxy.default
+          Path=proxy.pacman
+	  Default=0
+
+          [Profile2]
+          Name=proxy
+          IsRelative=1
+          Path=proxy.superman
+	  Default=0
+
+          [Profile3]
+          Name=proxy
+          IsRelative=1
+          Path=proxy.awsman
 	  Default=0
 
           [General]
@@ -265,8 +330,9 @@ in {
             text = cfg.userContent;
           };
 
-	## proxy.default profile
-        "${cfgPath}/proxy.default/user.js" =
+
+        ## proxy.pacman profile
+        "${cfgPath}/proxy.pacman/user.js" =
           mkIf (cfg.settings != {} || cfg.extraConfig != "") {
             text = ''
               ${concatStrings (mapAttrsToList (name: value: ''
@@ -275,28 +341,97 @@ in {
 	      ${cfg.extraConfig}
               ${concatStrings(mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.proxyConfig)}
+              '') cfg.proxyConfigPacman)}
             '';
           };
 
         #"${cfgPath}/proxy.default/prefs.js" =
-        #  mkIf (cfg.proxyConfig != {}) {
+        #  mkIf (cfg.proxyConfigPacman != {}) {
         #    text = ''
         #      ${concatStrings (mapAttrsToList (name: value: ''
         #        user_pref("${name}", ${builtins.toJSON value});
-        #      '') cfg.proxyConfig)}
+        #      '') cfg.proxyConfigPacman)}
         #    '';
         #  };
 
-        "${cfgPath}/proxy.default/chrome/userChrome.css" =
+        "${cfgPath}/proxy.pacman/chrome/userChrome.css" =
           mkIf (cfg.userChrome != "") {
             text = cfg.userChrome;
           };
 
-        "${cfgPath}/proxy.default/chrome/userContent.css" =
+        "${cfgPath}/proxy.pacman/chrome/userContent.css" =
           mkIf (cfg.userContent != "") {
             text = cfg.userContent;
           };
+
+
+        ## proxy.superman profile
+        "${cfgPath}/proxy.superman/user.js" =
+          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+            text = ''
+              ${concatStrings (mapAttrsToList (name: value: ''
+                user_pref("${name}", ${builtins.toJSON value});
+              '') cfg.settings)}
+	      ${cfg.extraConfig}
+              ${concatStrings(mapAttrsToList (name: value: ''
+                user_pref("${name}", ${builtins.toJSON value});
+              '') cfg.proxyConfigSuperman)}
+            '';
+          };
+
+        #"${cfgPath}/proxy.superman/prefs.js" =
+        #  mkIf (cfg.proxyConfigSuperman != {}) {
+        #    text = ''
+        #      ${concatStrings (mapAttrsToList (name: value: ''
+        #        user_pref("${name}", ${builtins.toJSON value});
+        #      '') cfg.proxyConfigSuperman)}
+        #    '';
+        #  };
+
+        "${cfgPath}/proxy.superman/chrome/userChrome.css" =
+          mkIf (cfg.userChrome != "") {
+            text = cfg.userChrome;
+          };
+
+        "${cfgPath}/proxy.superman/chrome/userContent.css" =
+          mkIf (cfg.userContent != "") {
+            text = cfg.userContent;
+          };
+
+
+        ## proxy.awsman profile
+        "${cfgPath}/proxy.awsman/user.js" =
+          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+            text = ''
+              ${concatStrings (mapAttrsToList (name: value: ''
+                user_pref("${name}", ${builtins.toJSON value});
+              '') cfg.settings)}
+	      ${cfg.extraConfig}
+              ${concatStrings(mapAttrsToList (name: value: ''
+                user_pref("${name}", ${builtins.toJSON value});
+              '') cfg.proxyConfigAwsman)}
+            '';
+          };
+
+        #"${cfgPath}/proxy.awsman/prefs.js" =
+        #  mkIf (cfg.proxyConfigAwsman != {}) {
+        #    text = ''
+        #      ${concatStrings (mapAttrsToList (name: value: ''
+        #        user_pref("${name}", ${builtins.toJSON value});
+        #      '') cfg.proxyConfigAwsman)}
+        #    '';
+        #  };
+
+        "${cfgPath}/proxy.awsman/chrome/userChrome.css" =
+          mkIf (cfg.userChrome != "") {
+            text = cfg.userChrome;
+          };
+
+        "${cfgPath}/proxy.awsman/chrome/userContent.css" =
+          mkIf (cfg.userContent != "") {
+            text = cfg.userContent;
+          };
+
       };
     }
   ]);

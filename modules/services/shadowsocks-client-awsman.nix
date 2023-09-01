@@ -6,7 +6,7 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.shadowsocks-client;
+  cfg = config.modules.services.shadowsocks-client-awsman;
   opts = {
     server_port = cfg.remotePort;
     local_address = cfg.localAddress;
@@ -24,13 +24,13 @@ let
     password = cfg.password;
   } // cfg.extraConfig;
 
-  configFile = pkgs.writeText "shadowsocks.json" (builtins.toJSON opts);
+  configFile = pkgs.writeText "shadowsocks_awsman.json" (builtins.toJSON opts);
 
 in
 
 {
   ##### Interfaces
-  options.modules.services.shadowsocks-client = {
+  options.modules.services.shadowsocks-client-awsman = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -166,7 +166,7 @@ in
         message = "Cannot use both password and passwordFile for shadowsocks-libev";
       };
 
-    systemd.services.shadowsocks-rust-client = {
+    systemd.services.shadowsocks-rust-client-awsman = {
       description = "shadowsocks-rust client Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
@@ -174,14 +174,14 @@ in
       serviceConfig.PrivateTmp = true;
       script = ''
         ${optionalString (cfg.passwordFile != null) ''
-          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks.json
+          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks_awsman.json
         ''}
 
         ${optionalString (cfg.remoteAddressFile != null) ''
-          jq --arg server "$(cat "${cfg.remoteAddressFile}")" '. + { server: $server }' >> /tmp/shadowsocks.json
+          jq --arg server "$(cat "${cfg.remoteAddressFile}")" '. + { server: $server }' >> /tmp/shadowsocks_awsman.json
         ''}
 
-        exec sslocal -c ${if cfg.passwordFile != null then "/tmp/shadowsocks.json" else configFile}
+        exec ssservice local -c ${if cfg.passwordFile != null then "/tmp/shadowsocks_awsman.json" else configFile}
       '';
     };
   };

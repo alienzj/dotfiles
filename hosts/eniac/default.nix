@@ -214,20 +214,50 @@
       	#inactiveInterval = 10;
       };
       flameshot.enable = true;
+
       #transmission.enable = true;
-      shadowsocks-client = {
+
+      shadowsocks-client-pacman = {
         enable = true;
 	remotePort = 33708;
 	localAddress = "127.0.0.1";
 	localPort = 1080;
-	remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
-	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
+	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_pacman";
+	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      rathole-client = {
+      shadowsocks-client-superman = {
         enable = true;
-	configFile = "/home/alienzj/projects/configuration/rathole/eniac_c.toml";
+	remotePort = 33807;
+	localAddress = "127.0.0.1";
+	localPort = 1081;
+	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
+	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
+        encryptionMethod = "chacha20-ietf-poly1305";
       };
+      #shadowsocks-client-superman = {
+      #  enable = true;
+      #	 remotePort = 33807;
+      #	 localAddress = "127.0.0.1";
+      #	 localPort = 1081;
+      #  remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server_superman";
+      #  passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password_superman";
+      #  encryptionMethod = "chacha20-ietf-poly1305";
+      #};
+ 
+      rathole-client-pacman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/pacman_eniac_c.toml";
+      };
+      rathole-client-superman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/superman_eniac_c.toml";
+      };
+      #rathole-client-awsman = {
+      #  enable = true;
+      #	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_eniac_c.toml";
+      #};
+
       boinc.enable = true;
       slurm.enable = true;
       earlyoom.enable = true;
@@ -266,11 +296,12 @@
   # firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 2323 3389 8080 8888 8787 ];
-    allowedUDPPortRanges = [
-      { from = 4000; to = 4007; }
-      { from = 8000; to = 8010; }
-    ];
+    allowedTCPPorts = [ 80 443 2323 2333 2343 8080 ];
+    #allowedUDPPorts = [ 80 443 2323 2333 2343 8080 ];
+    #allowedUDPPortRanges = [
+    #  { from = 4000; to = 4007; }
+    #  { from = 8000; to = 8010; }
+    #];
   };
 
 

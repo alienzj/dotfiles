@@ -3,11 +3,11 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.rathole-client;
+  cfg = config.modules.services.rathole-client-superman;
   configFile = cfg.configFile;
 in
 {
-  options.modules.services.rathole-client = {
+  options.modules.services.rathole-client-superman = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -26,7 +26,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.services.rathole-client = {
+    systemd.services.rathole-client-superman = {
       description = "rathole client Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];

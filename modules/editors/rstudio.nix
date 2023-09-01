@@ -46,6 +46,9 @@ let cfg = config.modules.editors.rstudio;
       tidymodels
       vegan
       shiny
+      ggplot2
+      ggsci
+      ggpubr
       ggtree
       ggtreeExtra
       MicrobiotaProcess
@@ -63,15 +66,23 @@ let cfg = config.modules.editors.rstudio;
       forcats
       tidytree
       readxl
+      stringr
+      stringi
       writexl
       flextable
-      randomForest	
+      randomForest
       tinytex
       ymlthis
       knitr
+      markdown
       rmarkdown
       curatedMetagenomicData
       SummarizedExperiment
+      Rcpp
+      Rcpp11
+      curl
+      jsonlite
+      Maaslin2
     ];
   };
 in {
@@ -81,8 +92,9 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      pkgs.unstable.rstudio
-      #RStudio-with-packages
+      #pkgs.unstable.rstudio
+      RStudio-with-packages
+      #pkgconfig
     ];
   };
 }

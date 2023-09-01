@@ -6,14 +6,17 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.shadowsocks-server;
+  cfg = config.modules.services.shadowsocks-client-pacman;
   opts = {
-    server = cfg.localAddress;
-    server_port = cfg.port;
+    server_port = cfg.remotePort;
+    local_address = cfg.localAddress;
+    local_port = cfg.localPort;
     method = cfg.encryptionMethod;
     mode = cfg.mode;
     user = "nobody";
     fast_open = cfg.fastOpen;
+  } // optionalAttrs (cfg.remoteAddress != null) {
+    server = cfg.remoteAddress;
   } // optionalAttrs (cfg.plugin != null) {
     plugin = cfg.plugin;
     plugin_opts = cfg.pluginOpts;
@@ -21,34 +24,58 @@ let
     password = cfg.password;
   } // cfg.extraConfig;
 
-  configFile = pkgs.writeText "shadowsocks.json" (builtins.toJSON opts);
+  configFile = pkgs.writeText "shadowsocks_pacman.json" (builtins.toJSON opts);
 
 in
 
 {
   ##### Interfaces
-  options.modules.services.shadowsocks-server = {
+  options.modules.services.shadowsocks-client-pacman = {
     enable = mkOption {
       type = types.bool;
       default = false;
       description = lib.mdDoc ''
-        Whether to run shadowsocks-rust shadowsocks server.
+        Whether to run shadowsocks-rust shadowsocks client.
+      '';
+    };
+
+    remoteAddress = mkOption {
+      type = types.str;
+      default = "207.148.125.210";
+      description = lib.mdDoc ''
+        Remote addresses to which the server run at.
+      '';
+    };
+
+    remoteAddressFile = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = lib.mdDoc ''
+        Remote Server Address file with remote server ip.
+      '';
+    };
+
+    remotePort = mkOption {
+      type = types.port;
+      default = 8388;
+      description = lib.mdDoc ''
+        Port which the server uses.
       '';
     };
 
     localAddress = mkOption {
       type = types.str;
-      default ="[::0]"; # "0.0.0.0"
+      default = "127.0.0.1";
       description = lib.mdDoc ''
-        Local addresses to which the server binds.
+        Local addresses to which the client binds.
       '';
     };
 
-    port = mkOption {
+    localPort = mkOption {
       type = types.port;
-      default = 8388;
+      default = 1080;
       description = lib.mdDoc ''
-        Port which the server uses.
+        Port which the client uses.
       '';
     };
 
@@ -139,17 +166,22 @@ in
         message = "Cannot use both password and passwordFile for shadowsocks-libev";
       };
 
-    systemd.services.shadowsocks-rust-server = {
-      description = "shadowsocks-rust server Daemon";
+    systemd.services.shadowsocks-rust-client-pacman = {
+      description = "shadowsocks-rust client Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       path = [ pkgs.shadowsocks-rust ] ++ optional (cfg.plugin != null) cfg.plugin ++ optional (cfg.passwordFile != null) pkgs.jq;
       serviceConfig.PrivateTmp = true;
       script = ''
         ${optionalString (cfg.passwordFile != null) ''
-          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks.json
+          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks_pacman.json
         ''}
-        exec ssservice server -c ${if cfg.passwordFile != null then "/tmp/shadowsocks.json" else configFile}
+
+        ${optionalString (cfg.remoteAddressFile != null) ''
+          jq --arg server "$(cat "${cfg.remoteAddressFile}")" '. + { server: $server }' >> /tmp/shadowsocks_pacman.json
+        ''}
+
+        exec ssservice local -c ${if cfg.passwordFile != null then "/tmp/shadowsocks_pacman.json" else configFile}
       '';
     };
   };
