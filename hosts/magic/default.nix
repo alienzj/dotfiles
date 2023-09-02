@@ -216,23 +216,48 @@
       };
       flameshot.enable = true;
       #transmission.enable = true;
-      shadowsocks-client = {
-        enable = false;
+
+      shadowsocks-client-pacman = {
+        enable = true;
 	remotePort = 33708;
 	localAddress = "127.0.0.1";
 	localPort = 1080;
-	remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
-	passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
+	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_pacman";
+	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      rathole-client = {
+      shadowsocks-client-superman = {
         enable = true;
-	configFile = "/home/alienzj/projects/configuration/rathole/magic_c.toml";
+	remotePort = 33807;
+	localAddress = "127.0.0.1";
+	localPort = 1081;
+	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
+	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
+        encryptionMethod = "chacha20-ietf-poly1305";
       };
-      rathole-client-aws = {
-        enable = false;
-	configFile = "/home/alienzj/projects/configuration/rathole/aws_magic_c.toml";
+      shadowsocks-client-awsman = {
+        enable = true;
+	remotePort = 9391;
+	localAddress = "127.0.0.1";
+	localPort = 1082;
+	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_awsman";
+	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_awsman";
+        encryptionMethod = "chacha20-ietf-poly1305";
       };
+ 
+      rathole-client-pacman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/pacman_magic_c.toml";
+      };
+      rathole-client-superman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/superman_magic_c.toml";
+      };
+      rathole-client-awsman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_magic_c.toml";
+      };
+ 
       boinc.enable = true;
       slurm.enable = true;
       earlyoom.enable = true;
@@ -271,13 +296,8 @@
   # firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 1993 80 443 2223 3389 8080 8888 8787 8891 8791 8892 8792 8893 8793 8894 8794 8123 ];
-    allowedUDPPortRanges = [
-      { from = 4000; to = 4007; }
-      { from = 8000; to = 8010; }
-      { from = 8891; to = 8894; }
-      { from = 8791; to = 8794; }
-    ];
+    allowedTCPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 9391 ];
+    allowedUDPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 9391 ];
   };
 
   ## Personal backups
