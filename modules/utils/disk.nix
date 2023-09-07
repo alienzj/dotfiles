@@ -12,6 +12,7 @@ in {
     user.packages = with pkgs; [
       unstable.diskus
       unstable.lfs
+      unstable.pigz
     ];
   };
 }

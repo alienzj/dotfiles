@@ -162,9 +162,14 @@
 	xdg.enable = true;
       };
       r.enable = true;
+      julia.enable = true;
+      go.enable = true;
+      haskell.enable = true;
       zeal.enable = true;
       conda.enable = true;
       mamba.enable = true;
+      ruby.enable = true;
+      web.enable = true;
     };
     editors = {
       default = "nvim";
