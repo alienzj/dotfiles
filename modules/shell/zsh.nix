@@ -47,6 +47,7 @@ in {
       jq
       ripgrep
       tldr
+      shfmt
     ];
 
     env = {

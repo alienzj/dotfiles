@@ -14,7 +14,7 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = true;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -25,10 +25,10 @@
 	scrcpy.enable = true;
 	thunderbird.enable = true;
 	anydesk.enable = true;
-	rustdesk.enable = true;
+	rustdesk.enable = false;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
-	etcher.enable = true;
+	etcher.enable = false; 
 	authenticator.enable = true;
 	backups.enable = true;
 	khronos.enable = true;
@@ -112,7 +112,7 @@
 	tdesktop.enable = true;
 	whatsapp.enable = true;
 	slack.enable = true;
-	discord.enable = true;
+	discord.enable = false;
       };
       input = {
         fcitx5.enable = true;
@@ -159,6 +159,11 @@
       r.enable = true;
       conda.enable = true;
       mamba.enable = true;
+      julia.enable = true;
+      go.enable = true;
+      ruby.enable = true;
+      web.enable = true;
+      haskell.enable = true;
     };
     editors = {
       default = "nvim";
@@ -210,19 +215,47 @@
       };
       flameshot.enable = true;
       #transmission.enable = true;
-      shadowsocks-client = {
+      shadowsocks-client-pacman = {
       	enable = true;
         remotePort = 33708;
         localAddress = "127.0.0.1";
         localPort = 1080;
-        remoteAddressFile = "/home/alienzj/projects/configuration/shadowsocks/server";
-        passwordFile = "/home/alienzj/projects/configuration/shadowsocks/password";
+        remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_pacman";
+        passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      rathole-client = {
-        enable = true;
-	configFile = "/home/alienzj/projects/configuration/rathole/yoga_c.toml";
+      shadowsocks-client-superman = {
+      	enable = true;
+        remotePort = 33807;
+        localAddress = "127.0.0.1";
+        localPort = 1081;
+        remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
+        passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
+        encryptionMethod = "chacha20-ietf-poly1305";
       };
+      #shadowsocks-client-awsman = {
+      #	enable = true;
+      #  remotePort = 9391;
+      #  localAddress = "127.0.0.1";
+      #  localPort = 1082;
+      #  remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_awsman";
+      #  passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_awsman";
+      #  encryptionMethod = "chacha20-ietf-poly1305";
+      #};
+ 
+      rathole-client-pacman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/pacman_yoga_c.toml";
+      };
+      rathole-client-superman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/superman_yoga_c.toml";
+      };
+      rathole-client-awsman = {
+        enable = true;
+	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_yoga_c.toml";
+      };
+
       boinc.enable = true;
       slurm.enable = true;
       earlyoom.enable = true;
@@ -262,11 +295,12 @@
   # firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 80 443 2323 3389 8080 8888 8787 ];
-    allowedUDPPortRanges = [
-      { from = 4000; to = 4007; }
-      { from = 8000; to = 8010; }
-    ];
+    allowedTCPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
+    allowedUDPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
+    #allowedUDPPortRanges = [
+    #  { from = 4000; to = 4007; }
+    #  { from = 8000; to = 8010; }
+    #];
   };
 
 
