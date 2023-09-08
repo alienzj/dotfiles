@@ -164,6 +164,11 @@
       zeal.enable = true;
       conda.enable = true;
       mamba.enable = true;
+      julia.enable = true;
+      ruby.enable = true;
+      go.enable = true;
+      web.enable = true;
+      haskell.enable = true;
     };
     editors = {
       default = "nvim";
@@ -235,15 +240,15 @@
 	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      shadowsocks-client-awsman = {
-        enable = true;
-        remotePort = 9391;
-      	localAddress = "127.0.0.1";
-      	localPort = 1082;
-        remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_awsman";
-        passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_awsman";
-        encryptionMethod = "chacha20-ietf-poly1305";
-      };
+      #shadowsocks-client-awsman = {
+      #  enable = true;
+      #  remotePort = 9391;
+      #	localAddress = "127.0.0.1";
+      #	localPort = 1082;
+      #  remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_awsman";
+      #  passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_awsman";
+      #  encryptionMethod = "chacha20-ietf-poly1305";
+      #};
  
       rathole-client-pacman = {
         enable = true;
@@ -296,8 +301,8 @@
   # firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 2323 2333 2343 8080 ];
-    #allowedUDPPorts = [ 80 443 2323 2333 2343 8080 ];
+    allowedTCPPorts = [ 80 443 3389 8080 2323 2333 2343 ];
+    allowedUDPPorts = [ 80 443 3389 8080 2323 2333 2343 ];
     #allowedUDPPortRanges = [
     #  { from = 4000; to = 4007; }
     #  { from = 8000; to = 8010; }

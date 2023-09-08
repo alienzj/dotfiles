@@ -48,24 +48,31 @@ in {
         #python-with-my-packages
 
         python311
+	pipenv
         python311Packages.pip
+        python311Packages.cython
+        python311Packages.isort
+        python311Packages.pyflakes
+        python311Packages.pytest
+        python311Packages.nose
         python311Packages.black
         python311Packages.setuptools
         python311Packages.pylint
         python311Packages.poetry-core
         python311Packages.ipython
-        #python311Packages.flask
-        #python311Packages.django
-      	#python311Packages.dash
-        #python311Packages.plotly
-        #python311Packages.requests
-        #python311Packages.jupyter
-        #python311Packages.jupyterlab
-        #python311Packages.pandas
-        #python311Packages.numpy
-        #python311Packages.matplotlib
-        #python311Packages.seaborn
-        #python311Packages.scipy
+        python311Packages.grip
+        python311Packages.flask
+        python311Packages.django
+        python311Packages.dash
+        python311Packages.plotly
+        python311Packages.requests
+        python311Packages.jupyter
+        python311Packages.jupyterlab
+        python311Packages.pandas
+        python311Packages.numpy
+        python311Packages.matplotlib
+        python311Packages.seaborn
+        python311Packages.scipy
         #python311Packages.openai
         #python311Pacakges.openaiauth
 	#python311Packages.tiktoken
