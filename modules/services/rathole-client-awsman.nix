@@ -26,7 +26,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.services.rathole-client-awsman = {
+    systemd.services.rathole-c-awsman = {
       description = "rathole client Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];

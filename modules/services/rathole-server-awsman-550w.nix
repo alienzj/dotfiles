@@ -3,16 +3,16 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.rathole-client-pacman;
+  cfg = config.modules.services.rathole-server-awsman-550w;
   configFile = cfg.configFile;
 in
 {
-  options.modules.services.rathole-client-pacman = {
+  options.modules.services.rathole-server-awsman-550w = {
     enable = mkOption {
       type = types.bool;
       default = false;
       description = lib.mdDoc ''
-        Whether to run rathole client.
+        Whether to run rathole server.
       '';
     };
 
@@ -20,20 +20,20 @@ in
       type = types.nullOr types.path;
       default = null;
       description = lib.mdDoc ''
-        Rathole client config toml file.
+        Rathole server config toml file.
       '';
     };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.rathole-c-pacman = {
-      description = "rathole client Daemon";
+    systemd.services.rathole-s-awsman-550w = {
+      description = "rathole server Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       path = [ pkgs.rathole ];
       serviceConfig.PrivateTmp = true;
       script = ''
-        exec rathole -c ${configFile}
+        exec rathole -s ${configFile}
       '';
     };
   };

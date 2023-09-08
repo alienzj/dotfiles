@@ -166,7 +166,7 @@ in
         message = "Cannot use both password and passwordFile for shadowsocks-libev";
       };
 
-    systemd.services.shadowsocks-rust-client-awsman = {
+    systemd.services.shadowsocks-c-awsman = {
       description = "shadowsocks-rust client Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];

@@ -6,17 +6,14 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.shadowsocks-client-superman;
+  cfg = config.modules.services.shadowsocks-server-awsman;
   opts = {
-    server_port = cfg.remotePort;
-    local_address = cfg.localAddress;
-    local_port = cfg.localPort;
+    server = cfg.localAddress;
+    server_port = cfg.port;
     method = cfg.encryptionMethod;
     mode = cfg.mode;
     user = "nobody";
     fast_open = cfg.fastOpen;
-  } // optionalAttrs (cfg.remoteAddress != null) {
-    server = cfg.remoteAddress;
   } // optionalAttrs (cfg.plugin != null) {
     plugin = cfg.plugin;
     plugin_opts = cfg.pluginOpts;
@@ -24,58 +21,34 @@ let
     password = cfg.password;
   } // cfg.extraConfig;
 
-  configFile = pkgs.writeText "shadowsocks_superman.json" (builtins.toJSON opts);
+  configFile = pkgs.writeText "shadowsocks_awsman.json" (builtins.toJSON opts);
 
 in
 
 {
   ##### Interfaces
-  options.modules.services.shadowsocks-client-superman = {
+  options.modules.services.shadowsocks-server-awsman = {
     enable = mkOption {
       type = types.bool;
       default = false;
       description = lib.mdDoc ''
-        Whether to run shadowsocks-rust shadowsocks client.
-      '';
-    };
-
-    remoteAddress = mkOption {
-      type = types.str;
-      default = "207.148.125.210";
-      description = lib.mdDoc ''
-        Remote addresses to which the server run at.
-      '';
-    };
-
-    remoteAddressFile = mkOption {
-      type = types.nullOr types.path;
-      default = null;
-      description = lib.mdDoc ''
-        Remote Server Address file with remote server ip.
-      '';
-    };
-
-    remotePort = mkOption {
-      type = types.port;
-      default = 8388;
-      description = lib.mdDoc ''
-        Port which the server uses.
+        Whether to run shadowsocks-rust shadowsocks server.
       '';
     };
 
     localAddress = mkOption {
       type = types.str;
-      default = "127.0.0.1";
+      default ="[::0]"; # "0.0.0.0"
       description = lib.mdDoc ''
-        Local addresses to which the client binds.
+        Local addresses to which the server binds.
       '';
     };
 
-    localPort = mkOption {
+    port = mkOption {
       type = types.port;
-      default = 1080;
+      default = 8388;
       description = lib.mdDoc ''
-        Port which the client uses.
+        Port which the server uses.
       '';
     };
 
@@ -166,22 +139,17 @@ in
         message = "Cannot use both password and passwordFile for shadowsocks-libev";
       };
 
-    systemd.services.shadowsocks-c-superman = {
-      description = "shadowsocks-rust client Daemon";
+    systemd.services.shadowsocks-s-awsman = {
+      description = "shadowsocks-rust server Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       path = [ pkgs.shadowsocks-rust ] ++ optional (cfg.plugin != null) cfg.plugin ++ optional (cfg.passwordFile != null) pkgs.jq;
       serviceConfig.PrivateTmp = true;
       script = ''
         ${optionalString (cfg.passwordFile != null) ''
-          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks_superman.json
+          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks_awsman.json
         ''}
-
-        ${optionalString (cfg.remoteAddressFile != null) ''
-          jq --arg server "$(cat "${cfg.remoteAddressFile}")" '. + { server: $server }' >> /tmp/shadowsocks_superman.json
-        ''}
-
-        exec ssservice local -c ${if cfg.passwordFile != null then "/tmp/shadowsocks_superman.json" else configFile}
+        exec ssservice server -c ${if cfg.passwordFile != null then "/tmp/shadowsocks_awsman.json" else configFile}
       '';
     };
   };

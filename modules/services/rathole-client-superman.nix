@@ -26,7 +26,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.services.rathole-client-superman = {
+    systemd.services.rathole-c-superman = {
       description = "rathole client Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
