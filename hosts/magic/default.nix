@@ -89,7 +89,7 @@
       vm = {
         lxd.enable = true;
         qemu.enable = true;
-	virtualbox.enable = true;
+	#virtualbox.enable = true;
 	virt-manager.enable = true;
       };
       noter = {
@@ -240,15 +240,15 @@
 	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      shadowsocks-client-awsman = {
-        enable = true;
-	remotePort = 9391;
-	localAddress = "127.0.0.1";
-	localPort = 1082;
-	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_awsman";
-	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_awsman";
-        encryptionMethod = "chacha20-ietf-poly1305";
-      };
+      # shadowsocks-client-awsman = {
+      #   enable = true;
+      #	  remotePort = 9391;
+      #	  localAddress = "127.0.0.1";
+      #	  localPort = 1082;
+      #	  remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_awsman";
+      #	  passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_awsman";
+      #   encryptionMethod = "chacha20-ietf-poly1305";
+      # };
  
       rathole-client-pacman = {
         enable = true;
@@ -301,8 +301,8 @@
   # firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 9391 ];
-    allowedUDPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 9391 ];
+    allowedTCPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 ];
+    allowedUDPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 ];
   };
 
   ## Personal backups
