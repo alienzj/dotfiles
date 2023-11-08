@@ -12,5 +12,9 @@ in {
     programs.adb.enable = true;
     #users."${config.user.name}".extraGroups = [ "adbusers" ];
     user.extraGroups = [ "adbusers" ];
+
+    services.udev.packages = [
+      pkgs.android-udev-rules
+    ];
   };
 }

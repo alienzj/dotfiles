@@ -10,7 +10,8 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      geph
+      #geph.gui
+      geph.cli
     ];
   };
 }

@@ -35,9 +35,9 @@
 	solanum.enable = true;
 	suckit.enable = true;
 	netapplet.enable = true;
-	#geph.enable = true;
+	geph.enable = true;
 	synology-drive-client.enable = true;
-	cryptowatch.enable = true;
+	#cryptowatch.enable = true;
 	vpn.enable = true;
 	file-manager.enable = true;
 	rdp.enable = true;
@@ -89,7 +89,7 @@
       vm = {
         lxd.enable = true;
         qemu.enable = true;
-	virtualbox.enable = true;
+	virtualbox.enable = false;
 	virt-manager.enable = true;
       };
       noter = {
@@ -231,15 +231,15 @@
 	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      shadowsocks-client-superman = {
-        enable = true;
-	remotePort = 33807;
-	localAddress = "127.0.0.1";
-	localPort = 1081;
-	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
-	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
-        encryptionMethod = "chacha20-ietf-poly1305";
-      };
+      #shadowsocks-client-superman = {
+      #  enable = true;
+      #  remotePort = 33807;
+      #  localAddress = "127.0.0.1";
+      #	 localPort = 1081;
+      #	 remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
+      #	 passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
+      #  encryptionMethod = "chacha20-ietf-poly1305";
+      #};
       #shadowsocks-client-awsman = {
       #  enable = true;
       #  remotePort = 9391;
@@ -254,10 +254,10 @@
         enable = true;
 	configFile = "/home/alienzj/projects/ohconfig/rathole/pacman_eniac_c.toml";
       };
-      rathole-client-superman = {
-        enable = true;
-	configFile = "/home/alienzj/projects/ohconfig/rathole/superman_eniac_c.toml";
-      };
+      #rathole-client-superman = {
+      #  enable = true;
+      #	 configFile = "/home/alienzj/projects/ohconfig/rathole/superman_eniac_c.toml";
+      #};
       rathole-client-awsman = {
         enable = true;
       	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_eniac_c.toml";

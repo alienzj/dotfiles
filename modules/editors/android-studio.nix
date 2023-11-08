@@ -13,6 +13,7 @@ in {
       android-tools
       android-file-transfer
       android-studio
+      #android-udev-rules
     ];
   };
 }
