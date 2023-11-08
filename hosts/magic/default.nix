@@ -13,7 +13,7 @@
         rofi.enable = true;
 	skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = true;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
 	onlyoffice.enable = true;
@@ -34,9 +34,9 @@
 	solanum.enable = true;
 	suckit.enable = true;
 	netapplet.enable = true;
-	#geph.enable = true;
+	geph.enable = true;
 	synology-drive-client.enable = true;
-	cryptowatch.enable = true;
+	#cryptowatch.enable = true;
 	vpn.enable = true;
 	file-manager.enable = true;
 	rdp.enable = true;
@@ -89,7 +89,7 @@
       vm = {
         lxd.enable = true;
         qemu.enable = true;
-	#virtualbox.enable = true;
+	virtualbox.enable = true;
 	virt-manager.enable = true;
       };
       noter = {
@@ -189,6 +189,13 @@
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
+      rustrover.enable = true;
+      clion.enable = true;
+      goland.enable = true;
+      dataspell.enable = true;
+      datagrip.enable = true;
+      mps.enable = true;
+      gateway.enable = true;
       android-studio.enable = true;
       gaphor.enable = true;
       textpieces.enable = false;
@@ -231,15 +238,15 @@
 	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      shadowsocks-client-superman = {
-        enable = true;
-	remotePort = 33807;
-	localAddress = "127.0.0.1";
-	localPort = 1081;
-	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
-	passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
-        encryptionMethod = "chacha20-ietf-poly1305";
-      };
+      #shadowsocks-client-superman = {
+      #  enable = true;
+      #	 remotePort = 33807;
+      #	 localAddress = "127.0.0.1";
+      #	 localPort = 1081;
+      #	 remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
+      #	 passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
+      #  encryptionMethod = "chacha20-ietf-poly1305";
+      # };
       # shadowsocks-client-awsman = {
       #   enable = true;
       #	  remotePort = 9391;
@@ -254,10 +261,10 @@
         enable = true;
 	configFile = "/home/alienzj/projects/ohconfig/rathole/pacman_magic_c.toml";
       };
-      rathole-client-superman = {
-        enable = true;
-	configFile = "/home/alienzj/projects/ohconfig/rathole/superman_magic_c.toml";
-      };
+      #rathole-client-superman = {
+      #  enable = true;
+      #	 configFile = "/home/alienzj/projects/ohconfig/rathole/superman_magic_c.toml";
+      #};
       rathole-client-awsman = {
         enable = true;
 	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_magic_c.toml";

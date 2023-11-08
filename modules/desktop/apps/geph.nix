@@ -9,8 +9,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      geph
+    user.packages = [
+      #pkgs.unstable.geph.gui
+      pkgs.unstable.geph.cli
     ];
   };
 }
