@@ -111,6 +111,8 @@ let cfg = config.modules.editors.rstudio;
       yaml
       optparse
       glue
+
+      V8
     ];
   };
 in {
