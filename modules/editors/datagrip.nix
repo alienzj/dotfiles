@@ -2,15 +2,15 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.apps.transmission;
+let cfg = config.modules.editors.datagrip;
 in {
-  options.modules.desktop.apps.transmission = {
+  options.modules.editors.datagrip = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      unstable.transmission-gtk
+      jetbrains.datagrip
     ];
   };
 }

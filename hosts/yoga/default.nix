@@ -34,8 +34,8 @@
 	khronos.enable = true;
 	solanum.enable = true;
 	suckit.enable = true;
-	cryptowatch.enable = true;
-	#geph.enable = true;
+	#cryptowatch.enable = true;
+	geph.enable = true;
 	netapplet.enable = true;
 	synology-drive-client.enable = true;
 	vpn.enable = true;
@@ -183,6 +183,13 @@
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
+      rustrover.enable = true;
+      clion.enable = true;
+      datagrip.enable = true;
+      dataspell.enable = true;
+      gateway.enable = true;
+      goland.enable = true;
+      mps.enable = true;
       android-studio.enable = true;
       gaphor.enable = true;
       #textpieces.enable = true;
@@ -224,15 +231,15 @@
         passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
-      shadowsocks-client-superman = {
-      	enable = true;
-        remotePort = 33807;
-        localAddress = "127.0.0.1";
-        localPort = 1081;
-        remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
-        passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
-        encryptionMethod = "chacha20-ietf-poly1305";
-      };
+      #shadowsocks-client-superman = {
+      #	 enable = true;
+      #  remotePort = 33807;
+      #  localAddress = "127.0.0.1";
+      #  localPort = 1081;
+      #  remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
+      #  passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
+      #  encryptionMethod = "chacha20-ietf-poly1305";
+      #};
       #shadowsocks-client-awsman = {
       #	enable = true;
       #  remotePort = 9391;
@@ -247,10 +254,10 @@
         enable = true;
 	configFile = "/home/alienzj/projects/ohconfig/rathole/pacman_yoga_c.toml";
       };
-      rathole-client-superman = {
-        enable = true;
-	configFile = "/home/alienzj/projects/ohconfig/rathole/superman_yoga_c.toml";
-      };
+      #rathole-client-superman = {
+      #  enable = true;
+      #	 configFile = "/home/alienzj/projects/ohconfig/rathole/superman_yoga_c.toml";
+      #};
       rathole-client-awsman = {
         enable = true;
 	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_yoga_c.toml";

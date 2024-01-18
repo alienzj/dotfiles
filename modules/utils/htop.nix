@@ -13,12 +13,12 @@ in {
       #unstable.htop
       unstable.hydra-check
       unstable.bandwhich
-      unstable.zenith
       #unstable.nvtop
       unstable.ctop
       #unstable.bpytop
       unstable.btop
       unstable.visidata
+      unstable.sniffnet
     ];
   };
 }

@@ -47,12 +47,12 @@ in {
 
       # Sprite sheets & animation
       (if cfg.sprites.enable then [
-        #aseprite-unfree
+        aseprite-unfree
       ] else []) ++
 
       # 3D modelling
       (if cfg.models.enable then [
-        blender
+        unstable.blender
       ] else []);
 
     home.configFile = mkIf cfg.raster.enable {

@@ -41,8 +41,8 @@
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau
     libvdpau-va-gl
-    rocm-opencl-icd
-    rocm-opencl-runtime
+    rocmPackages.clr.icd
+    rocmPackages.clr
     amdvlk
   ];
 

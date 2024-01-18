@@ -1,6 +1,6 @@
 # https://github.com/luishfonseca/dotfiles/blob/main/modules/upgrade-diff.nix
 
-{ pkgs, ... }:
+{ pkgs, ... }: 
 
 {
   system.activationScripts.diff = {

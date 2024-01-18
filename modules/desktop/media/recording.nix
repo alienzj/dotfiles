@@ -26,7 +26,7 @@ in {
       # for longer term streaming/recording the screen
       (if cfg.video.enable then [ 
           unstable.obs-studio
-	  #unstable.handbrake
+	  unstable.handbrake
 	  #unstable.gnome-decoder
 	  unstable.video-trimmer
 	  unstable.vokoscreen-ng
