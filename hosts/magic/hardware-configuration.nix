@@ -45,7 +45,14 @@
   };
 
   nix.settings.max-jobs = lib.mkDefault 16;
-  powerManagement.cpuFreqGovernor = "performance";
+
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "performance";
+    powertop.enable = true;
+
+  };
+  services.thermald.enable = true;
 
   # Displays
   services.xserver = {

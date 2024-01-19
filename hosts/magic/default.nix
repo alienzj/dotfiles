@@ -53,9 +53,9 @@
         emulators = {
 	  #psx.enable = true;
 	  ds.enable = true;
-	  gb.enable = true;
-	  gba.enable = true;
-	  snes.enable = true;
+	  gb.enable = false;
+	  gba.enable = false;
+	  snes.enable = false;
 	};
 	games.enable = true;
       };
@@ -132,7 +132,9 @@
       math = {
         enable = true;
 	tools.enable = true;
-	mathematica.enable = false;
+	wolframengine.enable = true;
+	mathematica.enable = true;
+	matlab.enable = true;
       };
     };
     dev = {
@@ -167,7 +169,7 @@
       haskell.enable = true;
       zeal.enable = true;
       conda.enable = true;
-      mamba.enable = true;
+      mamba.enable = false;
       ruby.enable = true;
       web.enable = true;
     };
@@ -186,7 +188,8 @@
       #vscode.enable = true;
       vscode_fhs.enable = true;
       vscodium.enable = true;
-      rstudio.enable = true;
+      rstudio.enable = true; 
+      rstudio-server.enable = true; 
       pycharm.enable = true;
       idea.enable = true;
       rustrover.enable = true;
@@ -197,7 +200,7 @@
       mps.enable = true;
       gateway.enable = true;
       android-studio.enable = true;
-      gaphor.enable = true;
+      gaphor.enable = false;
       textpieces.enable = false;
     };
     shell = {

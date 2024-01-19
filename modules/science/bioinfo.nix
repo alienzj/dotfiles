@@ -15,17 +15,17 @@ in {
 	unstable.bwa
 	unstable.blast
 	unstable.bowtie2
-	unstable.deeptools
+	#unstable.deeptools
 	unstable.fastp
 	unstable.hmmer
-	unstable.megahit
+	#unstable.megahit
 	unstable.minimap2
 	unstable.mmseqs2
 	unstable.sambamba
 	unstable.samtools
 	unstable.seqtk
 	unstable.seqkit
-	unstable.SPAdes
+	#unstable.SPAdes
 	unstable.sratoolkit
 	unstable.star
         unstable.vcftools
