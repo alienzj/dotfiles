@@ -40,49 +40,79 @@ let cfg = config.modules.editors.rstudio;
 
   RStudio-with-packages = pkgs.unstable.rstudioWrapper.override{
     packages = with pkgs.unstable.rPackages; [
+      tidyverse
+      # library(tidyverse) will load the core tidyverse packages:
+      ## ggplot2, for data visualisation.
+      ## dplyr, for data manipulation.
+      ## tidyr, for data tidying.
+      ## readr, for data import.
+      ## purrr, for functional programming.
+      ## tibble, for tibbles, a modern re-imagining of data frames.
+      ## stringr, for strings.
+      ## forcats, for factors.
+      ## lubridate, for date/times.
+
+      tidymodels
+      infer	
+
       devtools
       remotes
-      tidyverse
-      tidymodels
-      vegan
+
+      feather
+      httr
+      jsonlite
+      xml2
+      stringi
+      curl
+ 
       shiny
-      ggplot2
-      ggsci
-      ggpubr
+
+      knitr
+      rmarkdown
+      tinytex
+      ymlthis
+
+      vegan
+
       ggtree
       ggtreeExtra
+      tidytree
       MicrobiotaProcess
       MicrobiomeProfiler
       clusterProfiler
       enrichplot
+
       dada2
       DECIPHER
+
       ggpubr
       ggplotify
       ggalluvial
       ggstar
       ggnewscale
+
       coin
       forcats
-      tidytree
-      readxl
-      stringr
-      stringi
       writexl
       flextable
       randomForest
-      tinytex
-      ymlthis
-      knitr
-      markdown
-      rmarkdown
       curatedMetagenomicData
       SummarizedExperiment
+
       Rcpp
       Rcpp11
-      curl
-      jsonlite
+
       Maaslin2
+      pkgconfig
+      ComplexHeatmap
+      circlize
+      pagedown
+      reshape2
+      yaml
+      optparse
+      glue
+
+      V8
     ];
   };
 in {
@@ -94,7 +124,6 @@ in {
     user.packages = [
       #pkgs.unstable.rstudio
       RStudio-with-packages
-      #pkgconfig
     ];
   };
 }

@@ -11,7 +11,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       unstable.you-get
-      #unstable.youtube-dl
+      unstable.youtube-dl
       unstable.yutto
       unstable.yt-dlp
     ];

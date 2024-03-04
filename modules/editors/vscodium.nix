@@ -87,7 +87,7 @@ in {
 	  ms-toolsai.vscode-jupyter-slideshow
 
           # cpp
-	  ms-vscode.cpptools
+	  #ms-vscode.cpptools
 	  ms-vscode.cmake-tools
 	  ms-vscode.makefile-tools
 	  twxs.cmake
@@ -200,8 +200,8 @@ in {
       })
     ];
  
-    home.configFile = {
-      "VSCodium/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
-    };
+    #home.configFile = {
+    #  "VSCodium/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
+    #};
   };
 }

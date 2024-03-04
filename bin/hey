@@ -1,5 +1,5 @@
 #!/usr/bin/env cached-nix-shell
-#! nix-shell -p ruby_3_0 -i "ruby -S" --quiet
+#! nix-shell -p ruby_3_3 -i "ruby -S" --quiet
 
 DESC = <<~DESC
   Nix's CLI has a poor user story, in my opinion. It could be better; Guix is a
@@ -72,11 +72,16 @@ module Hey
   def self.rebuild(*args, sudo: false)
     sh [
         "env",
-        "http_proxy=http://127.0.0.1:9910",
-        "https_proxy=http://127.0.0.1:9910",
+        "http_proxy=socks5h://127.0.0.1:1080",
+        "https_proxy=socks5h://127.0.0.1:1080",
+        #"http_proxy=http://127.0.0.1:9999",
+        #"https_proxy=http://127.0.0.1:9999",
+        #"http_proxy=http://127.0.0.1:9910",
+        #"https_proxy=http://127.0.0.1:9910",
         "nixos-rebuild",
         "--flake", "#{@@opts[:flake]}##{@@opts[:host]}",
         "--option", "pure-eval", "no",
+	#"--option", "substituters", "",
         *args], sudo: sudo
   end
 

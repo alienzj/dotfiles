@@ -27,7 +27,7 @@ in {
       (if cfg.video.enable then [ 
           unstable.obs-studio
 	  unstable.handbrake
-	  #unstable.gnome-decoder
+	  unstable.gnome-decoder
 	  unstable.video-trimmer
 	  unstable.vokoscreen-ng
         ] else []);

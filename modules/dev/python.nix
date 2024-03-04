@@ -20,7 +20,7 @@ let devCfg = config.modules.dev;
       poetry-core
       flask
       django
-      #dash
+      dash
       plotly
       requests
       ipython
@@ -63,7 +63,7 @@ in {
         python311Packages.grip
         python311Packages.flask
         python311Packages.django
-        #python311Packages.dash
+      	python311Packages.dash
         python311Packages.plotly
         python311Packages.requests
         python311Packages.jupyter
@@ -75,6 +75,8 @@ in {
         python311Packages.scipy
         python311Packages.mkdocs
         python311Packages.mkdocs-material
+        python311Packages.mkdocs-jupyter
+
         #python311Packages.openai
         #python311Pacakges.openaiauth
 	#python311Packages.tiktoken

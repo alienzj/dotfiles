@@ -26,7 +26,7 @@ in {
             packages = [
               (pkgs.OVMF.override {
                 secureBoot = true;
-                csmSupport = false;
+                #csmSupport = false;
                 httpSupport = true;
                 tpmSupport = true;
               }).fd

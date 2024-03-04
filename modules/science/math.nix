@@ -1,4 +1,4 @@
-{ options, config, lib, pkgs, ... }:
+{ options, config, lib, pkgs, inputs, ... }:
 
 with lib;
 with lib.my;
@@ -9,10 +9,13 @@ in {
     tools.enable = mkBoolOpt true;
     worlframengine.enable = mkBoolOpt false;
     mathematica.enable = mkBoolOpt false;
+    matlab.enable = mkBoolOpt false;
     cplex.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [ inputs.nix-matlab.overlay ];
+
     user.packages = with pkgs; 
       (if cfg.tools.enable then [
         unstable.wxmaxima
@@ -30,6 +33,13 @@ in {
 	  webdoc = false;
 	  version = "13.2.1";
 	})
+      ] else []) ++
+
+      (if cfg.matlab.enable then [
+        matlab-language-server
+	matlab
+	matlab-mlint
+	matlab-mex
       ] else []) ++
 
       (if cfg.cplex.enable then [

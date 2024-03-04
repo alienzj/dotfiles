@@ -75,6 +75,7 @@ let cfg = config.modules.dev.r;
       #curatedMetagenomicData_
       curatedMetagenomicData
       SummarizedExperiment
+      V8
     ];
   };
 in {

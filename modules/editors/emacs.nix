@@ -47,7 +47,7 @@ in {
       (mkIf (config.programs.gnupg.agent.enable)
         pinentry-emacs)   # in-emacs gnupg prompts
       zstd                # for undo-fu-session/undo-tree compression
-      graphviz
+      graphviz # dot
       nixfmt
 
       ## Module dependencies

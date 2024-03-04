@@ -17,14 +17,14 @@
 	teams.enable = false;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
-	onlyoffice.enable = true;
+	onlyoffice.enable = true; 
 	usbimager.enable = true;
         godot.enable = true;
 	transmission.enable = true;
 	filezilla.enable = true;
 	scrcpy.enable = true;
 	thunderbird.enable = true;
-	anydesk.enable = true;
+	anydesk.enable = true; 
 	#rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
@@ -89,7 +89,7 @@
       vm = {
         lxd.enable = true;
         qemu.enable = true;
-	virtualbox.enable = false;
+	virtualbox.enable = true;
 	virt-manager.enable = true;
       };
       noter = {
@@ -132,6 +132,7 @@
 	enable = true;
 	tools.enable = true;
 	mathematica.enable = false;
+	matlab.enable = true;
       };
     };
     dev = {
@@ -168,14 +169,14 @@
       ruby.enable = true;
       go.enable = true;
       web.enable = true;
-      haskell.enable = true;
+      haskell.enable = true; 
     };
     editors = {
       default = "nvim";
       emacs = rec {
         enable = true;
 	doom = {
-          enable = false;
+          enable = true;
 	  forgeUrl = "https://github.com";
 	  repoUrl = "https://github.com/doomemacs/doomemacs";
 	  configRepoUrl = "https://github.com/alienzj/doom.d";
@@ -188,8 +189,15 @@
       rstudio.enable = true;
       pycharm.enable = true;
       idea.enable = true;
+      rustrover.enable = true;
+      clion.enable = true;
+      goland.enable = true;
+      dataspell.enable = true; 
+      datagrip.enable = true;
+      mps.enable = true;
+      gateway.enable = true;
       android-studio.enable = true;
-      gaphor.enable = true;
+      gaphor.enable = false;
       textpieces.enable = false;
     };
     shell = {
@@ -211,7 +219,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      rdp.enable = false; # remote desktop
+      rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {
@@ -221,6 +229,13 @@
       flameshot.enable = true;
 
       #transmission.enable = true;
+
+      proxychains = {
+        enable = true;
+	type = "socks5";
+	host = "127.0.0.1";
+	port = 1080;
+      };
 
       shadowsocks-client-pacman = {
         enable = true;
@@ -363,5 +378,6 @@
   # networking.proxy.default = "socks5://127.0.0.1:1080/";
   # networking.proxy.noProxy = "127.0.0.1,localhost";
 
+  #nix.settings.substituters = lib.mkForce [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
   #nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
 }

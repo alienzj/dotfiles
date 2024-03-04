@@ -42,7 +42,7 @@
     #videoDrivers = [ "nvidia" ];
     dpi = 168;
     exportConfiguration = true;
-    layout = "us";
+    xkb.layout = "us";
     #xkbOptions = "compose:caps";
 
     libinput = {

@@ -86,7 +86,7 @@ in {
 	  ms-toolsai.vscode-jupyter-slideshow
 
           # cpp
-	  ms-vscode.cpptools
+	  #ms-vscode.cpptools
 	  ms-vscode.cmake-tools
 	  ms-vscode.makefile-tools
 	  twxs.cmake
