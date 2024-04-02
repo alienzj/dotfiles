@@ -200,8 +200,8 @@ in {
       })
     ];
  
-    home.configFile = {
-      "VSCodium/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
-    };
+    #home.configFile = {
+    #  "VSCodium/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
+    #};
   };
 }

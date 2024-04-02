@@ -27,7 +27,7 @@
 	rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
-	etcher.enable = true;
+	etcher.enable = false;
 	authenticator.enable = true;
 	backups.enable = true;
 	khronos.enable = true;
@@ -132,8 +132,8 @@
       math = {
         enable = true;
 	tools.enable = true;
-	wolframengine.enable = true;
-	mathematica.enable = true;
+	wolframengine.enable = false;
+	mathematica.enable = false;
 	matlab.enable = true;
       };
     };
@@ -169,7 +169,7 @@
       haskell.enable = true;
       zeal.enable = true;
       conda.enable = true;
-      mamba.enable = false;
+      mamba.enable = true;
       ruby.enable = true;
       web.enable = true;
     };
@@ -222,7 +222,7 @@
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = true;
-      rdp.enable = false; # remote desktop
+      rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
       lockscreen = {

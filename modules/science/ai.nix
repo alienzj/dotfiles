@@ -14,7 +14,7 @@ in {
         unstable.aichat
         unstable.chatgpt-cli
 	unstable.shell_gpt
-	unstable.chatblade
+	#unstable.chatblade
       ];
     }
   ]);

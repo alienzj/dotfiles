@@ -12,7 +12,7 @@ in {
     user.packages = with pkgs; [
       unstable.you-get
       #unstable.youtube-dl
-      unstable.yutto
+      #unstable.yutto
       unstable.yt-dlp
     ];
   };
