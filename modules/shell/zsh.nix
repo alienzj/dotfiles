@@ -40,8 +40,7 @@ in {
       zsh
       nix-zsh-completions
       bat
-      #exa
-      #eza
+      eza
       fasd
       fd
       fzf

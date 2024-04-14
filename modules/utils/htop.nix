@@ -14,7 +14,7 @@ in {
       unstable.hydra-check
       unstable.bandwhich
       unstable.zenith
-      unstable.nvtop
+      unstable.nvtopPackages.full
       unstable.ctop
       #unstable.bpytop
       unstable.btop

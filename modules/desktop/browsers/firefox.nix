@@ -23,10 +23,7 @@ in {
     proxyConfigPacman = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
       Firefox preferences to set in <filename>prefs.js</filename>
     '';
-    proxyConfigSuperman = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
-      Firefox preferences to set in <filename>prefs.js</filename>
-    '';
-    proxyConfigAwsman = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+    proxyConfigGeph = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
       Firefox preferences to set in <filename>prefs.js</filename>
     '';
 
@@ -55,16 +52,8 @@ in {
           categories = [ "Network" ];
         })
         (makeDesktopItem {
-          name = "firefox-proxy-superman";
-          desktopName = "Firefox (Proxy superman)";
-          genericName = "Open a Firefox window with proxy";
-          icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
-          categories = [ "Network" ];
-        })
-        (makeDesktopItem {
-          name = "firefox-proxy-awsman";
-          desktopName = "Firefox (Proxy awsman)";
+          name = "firefox-proxy-geph";
+          desktopName = "Firefox (Proxy geph)";
           genericName = "Open a Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
@@ -79,16 +68,8 @@ in {
           categories = [ "Network" ];
         })
         (makeDesktopItem {
-          name = "firefox-private-proxy-superman";
-          desktopName = "Firefox (Private Proxy superman)";
-          genericName = "Open a private Firefox window with proxy";
-          icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
-          categories = [ "Network" ];
-        })
-        (makeDesktopItem {
-          name = "firefox-private-proxy-awsman";
-          desktopName = "Firefox (Private Proxy awsman)";
+          name = "firefox-private-proxy-geph";
+          desktopName = "Firefox (Private Proxy geph)";
           genericName = "Open a private Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
@@ -261,21 +242,13 @@ in {
         "network.proxy.socks_remote_dns" = true;
         "network.proxy.type" = 1;
       };
-      modules.desktop.browsers.firefox.proxyConfigSuperman = {
+      modules.desktop.browsers.firefox.proxyConfigGeph = {
         "network.proxy.no_proxies_on" = "127.0.0.1,localhost,192.168.50.84,aliyundrive.com,aliyun.com,jd.com,taobao.com,mi.com,.bilibili.com";
         "network.proxy.socks" = "127.0.0.1";
-        "network.proxy.socks_port" = 1081;
+        "network.proxy.socks_port" = 9909;
         "network.proxy.socks_remote_dns" = true;
         "network.proxy.type" = 1;
       };
-      modules.desktop.browsers.firefox.proxyConfigAwsman = {
-        "network.proxy.no_proxies_on" = "127.0.0.1,localhost,192.168.50.84,aliyundrive.com,aliyun.com,jd.com,taobao.com,mi.com,.bilibili.com";
-        "network.proxy.socks" = "127.0.0.1";
-        "network.proxy.socks_port" = 1082;
-        "network.proxy.socks_remote_dns" = true;
-        "network.proxy.type" = 1;
-      };
-
 
       # Use a stable profile name so we can target it in themes
       home.file = let cfgPath = ".mozilla/firefox"; in {
@@ -295,13 +268,7 @@ in {
           [Profile2]
           Name=proxy
           IsRelative=1
-          Path=proxy.superman
-	  Default=0
-
-          [Profile3]
-          Name=proxy
-          IsRelative=1
-          Path=proxy.awsman
+          Path=proxy.geph
 	  Default=0
 
           [General]
@@ -365,8 +332,8 @@ in {
           };
 
 
-        ## proxy.superman profile
-        "${cfgPath}/proxy.superman/user.js" =
+        ## proxy.geph profile
+        "${cfgPath}/proxy.geph/user.js" =
           mkIf (cfg.settings != {} || cfg.extraConfig != "") {
             text = ''
               ${concatStrings (mapAttrsToList (name: value: ''
@@ -375,59 +342,25 @@ in {
 	      ${cfg.extraConfig}
               ${concatStrings(mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.proxyConfigSuperman)}
+              '') cfg.proxyConfigGeph)}
             '';
           };
 
-        #"${cfgPath}/proxy.superman/prefs.js" =
-        #  mkIf (cfg.proxyConfigSuperman != {}) {
+        #"${cfgPath}/proxy.geph/prefs.js" =
+        #  mkIf (cfg.proxyConfigGeph != {}) {
         #    text = ''
         #      ${concatStrings (mapAttrsToList (name: value: ''
         #        user_pref("${name}", ${builtins.toJSON value});
-        #      '') cfg.proxyConfigSuperman)}
+        #      '') cfg.proxyConfigGeph)}
         #    '';
         #  };
 
-        "${cfgPath}/proxy.superman/chrome/userChrome.css" =
+        "${cfgPath}/proxy.geph/chrome/userChrome.css" =
           mkIf (cfg.userChrome != "") {
             text = cfg.userChrome;
           };
 
-        "${cfgPath}/proxy.superman/chrome/userContent.css" =
-          mkIf (cfg.userContent != "") {
-            text = cfg.userContent;
-          };
-
-
-        ## proxy.awsman profile
-        "${cfgPath}/proxy.awsman/user.js" =
-          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
-            text = ''
-              ${concatStrings (mapAttrsToList (name: value: ''
-                user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.settings)}
-	      ${cfg.extraConfig}
-              ${concatStrings(mapAttrsToList (name: value: ''
-                user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.proxyConfigAwsman)}
-            '';
-          };
-
-        #"${cfgPath}/proxy.awsman/prefs.js" =
-        #  mkIf (cfg.proxyConfigAwsman != {}) {
-        #    text = ''
-        #      ${concatStrings (mapAttrsToList (name: value: ''
-        #        user_pref("${name}", ${builtins.toJSON value});
-        #      '') cfg.proxyConfigAwsman)}
-        #    '';
-        #  };
-
-        "${cfgPath}/proxy.awsman/chrome/userChrome.css" =
-          mkIf (cfg.userChrome != "") {
-            text = cfg.userChrome;
-          };
-
-        "${cfgPath}/proxy.awsman/chrome/userContent.css" =
+        "${cfgPath}/proxy.geph/chrome/userContent.css" =
           mkIf (cfg.userContent != "") {
             text = cfg.userContent;
           };

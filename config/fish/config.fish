@@ -1,0 +1,2 @@
+
+source $FISHDOTDIR/extraconfig.fish

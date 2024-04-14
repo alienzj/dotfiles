@@ -20,6 +20,10 @@ in {
       rcFiles = [ "${configDir}/tmux/aliases.zsh" ];
     };
 
+    #modules.shell.fish = {
+    #  rcInit = "eval (tmuxifier init - fish)";
+    #};
+
     home.configFile = {
       "tmux" = { source = "${configDir}/tmux"; recursive = true; };
       "tmux/extraInit" = {

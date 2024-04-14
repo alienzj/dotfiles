@@ -82,6 +82,7 @@ with lib.my;
     ripgrep
     htop
     fd
+    alejandra
   ];
 
   # ??
