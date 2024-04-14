@@ -49,6 +49,7 @@ in {
 
     user.packages = with pkgs; [
       fish
+      starship
     ];
 
     env = {
@@ -57,21 +58,21 @@ in {
     };
 
     #home.configFile = {
-      # Write it recursively so other modules can write files to it
-      #"fish" = { source = "${configDir}/fish"; recursive = true; };
+    #  # Write it recursively so other modules can write files to it
+    #  "fish" = { source = "${configDir}/fish"; recursive = true; };
 
-      #"fish/extraconfig.fish".text = ''
-      #  ${concatMapStrings (path: "source '${path}'\n") cfg.rcFiles}
-      #  ${cfg.rcInit}
-      #'';
+    #  "fish/extraconfig.fish".text = ''
+    #    ${concatMapStrings (path: "source '${path}'\n") cfg.rcFiles}
+    #    ${cfg.rcInit}
+    #  '';
 
-      #"fish/functions/fish_prompt.fish".text = ''
-      #  set -l nix_shell_info (
-      #    if test -n "$IN_NIX_SHELL"
-      #      echo -n "<nix-shell> "
-      #    end
-      # )
-      #'';
+    #  #"fish/functions/fish_prompt.fish".text = ''
+    #  #  set -l nix_shell_info (
+    #  #    if test -n "$IN_NIX_SHELL"
+    #  #      echo -n "<nix-shell> "
+    #  #    end
+    #  # )
+    #  #'';
     #};
   };
 }
