@@ -234,7 +234,7 @@
 
       shadowsocks-client-pacman = {
         enable = true;
-	remotePort = 33708;
+	remotePort = 5777;
 	localAddress = "127.0.0.1";
 	localPort = 1080;
 	remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_pacman";
