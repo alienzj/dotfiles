@@ -28,12 +28,17 @@ in {
     ];
 
     services = {
+      displayManager = {
+        defaultSession = "none+bspwm";
+      };
+    };
+    services = {
       picom.enable = true;
       redshift.enable = true;
       xserver = {
         enable = true;
         displayManager = {
-          defaultSession = "none+bspwm";
+          #defaultSession = "none+bspwm";
           lightdm.enable = true;
           lightdm.greeters.mini.enable = true;
         };
