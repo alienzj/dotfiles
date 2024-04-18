@@ -8,19 +8,21 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+
+  # Kernel
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" "tun" "virtio" ];
+  boot.kernelParams = [
+    "mitigations=off"
+  ];
   boot.extraModulePackages = [ ];
 
-  boot.extraModprobeConfig = ''
-    options kvm_intel nested=1
-    options kvm_intel emulate_invalid_guest_state=0
-    options kvm ignore_msrs=1
-  '';
+  #boot.crashDump.enable = true; # will build whole linux kernel, disable it
 
-  services.fwupd.enable = true;
+  #services.fwupd.enable = true;
 
+  # Hardware
   modules.hardware = {
     audio.enable = true;
     bluetooth.enable = true;
@@ -32,8 +34,18 @@
     nvidia.enable = true;
   };
 
+
+  # CPU
   nix.settings.max-jobs = lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = "performance";
+  hardware.cpu.amd.updateMicrocode = true;
+
+  # Power management
+  environment.systemPackages = [ pkgs.acpi ];
+  powerManagement.powertop.enable = true;
+  # Monitor backlight control
+  programs.light.enable = true;
+  user.extraGroups = [ "video" ];
 
   # Displays
   services.xserver = {
@@ -58,6 +70,10 @@
   console.font =
     "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
+  # high-resolution display
+  #hardware.video.hidpi.enable = lib.mkDefault true;
+  #fonts.optimizeForVeryHighDPI = false;
+
   environment.variables = {
     # QT method manually
     ##QT_SCALE_FACTOR = "2";
@@ -73,6 +89,7 @@
   };
 
 
+  # Filesystem
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/952cf267-a657-4abb-b121-5bebf3a103aa";
       fsType = "ext4";
@@ -98,6 +115,7 @@
     ];
 
 
+  # Networking
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
@@ -106,8 +124,4 @@
   # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # high-resolution display
-  #hardware.video.hidpi.enable = lib.mkDefault true;
-  #fonts.optimizeForVeryHighDPI = false;
 }

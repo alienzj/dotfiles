@@ -45,7 +45,7 @@
       browsers = {
         default = "brave";
         brave.enable = true;
-        firefox.enable = true;
+        firefox.enable = false;
         qutebrowser.enable = true;
 	chromium.enable = true;
       };
@@ -190,7 +190,7 @@
       pycharm.enable = true;
       idea.enable = true;
       rustrover.enable = true;
-      clion.enable = true;
+      clion.enable = false;
       goland.enable = true;
       dataspell.enable = true; 
       datagrip.enable = true;
