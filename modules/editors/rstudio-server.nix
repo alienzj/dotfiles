@@ -2,7 +2,7 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.editors.rstudio;
+let cfg = config.modules.editors.rstudio-server;
 
   curatedMetagenomicData_ = pkgs.rPackages.buildRPackage {
     name = "curatedMetagenomicData";
@@ -38,9 +38,9 @@ let cfg = config.modules.editors.rstudio;
     buildInputs = [ pkgs.unstable.gsl ];
   };
 
-  RStudio-with-packages = pkgs.unstable.rstudioWrapper.override{
+  RStudio-Server-with-packages = pkgs.unstable.rstudioServerWrapper.override{
     packages = with pkgs.unstable.rPackages; [
-      #tidyverse
+      tidyverse
       # library(tidyverse) will load the core tidyverse packages:
       ## ggplot2, for data visualisation.
       ## dplyr, for data manipulation.
@@ -55,7 +55,7 @@ let cfg = config.modules.editors.rstudio;
       tidymodels
       infer	
 
-      #devtools
+      devtools
       remotes
 
       feather
@@ -72,21 +72,21 @@ let cfg = config.modules.editors.rstudio;
       tinytex
       ymlthis
 
-      #vegan
+      vegan
 
-      #ggtree
-      #ggtreeExtra
-      #tidytree
-      #MicrobiotaProcess
-      #MicrobiomeProfiler
-      #clusterProfiler
-      #enrichplot
+      ggtree
+      ggtreeExtra
+      tidytree
+      MicrobiotaProcess
+      MicrobiomeProfiler
+      clusterProfiler
+      enrichplot
 
-      #dada2
-      #DECIPHER
+      dada2
+      DECIPHER
 
       ggpubr
-      #ggplotify
+      ggplotify
       ggalluvial
       ggstar
       ggnewscale
@@ -96,16 +96,16 @@ let cfg = config.modules.editors.rstudio;
       writexl
       flextable
       randomForest
-      #curatedMetagenomicData
-      #SummarizedExperiment
+      curatedMetagenomicData
+      SummarizedExperiment
 
       Rcpp
       Rcpp11
 
-      #Maaslin2
+      Maaslin2
       pkgconfig
-      #ComplexHeatmap
-      #circlize
+      ComplexHeatmap
+      circlize
       pagedown
       reshape2
       yaml
@@ -116,14 +116,14 @@ let cfg = config.modules.editors.rstudio;
     ];
   };
 in {
-  options.modules.editors.rstudio = {
+  options.modules.editors.rstudio-server = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = [
-      #pkgs.unstable.rstudio
-      RStudio-with-packages
+      #pkgs.unstable.rstudio-server
+      RStudio-Server-with-packages
     ];
   };
 }

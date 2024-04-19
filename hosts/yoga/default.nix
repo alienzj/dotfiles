@@ -55,9 +55,9 @@
 	emulators = {
 	  #psx.enable = true;
 	  ds.enable = true;
-	  gb.enable = true;
-	  gba.enable = true;
-	  snes.enable = true;
+	  gb.enable = false;
+	  gba.enable = false;
+	  snes.enable = false;
 	};
 	games.enable = true;
       };
@@ -127,6 +127,7 @@
         enable = true;
         tools.enable = true;
 	mathematica.enable = false;
+	matlab.enable = true;
       };
     };
     dev = {
@@ -180,18 +181,19 @@
       vscode_fhs.enable = true;
       #vscode.enable = true;
       vscodium.enable = true;
-      rstudio.enable = true;
+      rstudio.enable = false;
+      rstudio-server.enable = false;
       pycharm.enable = true;
       idea.enable = true;
       rustrover.enable = true;
       clion.enable = true;
-      datagrip.enable = true;
-      dataspell.enable = true;
+      datagrip.enable = false;
+      dataspell.enable = false;
       gateway.enable = true;
-      goland.enable = true;
-      mps.enable = true;
+      goland.enable = false;
+      mps.enable = false;
       android-studio.enable = true;
-      gaphor.enable = true;
+      gaphor.enable = false;
       #textpieces.enable = true;
     };
     shell = {
@@ -214,8 +216,8 @@
       # Needed occasionally to help the parental units with PC problems
       teamviewer.enable = false;
       rdp.enable = false; # remote desktop
-      #samba.enable = true; # share folders
-      printing.enable = true; # RICOH printer
+      samba.enable = false; # share folders
+      printing.enable = false; # RICOH printer
       lockscreen = {
         enable = true;
       	#inactiveInterval = 10;
@@ -263,11 +265,11 @@
 	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_yoga_c.toml";
       };
 
-      boinc.enable = true;
-      slurm.enable = true;
+      boinc.enable = false;
+      slurm.enable = false;
       earlyoom.enable = true;
-      home-assistant.enable = true;
-      onedrive.enable = true;
+      home-assistant.enable = false;
+      onedrive.enable = false;
    };
     utils = {
       htop.enable = true;
@@ -284,32 +286,6 @@
   ## Local config
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
-
-  networking.networkmanager = {
-    enable = true;
-    plugins = with pkgs; [
-      networkmanager-fortisslvpn
-      networkmanager-iodine
-      networkmanager-l2tp
-      networkmanager-openconnect
-      networkmanager-openvpn
-      networkmanager-vpnc
-      networkmanager-sstp
-    ];
-  };
-
-
-  # firewall
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
-    allowedUDPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
-    #allowedUDPPortRanges = [
-    #  { from = 4000; to = 4007; }
-    #  { from = 8000; to = 8010; }
-    #];
-  };
-
 
   ## Personal backups
   # Syncthing is a bit heavy handed for my needs, so rsync to my NAS instead.

@@ -2,19 +2,16 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.science.ai;
+let cfg = config.modules.desktop.science.igv;
 in {
-  options.modules.science.ai = with types; {
+  options.modules.desktop.science.igv = with types; {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        unstable.aichat
-        unstable.chatgpt-cli
-	unstable.shell_gpt
-	#unstable.chatblade
+        unstable.igv
       ];
     }
   ]);

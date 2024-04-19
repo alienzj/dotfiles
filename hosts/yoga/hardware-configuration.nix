@@ -71,30 +71,59 @@
     #sensors.enable = true;
   };
 
-  # CPU
-  #nix.settings.max-jobs = lib.mkDefault 8;
-  #powerManagement.cpuFreqGovernor = "performance";
-  #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  # power management 
 
-  ## https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/power-management.nix
-  ## https://discourse.nixos.org/t/thinkpad-t470s-power-management/8141/3
-  #services.tlp = {
-  #  enable = true;
-  #  settings = {
-  #    CPU_SCALING_GOVERNOR_ON_AC = "performance";
-  #    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-  #  };
-  #};
   #services.upower.enable = true;
-
-  ## https://github.com/kvark/dotfiles/blob/master/nix/hardware-configuration.nix
+  #nix.settings.max-jobs = lib.mkDefault 8;
   powerManagement = {
     enable = true;
     powertop.enable = true;
-    cpuFreqGovernor = lib.mkDefault "ondemand";
+    #cpuFreqGovernor = lib.mkDefault "ondemand";
+  };
+  services.tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 20;
+
+       #Optional helps save long term battery health
+       START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
+       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
+      };
+  };
+  services.auto-cpufreq = {
+    enable = true;
+    settings = {
+      battery = {
+        governor = "powersave";
+        turbo = "never";
+      };
+      charger = {
+        governor = "performance";
+        turbo = "auto";
+      };
+    };
   };
 
-  networking.wireless.interfaces = [ "wlp1s0" ];
+  # screen brightness
+  programs.light.enable = true;
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      #{ keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+      #{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 63 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 64 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+    ];
+  };
 
   # Displays
   services.xserver = {
@@ -102,7 +131,7 @@
     videoDrivers = [ "amdgpu" ];
     dpi = 168;
     exportConfiguration = true;
-    layout = "us";
+    xkb.layout = "us";
     #xkbOptions = "compose:caps";
 
     libinput = {
@@ -115,9 +144,7 @@
     };
   };
 
-
-  console.font =
-    "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
   # reference
   # https://wiki.archlinuxcn.org/zh-hans/HiDPI
@@ -137,28 +164,91 @@
   };
 
   # Storage
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f53e0fc6-5d76-4106-a106-558af7be7d16";
-      fsType = "ext4";
-    };
+  fileSystems."/" = { 
+    device = "/dev/disk/by-uuid/f53e0fc6-5d76-4106-a106-558af7be7d16";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6018-D534";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = { 
+    device = "/dev/disk/by-uuid/6018-D534";
+    fsType = "vfat";
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357"; }
-    ];
+  fileSystems."/tmp" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = ["noatime" "nodev" "size=32G"];
+  };
+
+  swapDevices = [ { 
+    device = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357";
+  }];
 
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp3s0f4u1u3.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
+
+  networking = {
+    useDHCP = lib.mkDefault true;
+    #interfaces = {
+    #  wlp1s0.useDHCP = true;
+    #};
+ 
+    wireless = {
+      interfaces = [ "wlan0" ];
+      iwd = {
+        enable = true; 
+	settings = {
+          Network = {
+            EnableIPv6 = true;
+	    RoutePriorityOffset = 300;
+	  };
+	  Settings = {
+            AutoConnect = true;
+	    #Hidden = false;
+	    #AlwaysRandomizeAddress = false;
+	  };
+	};
+      };
+    }; 
+
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+      plugins = with pkgs; [
+        networkmanager-fortisslvpn
+        networkmanager-iodine
+        networkmanager-l2tp
+        networkmanager-openconnect
+        networkmanager-openvpn
+        networkmanager-vpnc
+        networkmanager-sstp
+      ];
+    };
+  
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
+      allowedUDPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
+      #allowedUDPPortRanges = [
+      #  { from = 4000; to = 4007; }
+      #  { from = 8000; to = 8010; }
+      #];
+    };
+  };
+
+  system.activationScripts = {
+    rfkillUnblockWlan = {
+      text = ''
+      rfkill unblock wlan
+      '';
+      deps = [];
+    };
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 

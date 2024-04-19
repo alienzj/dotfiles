@@ -55,8 +55,8 @@ in {
       vscode.fhs
     ];
  
-    home.configFile = {
-      "Code/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
-    };
+    #home.configFile = {
+    #  "Code/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
+    #};
   };
 }
