@@ -45,7 +45,7 @@
       browsers = {
         default = "brave";
         brave.enable = true;
-        firefox.enable = false;
+        firefox.enable = true;
         qutebrowser.enable = true;
 	chromium.enable = true;
       };

@@ -13,14 +13,31 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" "tun" "virtio" ];
-  boot.kernelParams = [
-    "mitigations=off"
-  ];
+
+  ## energy savings
+    #"mitigations=off"
+    #"mem_sleep_default=deep"
+    #"pcie_aspm.policy=powersupersave"
+  boot.kernelParams = [ ];
+
   boot.extraModulePackages = [ ];
+  #boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+
+  boot.extraModprobeConfig = lib.mkMerge [ 
+    "options kvm_amd nested=1"
+    "options kvm_amd emulate_invalid_guest_state=0"
+    "options kvm ignore_msrs=1"
+  ];
+  #boot.extraModprobeConfig = lib.mkMerge [
+  #  # idle audio card after one second
+  #  #"options snd_hda_amd power_save=1"
+  #  # enable wifi power saving (keep uapsd off to maintain low latencies)
+  #  #"options iwlwifi power_save=1 uapsd_disable=1"
+  ##];
 
   #boot.crashDump.enable = true; # will build whole linux kernel, disable it
 
-  #services.fwupd.enable = true;
+  services.fwupd.enable = true;
 
   # Hardware
   modules.hardware = {
@@ -37,15 +54,63 @@
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 16;
-  powerManagement.cpuFreqGovernor = "performance";
   hardware.cpu.amd.updateMicrocode = true;
 
   # Power management
-  environment.systemPackages = [ pkgs.acpi ];
-  powerManagement.powertop.enable = true;
-  # Monitor backlight control
-  programs.light.enable = true;
-  user.extraGroups = [ "video" ];
+  #environment.systemPackages = [ pkgs.acpi ];
+  #user.extraGroups = [ "video" ];
+  #services.upower.enable = true;
+
+  #powerManagement = {
+  #  enable = true;
+  #  powertop.enable = true;
+  #  cpuFreqGovernor = lib.mkDefault "performance";
+  #};
+  #services.tlp = {
+  #    enable = true;
+  #    settings = {
+  #      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+  #      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+  #      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+  #      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+  #      CPU_MIN_PERF_ON_AC = 0;
+  #      CPU_MAX_PERF_ON_AC = 100;
+  #      CPU_MIN_PERF_ON_BAT = 0;
+  #      CPU_MAX_PERF_ON_BAT = 20;
+
+  #     #Optional helps save long term battery health
+  #     START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
+  #     STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
+  #    };
+  #};
+  #services.auto-cpufreq = {
+  #  enable = true;
+  #  settings = {
+  #    battery = {
+  #      governor = "powersave";
+  #      turbo = "never";
+  #    };
+  #    charger = {
+  #      governor = "performance";
+  #      turbo = "auto";
+  #    };
+  #  };
+  #};
+
+  # screen brightness
+  #programs.light.enable = true;
+  #services.actkbd = {
+  #  enable = true;
+  #  bindings = [
+  #    #{ keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+  #    #{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+  #    { keys = [ 63 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+  #    { keys = [ 64 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+  #  ];
+  #};
+
 
   # Displays
   services.xserver = {
@@ -120,8 +185,65 @@
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
+
+  networking = {
+    #useDHCP = lib.mkDefault true;
+    interfaces = {
+      enp4s0.useDHCP = true;
+    };
+ 
+    #wireless = {
+    #  interfaces = [ "wlan0" ];
+    #  iwd = {
+    #    enable = true; 
+    #	 settings = {
+    #      Network = {
+    #        EnableIPv6 = true;
+    # 	     RoutePriorityOffset = 300;
+    #  	   };
+    # 	   Settings = {
+    #        AutoConnect = true;
+    #	     #Hidden = false;
+    #	     #AlwaysRandomizeAddress = false;
+    #      };
+    #	 };
+    #  };
+    #}; 
+
+    networkmanager = {
+      enable = true;
+      #wifi.backend = "iwd";
+      plugins = with pkgs; [
+        networkmanager-fortisslvpn
+        networkmanager-iodine
+        networkmanager-l2tp
+        networkmanager-openconnect
+        networkmanager-openvpn
+        networkmanager-vpnc
+        networkmanager-sstp
+      ];
+    };
+  
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
+      allowedUDPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
+      #allowedUDPPortRanges = [
+      #  { from = 4000; to = 4007; }
+      #  { from = 8000; to = 8010; }
+      #];
+    };
+  };
+
+  #system.activationScripts = {
+  #  rfkillUnblockBluetooth = {
+  #    text = ''
+  #    rfkill unblock bluetooth
+  #    '';
+  #    deps = [];
+  #  };
+  #};
+
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
