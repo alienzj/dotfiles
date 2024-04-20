@@ -71,9 +71,9 @@ module Hey
   end
   def self.rebuild(*args, sudo: false)
     sh [
-        #"env",
-        #"http_proxy=http://127.0.0.1:9910",
-        #"https_proxy=http://127.0.0.1:9910",
+        "env",
+        "http_proxy=http://127.0.0.1:9910",
+        "https_proxy=http://127.0.0.1:9910",
         "nixos-rebuild",
         "--flake", "#{@@opts[:flake]}##{@@opts[:host]}",
         "--option", "pure-eval", "no",

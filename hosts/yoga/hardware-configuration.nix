@@ -8,13 +8,12 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # Kernel
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" "tun" "virtio" "acpi_call" ];
-  boot.supportedFilesystems = [ "ntfs" ];
 
   ## https://kvark.github.io/linux/framework/2021/10/17/framework-nixos.html
-  #boot.kernelParams = [ "mem_sleep_default=deep" ];
   ## energy savings
   boot.kernelParams = ["mem_sleep_default=deep" "pcie_aspm.policy=powersupersave"];
 
@@ -22,13 +21,13 @@
 
   boot.extraModprobeConfig = lib.mkMerge [
     # idle audio card after one second
-    "options snd_hda_intel power_save=1"
+    "options snd_hda_amd power_save=1"
     # enable wifi power saving (keep uapsd off to maintain low latencies)
     "options iwlwifi power_save=1 uapsd_disable=1"
 
-    # OSX-KVM
-    "options kvm_intel nested=1"
-    "options kvm_intel emulate_invalid_guest_state=0"
+    # VM
+    "options kvm_amd nested=1"
+    "options kvm_amd emulate_invalid_guest_state=0"
     "options kvm ignore_msrs=1"
   ];
 
@@ -36,8 +35,8 @@
   #https://discourse.nixos.org/t/laptop-suspend-fails/4739
   services.fwupd.enable = true;
 
+  # GPU
   # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
-
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau
     libvdpau-va-gl
@@ -57,10 +56,7 @@
 
   environment.variables.AMD_VULKAN_ICD = lib.mkDefault "RADV";
 
-  # ssd
-  services.fstrim.enable = lib.mkDefault true;
-
-  # Modules
+  # Hardware
   modules.hardware = {
     audio.enable = true;
     bluetooth.enable = true;
@@ -71,10 +67,9 @@
     #sensors.enable = true;
   };
 
-  # power management 
-
+  # Power management 
   #services.upower.enable = true;
-  #nix.settings.max-jobs = lib.mkDefault 8;
+  nix.settings.max-jobs = lib.mkDefault 16;
   powerManagement = {
     enable = true;
     powertop.enable = true;
@@ -257,7 +252,7 @@
   #security.tpm2.enable = true;
   #security.tpm2.pkcs11.enable = true;
   #security.tpm2.tctiEnvironment.enable = true;
-  users.users.alienzj.extraGroups = [ "tss" ];
+  users.users.alienzj.extraGroups = [ "tss" "video" ];
 
   # high-resolution display
   #hardware.video.hidpi.enable = true;

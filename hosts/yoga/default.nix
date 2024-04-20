@@ -112,7 +112,7 @@
 	tdesktop.enable = true;
 	whatsapp.enable = true;
 	slack.enable = true;
-	discord.enable = false;
+	discord.enable = true;
       };
       input = {
         fcitx5.enable = true;
@@ -180,18 +180,18 @@
       vim.enable = true;
       vscode_fhs.enable = true;
       #vscode.enable = true;
-      vscodium.enable = true;
-      rstudio.enable = false;
+      vscodium.enable = false;
+      rstudio.enable = true;
       rstudio-server.enable = false;
       pycharm.enable = true;
       idea.enable = true;
       rustrover.enable = true;
-      clion.enable = true;
-      datagrip.enable = false;
-      dataspell.enable = false;
+      clion.enable = false;
+      datagrip.enable = true;
+      dataspell.enable = true;
       gateway.enable = true;
-      goland.enable = false;
-      mps.enable = false;
+      goland.enable = true;
+      mps.enable = true;
       android-studio.enable = true;
       gaphor.enable = false;
       #textpieces.enable = true;
@@ -226,11 +226,11 @@
       #transmission.enable = true;
       shadowsocks-client-pacman = {
       	enable = true;
-        remotePort = 33708;
+        remotePort = 5777;
         localAddress = "127.0.0.1";
         localPort = 1080;
-        remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_pacman";
-        passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_pacman";
+        remoteAddressFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/server_pacman";
+        passwordFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
       };
       #shadowsocks-client-superman = {
@@ -238,8 +238,8 @@
       #  remotePort = 33807;
       #  localAddress = "127.0.0.1";
       #  localPort = 1081;
-      #  remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_superman";
-      #  passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_superman";
+      #  remoteAddressFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/server_superman";
+      #  passwordFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/password_superman";
       #  encryptionMethod = "chacha20-ietf-poly1305";
       #};
       #shadowsocks-client-awsman = {
@@ -247,22 +247,22 @@
       #  remotePort = 9391;
       #  localAddress = "127.0.0.1";
       #  localPort = 1082;
-      #  remoteAddressFile = "/home/alienzj/projects/ohconfig/shadowsocks/server_awsman";
-      #  passwordFile = "/home/alienzj/projects/ohconfig/shadowsocks/password_awsman";
+      #  remoteAddressFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/server_awsman";
+      #  passwordFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/password_awsman";
       #  encryptionMethod = "chacha20-ietf-poly1305";
       #};
  
       rathole-client-pacman = {
         enable = true;
-	configFile = "/home/alienzj/projects/ohconfig/rathole/pacman_yoga_c.toml";
+	configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_yoga_c.toml";
       };
       #rathole-client-superman = {
       #  enable = true;
-      #	 configFile = "/home/alienzj/projects/ohconfig/rathole/superman_yoga_c.toml";
+      #	 configFile = "/home/alienzj/toolkits/ohconfig/rathole/superman_yoga_c.toml";
       #};
       rathole-client-awsman = {
         enable = true;
-	configFile = "/home/alienzj/projects/ohconfig/rathole/awsman_yoga_c.toml";
+	configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_yoga_c.toml";
       };
 
       boinc.enable = false;

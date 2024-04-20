@@ -9,9 +9,18 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = [
-      #pkgs.unstable.geph.gui
-      pkgs.unstable.geph.cli
+    user.packages = with pkgs; [
+      geph.gui
+      geph.cli
+
+      (makeDesktopItem {
+        name = "Geph-GUI";
+	desktopName = "Geph GUI";
+	genericName = "Open Geph GUI";
+	icon = "io.geph.GephGui";
+	exec = "env WEBKIT_DISABLE_COMPOSITING_MODE=1 GDK_SCALE=1 ${geph.gui}/bin/gephgui-wry";
+	categories = [ "Network" ];
+      })
     ];
   };
 }
