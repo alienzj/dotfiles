@@ -116,7 +116,7 @@
 	slack.enable = true;
 	discord.enable = true;
 	zulip.enable = true;
-	wechat.enable = true;
+	qqwechat.enable = true;
       };
       input = {
         #ibus.enable = true;
