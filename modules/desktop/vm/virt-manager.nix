@@ -34,7 +34,7 @@ in {
           };
 	};
       };
-      spiceUSBRedirection.enable = false;
+      spiceUSBRedirection.enable = true;
     };
 
     services.spice-vdagentd.enable = true;

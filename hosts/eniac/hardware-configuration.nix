@@ -49,6 +49,7 @@
     };
     #sensors.enable = true;
     nvidia.enable = true;
+    mouse.enable = true;
   };
 
 
@@ -61,11 +62,13 @@
   #user.extraGroups = [ "video" ];
   #services.upower.enable = true;
 
-  #powerManagement = {
-  #  enable = true;
-  #  powertop.enable = true;
-  #  cpuFreqGovernor = lib.mkDefault "performance";
-  #};
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = lib.mkDefault "performance";
+    powertop.enable = true;
+  };
+  services.thermald.enable = true;
+
   #services.tlp = {
   #    enable = true;
   #    settings = {
@@ -122,16 +125,17 @@
     xkb.layout = "us";
     #xkbOptions = "compose:caps";
 
-    libinput = {
-      enable = true;
-      #touchpad = {
-      #  tapping = true;
-      #  clickMethod = "clickfinger";
-      #	naturalScrolling = true;
-      #};
-    };
   };
 
+  services.libinput = {
+    enable = true;
+    #touchpad = {
+    #  tapping = true;
+    #  clickMethod = "clickfinger";
+    #  naturalScrolling = true;
+    #};
+  };
+ 
   console.font =
     "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
@@ -246,4 +250,6 @@
 
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+  users.users.alienzj.extraGroups = [ "tss" "video" ];
 }

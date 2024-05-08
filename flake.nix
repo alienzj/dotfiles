@@ -23,8 +23,13 @@
       # Extras
       emacs-overlay.url  = "github:nix-community/emacs-overlay";
       nixos-hardware.url = "github:nixos/nixos-hardware";
+
+      # Research
       nix-matlab.url = "gitlab:doronbehar/nix-matlab";
 
+      # NUR
+      nur.url = "github:nix-community/NUR";
+      #nur.inputs.nixpkgs.follows = "nixpkgs";
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, ... }:
@@ -39,8 +44,9 @@
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
 	config = {
 	  permittedInsecurePackages = [
-	    "electron-19.1.9"
-	    "zotero-6.0.27"
+	    #"electron-19.1.9"
+	    #"zotero-6.0.27"
+	    "openssl-1.1.1w"
           ];
 	};
       };

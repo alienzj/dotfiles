@@ -11,10 +11,13 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        unstable.aichat
-        unstable.chatgpt-cli
-	unstable.shell_gpt
-	unstable.chatblade
+        unstable.ollama
+	unstable.llama-cpp
+	#unstable.lmstudio
+        #unstable.aichat
+        #unstable.chatgpt-cli
+	#unstable.shell_gpt
+	#unstable.chatblade
       ];
     }
   ]);

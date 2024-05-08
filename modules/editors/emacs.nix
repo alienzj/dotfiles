@@ -49,8 +49,6 @@ in {
       zstd                # for undo-fu-session/undo-tree compression
       graphviz # dot
       nixfmt-rfc-style
-      dockfmt
-      rstfmt
 
       ## Module dependencies
       # :checkers spell

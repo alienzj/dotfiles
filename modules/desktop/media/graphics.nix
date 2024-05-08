@@ -24,10 +24,11 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs;
       (if cfg.tools.enable then [
-        font-manager   # so many damned fonts...
+        #font-manager   # so many damned fonts...
         imagemagick    # for image manipulation from the shell
 	eyedropper
 	gnome-obfuscate
+	gnome3.eog
       ] else []) ++
 
       # replaces illustrator & indesign

@@ -95,7 +95,6 @@ config.inactive_pane_hsb = {
 -- ------------------
 config.default_prog = { 'fish', '-l' }
 -- config.default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
--- config.default_prog = { "fish", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
 
 
 return config

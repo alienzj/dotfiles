@@ -5,27 +5,30 @@
     ./hardware-configuration.nix
   ];
 
+  disabledModules = [
+    "services/networking/jotta-cli.nix"
+  ];
 
-  # Modules
+  ## Modules
   modules = {
     desktop = {
       bspwm.enable = true;
       apps = {
         rofi.enable = true;
-	#skype.enable = true;
+	skype.enable = true;
 	zoomus.enable = true;
-	teams.enable = false;
+	#teams.enable = true;
 	libreoffice.enable = true;
 	wpsoffice.enable = true;
-	onlyoffice.enable = true; 
+	onlyoffice.enable = true;
 	usbimager.enable = true;
         godot.enable = true;
 	transmission.enable = true;
 	filezilla.enable = true;
 	scrcpy.enable = true;
 	thunderbird.enable = true;
-	anydesk.enable = true; 
-	#rustdesk.enable = true;
+	anydesk.enable = true;
+	rustdesk.enable = true;
 	ventoy.enable = true;
 	#unetbootin.enable = true;
 	etcher.enable = false;
@@ -52,10 +55,11 @@
       gaming = {
         steam.enable = true;
         emulators = {
+	  #psx.enable = true;
 	  ds.enable = true;
-	  gb.enable = true;
-	  gba.enable = true;
-	  snes.enable = true;
+	  gb.enable = false;
+	  gba.enable = false;
+	  snes.enable = false;
 	};
 	games.enable = true;
       };
@@ -79,6 +83,7 @@
 	amberol.enable = true;
 	cozy.enable = true;
 	netease-cloud-music.enable = true;
+	lx-music.enable = true;
       };
       term = {
         default = "xst";
@@ -110,6 +115,8 @@
 	whatsapp.enable = true;
 	slack.enable = true;
 	discord.enable = true;
+	zulip.enable = true;
+	qqwechat.enable = true;
       };
       input = {
         #ibus.enable = true;
@@ -126,11 +133,13 @@
       };
     };
     science = {
+      ai.enable = true;
       cytoscape.enable = true;
       bioinfo.enable = true;
       math = {
-	enable = true;
+        enable = true;
 	tools.enable = true;
+	wolframengine.enable = false;
 	mathematica.enable = false;
 	matlab.enable = true;
       };
@@ -162,21 +171,21 @@
 	xdg.enable = true;
       };
       r.enable = true;
+      julia.enable = true;
+      go.enable = true;
+      haskell.enable = true;
       zeal.enable = true;
       conda.enable = true;
       mamba.enable = true;
-      julia.enable = true;
       ruby.enable = true;
-      go.enable = true;
       web.enable = true;
-      haskell.enable = true; 
     };
     editors = {
       default = "nvim";
       emacs = rec {
         enable = true;
 	doom = {
-          enable = true;
+          enable = false;
 	  forgeUrl = "https://github.com";
 	  repoUrl = "https://github.com/doomemacs/doomemacs";
 	  configRepoUrl = "https://github.com/alienzj/doom.d";
@@ -185,20 +194,21 @@
       vim.enable = true;
       #vscode.enable = true;
       vscode_fhs.enable = true;
-      #vscodium.enable = true;
+      vscodium.enable = true;
       rstudio.enable = true;
+      rstudio-server.enable = false;
       pycharm.enable = true;
       idea.enable = true;
       rustrover.enable = true;
-      clion.enable = false;
+      clion.enable = true;
       goland.enable = true;
-      dataspell.enable = true; 
+      dataspell.enable = true;
       datagrip.enable = true;
-      mps.enable = true;
-      gateway.enable = true;
+      mps.enable = false;
+      gateway.enable = false;
       android-studio.enable = true;
       gaphor.enable = false;
-      textpieces.enable = false;
+      textpieces.enable = true;
     };
     shell = {
       adl.enable = true;
@@ -215,10 +225,13 @@
       adb.enable = true; # android
       #calibre.enable = true;
       syncthing.enable = true;
-      ssh.enable = true;
+      ssh = {
+        enable = true;
+        sshx.enable = true;
+      };
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
-      teamviewer.enable = false;
+      teamviewer.enable = true;
       rdp.enable = true; # remote desktop
       samba.enable = true; # share folders
       printing.enable = true; # RICOH printer
@@ -227,16 +240,13 @@
       	#inactiveInterval = 10;
       };
       flameshot.enable = true;
-
       #transmission.enable = true;
-
       proxychains = {
         enable = true;
-	type = "socks5";
-	host = "127.0.0.1";
-	port = 1080;
+        type = "socks5";
+        host = "127.0.0.1";
+        port = 1080;
       };
-
       shadowsocks-client-pacman = {
         enable = true;
 	remotePort = 5777;
@@ -248,36 +258,35 @@
       };
       #shadowsocks-client-superman = {
       #  enable = true;
-      #  remotePort = 33807;
-      #  localAddress = "127.0.0.1";
+      #	 remotePort = 33807;
+      #	 localAddress = "127.0.0.1";
       #	 localPort = 1081;
       #	 remoteAddressFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/server_superman";
       #	 passwordFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/password_superman";
       #  encryptionMethod = "chacha20-ietf-poly1305";
-      #};
-      #shadowsocks-client-awsman = {
-      #  enable = true;
-      #  remotePort = 9391;
-      #	localAddress = "127.0.0.1";
-      #	localPort = 1082;
-      #  remoteAddressFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/server_awsman";
-      #  passwordFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/password_awsman";
-      #  encryptionMethod = "chacha20-ietf-poly1305";
-      #};
+      # };
+      # shadowsocks-client-awsman = {
+      #   enable = true;
+      #	  remotePort = 9391;
+      #	  localAddress = "127.0.0.1";
+      #	  localPort = 1082;
+      #	  remoteAddressFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/server_awsman";
+      #	  passwordFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/password_awsman";
+      #   encryptionMethod = "chacha20-ietf-poly1305";
+      # };
  
       rathole-client-pacman = {
         enable = true;
-	configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_eniac_c.toml";
+	configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_magic_c.toml";
       };
       #rathole-client-superman = {
       #  enable = true;
-      #	 configFile = "/home/alienzj/toolkits/ohconfig/rathole/superman_eniac_c.toml";
+      #	 configFile = "/home/alienzj/toolkits/ohconfig/rathole/superman_magic_c.toml";
       #};
       rathole-client-awsman = {
         enable = true;
-      	configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_eniac_c.toml";
+	configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_magic_c.toml";
       };
-
       boinc.enable = false;
       slurm.enable = false;
       earlyoom.enable = true;
@@ -295,35 +304,9 @@
     theme.active = "alucard";
   };
 
-
   ## Local config
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
-
-  networking.networkmanager = {
-    enable = true;
-    plugins = with pkgs; [
-      networkmanager-fortisslvpn
-      networkmanager-iodine
-      networkmanager-l2tp
-      networkmanager-openconnect
-      networkmanager-openvpn
-      networkmanager-vpnc
-      networkmanager-sstp
-    ];
-  };
-
-  # firewall
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 80 443 3389 8080 2323 2333 2343 ];
-    allowedUDPPorts = [ 80 443 3389 8080 2323 2333 2343 ];
-    #allowedUDPPortRanges = [
-    #  { from = 4000; to = 4007; }
-    #  { from = 8000; to = 8010; }
-    #];
-  };
-
 
   ## Personal backups
   # Syncthing is a bit heavy handed for my needs, so rsync to my NAS instead.
@@ -369,7 +352,6 @@
   #};
 
   time.timeZone = "Asia/Hong_Kong";
-
   programs.adb.enable = true;
 
   # Configure network proxy if necessary
@@ -381,3 +363,4 @@
   #nix.settings.substituters = lib.mkForce [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
   #nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
 }
+

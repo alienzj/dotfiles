@@ -16,6 +16,8 @@ in {
 	unstable.blast
 	unstable.bowtie2
 	unstable.deeptools
+	unstable.diamond
+	unstable.jbrowse
 	unstable.fastp
 	unstable.hmmer
 	unstable.megahit
@@ -32,12 +34,21 @@ in {
         unstable.bedtools
         unstable.bcftools
         unstable.bftools
-	#unstable.kent
+	unstable.kent
         unstable.gatk
 	unstable.hisat2
         unstable.mafft
         unstable.muscle
         unstable.minia
+	unstable.clustal-omega
+	unstable.seaview
+	unstable.freebayes
+	unstable.mrbayes
+	unstable.raxml-mpi
+	unstable.veryfasttree
+	unstable.iqtree
+	# TODO
+	# unstable.ugene
       ];
     }
   ]);

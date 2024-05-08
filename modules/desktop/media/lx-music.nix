@@ -2,17 +2,15 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.editors.android-studio;
+let cfg = config.modules.desktop.media.lx-music;
 in {
-  options.modules.editors.android-studio = {
+  options.modules.desktop.media.lx-music = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      android-tools
-      android-file-transfer
-      android-studio
+      unstable.lx-music-desktop
     ];
   };
 }

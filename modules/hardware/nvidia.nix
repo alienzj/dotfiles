@@ -1,6 +1,3 @@
-# reference
-## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/hardware/video/nvidia.nix
-
 { options, config, lib, pkgs, ... }:
 
 with lib;
@@ -18,7 +15,7 @@ in {
       driSupport32Bit = true;
     };
 
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     environment.systemPackages = with pkgs; [
       # Respect XDG conventions, damn it!
@@ -30,4 +27,3 @@ in {
     ];
   };
 }
-
