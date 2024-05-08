@@ -14,6 +14,9 @@ in {
         html-tidy
 	nodePackages.stylelint
 	nodePackages.js-beautify
+         
+	# A fast static site generator with everything built-in
+	zola
       ];
   };
 }

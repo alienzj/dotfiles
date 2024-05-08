@@ -42,6 +42,7 @@
       ssd.enable = true;
     };
     #sensors.enable = true;
+    mouse.enable = true;
   };
 
   nix.settings.max-jobs = lib.mkDefault 16;
@@ -64,16 +65,17 @@
     xkb.layout = "us";
     #xkbOptions = "compose:caps";
 
-    libinput = {
-      enable = true;
-      #touchpad = {
-      #  tapping = true;
-      #  clickMethod = "clickfinger";
-      #	naturalScrolling = true;
-      #};
-    };
   };
 
+  services.libinput = {
+    enable = true;
+    #touchpad = {
+    #  tapping = true;
+    #  clickMethod = "clickfinger";
+    #	naturalScrolling = true;
+    #};
+  };
+ 
   console.font =
     "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 

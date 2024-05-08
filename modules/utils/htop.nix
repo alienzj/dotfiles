@@ -10,16 +10,29 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      #unstable.htop
-      unstable.hydra-check
-      unstable.bandwhich
-      #unstable.zenith
-      #unstable.nvtop
-      unstable.ctop
-      #unstable.bpytop
+      # cpu
+      unstable.htop
       unstable.btop
-      unstable.visidata
+
+      # gpu
+      unstable.nvtopPackages.full
+      unstable.gpu-viewer
+      unstable.gpustat
+      unstable.nvitop
+
+      # docker
+      unstable.ctop
+
+      # network
+      unstable.bandwhich
+      unstable.zenith
       unstable.sniffnet
-    ];
+ 
+      # data
+      unstable.visidata
+
+      # nix
+      unstable.hydra-check
+   ];
   };
 }

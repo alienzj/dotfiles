@@ -13,6 +13,7 @@ in {
       user.packages = with pkgs; [
         unstable.ollama
 	unstable.llama-cpp
+	#unstable.lmstudio
         #unstable.aichat
         #unstable.chatgpt-cli
 	#unstable.shell_gpt

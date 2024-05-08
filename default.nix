@@ -81,6 +81,7 @@ with lib.my;
     ripgrep
     htop
     fd
+    tokei
   ];
 
   # ??

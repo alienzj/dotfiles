@@ -25,6 +25,7 @@ in {
       (if cfg.audio.enable then [ unstable.audacity unstable.ardour unstable.blanket ] else []) ++
       # for longer term streaming/recording the screen
       (if cfg.video.enable then [ 
+          unstable.asciinema
           unstable.obs-studio
 	  #unstable.handbrake
 	  #unstable.gnome-decoder
