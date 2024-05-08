@@ -120,8 +120,67 @@
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
+  # networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+
+
+  networking = {
+    #useDHCP = lib.mkDefault true;
+    interfaces = {
+      eno1.useDHCP = true;
+    };
+
+    #wireless = {
+    #  interfaces = [ "wlan0" ];
+    #  iwd = {
+    #    enable = true;
+    #   settings = {
+    #      Network = {
+    #        EnableIPv6 = true;
+    #       RoutePriorityOffset = 300;
+    #             };
+    #     Settings = {
+    #        AutoConnect = true;
+    #       #Hidden = false;
+    #       #AlwaysRandomizeAddress = false;
+    #      };
+    #   };
+    #  };
+    #};
+
+    networkmanager = {
+      enable = true;
+      #wifi.backend = "iwd";
+      plugins = with pkgs; [
+        networkmanager-fortisslvpn
+        networkmanager-iodine
+        networkmanager-l2tp
+        networkmanager-openconnect
+        networkmanager-openvpn
+        networkmanager-vpnc
+        networkmanager-sstp
+      ];
+    };
+
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
+      allowedUDPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
+      #allowedUDPPortRanges = [
+      #  { from = 4000; to = 4007; }
+      #  { from = 8000; to = 8010; }
+      #];
+    };
+  };
+
+  #system.activationScripts = {
+  #  rfkillUnblockBluetooth = {
+  #    text = ''
+  #    rfkill unblock bluetooth
+  #    '';
+  #    deps = [];
+  #  };
+  #};
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
@@ -131,5 +190,5 @@
   #security.tpm2.enable = true;
   #security.tpm2.pkcs11.enable = true;  # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
   #security.tpm2.tctiEnvironment.enable = true;  # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  users.users.alienzj.extraGroups = [ "tss" ];  # tss group has access to TPM devices
+  users.users.alienzj.extraGroups = [ "tss" "video" ];  # tss group has access to TPM devices
 }

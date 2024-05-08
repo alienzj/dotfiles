@@ -8,16 +8,16 @@ in {
     enable = mkBoolOpt false;
   };
 
-  #imports = [ inputs.nur.nixosModules.nur ];
+  imports = [ inputs.nur.nixosModules.nur ];
 
   config = mkIf cfg.enable {
     #nixpkgs.overlays = [ inputs.nur.overlay ];
 
     user.packages = with pkgs; [
       # pkgs.xdg-user-dirs
-      # config.nur.repos.xddxdd.wechat-uos
+      config.nur.repos.xddxdd.wechat-uos
       unstable.qq
-      unstable.wechat-uos
+      #unstable.wechat-uos
     ];
 
     environment.sessionVariables = {

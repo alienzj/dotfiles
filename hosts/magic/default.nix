@@ -195,8 +195,8 @@
       #vscode.enable = true;
       vscode_fhs.enable = true;
       vscodium.enable = true;
-      rstudio.enable = true; 
-      rstudio-server.enable = true; 
+      rstudio.enable = true;
+      rstudio-server.enable = false;
       pycharm.enable = true;
       idea.enable = true;
       rustrover.enable = true;
@@ -227,7 +227,7 @@
       syncthing.enable = true;
       ssh = {
         enable = true;
-	sshx.enable = true;
+        sshx.enable = true;
       };
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
@@ -241,7 +241,12 @@
       };
       flameshot.enable = true;
       #transmission.enable = true;
-
+      proxychains = {
+        enable = true;
+        type = "socks5";
+        host = "127.0.0.1";
+        port = 1080;
+      };
       shadowsocks-client-pacman = {
         enable = true;
 	remotePort = 5777;
@@ -282,12 +287,11 @@
         enable = true;
 	configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_magic_c.toml";
       };
- 
-      boinc.enable = true;
-      slurm.enable = true;
+      boinc.enable = false;
+      slurm.enable = false;
       earlyoom.enable = true;
       home-assistant.enable = true;
-      onedrive.enable = true;
+      onedrive.enable = false;
     };
     utils = {
       htop.enable = true;
@@ -300,30 +304,9 @@
     theme.active = "alucard";
   };
 
-
   ## Local config
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
-
-  networking.networkmanager = {
-    enable = true;
-    plugins = with pkgs; [
-      networkmanager-fortisslvpn
-      networkmanager-iodine
-      networkmanager-l2tp
-      networkmanager-openconnect
-      networkmanager-openvpn
-      networkmanager-vpnc
-      networkmanager-sstp
-    ];
-  };
-
-  # firewall
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 ];
-    allowedUDPPorts = [ 1993 80 443 2223 2233 2243 3389 8080 33807 33708 ];
-  };
 
   ## Personal backups
   # Syncthing is a bit heavy handed for my needs, so rsync to my NAS instead.
@@ -369,6 +352,15 @@
   #};
 
   time.timeZone = "Asia/Hong_Kong";
-
   programs.adb.enable = true;
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # networking.proxy.default = "socks5://127.0.0.1:1080/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost";
+
+  #nix.settings.substituters = lib.mkForce [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  #nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
 }
+
