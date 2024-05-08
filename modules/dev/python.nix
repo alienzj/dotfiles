@@ -34,7 +34,7 @@ let devCfg = config.modules.dev;
       openai
       openaiauth
     ]; 
-    python-with-my-packages = pkgs.python311.withPackages my-python-packages;
+    python-with-my-packages = pkgs.python310.withPackages my-python-packages;
 
 in {
   options.modules.dev.python = {
@@ -47,43 +47,43 @@ in {
       user.packages = with pkgs; [
         #python-with-my-packages
 
-        python311
+        python310
 	pipenv
-        python311Packages.pip
-        python311Packages.cython
-        python311Packages.isort
-        python311Packages.pyflakes
-        python311Packages.pytest
-        python311Packages.nose
-        python311Packages.black
-        python311Packages.setuptools
-        python311Packages.pylint
-        python311Packages.poetry-core
-        python311Packages.ipython
-        python311Packages.grip
-        python311Packages.flask
-        python311Packages.django
-      	#python311Packages.dash
-        python311Packages.plotly
-        python311Packages.requests
-        python311Packages.jupyter
-        python311Packages.jupyterlab
-        python311Packages.pandas
-        python311Packages.numpy
-        python311Packages.matplotlib
-        python311Packages.seaborn
-        python311Packages.scipy
-        python311Packages.mkdocs
-        python311Packages.mkdocs-material
-        python311Packages.mkdocs-jupyter
+        python310Packages.pip
+        python310Packages.cython
+        python310Packages.isort
+        python310Packages.pyflakes
+        python310Packages.pytest
+        python310Packages.nose
+        python310Packages.black
+        python310Packages.setuptools
+        python310Packages.pylint
+        python310Packages.poetry-core
+        python310Packages.ipython
+        python310Packages.grip
+        python310Packages.flask
+        python310Packages.django
+      	#python310Packages.dash
+        python310Packages.plotly
+        python310Packages.requests
+        python310Packages.jupyter
+        python310Packages.jupyterlab
+        python310Packages.pandas
+        python310Packages.numpy
+        python310Packages.matplotlib
+        python310Packages.seaborn
+        python310Packages.scipy
+        python310Packages.mkdocs
+        python310Packages.mkdocs-material
+        python310Packages.mkdocs-jupyter
 
-        #python311Packages.openai
-        #python311Pacakges.openaiauth
-	#python311Packages.tiktoken
-	#python311Packages.openai-whisper
-	#python311Packages.torch
-	#python311Packages.tensorflow
-	#python311Packages.keras
+        #python310Packages.openai
+        #python310Pacakges.openaiauth
+	#python310Packages.tiktoken
+	#python310Packages.openai-whisper
+	#python310Packages.torch
+	#python310Packages.tensorflow
+	#python310Packages.keras
       ];
 
       environment.shellAliases = {

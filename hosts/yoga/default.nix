@@ -16,7 +16,7 @@
 	zoomus.enable = true;
 	#teams.enable = true;
 	libreoffice.enable = true;
-	wpsoffice.enable = true;
+	wpsoffice.enable = false;
 	onlyoffice.enable = true;
 	usbimager.enable = true;
         godot.enable = true;
@@ -185,13 +185,13 @@
       rstudio-server.enable = false;
       pycharm.enable = true;
       idea.enable = true;
-      rustrover.enable = true;
+      rustrover.enable = false;
       clion.enable = false;
-      datagrip.enable = true;
-      dataspell.enable = true;
-      gateway.enable = true;
-      goland.enable = true;
-      mps.enable = true;
+      datagrip.enable = false;
+      dataspell.enable = false;
+      gateway.enable = false;
+      goland.enable = false;
+      mps.enable = false;
       android-studio.enable = true;
       gaphor.enable = false;
       #textpieces.enable = true;
@@ -209,7 +209,7 @@
     };
     services = {
       adb.enable = true; # android
-      #calibre.enable = true;
+      calibre.enable = false;
       syncthing.enable = true;
       ssh.enable = true;
       docker.enable = true;
