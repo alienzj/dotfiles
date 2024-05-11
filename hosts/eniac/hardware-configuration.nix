@@ -21,7 +21,8 @@
 
   # https://discourse.nixos.org/t/external-mouse-and-keyboard-sleep-when-they-stay-untouched-for-a-few-seconds/14900/10
   boot.kernelParams = [ 
-    #"usb.core.autosuspend=-1"
+    #"usb.core.autosuspend=-1" # disable autosuspend
+    #"usb.core.autosuspend=5"  # 5 sencond
   ];
 
   boot.extraModulePackages = [ ];
@@ -88,7 +89,7 @@
     }
   ];
   # Another way: USB auotsuspend
-  #hardware.usb.autosuspendDelay = 7200000; # 2 hours
+  hardware.usb.autosuspendDelay = 7200000; # 2 hours
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 16;
