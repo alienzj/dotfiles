@@ -22,7 +22,7 @@
   # https://discourse.nixos.org/t/external-mouse-and-keyboard-sleep-when-they-stay-untouched-for-a-few-seconds/14900/10
   boot.kernelParams = [ 
     #"usb.core.autosuspend=-1" # disable autosuspend
-    #"usb.core.autosuspend=5"  # 5 sencond
+    #"usb.core.autosuspend=3600"  # 5 sencond # it seems no effect
   ];
 
   boot.extraModulePackages = [ ];
@@ -47,59 +47,74 @@
   # Hardware
   modules.hardware = {
     audio.enable = true;
+
     bluetooth.enable = true;
     fs = {
       enable = true;
       ssd.enable = true;
     };
+
     #sensors.enable = true;
+
     nvidia.enable = true;
+
+    #https://discourse.nixos.org/t/usb-mouse-and-keyboard-poweroff-too-soon-udev/22459
+    power.enable = true; # install powertop
+
     mouse.enable = true;
+
+    # USB
+    # Don't let USB devices wake the computer from sleep.
+    #usb.wakeupDisabled = [
+    #  #{
+    #    # Holtek Semiconductor Keyboard
+    #    #vendor = "04d9";
+    #    #product = "0209";
+    #  #}
+    #  {
+    #    # Razer Abyssus 2000
+    #    vendor = "1532";
+    #    product = "005e";
+    #    wakeup = false;
+    #  }
+    #];
+
+    # Set usb autosuspend to On
+    #usb.autosuspendAlwaysOn = [
+    #  {
+    #    # Holtek Semiconductor Keyboard
+    #    vendor = "04d9";
+    #    product = "0209";
+    #    autosuspendOn = true;
+    #  }
+    #  {
+    #    # Razer Abyssus 2000
+    #    vendor = "1532";
+    #    product = "005e";
+    #    autosuspendOn = true;
+    #  }
+    #];
   };
 
-  # USB
-  # Don't let USB devices wake the computer from sleep.
-  hardware.usb.wakeupDisabled = [
-    #{
-    #  # Holtek Semiconductor Keyboard
-    #  vendor = "04d9";
-    #  product = "0209";
-    #}
-    {
-      # Razer Abyssus 2000
-      vendor = "1532";
-      product = "005e";
-      wakeup = false;
-    }
-  ];
+  services.udev.extraRules = ''
+    # keyboard autosuspand
+    #ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="720000"
 
-  # Set usb autosuspend to On
-  hardware.usb.autosuspendAlwaysOn = [
-    {
-      # Holtek Semiconductor Keyboard
-      vendor = "04d9";
-      product = "0209";
-      autosuspendOn = true;
-    }
-    {
-      # Razer Abyssus 2000
-      vendor = "1532";
-      product = "005e";
-      autosuspendOn = true;
-    }
-  ];
-  # Another way: USB auotsuspend
-  hardware.usb.autosuspendDelay = 7200000; # 2 hours
+    # mouse autosuspand
+    #ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="720000"
+  '';
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 16;
   hardware.cpu.amd.updateMicrocode = true;
 
   # Power management
-  #environment.systemPackages = [ pkgs.acpi ];
-  #user.extraGroups = [ "video" ];
+  environment.systemPackages = [ pkgs.acpi ];
   #services.upower.enable = true;
-
   powerManagement = {
     enable = true;
     cpuFreqGovernor = lib.mkDefault "performance";
@@ -126,6 +141,7 @@
   #     STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
   #    };
   #};
+
   #services.auto-cpufreq = {
   #  enable = true;
   #  settings = {

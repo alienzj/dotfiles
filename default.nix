@@ -62,9 +62,9 @@ with lib.my;
     #kernelPackages = mkDefault pkgs.linuxPackages_lqx;
     #kernelPackages = mkDefault pkgs.linuxPackages_xanmod;
     loader = {
-      efi.canTouchEfiVariables = mkDefault true;
+      efi.canTouchEfiVariables = true;
       systemd-boot.configurationLimit = 7;
-      systemd-boot.enable = mkDefault true;
+      systemd-boot.enable = true;
     };
   };
 
