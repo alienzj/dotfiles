@@ -44,6 +44,7 @@
 	vpn.enable = true;
 	file-manager.enable = true;
 	rdp.enable = true;
+	goldendict.enable = true;
       };
       browsers = {
         default = "brave";
