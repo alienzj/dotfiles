@@ -18,7 +18,11 @@
     #"mitigations=off"
     #"mem_sleep_default=deep"
     #"pcie_aspm.policy=powersupersave"
-  boot.kernelParams = [ ];
+
+  # https://discourse.nixos.org/t/external-mouse-and-keyboard-sleep-when-they-stay-untouched-for-a-few-seconds/14900/10
+  boot.kernelParams = [ 
+    #"usb.core.autosuspend=-1"
+  ];
 
   boot.extraModulePackages = [ ];
   #boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
@@ -52,6 +56,39 @@
     mouse.enable = true;
   };
 
+  # USB
+  # Don't let USB devices wake the computer from sleep.
+  hardware.usb.wakeupDisabled = [
+    #{
+    #  # Holtek Semiconductor Keyboard
+    #  vendor = "04d9";
+    #  product = "0209";
+    #}
+    {
+      # Razer Abyssus 2000
+      vendor = "1532";
+      product = "005e";
+      wakeup = false;
+    }
+  ];
+
+  # Set usb autosuspend to On
+  hardware.usb.autosuspendAlwaysOn = [
+    {
+      # Holtek Semiconductor Keyboard
+      vendor = "04d9";
+      product = "0209";
+      autosuspendOn = true;
+    }
+    {
+      # Razer Abyssus 2000
+      vendor = "1532";
+      product = "005e";
+      autosuspendOn = true;
+    }
+  ];
+  # Another way: USB auotsuspend
+  #hardware.usb.autosuspendDelay = 7200000; # 2 hours
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 16;
@@ -230,8 +267,8 @@
   
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
-      allowedUDPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
+      allowedTCPPorts = [ 22 80 443 3389 8080 ];
+      allowedUDPPorts = [ 22 80 443 3389 8080 ];
       #allowedUDPPortRanges = [
       #  { from = 4000; to = 4007; }
       #  { from = 8000; to = 8010; }

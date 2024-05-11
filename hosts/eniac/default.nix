@@ -277,15 +277,15 @@
  
       rathole-client-pacman = {
         enable = true;
-	configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_magic_c.toml";
+	configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_eniac_c.toml";
       };
       #rathole-client-superman = {
       #  enable = true;
-      #	 configFile = "/home/alienzj/toolkits/ohconfig/rathole/superman_magic_c.toml";
+      #	 configFile = "/home/alienzj/toolkits/ohconfig/rathole/superman_eniac_c.toml";
       #};
       rathole-client-awsman = {
         enable = true;
-	configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_magic_c.toml";
+	configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_eniac_c.toml";
       };
       boinc.enable = false;
       slurm.enable = false;
