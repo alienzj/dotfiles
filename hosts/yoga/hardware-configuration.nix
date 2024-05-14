@@ -15,7 +15,12 @@
 
   ## https://kvark.github.io/linux/framework/2021/10/17/framework-nixos.html
   ## energy savings
-  boot.kernelParams = ["mem_sleep_default=deep" "pcie_aspm.policy=powersupersave"];
+  boot.kernelParams = [
+    "mem_sleep_default=deep"
+    "pcie_aspm.policy=powersupersave"
+    "nmi_watchdog=0"
+    "laptop_mode=5"
+  ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
@@ -65,9 +70,14 @@
       ssd.enable = true;
     };
     #sensors.enable = true;
+    mouse.enable = true;
+    power.enable = true; # install powertop
   };
 
   # Power management 
+  # TODO
+  # FIXME
+  # powertop vs tlp ??
   #services.upower.enable = true;
   nix.settings.max-jobs = lib.mkDefault 16;
   powerManagement = {
@@ -128,14 +138,14 @@
     exportConfiguration = true;
     xkb.layout = "us";
     #xkbOptions = "compose:caps";
+  };
 
-    libinput = {
-      enable = true;
-      touchpad = {
-        tapping = true;
-        clickMethod = "clickfinger";
-      	naturalScrolling = true;
-      };
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      tapping = true;
+      clickMethod = "clickfinger";
+      naturalScrolling = true;
     };
   };
 
@@ -188,32 +198,37 @@
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   networking = {
-    useDHCP = lib.mkDefault true;
-    #interfaces = {
-    #  wlp1s0.useDHCP = true;
-    #};
+    #useDHCP = lib.mkDefault true;
+    interfaces = {
+      wlp1s0.useDHCP = true;
+    };
  
+    #wireless = {
+    #  interfaces = [ "wlan0" ];
+    #  iwd = {
+    #    enable = true; 
+    #	 settings = {
+    #      Network = {
+    #        EnableIPv6 = true;
+    #	     RoutePriorityOffset = 300;
+    #	   };
+    #	   Settings = {
+    #        AutoConnect = true;
+    #	     #Hidden = false;
+    #	     #AlwaysRandomizeAddress = false;
+    #	   };
+    #	 };
+    #  };
+    #}; 
+
     wireless = {
-      interfaces = [ "wlan0" ];
-      iwd = {
-        enable = true; 
-	settings = {
-          Network = {
-            EnableIPv6 = true;
-	    RoutePriorityOffset = 300;
-	  };
-	  Settings = {
-            AutoConnect = true;
-	    #Hidden = false;
-	    #AlwaysRandomizeAddress = false;
-	  };
-	};
-      };
-    }; 
+      enable = true;
+      userControlled.enable = true;
+    };
 
     networkmanager = {
       enable = true;
-      wifi.backend = "iwd";
+      #wifi.backend = "iwd"; # not good, now use wpa_supplicant
       plugins = with pkgs; [
         networkmanager-fortisslvpn
         networkmanager-iodine
@@ -227,8 +242,8 @@
   
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
-      allowedUDPPorts = [ 22 80 443 3389 8080 2424 2434 2444 ];
+      allowedTCPPorts = [ 22 80 443 3389 8080 ];
+      allowedUDPPorts = [ 22 80 443 3389 8080 ];
       #allowedUDPPortRanges = [
       #  { from = 4000; to = 4007; }
       #  { from = 8000; to = 8010; }

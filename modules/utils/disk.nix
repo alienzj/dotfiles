@@ -12,6 +12,8 @@ in {
     user.packages = with pkgs; [
       unstable.diskus
       unstable.lfs
+      unstable.payload-dumper-go
+      unstable.usbutils
       unstable.pigz
     ];
   };

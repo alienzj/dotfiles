@@ -19,8 +19,8 @@ in {
     user.packages = with pkgs; [
       unstable.ardour  # recording, mixing, loops
       lmms             # for making music
-      #unstable.sunvox  # my favorite midi tracker
-      # audacity   # for recording and remastering audio
+      unstable.sunvox  # my favorite midi tracker
+      audacity   # for recording and remastering audio
     ];
   };
 }

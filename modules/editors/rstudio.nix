@@ -40,7 +40,7 @@ let cfg = config.modules.editors.rstudio;
 
   RStudio-with-packages = pkgs.unstable.rstudioWrapper.override{
     packages = with pkgs.unstable.rPackages; [
-      #tidyverse
+      tidyverse
       # library(tidyverse) will load the core tidyverse packages:
       ## ggplot2, for data visualisation.
       ## dplyr, for data manipulation.
@@ -55,13 +55,13 @@ let cfg = config.modules.editors.rstudio;
       tidymodels
       infer	
 
-      #devtools
+      devtools
       remotes
 
       feather
       httr
       jsonlite
-      #xml2
+      xml2
       stringi
       curl
  
@@ -72,21 +72,21 @@ let cfg = config.modules.editors.rstudio;
       tinytex
       ymlthis
 
-      #vegan
+      vegan
 
-      #ggtree
-      #ggtreeExtra
-      #tidytree
-      #MicrobiotaProcess
-      #MicrobiomeProfiler
-      #clusterProfiler
-      #enrichplot
+      ggtree
+      ggtreeExtra
+      tidytree
+      MicrobiotaProcess
+      MicrobiomeProfiler
+      clusterProfiler
+      enrichplot
 
-      #dada2
-      #DECIPHER
+      dada2
+      DECIPHER
 
       ggpubr
-      #ggplotify
+      ggplotify
       ggalluvial
       ggstar
       ggnewscale
@@ -96,16 +96,16 @@ let cfg = config.modules.editors.rstudio;
       writexl
       flextable
       randomForest
-      #curatedMetagenomicData
-      #SummarizedExperiment
+      curatedMetagenomicData
+      SummarizedExperiment
 
       Rcpp
       Rcpp11
 
-      #Maaslin2
+      Maaslin2
       pkgconfig
-      #ComplexHeatmap
-      #circlize
+      ComplexHeatmap
+      circlize
       pagedown
       reshape2
       yaml

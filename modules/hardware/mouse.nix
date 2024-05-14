@@ -2,18 +2,15 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.utils.youdl;
+let cfg = config.modules.hardware.mouse;
 in {
-  options.modules.utils.youdl = with types; {
+  options.modules.hardware.mouse = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      unstable.you-get
-      unstable.youtube-dl
-      unstable.yutto
-      unstable.yt-dlp
+      unstable.lan-mouse
     ];
   };
 }

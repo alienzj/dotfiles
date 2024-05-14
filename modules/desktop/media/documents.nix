@@ -16,7 +16,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        #(mkIf cfg.ebook.enable calibre)
+        (mkIf cfg.ebook.enable calibre)
         (mkIf cfg.pdf.enable   gnome3.evince)
         (mkIf cfg.file.enable  gnome3.nautilus)
 	gsettings-desktop-schemas

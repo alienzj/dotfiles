@@ -2,18 +2,15 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.utils.youdl;
+let cfg = config.modules.desktop.im.zulip;
 in {
-  options.modules.utils.youdl = with types; {
+  options.modules.desktop.im.zulip = with types; {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      unstable.you-get
-      unstable.youtube-dl
-      unstable.yutto
-      unstable.yt-dlp
+      unstable.zulip
     ];
   };
 }

@@ -264,8 +264,8 @@ bar-used-empty-foreground = ${colors.fg-alt}
 
 [module/wlan]
 type = internal/network
-interface = wlan0
-#interface = wlp1s0
+#interface = wlan0
+interface = wlp1s0
 #interface = eno1
 interval = 3.0
 
