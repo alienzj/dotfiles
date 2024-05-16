@@ -61,7 +61,7 @@ in {
             "guest ok" = "yes";
             "create mask" = "0644";
             "directory mask" = "0755";
-            "force user" = "alienzj";
+            "force user" = "dumbledore";
             "force group" = "users";
           };
           private = {
@@ -71,7 +71,7 @@ in {
             "guest ok" = "no";
             "create mask" = "0644";
             "directory mask" = "0755";
-            "force user" = "alienzj";
+            "force user" = "dumbledore";
             "force group" = "users";
           };
         };

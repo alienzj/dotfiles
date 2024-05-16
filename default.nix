@@ -62,9 +62,12 @@ with lib.my;
     #kernelPackages = mkDefault pkgs.linuxPackages_lqx;
     #kernelPackages = mkDefault pkgs.linuxPackages_xanmod;
     loader = {
+      #timeout = 60; # press t when boot
       efi.canTouchEfiVariables = mkDefault true;
-      systemd-boot.configurationLimit = 7;
-      systemd-boot.enable = mkDefault true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 7;
+      };
     };
   };
 

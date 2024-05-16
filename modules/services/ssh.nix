@@ -20,8 +20,8 @@ in {
     };
 
     user.openssh.authorizedKeys.keys =
-      if config.user.name == "hlissner"
-      then [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB71rSnjuC06Qq3NLXQJwSz7jazoB+umydddrxL6vg1a hlissner" ]
+      if config.user.name == "dumbledore"
+      then [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIJyw1sOglPfJkgBRNuPu0U0ICfGEuyQ0H/Es3Lt/fp/ alienzj@magic" ]
       else [];
 
     user.packages = with pkgs;

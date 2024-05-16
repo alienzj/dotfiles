@@ -3,6 +3,7 @@
 case $HOSTNAME in
   yoga)  export WLP=wlp1s0   ;;
   magic) export WLP=eno1     ;;
+  MagIC-APP) export WLP=ens192 ;;
 esac
 
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
@@ -17,7 +18,7 @@ MONITOR=${MONITOR:-${MONITORS[0]}}
 # bspc monitor $MONITOR -d {1,2,3,4,5,6,7,8,9,10}
 # https://github.com/baskerville/bspwm/issues/1442
 bspc monitor primary -d 1 2 3 4 5 6 7 8 9 10
-bspc monitor 'primary#next' -d 11 12 13 14 15 16 17 18 19 20
+#bspc monitor 'primary#next' -d 11 12 13 14 15 16 17 18 19 20
 
 #bspc monitor DP1 -d {1 2 3 4 5 6 7 8 9 10}
 #bspc monitor DP2 -d {11 12 13 14 15 16 17 18 19 20}

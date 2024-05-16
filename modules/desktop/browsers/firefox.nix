@@ -244,7 +244,7 @@ in {
           Version=2
         '';
 
-	## alienzj.default profile
+	## dumbledore.default profile
         "${cfgPath}/${cfg.profileName}.default/user.js" =
           mkIf (cfg.settings != {} || cfg.extraConfig != "") {
             text = ''

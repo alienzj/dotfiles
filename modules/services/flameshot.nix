@@ -9,7 +9,7 @@ let cfg = config.modules.services.flameshot;
       General = {
         disabledTrayIcon = false;
         showStartupLaunchMessage = true;
-        savePath = "/home/alienzj/pictures/flameshot";
+        savePath = "/home/dumbledore/pictures/flameshot";
         saveAsFileExtension = ".png";
         ignoreUpdateToVersion = true;
       };
