@@ -26,7 +26,6 @@ in {
       group = "gitea";
       isSystemUser = true;
     };
-
     user.extraGroups = [ "gitea" ];
 
     services.gitea = {
@@ -34,12 +33,19 @@ in {
       lfs.enable = true;
 
       user = "git";
-      database.user = "git";
+      group = "gitea";
+
+      database = {
+        type = "postgres"; # default: sqlite3
+        user = "git";
+      };
 
       # We're assuming SSL-only connectivity
-      cookieSecure = true;
+      cookieSecure = true; # services.gitea.settings.session.COOKIE_SECURE
+
       # Only log what's important, but Info is necessary for fail2ban to work
-      log.level = "Info";
+      log.level = "Info";  # services.gitea.settings.log.LEVEL
+
       settings = {
         server.DISABLE_ROUTER_LOG = true;
         database.LOG_SQL = false;

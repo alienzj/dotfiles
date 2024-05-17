@@ -15,15 +15,11 @@ with lib.my;
 
     # Services
     # ./modules/backup.nix
-    # ./modules/gitea.nix
+    #./modules/gitea.nix
     #./modules/cgit.nix
     #./modules/vaultwarden.nix
     #./modules/shlink.nix
     #./modules/metrics.nix
-  ];
-
-  disabledModules = [
-    "services/networking/jotta-cli.nix"
   ];
 
   ## Modules
@@ -88,6 +84,7 @@ with lib.my;
       nginx.enable = true;
       docker.enable = true;
       #earlyoom.enable = true;
+      stalwart-mail.enable = true;
     };
     utils = {
       htop.enable = true;

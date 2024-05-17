@@ -43,7 +43,12 @@
       device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
     };
+    "/backup" = {
+      device = "/dev/disk/by-label/backup";
+      fsType = "noatime";
+    };
   };
+
   swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -58,7 +63,7 @@
     domain = "magic.local";
     nameservers = [ "1.1.1.1" "8.8.8.8" "10.132.2.30" "10.132.2.31" ];
 
-    networkmanager.enable = true;
+    #networkmanager.enable = true;
 
     firewall.enable = true;
 
