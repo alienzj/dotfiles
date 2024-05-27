@@ -43,6 +43,7 @@
     };
     #sensors.enable = true;
     mouse.enable = true;
+    #power.enable = true;
   };
 
   nix.settings.max-jobs = lib.mkDefault 16;
@@ -50,10 +51,9 @@
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "performance";
-    powertop.enable = true;
-
+    #powertop.enable = true;
   };
-  services.thermald.enable = true;
+  #services.thermald.enable = true;
 
   # Displays
   services.xserver = {
@@ -64,7 +64,6 @@
     exportConfiguration = true;
     xkb.layout = "us";
     #xkbOptions = "compose:caps";
-
   };
 
   services.libinput = {
@@ -164,8 +163,8 @@
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
-      allowedUDPPorts = [ 22 80 443 3389 8080 2323 2343 3232 ];
+      allowedTCPPorts = [ 22 80 443 3389 8080 ];
+      allowedUDPPorts = [ 22 80 443 3389 8080 ];
       #allowedUDPPortRanges = [
       #  { from = 4000; to = 4007; }
       #  { from = 8000; to = 8010; }

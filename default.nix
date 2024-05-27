@@ -42,7 +42,8 @@ with lib.my;
   #system.stateVersion = "21.05";
   #system.stateVersion = "22.11";
   #system.stateVersion = "23.05";
-  system.stateVersion = "23.11";
+  #system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   ## Some reasonable, global defaults
   # This is here to appease 'nix flake check' for generic hosts with no
