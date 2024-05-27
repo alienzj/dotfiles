@@ -6,12 +6,12 @@
   services.gitea = {
     appName = "Gitea at MagIC";
 
-    domain = "localhost";              # services.gitea.settings.server.DOMAIN
-    rootUrl = "http://127.0.0.1:3000";  # services.gitea.settings.server.ROOT_URL
-    disableRegistration = false;       # services.gitea.settings.service.DISABLE_REGISTRATION
+    domain = "localhost";                  # services.gitea.settings.server.DOMAIN
+    rootUrl = "http://10.132.2.151:3000";  # services.gitea.settings.server.ROOT_URL
+    disableRegistration = false;           # services.gitea.settings.service.DISABLE_REGISTRATION
 
     database = {
-      passwordFile = config.age.secrets.gitea-database-secret.path;
+      passwordFile = config.age.secrets.gitea-at-MagIC-APP-database-secret.path;
     };
 
     # Enable a timer that runs gitea dump to generate backup-files of the current gitea database and repositories.
@@ -28,24 +28,25 @@
 	#PROTOCOL = "http";
 	#HTTP_ADDR = "0.0.0.0";
 	#HTTP_PORT = 3000;
-        #SSH_DOMAIN = "henrik.io";
+        #SSH_DOMAIN = "magic-inno.hk";
       #};
       mailer = {
         ENABLED = false;
         #FROM = "noreply@magic-inno.hk";
         #HOST = "smtp.mailgun.org:587";
-        #USER = "postmaster@mail.henrik.io";
+        #USER = "sysadmin";
         #MAILER_TYPE = "smtp";
       };
     };
-    #mailerPasswordFile = config.age.secrets.gitea-smtp-secret.path;
+    #mailerPasswordFile = config.age.secrets.gitea-at-MagIC-APP-gmail-smtp-secret.path;
+    mailerPasswordFile = config.age.secrets.gitea-at-MagIC-APP-outlook-smtp-secret.path;
   };
 
-  #services.nginx.virtualHosts."git.henrik.io" = {
+  #services.nginx.virtualHosts."git.magic-inno.hk" = {
   #  http2 = true;
   #  forceSSL = true;
   #  enableACME = true;
-  #  root = "/srv/www/git.henrik.io";
+  #  root = "/srv/www/git.magic-inno.hk";
   #  locations."/".proxyPass = "http://127.0.0.1:3000";
   #};
 

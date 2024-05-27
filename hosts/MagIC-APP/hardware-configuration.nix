@@ -7,7 +7,7 @@
   imports = [ ];
 
   boot.initrd.availableKernelModules = [ "ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "cifs" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 

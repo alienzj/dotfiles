@@ -18,7 +18,7 @@ in {
         maxtime = "168h";
         factor = "4";
       };
-      jails.DEFAULT = ''
+      jails.DEFAULT = lib.mkDefault ''
         blocktype = DROP
         bantime = 1h
         findtime = 1h
@@ -32,6 +32,12 @@ in {
         failregex =  .*(Failed authentication attempt|invalid credentials|Attempted access of unknown user).* from <HOST>
         ignoreregex =
         journalmatch = _SYSTEMD_UNIT=gitea.service
+      '';
+      "fail2ban/filter.d/forgejo.conf".text = ''
+        [Definition]
+        failregex =  .*(Failed authentication attempt|invalid credentials|Attempted access of unknown user).* from <HOST>
+        ignoreregex =
+        journalmatch = _SYSTEMD_UNIT=forgejo.service
       '';
     };
   };
