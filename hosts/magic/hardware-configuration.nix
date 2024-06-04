@@ -8,32 +8,38 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ "i915" ];
-  boot.kernelModules = [ "kvm-intel" "tun" "virtio" ];
-  boot.extraModulePackages = [ ];
-  #boot.supportedFilesystems = [ "ntfs" ];
-  boot.supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
+  # Kernel
+  boot = {
+    initrd.availableKernelModules = [ "xhci_pci" "vfio-pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
+    initrd.kernelModules = [ "i915" ];
+    kernelModules = [ "tun" "vfio" "vfio_immmu_type1" "virtio" "vfio_pci" "kvm-intel"];
+    extraModulePackages = [ ];
+    supportedFilesystems = lib.mkForce [ "ntfs" "cifs" ];
 
-  boot.extraModprobeConfig = ''
-    options kvm_intel nested=1
-    options kvm_intel emulate_invalid_guest_state=0
-    options kvm ignore_msrs=1
-  '';
+    extraModprobeConfig = ''
+      options kvm_intel nested=1
+      options kvm_intel emulate_invalid_guest_state=0
+      options kvm ignore_msrs=1
+    '';
+  };
 
-  hardware.opengl.enable = true; 
+  # Firmware
+  services.fwupd.enable = true;
+
+  # NixOS Hardware options
+  hardware.opengl = {
+    enable = true; 
+    extraPackages = with pkgs; [
+      vaapiIntel
+      libvdpau-va-gl
+      intel-media-driver
+    ];
+  };
   environment.variables = {
     VDPAU_DRIVER = "va_gl";
   };
-
-  hardware.opengl.extraPackages = with pkgs; [
-    vaapiIntel
-    libvdpau-va-gl
-    intel-media-driver
-  ];
-
-  services.fwupd.enable = true;
-
+ 
+  # Custom hardware options
   modules.hardware = {
     audio.enable = true;
     bluetooth.enable = true;
@@ -41,61 +47,47 @@
       enable = true;
       ssd.enable = true;
     };
-    #sensors.enable = true;
     mouse.enable = true;
-    #power.enable = true;
+    dualmonitor.enable = true; # dual monitor
   };
 
+  # CPU
   nix.settings.max-jobs = lib.mkDefault 16;
-
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "performance";
-    #powertop.enable = true;
   };
-  #services.thermald.enable = true;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Displays
   services.xserver = {
     enable = true;
-    #videoDrivers = [ "modesetting" ];
     videoDrivers = [ "intel" ];
-    dpi = 168;
     exportConfiguration = true;
     xkb.layout = "us";
-    #xkbOptions = "compose:caps";
+    serverFlagsSection = ''
+      Option "StandbyTime" "0"
+      Option "SuspendTime" "0"
+      Option "OffTime" "0"
+      Option "BlankTime" "0"
+    '';
   };
 
+  ## dual monitor
+  ## https://github.com/NixOS/nixpkgs/issues/30796
+  services.xserver.displayManager.setupCommands = ''
+    LEFT='DP1'
+    RIGHT='DP2'
+    ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $RIGHT --mode 2560x1440 --rate 60 --pos 3840x0 --scale 1.2x1.2 --rotate inverted --rotate left --output $LEFT --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary
+  '';
+
+  # Mouse
   services.libinput = {
     enable = true;
-    #touchpad = {
-    #  tapping = true;
-    #  clickMethod = "clickfinger";
-    #	naturalScrolling = true;
-    #};
+    mouse.accelProfile = "flat";
   };
  
-  console.font =
-    "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-
-  # reference
-  # https://wiki.archlinuxcn.org/zh-hans/HiDPI
-  environment.variables = {
-    # QT method: manually
-    ##QT_SCALE_FACTOR = "2";
-    QT_SCREEN_SCALE_FACTORS = "2;2";
-    QT_AUTO_SCREEN_SCALE_FACTOR = "0";
-
-    # QT method: automatically
-    #QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-
-    # GTK
-    GDK_SCALE = "2";
-    GDK_DPI_SCALE = "0.5";
-    _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
-  };
-
-
+  # File System
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/b664f175-f1be-4e65-b5aa-81a2244136c7";
       fsType = "ext4";
@@ -115,60 +107,37 @@
     [ { device = "/dev/disk/by-uuid/29706bb2-5983-4597-a450-4b4c370c8023"; }
     ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  # networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
 
+  # Network
+  #https://nixos.org/manual/nixos/stable/#sec-rename-ifs
+  systemd.network.links."10-lan" = {
+    matchConfig.PermanentMACAddress = "a4:bb:6d:e2:d3:c8";
+    linkConfig.Name = "lan";
+  };
 
   networking = {
-    #useDHCP = lib.mkDefault true;
-    interfaces = {
-      eno1.useDHCP = true;
-    };
+    domain = "magic.local";
+    nameservers = [ "1.1.1.1" "8.8.8.8" "10.132.2.30" "10.132.2.31" ];
 
-    #wireless = {
-    #  interfaces = [ "wlan0" ];
-    #  iwd = {
-    #    enable = true;
-    #   settings = {
-    #      Network = {
-    #        EnableIPv6 = true;
-    #       RoutePriorityOffset = 300;
-    #             };
-    #     Settings = {
-    #        AutoConnect = true;
-    #       #Hidden = false;
-    #       #AlwaysRandomizeAddress = false;
-    #      };
-    #   };
-    #  };
-    #};
-
-    networkmanager = {
-      enable = true;
-      #wifi.backend = "iwd";
-      plugins = with pkgs; [
-        networkmanager-fortisslvpn
-        networkmanager-iodine
-        networkmanager-l2tp
-        networkmanager-openconnect
-        networkmanager-openvpn
-        networkmanager-vpnc
-        networkmanager-sstp
-      ];
-    };
-
+    #networkmanager.enable = true;
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 80 443 3389 8080 ];
       allowedUDPPorts = [ 22 80 443 3389 8080 ];
-      #allowedUDPPortRanges = [
-      #  { from = 4000; to = 4007; }
-      #  { from = 8000; to = 8010; }
-      #];
+    };
+ 
+    # Network
+    interfaces.lan = {
+      useDHCP = false;
+      ipv4.addresses = [{
+        address = "10.132.22.122";
+        prefixLength = 24;
+      }];
+    };
+    # Gateway
+    defaultGateway = {
+      address = "10.132.22.254";
+      interface = "lan";
     };
   };
 
@@ -181,13 +150,13 @@
   #  };
   #};
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
+  # User
   # https://nixos.wiki/wiki/TPM
   #security.tpm2.enable = true;
   #security.tpm2.pkcs11.enable = true;  # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
   #security.tpm2.tctiEnvironment.enable = true;  # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  users.users.alienzj.extraGroups = [ "tss" "video" ];  # tss group has access to TPM devices
+  users.extraGroups = [ "tss" "video" ];  # tss group has access to TPM devices
+
+  # Platform
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

@@ -36,8 +36,6 @@ in {
         exec = ''scratch "${tmux}/bin/tmux new-session -s calc -n calc qalc"'';
         categories = [ "Development" ];
       })
-      qgnomeplatform        # QPlatformTheme for a better Qt application inclusion in GNOME
-      libsForQt5.qtstyleplugin-kvantum # SVG-based Qt5 theme engine plus a config tool and extra theme
     ];
 
     fonts = {
@@ -105,6 +103,14 @@ in {
         xrender-sync-fence = true;
       };
     };
+
+    environment.systemPackages = with pkgs; [
+      # QPlatformTheme for a better Qt application inclusion in GNOME
+      qgnomeplatform
+      # SVG-based theme engine plus a config tool and extra theme
+      libsForQt5.qtstyleplugin-kvantum
+      qt6Packages.qtstyleplugin-kvantum
+    ];
 
     # Try really hard to get QT to respect my GTK theme.
     env.GTK_DATA_PREFIX = [ "${config.system.path}" ];

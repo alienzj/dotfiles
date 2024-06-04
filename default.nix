@@ -77,4 +77,11 @@ with lib.my;
     fd
     tokei
   ];
+
+  # Console setup
+  console.font = "ter-i32b";
+  console.packages = with pkgs; [
+    terminus_font
+  ];
+  console.keyMap = "mod-dh-ansi-us";
 }
