@@ -79,6 +79,7 @@ module Hey
         "nixos-rebuild",
         "--flake", "#{@@opts[:flake]}##{@@opts[:host]}",
         "--option", "pure-eval", "no",
+	#"--option", "substituters", "",
         *args], sudo: sudo
   end
 

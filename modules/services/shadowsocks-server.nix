@@ -149,7 +149,7 @@ in
         ${optionalString (cfg.passwordFile != null) ''
           cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks.json
         ''}
-        exec ssserver -c ${if cfg.passwordFile != null then "/tmp/shadowsocks.json" else configFile}
+        exec ssservice server -c ${if cfg.passwordFile != null then "/tmp/shadowsocks.json" else configFile}
       '';
     };
   };
