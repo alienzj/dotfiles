@@ -3,8 +3,10 @@
 with lib;
 with lib.my;
 
-let cfg = config.modules.desktop.vm.virt-manager;
-in {
+let
+  cfg = config.modules.desktop.vm.virt-manager;
+in
+{
   options.modules.desktop.vm.virt-manager = {
     enable = mkBoolOpt false;
   };
@@ -15,14 +17,14 @@ in {
       libvirtd = {
         enable = true;
         qemu = {
-	  #runAsRoot = false;
+          #runAsRoot = false;
           swtpm.enable = true;
-	  ovmf = {
+          ovmf = {
             enable = true;
 
             # https://github.com/NixOS/nixpkgs/issues/164064
-	    #package = pkgs.unstable.OVMFFull;
-	    #packages = [ pkgs.OVMFFull.fd ];
+            #package = pkgs.unstable.OVMFFull;
+            #packages = [ pkgs.OVMFFull.fd ];
             packages = [
               (pkgs.OVMF.override {
                 secureBoot = true;
@@ -32,7 +34,7 @@ in {
               }).fd
             ];
           };
-	};
+        };
       };
       spiceUSBRedirection.enable = true;
     };

@@ -1,33 +1,27 @@
 #!/usr/bin/env bash
 
-case $HOSTNAME in
-  yoga)  export WLP=wlp1s0   ;;
-  magic) export WLP=eno1     ;;
-esac
+#case $HOSTNAME in
+#  yoga)  export WLP=wlp1s0   ;;
+#  magic) export WLP=eno1     ;;
+#esac
 
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
 export MONITORS=( $(xrandr -q | grep ' connected' | cut -d' ' -f1) )
 MONITOR=${MONITOR:-${MONITORS[0]}}
 
-# Only have workspaces for primary monitor
-#for monitor in $MONITORS; do
-#  bspc monitor $monitor -d 0
-#done
 
-# bspc monitor $MONITOR -d {1,2,3,4,5,6,7,8,9,10}
-# https://github.com/baskerville/bspwm/issues/1442
-bspc monitor primary -d 1 2 3 4 5 6 7 8 9 10
-bspc monitor 'primary#next' -d 11 12 13 14 15 16 17 18 19 20
+if [ $DUALMONITOR == "yes" ]; then
+  # bspc monitor $MONITOR -d {1,2,3,4,5,6,7,8,9,10}
+  # https://github.com/baskerville/bspwm/issues/1442
+  bspc monitor primary -d 1 2 3 4 5 6 7 8 9 10
+  bspc monitor 'primary#next' -d 11 12 13 14 15 16 17 18 19 20
+else
+  for monitor in $MONITORS; do
+    bspc monitor $monitor -d 0
+  done
+  bspc monitor $MONITOR -d {1,2,3,4,5,6,7,8,9,10}
+fi
 
-#bspc monitor DP1 -d {1 2 3 4 5 6 7 8 9 10}
-#bspc monitor DP2 -d {11 12 13 14 15 16 17 18 19 20}
-
-#if [[ $HOSTNAME == 'yoga' ]]; then
-#  bspc monitor $MONITOR -d 1 2 3 4 5 6 7 8 9 10
-#elif [[ $HOSTNAME == 'magic' ]]; then
-#  bspc monitor ${MONITORS[0]} -d 1 2 3 4 5 6 7 8 9 10
-#  bspc monitor ${MONITORS[1]} -d 11 12 13 14 15
-#fi
 
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true

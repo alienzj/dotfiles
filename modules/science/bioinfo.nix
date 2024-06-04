@@ -2,8 +2,10 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.science.bioinfo;
-in {
+let
+  cfg = config.modules.science.bioinfo;
+in
+{
   options.modules.science.bioinfo = with types; {
     enable = mkBoolOpt false;
   };
@@ -12,43 +14,43 @@ in {
     {
       user.packages = with pkgs; [
         unstable.igv
-	unstable.bwa
-	unstable.blast
-	unstable.bowtie2
-	unstable.deeptools
-	unstable.diamond
-	unstable.jbrowse
-	unstable.fastp
-	unstable.hmmer
-	unstable.megahit
-	unstable.minimap2
-	unstable.mmseqs2
-	unstable.sambamba
-	unstable.samtools
-	unstable.seqtk
-	unstable.seqkit
-	unstable.SPAdes
-	unstable.sratoolkit
-	unstable.star
+        unstable.bwa
+        unstable.blast
+        unstable.bowtie2
+        unstable.deeptools
+        unstable.diamond
+        unstable.jbrowse
+        unstable.fastp
+        unstable.hmmer
+        unstable.megahit
+        unstable.minimap2
+        unstable.mmseqs2
+        unstable.sambamba
+        unstable.samtools
+        unstable.seqtk
+        unstable.seqkit
+        unstable.SPAdes
+        unstable.sratoolkit
+        unstable.star
         unstable.vcftools
         unstable.bedtools
         unstable.bcftools
         unstable.bftools
-	unstable.kent
+        #unstable.kent
         unstable.gatk
-	unstable.hisat2
+        unstable.hisat2
         unstable.mafft
         unstable.muscle
         unstable.minia
-	unstable.clustal-omega
-	unstable.seaview
-	unstable.freebayes
-	unstable.mrbayes
-	unstable.raxml-mpi
-	unstable.veryfasttree
-	unstable.iqtree
-	# TODO
-	# unstable.ugene
+        unstable.clustal-omega
+        unstable.seaview
+        unstable.freebayes
+        unstable.mrbayes
+        unstable.raxml-mpi
+        unstable.veryfasttree
+        unstable.iqtree
+        # TODO
+        # unstable.ugene
       ];
     }
   ]);

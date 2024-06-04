@@ -38,7 +38,7 @@ let cfg = config.modules.editors.rstudio;
     buildInputs = [ pkgs.unstable.gsl ];
   };
 
-  RStudio-with-packages = pkgs.unstable.rstudioWrapper.override{
+  rstudio-with-packages = pkgs.unstable.rstudioWrapper.override{
     packages = with pkgs.unstable.rPackages; [
       tidyverse
       # library(tidyverse) will load the core tidyverse packages:
@@ -61,7 +61,7 @@ let cfg = config.modules.editors.rstudio;
       feather
       httr
       jsonlite
-      #xml2
+      xml2
       stringi
       curl
  
@@ -96,7 +96,7 @@ let cfg = config.modules.editors.rstudio;
       writexl
       flextable
       randomForest
-      #curatedMetagenomicData
+      curatedMetagenomicData
       SummarizedExperiment
 
       Rcpp
@@ -123,7 +123,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = [
       #pkgs.unstable.rstudio
-      RStudio-with-packages
+      rstudio-with-packages
     ];
   };
 }

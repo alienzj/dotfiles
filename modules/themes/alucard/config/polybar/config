@@ -28,7 +28,7 @@ accent = #604c7e
 
 [global/wm]
 margin-top = 0
-margin-bottom = 50
+margin-bottom = 42
 
 
 [bar/bar1]
@@ -45,7 +45,7 @@ background = ${colors.bg}
 foreground = ${colors.fg}
 
 width = 100%
-height = 50
+height = 42
 offset-x = 0
 offset-y = 0
 bottom = true
@@ -64,18 +64,18 @@ padding-right = 2
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = "Fira Code:pixelsize=18;2"
-font-1 = "Wuncon Siji:pixelsize=18;2"
-font-2 = "Siji:pixelsize=18;2"
-font-3 = "Font Awesome 6 Free Solid:style=Solid:pixelsize=18;2"
-font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=18;2"
-font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=18;2"
-font-6 = "Material Icons: style=Regular: pixelsize=18;2"
+font-0 = "Fira Code:pixelsize=10;2"
+font-1 = "Wuncon Siji:pixelsize=12;2"
+font-2 = "Siji:pixelsize=12;2"
+font-3 = "Font Awesome 6 Free Solid:style=Solid:pixelsize=11;2"
+font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=11;2"
+font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=11;2"
+font-6 = "Material Icons: style=Regular: pixelsize=11;2"
 
 modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
 ;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
 modules-center = bspwm
-modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
+modules-right = redshift pad network pad pad network-up pad network-down pad battery pad date pad syncthing
 
 ;tray-position = center
 ;tray-padding = 2
@@ -130,7 +130,7 @@ font-6 = "Material Icons: style=Regular: pixelsize=18;2"
 ;modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
 ;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
 modules-center = bspwm
-;modules-right = redshift pad wlan pad pad network-up pad network-down pad battery pad date pad syncthing
+;modules-right = redshift pad network pad pad network-up pad network-down pad battery pad date pad syncthing
 
 ;tray-position = center
 ;tray-padding = 2
@@ -316,10 +316,9 @@ bar-used-empty = ¦
 bar-used-empty-foreground = ${colors.fg-alt}
 
 
-[module/wlan]
+[module/network]
 type = internal/network
-#interface = wlp1s0
-interface = eno1
+interface = lan
 interval = 3.0
 
 # 
@@ -348,7 +347,7 @@ ramp-signal-4-foreground = ${colors.fg}
 
 [module/network-up]
 type = internal/network
-interface = eno1
+interface = lan
 interval = 4.0
 label-connected = "%upspeed%"
 ;format-connected-prefix = " "
@@ -364,7 +363,7 @@ format-disconnected-foreground = ${colors.alert}
 
 [module/network-down]
 type = internal/network
-interface = eno1
+interface = lan
 interval = 4.0
 label-connected = "%downspeed%"
 ;format-connected-prefix = " "

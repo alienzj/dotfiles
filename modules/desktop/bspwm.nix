@@ -23,15 +23,11 @@ in {
         alsaSupport = true;
         pulseSupport = true;
         nlSupport = true;
-	mpdSupport = true;
+	      mpdSupport = true;
       })
     ];
 
-    services = {
-      displayManager = {
-        defaultSession = "none+bspwm";
-      };
-    };
+    services.displayManager.defaultSession = "none+bspwm";
     services = {
       picom.enable = true;
       redshift.enable = true;

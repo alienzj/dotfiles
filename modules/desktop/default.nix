@@ -47,10 +47,10 @@ in {
         ubuntu_font_family
         dejavu_fonts
         symbola
-	noto-fonts
-	noto-fonts-cjk
-	noto-fonts-emoji
-	#fira
+	      noto-fonts
+	      noto-fonts-cjk
+	      noto-fonts-emoji
+	      #fira
       ];
     };
 

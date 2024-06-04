@@ -17,33 +17,29 @@ with lib.my;
   # Configure nix and nixpkgs
   environment.variables.NIXPKGS_ALLOW_UNFREE = "1";
   nix =
-    let filteredInputs = filterAttrs (n: _: n != "self") inputs;
-        nixPathInputs  = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
-        registryInputs = mapAttrs (_: v: { flake = v; }) filteredInputs;
-    in {
+    let
+      filteredInputs = filterAttrs (n: _: n != "self") inputs;
+      nixPathInputs = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
+      registryInputs = mapAttrs (_: v: { flake = v; }) filteredInputs;
+    in
+    {
       package = pkgs.nixFlakes;
       extraOptions = "experimental-features = nix-command flakes";
       nixPath = nixPathInputs ++ [
         "nixpkgs-overlays=${config.dotfiles.dir}/overlays"
         "dotfiles=${config.dotfiles.dir}"
       ];
-      registry = registryInputs // { dotfiles.flake = inputs.self; };
+      registry = registryInputs // {
+        dotfiles.flake = inputs.self;
+      };
       settings = {
-        substituters = [
-          "https://nix-community.cachix.org"
-        ];
-        trusted-public-keys = [
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
+        substituters = [ "https://nix-community.cachix.org" ];
+        trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
         auto-optimise-store = true;
       };
     };
   system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
-  #system.stateVersion = "21.05";
-  #system.stateVersion = "22.11";
-  #system.stateVersion = "23.05";
-  #system.stateVersion = "23.11";
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 
   ## Some reasonable, global defaults
   # This is here to appease 'nix flake check' for generic hosts with no
@@ -84,11 +80,4 @@ with lib.my;
     fd
     tokei
   ];
-
-  # ??
-  #nixpkgs.config.permittedInsecurePackages = [
-  #  "python-2.7.18.6"
-  #];
-
-
 }

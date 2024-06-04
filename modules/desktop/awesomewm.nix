@@ -28,7 +28,7 @@ in {
         enable = true;
         displayManager = {
           lightdm.enable = true;
-        #  lightdm.greeters.mini.enable = true;
+          #lightdm.greeters.mini.enable = true;
         };
         windowManager.awesome.enable = true;
       };

@@ -8,13 +8,60 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # Kernel
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-amd" "tun" "virtio" "acpi_call" ];
+
+  ## https://kvark.github.io/linux/framework/2021/10/17/framework-nixos.html
+  ## energy savings
+  boot.kernelParams = [
+    "mem_sleep_default=deep"
+    "pcie_aspm.policy=powersupersave"
+    "nmi_watchdog=0"
+    "laptop_mode=5"
+  ];
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+
+  boot.extraModprobeConfig = lib.mkMerge [
+    # idle audio card after one second
+    "options snd_hda_amd power_save=1"
+    # enable wifi power saving (keep uapsd off to maintain low latencies)
+    "options iwlwifi power_save=1 uapsd_disable=1"
+
+    # VM
+    "options kvm_amd nested=1"
+    "options kvm_amd emulate_invalid_guest_state=0"
+    "options kvm ignore_msrs=1"
+  ];
 
 
-  # Modules
+  #https://discourse.nixos.org/t/laptop-suspend-fails/4739
+  services.fwupd.enable = true;
+
+  # GPU
+  # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiVdpau
+    libvdpau-va-gl
+    rocmPackages.clr.icd
+    rocmPackages.clr
+    amdvlk
+  ];
+
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+
+  hardware.opengl = {
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  environment.variables.AMD_VULKAN_ICD = lib.mkDefault "RADV";
+
+  # Hardware
   modules.hardware = {
     audio.enable = true;
     bluetooth.enable = true;
@@ -23,14 +70,65 @@
       ssd.enable = true;
     };
     #sensors.enable = true;
+    mouse.enable = true;
+    power.enable = true; # install powertop
   };
 
-  # CPU
-  nix.settings.max-jobs = lib.mkDefault 8;
-  powerManagement.cpuFreqGovernor = "performance";
-  hardware.cpu.amd.updateMicrocode = true;
+  # Power management 
+  # TODO
+  # FIXME
+  # powertop vs tlp ??
+  #services.upower.enable = true;
+  nix.settings.max-jobs = lib.mkDefault 16;
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+    #cpuFreqGovernor = lib.mkDefault "ondemand";
+  };
+  services.tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-  networking.wireless.interfaces = [ "wlp1s0" ];
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 20;
+
+       #Optional helps save long term battery health
+       START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
+       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
+      };
+  };
+  services.auto-cpufreq = {
+    enable = true;
+    settings = {
+      battery = {
+        governor = "powersave";
+        turbo = "never";
+      };
+      charger = {
+        governor = "performance";
+        turbo = "auto";
+      };
+    };
+  };
+
+  # screen brightness
+  programs.light.enable = true;
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      #{ keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+      #{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 63 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 64 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+    ];
+  };
 
   # Displays
   services.xserver = {
@@ -38,60 +136,141 @@
     videoDrivers = [ "amdgpu" ];
     dpi = 168;
     exportConfiguration = true;
-    layout = "us";
+    xkb.layout = "us";
     #xkbOptions = "compose:caps";
+  };
 
-    libinput = {
-      enable = true;
-      touchpad = {
-        tapping = true;
-        clickMethod = "clickfinger";
-      	naturalScrolling = true;
-      };
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      tapping = true;
+      clickMethod = "clickfinger";
+      naturalScrolling = true;
     };
   };
 
-  console.font =
-    "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+
+  # reference
+  # https://wiki.archlinuxcn.org/zh-hans/HiDPI
   environment.variables = {
-    # QT_SCALE_FACTOR = "2";
+    # QT method: manually
+    ##QT_SCALE_FACTOR = "2";
+    QT_SCREEN_SCALE_FACTORS = "2;2";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "0";
+
+    # QT method: automatically
+    #QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+
+    # GTK
     GDK_SCALE = "2";
     GDK_DPI_SCALE = "0.5";
     _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
   };
 
-
   # Storage
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f53e0fc6-5d76-4106-a106-558af7be7d16";
-      fsType = "ext4";
-    };
+  fileSystems."/" = { 
+    device = "/dev/disk/by-uuid/f53e0fc6-5d76-4106-a106-558af7be7d16";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6018-D534";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = { 
+    device = "/dev/disk/by-uuid/6018-D534";
+    fsType = "vfat";
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357"; }
-    ];
+  fileSystems."/tmp" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = ["noatime" "nodev" "size=32G"];
+  };
+
+  swapDevices = [ { 
+    device = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357";
+  }];
 
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp3s0f4u1u3.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
+  networking = {
+    #useDHCP = lib.mkDefault true;
+    interfaces = {
+      wlp1s0.useDHCP = true;
+    };
+ 
+    #wireless = {
+    #  interfaces = [ "wlan0" ];
+    #  iwd = {
+    #    enable = true; 
+    #	 settings = {
+    #      Network = {
+    #        EnableIPv6 = true;
+    #	     RoutePriorityOffset = 300;
+    #	   };
+    #	   Settings = {
+    #        AutoConnect = true;
+    #	     #Hidden = false;
+    #	     #AlwaysRandomizeAddress = false;
+    #	   };
+    #	 };
+    #  };
+    #}; 
+
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+    };
+
+    networkmanager = {
+      enable = true;
+      #wifi.backend = "iwd"; # not good, now use wpa_supplicant
+      plugins = with pkgs; [
+        networkmanager-fortisslvpn
+        networkmanager-iodine
+        networkmanager-l2tp
+        networkmanager-openconnect
+        networkmanager-openvpn
+        networkmanager-vpnc
+        networkmanager-sstp
+      ];
+    };
+  
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 3389 8080 ];
+      allowedUDPPorts = [ 22 80 443 3389 8080 ];
+      #allowedUDPPortRanges = [
+      #  { from = 4000; to = 4007; }
+      #  { from = 8000; to = 8010; }
+      #];
+    };
+  };
+
+  system.activationScripts = {
+    rfkillUnblockWlan = {
+      text = ''
+      rfkill unblock wlan
+      '';
+      deps = [];
+    };
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  #hardware.cpu.amd.updateMicrocode = true;
+  hardware.cpu.amd.updateMicrocode = true;
+
+  #security.tpm2.enable = true;
+  #security.tpm2.pkcs11.enable = true;
+  #security.tpm2.tctiEnvironment.enable = true;
+  users.users.alienzj.extraGroups = [ "tss" "video" ];
 
   # high-resolution display
-  hardware.video.hidpi.enable = true;
-
+  #hardware.video.hidpi.enable = true;
+  #fonts.optimizeForVeryHighDPI = false;
   hardware.sensor.iio.enable = true;
-
 }
