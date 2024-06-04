@@ -1,9 +1,13 @@
 #+TITLE: Host Configurations
 
-* Systems
-+ kuro
-+ shiro
-+ ao
-+ aka
-+ aijiro
-+ unlisted: 100+ linodes, 7 VMs
+* backup
+hlissner's hosts.
+
+* personal hosts 
++ eniac 
++ yoga
++ nixman
++ awsman
++ magic
++ MagIC-APP
++ MagIC-DEV
