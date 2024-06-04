@@ -96,7 +96,7 @@ let cfg = config.modules.editors.rstudio;
       writexl
       flextable
       randomForest
-      curatedMetagenomicData
+      #curatedMetagenomicData
       SummarizedExperiment
 
       Rcpp

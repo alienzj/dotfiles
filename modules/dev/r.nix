@@ -73,7 +73,7 @@ let cfg = config.modules.dev.r;
       knitr
       rmarkdown
       #curatedMetagenomicData_
-      curatedMetagenomicData
+      #curatedMetagenomicData
       SummarizedExperiment
       V8
     ];
