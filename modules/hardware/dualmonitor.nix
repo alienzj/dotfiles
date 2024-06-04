@@ -9,6 +9,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.variables.DUALMONITOR = "yes"; 
+    environment.variables.DUALMONITOR = "yes";
   };
 }
