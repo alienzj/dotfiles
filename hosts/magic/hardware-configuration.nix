@@ -28,7 +28,7 @@
 
   # NixOS Hardware options
   hardware.opengl = {
-    enable = true; 
+    enable = true;
     extraPackages = with pkgs; [
       vaapiIntel
       libvdpau-va-gl
@@ -38,7 +38,7 @@
   environment.variables = {
     VDPAU_DRIVER = "va_gl";
   };
- 
+
   # Custom hardware options
   modules.hardware = {
     audio.enable = true;
@@ -86,7 +86,7 @@
     enable = true;
     mouse.accelProfile = "flat";
   };
- 
+
   # File System
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/b664f175-f1be-4e65-b5aa-81a2244136c7";
@@ -125,7 +125,7 @@
       allowedTCPPorts = [ 22 80 443 3389 8080 ];
       allowedUDPPorts = [ 22 80 443 3389 8080 ];
     };
- 
+
     # Network
     interfaces.lan = {
       useDHCP = false;
