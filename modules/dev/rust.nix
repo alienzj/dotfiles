@@ -7,13 +7,21 @@
 # is no formal proof of your claims for safety, but who said you have to solve
 # all the world's problems to be wonderful?
 
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 with lib.my;
-let devCfg = config.modules.dev;
-    cfg = devCfg.rust;
-in {
+let
+  devCfg = config.modules.dev;
+  cfg = devCfg.rust;
+in
+{
   options.modules.dev.rust = {
     enable = mkBoolOpt false;
     xdg.enable = mkBoolOpt devCfg.xdg.enable;
@@ -21,15 +29,15 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = [ 
-      	pkgs.rustup
-	pkgs.rust-analyzer
+      user.packages = [
+        pkgs.rustup
+        pkgs.rust-analyzer
       ];
       env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
       environment.shellAliases = {
-        rs  = "rustc";
+        rs = "rustc";
         rsp = "rustup";
-        ca  = "cargo";
+        ca = "cargo";
       };
     })
 
