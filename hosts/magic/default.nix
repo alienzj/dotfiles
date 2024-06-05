@@ -20,12 +20,8 @@
         transmission.enable = true;
         filezilla.enable = true;
         scrcpy.enable = true;
-        anydesk.enable = true;
         rustdesk.enable = true;
-        authenticator.enable = true;
         geph.enable = true;
-        vpn.enable = true;
-        file-manager.enable = true;
         rdp.enable = true;
       };
       browsers = {
@@ -50,7 +46,6 @@
         recording.enable = true;
         spotify.enable = true;
         sayonara.enable = true;
-        podcasts.enable = true;
         netease-cloud-music.enable = true;
         lx-music.enable = true;
       };
@@ -78,7 +73,6 @@
         fcitx5 = {
           enable = true;
         };
-        translate.enable = true;
       };
     };
     science = {
@@ -141,11 +135,8 @@
         };
       };
       vim.enable = true;
-      vscode_fhs.enable = true;
-      vscodium.enable = true;
+      vscode.enable = true;
       rstudio.enable = true;
-      rstudio-server.enable = false;
-      idea.enable = true;
       android-studio.enable = true;
     };
     shell = {
@@ -158,14 +149,14 @@
       fish.enable = true;
     };
     services = {
-      adb.enable = true; # android
+      adb.enable = true;
       syncthing.enable = true;
       ssh.enable = true;
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       rdp.enable = true; # remote desktop
-      samba.enable = true; # share folders
-      printing.enable = true; # RICOH printer
+      samba.enable = false; # share folders
+      printing.enable = false; # RICOH printer
       lockscreen.enable = true;
       flameshot.enable = true;
       proxychains = {
