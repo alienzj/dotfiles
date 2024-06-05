@@ -86,5 +86,7 @@ with lib.my;
   console.packages = with pkgs; [
     terminus_font
   ];
-  console.keyMap = "mod-dh-ansi-us";
+
+  #find "$(nix eval --raw 'nixpkgs#kbd')/share/keymaps" -name '*.map.gz'
+  console.keyMap = "us";
 }
