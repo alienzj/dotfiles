@@ -22,5 +22,5 @@ if [ $DUALMONITOR == "yes" ]; then
   bspc config -m 'primary#next' top_padding 0
   bspc config -m 'primary#next' bottom_padding 50
 else
-  bspc config -m primary bottom_padding 42
+  bspc config -m primary bottom_padding 50
 fi
