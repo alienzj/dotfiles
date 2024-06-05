@@ -40,7 +40,7 @@
     #"mem_sleep_default=deep"
     #"pcie_aspm.policy=powersupersave"
     kernelParams = [
-      "usb.core.autosuspend=-1"     # disable autosuspend
+      #"usb.core.autosuspend=-1"     # disable autosuspend
       #"usb.core.autosuspend=3600"  # 5 sencond # it seems no effect
     ];
 
@@ -76,7 +76,7 @@
     #sensors.enable = true;
     nvidia.enable = true;
     #https://discourse.nixos.org/t/usb-mouse-and-keyboard-poweroff-too-soon-udev/22459
-    #power.enable = true; # install powertop
+    power.enable = true; # install powertop
     mouse.enable = true;
 
     # USB
@@ -129,60 +129,14 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   # Power management
-  #environment.systemPackages = [ pkgs.acpi ];
+  environment.systemPackages = [ pkgs.acpi ];
   #services.upower.enable = true;
-  #powerManagement = {
-  #  enable = true;
-  #  cpuFreqGovernor = lib.mkDefault "performance";
-  #  powertop.enable = true;
-  #};
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = lib.mkDefault "performance";
+    powertop.enable = true;
+  };
   #services.thermald.enable = true;
-
-  #services.tlp = {
-  #  enable = true;
-  #  settings = {
-  #    CPU_SCALING_GOVERNOR_ON_AC = "performance";
-  #    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-  #    CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-  #    CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-  #    CPU_MIN_PERF_ON_AC = 0;
-  #    CPU_MAX_PERF_ON_AC = 100;
-  #    CPU_MIN_PERF_ON_BAT = 0;
-  #    CPU_MAX_PERF_ON_BAT = 20;
-
-  #   #Optional helps save long term battery health
-  #   START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
-  #   STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-  #  };
-  #};
-
-  #services.auto-cpufreq = {
-  #  enable = true;
-  #  settings = {
-  #    battery = {
-  #      governor = "powersave";
-  #      turbo = "never";
-  #    };
-  #    charger = {
-  #      governor = "performance";
-  #      turbo = "auto";
-  #    };
-  #  };
-  #};
-
-  # screen brightness
-  #programs.light.enable = true;
-  #services.actkbd = {
-  #  enable = true;
-  #  bindings = [
-  #    #{ keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-  #    #{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-  #    { keys = [ 63 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-  #    { keys = [ 64 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-  #  ];
-  #};
 
   # Displays
   services.xserver = {
@@ -200,8 +154,7 @@
   ## Single monitor
   ## https://github.com/NixOS/nixpkgs/issues/30796
   services.xserver.displayManager.setupCommands = ''
-    CENTER='DP1'
-    #${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $CENTER --mode 3840x2160 --rate 60 --pos 0x0 --primary
+    ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output HDMI-0 --mode 3840x2160 --rate 60 --pos 0x0 --primary
   '';
 
   # Mouse
@@ -258,7 +211,7 @@
     };
     # Gateway
     defaultGateway = {
-      address = "192.168.1.254";
+      address = "192.168.1.1"; # ip route
       interface = "lan";
     };
   };
