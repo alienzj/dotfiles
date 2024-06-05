@@ -1,11 +1,19 @@
 # modules/desktop/media/docs.nix
 
-{ options, config, lib, pkgs, ... }:
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.media.documents;
-in {
+let
+  cfg = config.modules.desktop.media.documents;
+in
+{
   options.modules.desktop.media.documents = {
     enable = mkBoolOpt false;
     pdf.enable = mkBoolOpt false;
@@ -17,18 +25,24 @@ in {
     {
       user.packages = with pkgs; [
         (mkIf cfg.ebook.enable calibre)
-        (mkIf cfg.pdf.enable   gnome3.evince)
-        (mkIf cfg.file.enable  gnome3.nautilus)
-	gsettings-desktop-schemas
-        zathura
+        (mkIf cfg.pdf.enable evince)
+        #zathura
       ];
     }
 
     (mkIf (cfg.file.enable) {
       services.gvfs.enable = true;
-      programs.dconf.enable = true;
-    })
+      services.tumbler.enable = true;
 
+      programs.thunar.enable = true;
+      programs.xfconf.enable = true;
+      programs.thunar.plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-volman
+      ];
+    })
+ 
     # TODO calibre/evince/zathura dotfiles
+
   ]);
 }

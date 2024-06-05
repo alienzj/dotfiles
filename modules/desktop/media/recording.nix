@@ -4,12 +4,20 @@
 # This, paired with DaVinci Resolve for video editing (on my Windows system) and
 # I have what I need for youtube videos and streaming.
 
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.media.recording;
-in {
+let
+  cfg = config.modules.desktop.media.recording;
+in
+{
   options.modules.desktop.media.recording = {
     enable = mkBoolOpt false;
     audio.enable = mkBoolOpt true;
@@ -19,18 +27,34 @@ in {
   config = mkIf cfg.enable {
     services.pipewire.jack.enable = true;
 
-    user.packages = with pkgs;
+    user.packages =
+      with pkgs;
       # for recording and remastering audio
       # (if cfg.audio.enable then [ unstable.audacity-gtk3 unstable.ardour ] else []) ++
-      (if cfg.audio.enable then [ unstable.audacity unstable.ardour unstable.blanket ] else []) ++
-      # for longer term streaming/recording the screen
-      (if cfg.video.enable then [ 
-          unstable.asciinema
-          unstable.obs-studio
-	  #unstable.handbrake
-	  #unstable.gnome-decoder
-	  unstable.video-trimmer
-	  unstable.vokoscreen-ng
-        ] else []);
+      (
+        if cfg.audio.enable then
+          [
+            unstable.audacity
+            unstable.ardour
+            unstable.blanket
+          ]
+        else
+          [ ]
+      )
+      ++
+        # for longer term streaming/recording the screen
+        (
+          if cfg.video.enable then
+            [
+              unstable.asciinema
+              unstable.obs-studio
+              #unstable.handbrake
+              #unstable.gnome-decoder
+              unstable.video-trimmer
+              unstable.vokoscreen-ng
+            ]
+          else
+            [ ]
+        );
   };
 }
