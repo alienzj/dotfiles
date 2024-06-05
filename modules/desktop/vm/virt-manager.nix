@@ -41,8 +41,6 @@ in
 
     services.spice-vdagentd.enable = true;
 
-    programs.dconf.enable = true;
-
     environment.systemPackages = with pkgs; [
       virt-manager
       virt-viewer

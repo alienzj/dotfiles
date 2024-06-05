@@ -19,12 +19,20 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Extras
+    # Emacs
     emacs-overlay.url = "github:nix-community/emacs-overlay";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
-    # Research
+    # Hardware
+    nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    # VSCodium
+    # TODO
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    # https://github.com/nix-community/nix-vscode-extensions/blob/master/template/flake.nix
+    #flake-utils.follows = "nix-vscode-extensions/flake-utils";
+    #nixpkgs.follows = "nix-vscode-extensions/nixpkgs";
+
+    # Matlab
     nix-matlab.url = "gitlab:doronbehar/nix-matlab";
 
     # NUR

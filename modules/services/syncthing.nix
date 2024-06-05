@@ -16,7 +16,7 @@ in {
       group = "users";
       configDir = "${config.user.home}/.config/syncthing";
       dataDir = "${config.user.home}/.local/share/syncthing";
-      declarative.folders = {};
+      settings.folders = {};
     };
 
     networking.firewall.allowedTCPPorts = [ 8384 22000 ];

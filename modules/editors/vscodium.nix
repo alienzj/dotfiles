@@ -9,7 +9,7 @@
   options,
   lib,
   pkgs,
-  extensions,
+  inputs,
   ...
 }:
 
@@ -17,6 +17,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.editors.vscodium;
+  extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux";
   jsonFormat = pkgs.formats.json { };
   vscodeUserSettings = {
     "workbench.iconTheme" = "material-icon-theme";
@@ -61,109 +62,113 @@ in
 
   config = mkIf cfg.enable {
 
-    programs.vscode = {
-      enable = true;
-      package = pkgs.unstable.vscodium;
+    environment.systemPackages = with pkgs.unstable; [
+      (vscode-with-extensions.override {
+        vscode = vscodium;
+        vscodeExtensions = (with extensions.vscode-marketplace; [
+          # ui
+          pkief.material-icon-theme
+          catppuccin.catppuccin-vsc
+          esbenp.prettier-vscode
+          naumovs.color-highlight
+          oderwat.indent-rainbow
+          ibm.output-colorizer
+          shardulm94.trailing-spaces
+          usernamehw.errorlens
+          christian-kohler.path-intellisense
+          formulahendry.code-runner
 
-      #extensions = with pkgs.unstable.vscode-extensions; [
-      extensions = with extensions.vscode-marketplace; [
+          # nix
+          bbenoist.nix
+          brettm12345.nixfmt-vscode
+          kamadorueda.alejandra
+          arrterian.nix-env-selector
 
-        # ui
-        pkief.material-icon-theme
-        catppuccin.catppuccin-vsc
-        esbenp.prettier-vscode
-        naumovs.color-highlight
-        oderwat.indent-rainbow
-        ibm.output-colorizer
-        shardulm94.trailing-spaces
-        usernamehw.errorlens
-        christian-kohler.path-intellisense
-        formulahendry.code-runner
+          # debug
+          vadimcn.vscode-lldb
 
-        # nix
-        bbenoist.nix
-        kamadorueda.alejandra
-        arrterian.nix-env-selector
+          # python
+          ms-python.python
+          ms-python.vscode-pylance
 
-        # debug
-        vadimcn.vscode-lldb
+          # jupyter
+          ms-toolsai.jupyter
+          ms-toolsai.jupyter-keymap
+          ms-toolsai.jupyter-renderers
+          ms-toolsai.vscode-jupyter-cell-tags
+          ms-toolsai.vscode-jupyter-slideshow
 
-        # python
-        ms-python.python
-        ms-python.vscode-pylance
+          # cpp
+          ms-vscode.cpptools
+          ms-vscode.cmake-tools
+          ms-vscode.makefile-tools
+          twxs.cmake
 
-        # jupyter
-        ms-toolsai.jupyter
-        ms-toolsai.jupyter-keymap
-        ms-toolsai.jupyter-renderers
-        ms-toolsai.vscode-jupyter-cell-tags
-        ms-toolsai.vscode-jupyter-slideshow
+          # rust
+          rust-lang.rust-analyzer
 
-        # cpp
-        ms-vscode.cpptools
-        ms-vscode.cmake-tools
-        ms-vscode.makefile-tools
-        twxs.cmake
+          # docker
+          ms-azuretools.vscode-docker
 
-        # rust
-        rust-lang.rust-analyzer
+          # remote dev
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-containers
 
-        # docker
-        ms-azuretools.vscode-docker
+          # vim keybindings
+          vscodevim.vim
 
-        # remote dev
-        ms-vscode-remote.remote-ssh
+          # toml
+          bungcip.better-toml
 
-        # vim keybindings
-        vscodevim.vim
+          # csv
+          mechatroner.rainbow-csv
 
-        # toml
-        bungcip.better-toml
+          # yaml
+          redhat.vscode-yaml
 
-        # csv
-        mechatroner.rainbow-csv
+          # markdown
+          yzhang.markdown-all-in-one
 
-        # yaml
-        redhat.vscode-yaml
+          # svg
+          jock.svg
 
-        # markdown
-        yzhang.markdown-all-in-one
+          # pdf
+          tomoki1207.pdf
 
-        # svg
-        jock.svg
+          # tex
+          james-yu.latex-workshop
 
-        # pdf
-        tomoki1207.pdf
+          # haskell
+          haskell.haskell
+          justusadam.language-haskell
 
-        # tex
-        james-yu.latex-workshop
+          # go
+          golang.go
 
-        # haskell
-        haskell.haskell
-        justusadam.language-haskell
+          # github
+          github.codespaces
+          github.vscode-pull-request-github
 
-        # go
-        golang.go
+          # git
+          eamodio.gitlens
+          donjayamanne.githistory
 
-        # github
-        github.codespaces
-        github.vscode-pull-request-github
+          # r
+          reditorsupport.r
 
-        # git
-        eamodio.gitlens
-        donjayamanne.githistory
+          # snakemake
+          snakemake.snakemake-lang
+          tfehlmann.snakefmt
 
-        # r
-        reditorsupport.r
+        ]) ++ (with extensions.open-vsx; [
+          #ms-vscode.cpptools #error: attribute 'cpptools' missing
 
-        # snakemake
-        Snakemake.snakemake-lang
-        tfehlmann.snakefmt
-      ];
-    };
+        ]);
+      })
+    ];
 
     home.configFile = {
-      "Code/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
+      "VSCodium/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
     };
   };
 }
