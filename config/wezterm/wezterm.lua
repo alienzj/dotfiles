@@ -34,7 +34,7 @@ config.keys = {
 -- config.color_scheme = 'One Dark (Gogh)'
 config.color_scheme = 'DoomOne'
 config.font = wezterm.font 'JetBrains Mono'
-config.font_size = 19.0
+config.font_size = 12.0
 
 -- config.enable_scroll_bar = true
 
@@ -57,7 +57,7 @@ config.window_frame = {
 
   -- The size of the font in the tab bar.
   -- Default to 10. on Windows but 12.0 on other systems
-  font_size = 19.0,
+  font_size = 13.0,
 
   -- The overall background color of the tab bar when
   -- the window is focused
