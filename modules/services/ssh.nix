@@ -20,7 +20,7 @@ in {
     };
 
     user.openssh.authorizedKeys.keys =
-      if config.user.name == "dumbledore"
+      if config.user.name == "alienzj"
       then [ 
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMJ92xO04Yww0AcQ7hEmo5a1vaNm0pBdD9U80OKPztfv jiezhu@magic_pc 20240516"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBvPPsoS8zruy3kxqmCZjE1Zhu2vProXCP755UKGqhyA jiezhu@magic_dev 20240516"
