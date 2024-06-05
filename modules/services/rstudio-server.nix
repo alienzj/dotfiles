@@ -2,7 +2,7 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.editors.rstudio-server;
+let cfg = config.modules.services.rstudio-server;
 
   curatedMetagenomicData_ = pkgs.rPackages.buildRPackage {
     name = "curatedMetagenomicData";
@@ -38,7 +38,7 @@ let cfg = config.modules.editors.rstudio-server;
     buildInputs = [ pkgs.unstable.gsl ];
   };
 
-  RStudio-Server-with-packages = pkgs.unstable.rstudioServerWrapper.override{
+  rstudio-server-with-packages = pkgs.unstable.rstudioServerWrapper.override{
     packages = with pkgs.unstable.rPackages; [
       tidyverse
       # library(tidyverse) will load the core tidyverse packages:
@@ -61,7 +61,7 @@ let cfg = config.modules.editors.rstudio-server;
       feather
       httr
       jsonlite
-      #xml2
+      xml2
       stringi
       curl
  
@@ -116,14 +116,14 @@ let cfg = config.modules.editors.rstudio-server;
     ];
   };
 in {
-  options.modules.editors.rstudio-server = {
+  options.modules.services.rstudio-server = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = [
       #pkgs.unstable.rstudio-server
-      RStudio-Server-with-packages
+      rstudio-server-with-packages
     ];
   };
 }
