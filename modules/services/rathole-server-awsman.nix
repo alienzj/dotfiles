@@ -3,11 +3,11 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.rathole-server-awsman-pasteur;
+  cfg = config.modules.services.rathole-server-awsman;
   configFile = cfg.configFile;
 in
 {
-  options.modules.services.rathole-server-awsman-pasteur = {
+  options.modules.services.rathole-server-awsman = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -26,7 +26,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.services.rathole-s-awsman-pasteur = {
+    systemd.services.rathole-s-awsman = {
       description = "rathole server Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];

@@ -6,7 +6,7 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.services.shadowsocks-server;
+  cfg = config.modules.services.shadowsocks-server-pacman;
   opts = {
     server = cfg.localAddress;
     server_port = cfg.port;
@@ -21,13 +21,13 @@ let
     password = cfg.password;
   } // cfg.extraConfig;
 
-  configFile = pkgs.writeText "shadowsocks.json" (builtins.toJSON opts);
+  configFile = pkgs.writeText "shadowsocks_pacman.json" (builtins.toJSON opts);
 
 in
 
 {
   ##### Interfaces
-  options.modules.services.shadowsocks-server = {
+  options.modules.services.shadowsocks-server-pacman = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -136,10 +136,10 @@ in
 
     assertions = singleton
       { assertion = cfg.password == null || cfg.passwordFile == null;
-        message = "Cannot use both password and passwordFile for shadowsocks-libev";
+        message = "Cannot use both password and passwordFile for shadowsocks-rust";
       };
 
-    systemd.services.shadowsocks-rust-server = {
+    systemd.services.shadowsocks-rust-server-pacman = {
       description = "shadowsocks-rust server Daemon";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
@@ -147,9 +147,9 @@ in
       serviceConfig.PrivateTmp = true;
       script = ''
         ${optionalString (cfg.passwordFile != null) ''
-          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks.json
+          cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks_pacman.json
         ''}
-        exec ssservice server -c ${if cfg.passwordFile != null then "/tmp/shadowsocks.json" else configFile}
+        exec ssservice server -c ${if cfg.passwordFile != null then "/tmp/shadowsocks_pacman.json" else configFile}
       '';
     };
   };
