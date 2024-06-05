@@ -11,17 +11,15 @@ in {
   config = mkIf cfg.enable {
     services.syncthing = {
       enable = true;
-
-      #settings = {
-
       openDefaultPorts = true;
       user = config.user.name;
       group = "users";
       configDir = "${config.user.home}/.config/syncthing";
       dataDir = "${config.user.home}/.local/share/syncthing";
-
-      #};
-
+      declarative.folders = {};
     };
+
+    networking.firewall.allowedTCPPorts = [ 8384 22000 ];
+    networking.firewall.allowedUDPPorts = [ 22000 21027 ];
   };
 }

@@ -125,5 +125,7 @@ in {
       #pkgs.unstable.rstudio-server
       rstudio-server-with-packages
     ];
+
+    networking.firewall.allowedTCPPorts = [ 8787 ];
   };
 }
