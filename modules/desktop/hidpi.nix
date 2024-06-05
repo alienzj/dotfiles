@@ -32,8 +32,8 @@ in
     };
 
     # link recursively so other modules can link files in their folders
+    #Xcursor.size: 32
     home.configFile."xtheme/80-high-dpi".text = ''
-      Xcursor.size: 32
       Xft.dpi: 168
     '';
   };
