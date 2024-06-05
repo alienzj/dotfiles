@@ -59,6 +59,7 @@ with lib.my;
       docker.enable = true;
       earlyoom.enable = true;
       syncthing.enable = true;
+      rstudio-server.enable = true;
     };
     utils = {
       htop.enable = true;
