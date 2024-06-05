@@ -32,7 +32,8 @@ margin-bottom = 42
 
 
 [bar/bar1]
-#dpi = 168
+# always 4K primary monitor 
+dpi = 168
 monitor = DP1
 monitor-strict = true
 enable-ipc = true
