@@ -74,7 +74,9 @@ in {
         python311Packages.seaborn
         python311Packages.scipy
         python311Packages.mkdocs
+        python311Packages.neoteroi-mkdocs
         python311Packages.mkdocs-material
+        python311Packages.mkdocs-material-extensions
         python311Packages.mkdocs-jupyter
 
         #python311Packages.openai

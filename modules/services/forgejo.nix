@@ -1,63 +1,63 @@
-# modules/services/gitea.nix
+# modules/services/forgejo.nix
 #
-# Gitea is essentially a self-hosted github. This modules configures it with the
+# Forgejo is essentially a self-hosted github. This modules configures it with the
 # expectation that it will be served over an SSL-secured reverse proxy (best
 # paired with my modules.services.nginx module).
 #
 # Resources
-#   Config: https://docs.gitea.io/en-us/config-cheat-sheet/
-#   API:    https://docs.gitea.io/en-us/api-usage/
+#   https://forgejo.org/docs/latest/
 
 { options, config, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
-let cfg = config.modules.services.gitea;
+let cfg = config.modules.services.forgejo;
 in {
-  options.modules.services.gitea = {
+  options.modules.services.forgejo = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    # Allows git@... clone addresses rather than gitea@...
+    # Allows git@... clone addresses rather than forgejo@...
     users.users.git = {
       useDefaultShell = true;
-      home = "/var/lib/gitea";
-      group = "gitea";
+      home = "/var/lib/forgejo"; # Forgejo data directory
+      group = "forgejo";
       isSystemUser = true;
     };
-    user.extraGroups = [ "gitea" ];
+    user.extraGroups = [ "forgejo" ];
 
-    services.gitea = {
+    services.forgejo = {
       enable = true;
       lfs.enable = true;
 
       user = "git";
-      group = "gitea";
+      group = "forgejo";
 
       database = {
         type = "postgres"; # default: sqlite3
         user = "git";
+	name = "git";
       };
 
-      # We're assuming SSL-only connectivity
-      cookieSecure = true; # services.gitea.settings.session.COOKIE_SECURE
-
-      # Only log what's important, but Info is necessary for fail2ban to work
-      log.level = "Info";  # services.gitea.settings.log.LEVEL
-
       settings = {
+        # We're assuming SSL-only connectivity
+        #session.COOKIE_SECURE = false; # services.forgejo.settings.session.COOKIE_SECURE
+
         server.DISABLE_ROUTER_LOG = true;
         database.LOG_SQL = false;
         service.ENABLE_BASIC_AUTHENTICATION = false;
+
+        # Only log what's important, but Info is necessary for fail2ban to work
+	log.LEVEL = "Info";
       };
 
       dump.interval = "daily";
     };
 
-    services.fail2ban.jails.gitea = ''
+    services.fail2ban.jails.forgejo = ''
       enabled = true
-      filter = gitea
+      filter = forgejo
       banaction = %(banaction_allports)s
       maxretry = 5
     '';

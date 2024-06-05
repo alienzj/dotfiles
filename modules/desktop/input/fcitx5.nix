@@ -8,7 +8,7 @@ let cfg = config.modules.desktop.input.fcitx5;
 in {
   options = {
     modules.desktop.input.fcitx5 = {
-      enable = mkBoolOpt types.false;
+      enable = mkBoolOpt false;
     #  addons = mkOption {
     #    type = with types; listOf package;
     #    default = [ ];

@@ -11,14 +11,14 @@ in {
   config = mkIf cfg.enable {
     services.fail2ban = {
       enable = true;
-      ignoreIP = [ "127.0.0.1/16" "192.168.1.0/24" ];
+      ignoreIP = [ "127.0.0.1/16" "192.168.1.0/24" "10.132.2.0/24" "10.132.22.0/24" ];
       banaction-allports = "iptables-allports";
       bantime-increment = {
         enable = true;
         maxtime = "168h";
         factor = "4";
       };
-      jails.DEFAULT = ''
+      jails.DEFAULT = lib.mkDefault ''
         blocktype = DROP
         bantime = 1h
         findtime = 1h
@@ -32,6 +32,12 @@ in {
         failregex =  .*(Failed authentication attempt|invalid credentials|Attempted access of unknown user).* from <HOST>
         ignoreregex =
         journalmatch = _SYSTEMD_UNIT=gitea.service
+      '';
+      "fail2ban/filter.d/forgejo.conf".text = ''
+        [Definition]
+        failregex =  .*(Failed authentication attempt|invalid credentials|Attempted access of unknown user).* from <HOST>
+        ignoreregex =
+        journalmatch = _SYSTEMD_UNIT=forgejo.service
       '';
     };
   };

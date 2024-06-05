@@ -56,9 +56,12 @@ with lib.my;
   boot = {
     kernelPackages = mkDefault pkgs.linuxPackages_latest;
     loader = {
+      #timeout = 60; # press t when boot
       efi.canTouchEfiVariables = mkDefault true;
-      systemd-boot.configurationLimit = 7;
-      systemd-boot.enable = mkDefault true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 7;
+      };
     };
   };
 
