@@ -31,10 +31,10 @@ margin-top = 0
 margin-bottom = 42
 
 
-[bar/bar1]
-# always 4K primary monitor 
-dpi = 168
-monitor = DP1
+[bar/primary]
+# always 4K primary monitor
+dpi = ${env:DPI}
+monitor = ${env:MONITOR}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm
@@ -86,9 +86,9 @@ modules-right = redshift pad network pad pad network-up pad network-down pad bat
 ;tray-maxsize = 28
 
 
-[bar/bar2]
-#dpi = 168
-monitor = DP2
+[bar/next]
+#dpi = ${env:DPI}
+monitor = ${env:MONITOR}
 monitor-strict = true
 enable-ipc = true
 wm-restack = bspwm

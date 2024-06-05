@@ -13,9 +13,15 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 #    MONITOR=$m polybar --reload bar2 >$XDG_DATA_HOME/polybar_$m.log 2>&1 &
 #done
 
+COMPUTERNAME=$(hostname)
+
 if [ $DUALMONITOR == "yes" ]; then
-    MONITOR=DP1 polybar --reload bar1 >$XDG_DATA_HOME/polybar_DP1.log 2>&1 &
-    MONITOR=DP2 polybar --reload bar2 >$XDG_DATA_HOME/polybar_DP2.log 2>&1 &
+    if [ $COMPUTERNAME == "magic" ]; then
+        MONITOR="DP1" DPI=168 polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+        MONITOR="DP2" polybar --reload next >$XDG_DATA_HOME/polybar_next.log 2>&1 &
+    fi
 else
-    MONITOR=DP1 polybar --reload bar1 >$XDG_DATA_HOME/polybar_DP1.log 2>&1 &
+    if [ $COMPUTERNAME == "eniac" ]; then
+        MONITOR="HDMI-0" DPI=168 polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+    fi
 fi
