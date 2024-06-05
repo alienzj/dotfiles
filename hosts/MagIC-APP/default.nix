@@ -1,6 +1,11 @@
 # MagIC-APP -- MagIC APP server
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib.my;
 {
@@ -9,30 +14,17 @@ with lib.my;
     ../home.nix
     ./hardware-configuration.nix
 
-    # TODO
-    #./modules/wireguard.nix
-    #./modules/dyndns.nix
-
     # Services
-    #./modules/backup.nix
-    #./modules/gitea.nix
     ./modules/forgejo.nix
     ./modules/discourse.nix
-    #./modules/cgit.nix
-    #./modules/vaultwarden.nix
-    #./modules/shlink.nix
-    #./modules/metrics.nix
   ];
 
-  ## Modules
+  # Modules
   modules = {
-    #science = {
-    #  ai.enable = true;
-    #};
     dev = {
       cc = {
         enable = true;
-	xdg.enable = true;
+        xdg.enable = true;
       };
       node = {
         enable = true;
@@ -40,53 +32,36 @@ with lib.my;
       };
       rust = {
         enable = true;
-	xdg.enable = true;
+        xdg.enable = true;
       };
       python = {
         enable = true;
-	xdg.enable = true;
+        xdg.enable = true;
       };
       shell = {
         enable = true;
-	xdg.enable = true;
+        xdg.enable = true;
       };
-      #r.enable = true;
-      #julia.enable = true;
-      #go.enable = true;
-      #conda.enable = true;
-      #mamba.enable = true;
-      #ruby.enable = true;
       web.enable = true;
     };
     editors = {
       default = "nvim";
-      emacs = rec {
-        enable = true;
-	doom = {
-          enable = false;
-	  forgeUrl = "https://github.com";
-	  repoUrl = "https://github.com/doomemacs/doomemacs";
-	  configRepoUrl = "https://github.com/alienzj/doom.d";
-	};
-      };
       vim.enable = true;
     };
     shell = {
-      #vaultwarden.enable = true;
       direnv.enable = true;
-      git.enable    = true;
-      gnupg.enable  = true;
-      tmux.enable   = true;
-      zsh.enable    = true;
-      fish.enable   = true;
+      git.enable = true;
+      gnupg.enable = true;
+      tmux.enable = true;
+      zsh.enable = true;
+      fish.enable = true;
     };
     services = {
       fail2ban.enable = true;
       ssh.enable = true;
       nginx.enable = true;
       docker.enable = true;
-      #earlyoom.enable = true;
-      #stalwart-mail.enable = true;
+      earlyoom.enable = true;
     };
     utils = {
       htop.enable = true;
@@ -97,13 +72,13 @@ with lib.my;
     };
   };
 
-  ## Local config
+  # Local config
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
 
-  ## Local config
-  time.timeZone = "Asia/Hong_Kong";
-  
+  # Run unpatched dynamic binaries on NixOS
+  programs.nix-ld.enable = true;
+
   ## Security
   #security.acme.defaults.email = "alienchuj@gmail.com";
 }

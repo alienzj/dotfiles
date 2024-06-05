@@ -10,9 +10,8 @@
     hostname = "10.132.2.151";
 
     admin = {
-      email = "alienchuj@gmail.com";
-      username = "alienzj";
-      #username = "biocore";
+      email = "jiezhu@magic-inno.hk";
+      username = "biocore";
       fullName = "Jie Zhu";
       passwordFile = config.age.secrets.discourse-at-MagIC-APP-admin-secret.path;
     };    
