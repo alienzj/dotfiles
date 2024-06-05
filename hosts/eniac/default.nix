@@ -243,4 +243,10 @@
   services.openssh.startWhenNeeded = true;
   services.pcscd.enable = true; # for gpg-agent
   services.timesyncd.enable = true; # to sync time
+
+  # Run unpatched dynamic binaries on NixOS
+  programs.nix-ld.enable = true;
+
+  ## Security
+  #security.acme.defaults.email = "alienchuj@gmail.com";
 }
