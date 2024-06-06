@@ -23,5 +23,7 @@ if [ $DUALMONITOR == "yes" ]; then
 else
     if [ $COMPUTERNAME == "eniac" ]; then
         MONITOR="HDMI-0" DPI=168 polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+    elif [ $COMPUTERNAME == "yoga" ]; then
+        MONITOR="eDP" DPI=168 polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
     fi
 fi
