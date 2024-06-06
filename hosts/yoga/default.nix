@@ -79,7 +79,7 @@
       vm = {
         lxd.enable = true;
         qemu.enable = true;
-        virtualbox.enable = true;
+        virtualbox.enable = false; # issues with kernel
         virt-manager.enable = true;
       };
       noter = {
