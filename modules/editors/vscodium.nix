@@ -63,6 +63,8 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs.unstable; [
       alejandra
+      yamlfmt
+      shfmt
       (vscode-with-extensions.override {
         vscode = vscodium;
         vscodeExtensions =
@@ -95,6 +97,11 @@ in {
 
             # debug
             vadimcn.vscode-lldb
+
+            # shell
+            rogalmic.bash-debug
+            shakram02.bash-beautify
+            foxundermoon.shell-format
 
             # python
             ms-python.python
