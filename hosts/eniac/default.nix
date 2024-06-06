@@ -153,7 +153,8 @@
         };
       };
       vim.enable = true;
-      vscodium.enable = true;
+      vscode.enable = true;
+      vscodium.enable = false;
       rstudio.enable = true;
       android-studio.enable = true;
     };
@@ -176,7 +177,10 @@
       # Needed occasionally to help the parental units with PC problems
       rdp.enable = true; # remote desktop
       samba.enable = false; # share folders
-      printing.enable = false; # RICOH printer
+      printing = {
+        enable = true;
+        sharing = true;
+      };
       lockscreen = {
         enable = true;
         inactiveInterval = 10;
