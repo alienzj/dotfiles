@@ -178,8 +178,8 @@ module Hey
       else
         puts "Trying to update flakes: #{args.join ' '}"
         sh ["nix", "flake", "lock", "--impure"]
-             .concat(args.map { |f| [ "--update-input", f ]}.flatten)
-             .concat([@@opts[:flake]])
+            .concat(args.map { |f| [ "--update-input", f ]}.flatten)
+            .concat([@@opts[:flake]])
       end
     end
   end
@@ -372,9 +372,9 @@ module Hey
       opt.banner = "Usage: hey [global-options] [command] [sub-options]\n\n" + DESC
       opt.separator "\n\nAvailable Commands:"
       opt.separator (@@commands.values
-                       .reject { |c| c.desc.empty? }
-                       .sort { |a,b| a.name <=> b.name }
-                       .map { |c| "  %-22s %s\n" % ["#{c.name} #{c.args.join ' '}",
+                      .reject { |c| c.desc.empty? }
+                      .sort { |a,b| a.name <=> b.name }
+                      .map { |c| "  %-22s %s\n" % ["#{c.name} #{c.args.join ' '}",
                                                     c.desc[0]]})
       opt.separator "\nOptions:"
       opt.on '-d', '--dryrun',    "Don't change anything; perform dry run"
