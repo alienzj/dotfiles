@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.dev.r;
+with lib.my; let
+  cfg = config.modules.dev.r;
 
   curatedMetagenomicData_ = pkgs.rPackages.buildRPackage {
     name = "curatedMetagenomicData";
@@ -32,50 +37,90 @@ let cfg = config.modules.dev.r;
     ];
     nativeBuildInputs = [
       pkgs.unstable.R
-    #  pkgs.unstable.rPackages.knitr
-    #  pkgs.unstable.pkg-config
-    #  pkgs.unstable.gsl
-    #  pkgs.unstable.make
+      #  pkgs.unstable.rPackages.knitr
+      #  pkgs.unstable.pkg-config
+      #  pkgs.unstable.gsl
+      #  pkgs.unstable.make
     ];
-    buildInputs = [ pkgs.unstable.gsl ];
+    buildInputs = [pkgs.unstable.gsl];
   };
 
-  R-with-packages = pkgs.unstable.rWrapper.override{
+  r-with-packages = pkgs.unstable.rWrapper.override {
     packages = with pkgs.unstable.rPackages; [
+      tidyverse
+      # library(tidyverse) will load the core tidyverse packages:
+      ## ggplot2, for data visualisation.
+      ## dplyr, for data manipulation.
+      ## tidyr, for data tidying.
+      ## readr, for data import.
+      ## purrr, for functional programming.
+      ## tibble, for tibbles, a modern re-imagining of data frames.
+      ## stringr, for strings.
+      ## forcats, for factors.
+      ## lubridate, for date/times.
+
+      tidymodels
+      infer
+
       devtools
       remotes
-      tidyverse
-      tidymodels
-      vegan
+
+      feather
+      httr
+      jsonlite
+      xml2
+      stringi
+      curl
+
       shiny
+
+      knitr
+      rmarkdown
+      tinytex
+      ymlthis
+
+      vegan
+
       ggtree
       ggtreeExtra
+      tidytree
       MicrobiotaProcess
       MicrobiomeProfiler
       clusterProfiler
       enrichplot
+
       dada2
       DECIPHER
+
       ggpubr
       ggplotify
       ggalluvial
       ggstar
       ggnewscale
+
       coin
       forcats
-      tidytree
-      readxl
       writexl
       flextable
-      randomForest	
-      tinytex
-      ymlthis
-      knitr
-      rmarkdown
-      #curatedMetagenomicData_
+      randomForest
       curatedMetagenomicData
       SummarizedExperiment
+
+      Rcpp
+      Rcpp11
+
+      Maaslin2
+      pkgconfig
+      ComplexHeatmap
+      circlize
+      pagedown
+      reshape2
+      yaml
+      optparse
+      glue
+
       V8
+      languageserver
     ];
   };
 in {
@@ -85,8 +130,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      pkgs.unstable.R
-      #R-with-packages
+      r-with-packages
     ];
   };
 }

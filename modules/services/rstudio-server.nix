@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.rstudio-server;
+with lib.my; let
+  cfg = config.modules.services.rstudio-server;
 
   curatedMetagenomicData_ = pkgs.rPackages.buildRPackage {
     name = "curatedMetagenomicData";
@@ -35,10 +40,10 @@ let cfg = config.modules.services.rstudio-server;
       #pkgs.unstable.rPackages.rlang
       #pkgs.unstable.rPackages.knitr
     ];
-    buildInputs = [ pkgs.unstable.gsl ];
+    buildInputs = [pkgs.unstable.gsl];
   };
 
-  rstudio-server-with-packages = pkgs.unstable.rstudioServerWrapper.override{
+  rstudio-server-with-packages = pkgs.unstable.rstudioServerWrapper.override {
     packages = with pkgs.unstable.rPackages; [
       tidyverse
       # library(tidyverse) will load the core tidyverse packages:
@@ -53,7 +58,7 @@ let cfg = config.modules.services.rstudio-server;
       ## lubridate, for date/times.
 
       tidymodels
-      infer	
+      infer
 
       devtools
       remotes
@@ -64,7 +69,7 @@ let cfg = config.modules.services.rstudio-server;
       xml2
       stringi
       curl
- 
+
       shiny
 
       knitr
@@ -113,6 +118,7 @@ let cfg = config.modules.services.rstudio-server;
       glue
 
       V8
+      languageserver
     ];
   };
 in {
@@ -122,10 +128,9 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      #pkgs.unstable.rstudio-server
       rstudio-server-with-packages
     ];
 
-    networking.firewall.allowedTCPPorts = [ 8787 ];
+    networking.firewall.allowedTCPPorts = [8787];
   };
 }

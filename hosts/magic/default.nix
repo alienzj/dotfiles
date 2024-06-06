@@ -135,7 +135,7 @@
         };
       };
       vim.enable = true;
-      vscode.enable = true;
+      vscodium.enable = true;
       rstudio.enable = true;
       android-studio.enable = true;
     };
@@ -151,13 +151,17 @@
     services = {
       adb.enable = true;
       syncthing.enable = true;
+      rstudio-server.enable = true;
       ssh.enable = true;
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       rdp.enable = true; # remote desktop
       samba.enable = false; # share folders
       printing.enable = false; # RICOH printer
-      lockscreen.enable = true;
+      lockscreen = {
+        enable = true;
+        inactiveInterval = 10;
+      };
       flameshot.enable = true;
       proxychains = {
         enable = true;

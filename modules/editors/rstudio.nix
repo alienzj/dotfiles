@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.editors.rstudio;
+with lib.my; let
+  cfg = config.modules.editors.rstudio;
 
   curatedMetagenomicData_ = pkgs.rPackages.buildRPackage {
     name = "curatedMetagenomicData";
@@ -35,10 +40,10 @@ let cfg = config.modules.editors.rstudio;
       #pkgs.unstable.rPackages.rlang
       #pkgs.unstable.rPackages.knitr
     ];
-    buildInputs = [ pkgs.unstable.gsl ];
+    buildInputs = [pkgs.unstable.gsl];
   };
 
-  rstudio-with-packages = pkgs.unstable.rstudioWrapper.override{
+  rstudio-with-packages = pkgs.unstable.rstudioWrapper.override {
     packages = with pkgs.unstable.rPackages; [
       tidyverse
       # library(tidyverse) will load the core tidyverse packages:
@@ -53,7 +58,7 @@ let cfg = config.modules.editors.rstudio;
       ## lubridate, for date/times.
 
       tidymodels
-      infer	
+      infer
 
       devtools
       remotes
@@ -64,7 +69,7 @@ let cfg = config.modules.editors.rstudio;
       xml2
       stringi
       curl
- 
+
       shiny
 
       knitr
@@ -113,6 +118,7 @@ let cfg = config.modules.editors.rstudio;
       glue
 
       V8
+      languageserver
     ];
   };
 in {
@@ -122,7 +128,6 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      #pkgs.unstable.rstudio
       rstudio-with-packages
     ];
   };
