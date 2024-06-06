@@ -1,11 +1,15 @@
-{ pkgs, config, lib, ... }:
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   imports = [
     ../home.nix
     ./hardware-configuration.nix
   ];
 
-  disabledModules = [ "services/networking/jotta-cli.nix" ];
+  disabledModules = ["services/networking/jotta-cli.nix"];
 
   ## Modules
   modules = {
@@ -135,7 +139,8 @@
         };
       };
       vim.enable = true;
-      vscodium.enable = true;
+      vscode.enable = true;
+      #vscodium.enable = true;
       rstudio.enable = true;
       android-studio.enable = true;
     };

@@ -10,7 +10,7 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.editors.vscodium;
+  cfg = config.modules.editors.vscode;
   extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux";
   jsonFormat = pkgs.formats.json {};
   vscodeUserSettings = {
@@ -56,7 +56,7 @@ with lib.my; let
     "extensions.autoCheckUpdates" = false;
   };
 in {
-  options.modules.editors.vscodium = {
+  options.modules.editors.vscode = {
     enable = mkBoolOpt false;
   };
 
@@ -66,7 +66,7 @@ in {
       yamlfmt
       shfmt
       (vscode-with-extensions.override {
-        vscode = vscodium;
+        vscode = vscode;
         vscodeExtensions =
           (with extensions.vscode-marketplace; [
             # ui
@@ -139,7 +139,7 @@ in {
             ms-azuretools.vscode-docker
 
             # remote dev
-            ms-vscode-remote.remote-ssh # didn't work
+            ms-vscode-remote.remote-ssh
             ms-vscode.remote-explorer
             ms-vscode-remote.remote-ssh-edit
             ms-vscode-remote.remote-containers
@@ -243,7 +243,7 @@ in {
     # => .vscode-oss/extensions
 
     home.configFile = {
-      "VSCodium/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
+      "Code/User/settings.json".source = jsonFormat.generate "vscode-user-settings" vscodeUserSettings;
     };
   };
 }
