@@ -38,7 +38,7 @@
     #"mem_sleep_default=deep"
     #"pcie_aspm.policy=powersupersave"
     kernelParams = [
-      #"usb.core.autosuspend=-1"     # disable autosuspend
+      "usb.core.autosuspend=-1" # disable autosuspend
       #"usb.core.autosuspend=3600"  # 5 sencond # it seems no effect
     ];
 
@@ -75,39 +75,7 @@
     nvidia.enable = true;
     #https://discourse.nixos.org/t/usb-mouse-and-keyboard-poweroff-too-soon-udev/22459
     power.enable = true; # install powertop
-    mouse.enable = true;
-
-    # USB
-    # Don't let USB devices wake the computer from sleep.
-    #usb.wakeupDisabled = [
-    #  #{
-    #    # Holtek Semiconductor Keyboard
-    #    #vendor = "04d9";
-    #    #product = "0209";
-    #  #}
-    #  {
-    #    # Razer Abyssus 2000
-    #    vendor = "1532";
-    #    product = "005e";
-    #    wakeup = false;
-    #  }
-    #];
-
-    # Set usb autosuspend to On
-    #usb.autosuspendAlwaysOn = [
-    #  {
-    #    # Holtek Semiconductor Keyboard
-    #    vendor = "04d9";
-    #    product = "0209";
-    #    autosuspendOn = true;
-    #  }
-    #  {
-    #    # Razer Abyssus 2000
-    #    vendor = "1532";
-    #    product = "005e";
-    #    autosuspendOn = true;
-    #  }
-    #];
+    #mouse.enable = true;
   };
 
   #services.udev.extraRules = ''
