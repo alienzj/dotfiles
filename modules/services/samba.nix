@@ -16,12 +16,8 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       services.samba-wsdd.enable = true; # make shares visible for windows 10 clients
-      networking.firewall.allowedTCPPorts = [
-        5357 # wsdd
-      ];
-      networking.firewall.allowedUDPPorts = [
-        3702 # wsdd
-      ];
+      networking.firewall.allowedTCPPorts = [5357];
+      networking.firewall.allowedUDPPorts = [3702];
 
       services.samba = {
         enable = true;
@@ -31,21 +27,21 @@ in {
         extraConfig = ''
           # printer config
           ##load printers = yes
-                 ##printing = cups
-                 ##printcap name = cups
+          ##printing = cups
+          ##printcap name = cups
 
           # general config
-                 workgroup = magic.local
-                 server string = smbnix
-                 netbios name = smbnix
-                 security = user
-                 #use sendfile = yes
-                 #max protocol = smb2
-                 # note: localhost is the ipv6 localhost ::1
-                 hosts allow = 10.132.22. 192.168.0. 127.0.0.1 localhost
-                 hosts deny = 0.0.0.0/0
-                 guest account = nobody
-                 map to guest = bad user
+          workgroup = magic.local
+          server string = smbnix
+          netbios name = smbnix
+          security = user
+          #use sendfile = yes
+          #max protocol = smb2
+          # note: localhost is the ipv6 localhost ::1
+          hosts allow = 10.132.22. 192.168.0. 127.0.0.1 localhost
+          hosts deny = 0.0.0.0/0
+          guest account = nobody
+          map to guest = bad user
         '';
         shares = {
           ##printers = {
