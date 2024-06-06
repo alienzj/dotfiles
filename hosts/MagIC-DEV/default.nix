@@ -40,6 +40,7 @@ with lib.my; {
     editors = {
       default = "nvim";
       vim.enable = true;
+      vscode.enable = true;
     };
     shell = {
       direnv.enable = true;
