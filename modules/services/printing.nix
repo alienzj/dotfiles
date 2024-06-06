@@ -1,3 +1,4 @@
+# https://wiki.nixos.org/wiki/Printing
 {
   config,
   options,
@@ -12,6 +13,7 @@ with lib.my; let
 in {
   options.modules.services.printing = {
     enable = mkBoolOpt false;
+    sharing = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -24,5 +26,25 @@ in {
         #];
       };
     }
+
+    (mkIf cfg.sharing {
+      # Printer sharing
+      services.avahi = {
+        enable = true;
+        nssmdns = true;
+        openFirewall = true;
+        publish = {
+          enable = true;
+          userServices = true;
+        };
+      };
+      services.printing = {
+        listenAddresses = ["*:631"];
+        allowFrom = ["all"];
+        browsing = true;
+        defaultShared = true;
+        openFirewall = true;
+      };
+    })
   ]);
 }

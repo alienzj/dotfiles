@@ -162,7 +162,10 @@
       # Needed occasionally to help the parental units with PC problems
       rdp.enable = true; # remote desktop
       samba.enable = false; # share folders
-      printing.enable = true; # RICOH printer
+      printing = {
+        enable = true; # RICOH printer
+        sharing = false;
+      };
       lockscreen = {
         enable = true;
         inactiveInterval = 10;
