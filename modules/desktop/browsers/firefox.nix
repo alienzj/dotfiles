@@ -3,31 +3,35 @@
 # Oh Firefox, gateway to the interwebs, devourer of ram. Give onto me your
 # infinite knowledge and shelter me from ads, but bless my $HOME with
 # directories nobody needs and live long enough to turn into Chrome.
-
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.browsers.firefox;
+with lib.my; let
+  cfg = config.modules.desktop.browsers.firefox;
 in {
   options.modules.desktop.browsers.firefox = with types; {
     enable = mkBoolOpt false;
     profileName = mkOpt types.str config.user.name;
 
-    settings = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+    settings = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
       Firefox preferences to set in <filename>user.js</filename>
     '';
     extraConfig = mkOpt' lines "" ''
       Extra lines to add to <filename>user.js</filename>
     '';
-    proxyConfigPacman = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+    proxyConfigPacman = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
       Firefox preferences to set in <filename>prefs.js</filename>
     '';
-    proxyConfigGeph = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+    proxyConfigGeph = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
       Firefox preferences to set in <filename>prefs.js</filename>
     '';
 
-    userChrome  = mkOpt' lines "" "CSS Styles for Firefox's interface";
+    userChrome = mkOpt' lines "" "CSS Styles for Firefox's interface";
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
   };
 
@@ -41,7 +45,7 @@ in {
           genericName = "Open a private Firefox window";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox --private-window";
-          categories = [ "Network" ];
+          categories = ["Network"];
         })
         (makeDesktopItem {
           name = "firefox-proxy-pacman";
@@ -49,7 +53,7 @@ in {
           genericName = "Open a Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
-          categories = [ "Network" ];
+          categories = ["Network"];
         })
         (makeDesktopItem {
           name = "firefox-proxy-geph";
@@ -57,7 +61,7 @@ in {
           genericName = "Open a Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
-          categories = [ "Network" ];
+          categories = ["Network"];
         })
         (makeDesktopItem {
           name = "firefox-private-proxy-pacman";
@@ -65,7 +69,7 @@ in {
           genericName = "Open a private Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
-          categories = [ "Network" ];
+          categories = ["Network"];
         })
         (makeDesktopItem {
           name = "firefox-private-proxy-geph";
@@ -73,7 +77,7 @@ in {
           genericName = "Open a private Firefox window with proxy";
           icon = "firefox";
           exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
-          categories = [ "Network" ];
+          categories = ["Network"];
         })
       ];
 
@@ -141,13 +145,13 @@ in {
         # Show whole URL in address bar
         "browser.urlbar.trimURLs" = false;
         # Disable some not so useful functionality.
-        "browser.disableResetPrompt" = true;       # "Looks like you haven't started Firefox in a while."
-        "browser.onboarding.enabled" = false;      # "New to Firefox? Let's get started!" tour
+        "browser.disableResetPrompt" = true; # "Looks like you haven't started Firefox in a while."
+        "browser.onboarding.enabled" = false; # "New to Firefox? Let's get started!" tour
         "browser.aboutConfig.showWarning" = false; # Warning when opening about:config
         "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
         "extensions.pocket.enabled" = false;
         "extensions.shield-recipe-client.enabled" = false;
-        "reader.parse-on-load.enabled" = false;  # "reader view"
+        "reader.parse-on-load.enabled" = false; # "reader view"
 
         # Security-oriented defaults
         "security.family_safety.mode" = 0;
@@ -164,7 +168,7 @@ in {
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
         "extensions.htmlaboutaddons.recommendations.enabled" = false;
         "extensions.htmlaboutaddons.discover.enabled" = false;
-        "extensions.getAddons.showPane" = false;  # uses Google Analytics
+        "extensions.getAddons.showPane" = false; # uses Google Analytics
         "browser.discovery.enabled" = false;
         # Reduce File IO / SSD abuse
         # Otherwise, Firefox bombards the HD with writes. Not so nice for SSDs.
@@ -223,7 +227,7 @@ in {
         # Disable crash reports
         "breakpad.reportURL" = "";
         "browser.tabs.crashReporting.sendReport" = false;
-        "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;  # don't submit backlogged reports
+        "browser.crashReports.unsubmittedCheck.autoSubmit2" = false; # don't submit backlogged reports
 
         # Disable Form autofill
         # https://wiki.mozilla.org/Firefox/Features/Form_Autofill
@@ -251,66 +255,66 @@ in {
       };
 
       # Use a stable profile name so we can target it in themes
-      home.file = let cfgPath = ".mozilla/firefox"; in {
+      home.file = let
+        cfgPath = ".mozilla/firefox";
+      in {
         "${cfgPath}/profiles.ini".text = ''
-          [Profile0]
-          Name=default
-          IsRelative=1
-          Path=${cfg.profileName}.default
-          Default=1
+                 [Profile0]
+                 Name=default
+                 IsRelative=1
+                 Path=${cfg.profileName}.default
+                 Default=1
 
-          [Profile1]
-          Name=proxy
-          IsRelative=1
-          Path=proxy.pacman
-	  Default=0
+                 [Profile1]
+                 Name=proxy
+                 IsRelative=1
+                 Path=proxy.pacman
+          Default=0
 
-          [Profile2]
-          Name=proxy
-          IsRelative=1
-          Path=proxy.geph
-	  Default=0
+                 [Profile2]
+                 Name=proxy
+                 IsRelative=1
+                 Path=proxy.geph
+          Default=0
 
-          [General]
-          StartWithLastProfile=1
-          Version=2
+                 [General]
+                 StartWithLastProfile=1
+                 Version=2
         '';
 
-	## default profile
-        "${cfgPath}/${cfg.profileName}.default/user.js" =
-          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
-            text = ''
-              ${concatStrings (mapAttrsToList (name: value: ''
+        ## default profile
+        "${cfgPath}/${cfg.profileName}.default/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+          text = ''
+            ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.settings)}
-              ${cfg.extraConfig}
-            '';
-          };
+              '')
+              cfg.settings)}
+            ${cfg.extraConfig}
+          '';
+        };
 
-        "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css" =
-          mkIf (cfg.userChrome != "") {
-            text = cfg.userChrome;
-          };
+        "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
+          text = cfg.userChrome;
+        };
 
-        "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css" =
-          mkIf (cfg.userContent != "") {
-            text = cfg.userContent;
-          };
-
+        "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css" = mkIf (cfg.userContent != "") {
+          text = cfg.userContent;
+        };
 
         ## proxy.pacman profile
-        "${cfgPath}/proxy.pacman/user.js" =
-          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
-            text = ''
-              ${concatStrings (mapAttrsToList (name: value: ''
+        "${cfgPath}/proxy.pacman/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+          text = ''
+                   ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.settings)}
-	      ${cfg.extraConfig}
-              ${concatStrings(mapAttrsToList (name: value: ''
+              '')
+              cfg.settings)}
+            ${cfg.extraConfig}
+                   ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.proxyConfigPacman)}
-            '';
-          };
+              '')
+              cfg.proxyConfigPacman)}
+          '';
+        };
 
         #"${cfgPath}/proxy.default/prefs.js" =
         #  mkIf (cfg.proxyConfigPacman != {}) {
@@ -321,30 +325,28 @@ in {
         #    '';
         #  };
 
-        "${cfgPath}/proxy.pacman/chrome/userChrome.css" =
-          mkIf (cfg.userChrome != "") {
-            text = cfg.userChrome;
-          };
+        "${cfgPath}/proxy.pacman/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
+          text = cfg.userChrome;
+        };
 
-        "${cfgPath}/proxy.pacman/chrome/userContent.css" =
-          mkIf (cfg.userContent != "") {
-            text = cfg.userContent;
-          };
-
+        "${cfgPath}/proxy.pacman/chrome/userContent.css" = mkIf (cfg.userContent != "") {
+          text = cfg.userContent;
+        };
 
         ## proxy.geph profile
-        "${cfgPath}/proxy.geph/user.js" =
-          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
-            text = ''
-              ${concatStrings (mapAttrsToList (name: value: ''
+        "${cfgPath}/proxy.geph/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+          text = ''
+                   ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.settings)}
-	      ${cfg.extraConfig}
-              ${concatStrings(mapAttrsToList (name: value: ''
+              '')
+              cfg.settings)}
+            ${cfg.extraConfig}
+                   ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
-              '') cfg.proxyConfigGeph)}
-            '';
-          };
+              '')
+              cfg.proxyConfigGeph)}
+          '';
+        };
 
         #"${cfgPath}/proxy.geph/prefs.js" =
         #  mkIf (cfg.proxyConfigGeph != {}) {
@@ -355,15 +357,13 @@ in {
         #    '';
         #  };
 
-        "${cfgPath}/proxy.geph/chrome/userChrome.css" =
-          mkIf (cfg.userChrome != "") {
-            text = cfg.userChrome;
-          };
+        "${cfgPath}/proxy.geph/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
+          text = cfg.userChrome;
+        };
 
-        "${cfgPath}/proxy.geph/chrome/userContent.css" =
-          mkIf (cfg.userContent != "") {
-            text = cfg.userContent;
-          };
+        "${cfgPath}/proxy.geph/chrome/userContent.css" = mkIf (cfg.userContent != "") {
+          text = cfg.userContent;
+        };
       };
     }
   ]);

@@ -1,12 +1,14 @@
-{ options, config, lib, ... }:
-
+{
+  options,
+  config,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.hidpi;
   configDir = config.dotfiles.configDir;
-in
-{
+in {
   options.modules.desktop.hidpi = {
     enable = mkBoolOpt false;
   };

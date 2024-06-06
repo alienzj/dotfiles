@@ -1,9 +1,14 @@
-{ config, options, pkgs, lib, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.shell.fish;
-    configDir = config.dotfiles.configDir;
+with lib.my; let
+  cfg = config.modules.shell.fish;
+  configDir = config.dotfiles.configDir;
 in {
   options.modules.shell.fish = with types; {
     enable = mkBoolOpt false;

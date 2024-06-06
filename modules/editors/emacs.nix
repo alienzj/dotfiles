@@ -1,13 +1,17 @@
 # Emacs is my main driver. I'm the author of Doom Emacs
 # https://github.com/hlissner/doom-emacs. This module sets it up to meet my
 # particular Doomy needs.
-
-{ config, lib, pkgs, inputs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.editors.emacs;
-    configDir = config.dotfiles.configDir;
+with lib.my; let
+  cfg = config.modules.editors.emacs;
+  configDir = config.dotfiles.configDir;
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
@@ -20,39 +24,39 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
+    nixpkgs.overlays = [inputs.emacs-overlay.overlay];
 
     user.packages = with pkgs; [
       ## Emacs itself
-      binutils       # native-comp needs 'as', provided by this
+      binutils # native-comp needs 'as', provided by this
       # 28.2 + native-comp
       #((emacsPackagesFor emacsNativeComp).emacsWithPackages
       #((emacsPackagesFor emacs).emacsWithPackages
       ((emacsPackagesFor emacs-unstable).emacsWithPackages
         (epkgs: [
-	  epkgs.vterm
-	  ##epkgs.pdf-tools
-	  epkgs.melpaStablePackages.pdf-tools
-	]))
+          epkgs.vterm
+          ##epkgs.pdf-tools
+          epkgs.melpaStablePackages.pdf-tools
+        ]))
       poppler
 
       ## Doom dependencies
       git
       (ripgrep.override {withPCRE2 = true;})
-      gnutls              # for TLS connectivity
+      gnutls # for TLS connectivity
 
       ## Optional dependencies
-      fd                  # faster projectile indexing
-      imagemagick         # for image-dired
+      fd # faster projectile indexing
+      imagemagick # for image-dired
       (mkIf (config.programs.gnupg.agent.enable)
-        pinentry-emacs)   # in-emacs gnupg prompts
-      zstd                # for undo-fu-session/undo-tree compression
+        pinentry-emacs) # in-emacs gnupg prompts
+      zstd # for undo-fu-session/undo-tree compression
       graphviz # dot
       nixfmt-rfc-style
 
       ## Module dependencies
       # :checkers spell
-      (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
+      (aspellWithDicts (ds: with ds; [en en-computers en-science]))
       # :tools editorconfig
       editorconfig-core-c # per-project style config
       # :tools lookup & :lang org +roam
@@ -63,14 +67,14 @@ in {
       #texlive.combined.scheme-small
       # :lang beancount
       beancount
-      unstable.fava  # HACK Momentarily broken on nixos-unstable
+      unstable.fava # HACK Momentarily broken on nixos-unstable
     ];
 
-    env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
+    env.PATH = ["$XDG_CONFIG_HOME/emacs/bin"];
 
-    modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
+    modules.shell.zsh.rcFiles = ["${configDir}/emacs/aliases.zsh"];
 
-    fonts.packages = [ pkgs.emacs-all-the-icons-fonts ];
+    fonts.packages = [pkgs.emacs-all-the-icons-fonts];
 
     system.userActivationScripts = mkIf cfg.doom.enable {
       installDoomEmacs = ''

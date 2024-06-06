@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.sayonara;
+with lib.my; let
+  cfg = config.modules.desktop.media.sayonara;
 in {
   options.modules.desktop.media.sayonara = {
     enable = mkBoolOpt false;

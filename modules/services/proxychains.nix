@@ -1,13 +1,18 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.proxychains;
-    opts = {
-      type = cfg.type;
-      host = cfg.host;
-      port = cfg.port;
-    };
+with lib.my; let
+  cfg = config.modules.services.proxychains;
+  opts = {
+    type = cfg.type;
+    host = cfg.host;
+    port = cfg.port;
+  };
 in {
   options.modules.services.proxychains = {
     enable = mkBoolOpt false;
@@ -42,8 +47,8 @@ in {
         pacman = {
           enable = true;
           type = cfg.type;
-	  host = cfg.host;
-	  port = cfg.port;
+          host = cfg.host;
+          port = cfg.port;
         };
       };
     };

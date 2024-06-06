@@ -1,22 +1,27 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.input.fcitx5;
-    configDir = config.dotfiles.configDir;
-    #fcitx5Package = pkgs.fcitx5-with-addons.override { inherit (cfg) addons; };
+with lib.my; let
+  cfg = config.modules.desktop.input.fcitx5;
+  configDir = config.dotfiles.configDir;
+  #fcitx5Package = pkgs.fcitx5-with-addons.override { inherit (cfg) addons; };
 in {
   options = {
     modules.desktop.input.fcitx5 = {
       enable = mkBoolOpt false;
-    #  addons = mkOption {
-    #    type = with types; listOf package;
-    #    default = [ ];
-    #    example = literalExpression "with pkgs; [ fcitx5-rime ]";
-    #    description = ''
-    #      Enabled Fcitx5 addons.
-    #    '';
-    #  };
+      #  addons = mkOption {
+      #    type = with types; listOf package;
+      #    default = [ ];
+      #    example = literalExpression "with pkgs; [ fcitx5-rime ]";
+      #    description = ''
+      #      Enabled Fcitx5 addons.
+      #    '';
+      #  };
     };
   };
 

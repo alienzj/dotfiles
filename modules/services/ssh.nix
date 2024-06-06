@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.ssh;
+with lib.my; let
+  cfg = config.modules.services.ssh;
 in {
   options.modules.services.ssh = {
     enable = mkBoolOpt false;
@@ -21,7 +26,7 @@ in {
 
     user.openssh.authorizedKeys.keys =
       if config.user.name == "alienzj"
-      then [ 
+      then [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMJ92xO04Yww0AcQ7hEmo5a1vaNm0pBdD9U80OKPztfv jiezhu@magic_pc 20240516"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBvPPsoS8zruy3kxqmCZjE1Zhu2vProXCP755UKGqhyA jiezhu@magic_dev 20240516"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjLz52kR1atxbLWFJUE4M2UigRSxev08BRb7132tXOT jiezhu@magic-server 20240516"
@@ -30,11 +35,13 @@ in {
       ]
       else [];
 
-    user.packages = with pkgs;
-    (if cfg.sshx.enable then [
-      unstable.sshx
-      unstable.sshx-server
-    ] else []);
-
+    user.packages = with pkgs; (
+      if cfg.sshx.enable
+      then [
+        unstable.sshx
+        unstable.sshx-server
+      ]
+      else []
+    );
   };
 }

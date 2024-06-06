@@ -3,7 +3,6 @@
 # OBS to capture footage/stream, audacity for audio, handbrake to encode it all.
 # This, paired with DaVinci Resolve for video editing (on my Windows system) and
 # I have what I need for youtube videos and streaming.
-
 {
   config,
   options,
@@ -11,13 +10,10 @@
   pkgs,
   ...
 }:
-
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.media.recording;
-in
-{
+in {
   options.modules.desktop.media.recording = {
     enable = mkBoolOpt false;
     audio.enable = mkBoolOpt true;
@@ -27,34 +23,31 @@ in
   config = mkIf cfg.enable {
     services.pipewire.jack.enable = true;
 
-    user.packages =
-      with pkgs;
-      # for recording and remastering audio
-      # (if cfg.audio.enable then [ unstable.audacity-gtk3 unstable.ardour ] else []) ++
+    user.packages = with pkgs;
+    # for recording and remastering audio
+    # (if cfg.audio.enable then [ unstable.audacity-gtk3 unstable.ardour ] else []) ++
       (
-        if cfg.audio.enable then
-          [
-            unstable.audacity
-            unstable.ardour
-            unstable.blanket
-          ]
-        else
-          [ ]
+        if cfg.audio.enable
+        then [
+          unstable.audacity
+          unstable.ardour
+          unstable.blanket
+        ]
+        else []
       )
       ++
-        # for longer term streaming/recording the screen
-        (
-          if cfg.video.enable then
-            [
-              unstable.asciinema
-              unstable.obs-studio
-              #unstable.handbrake
-              #unstable.gnome-decoder
-              unstable.video-trimmer
-              unstable.vokoscreen-ng
-            ]
-          else
-            [ ]
-        );
+      # for longer term streaming/recording the screen
+      (
+        if cfg.video.enable
+        then [
+          unstable.asciinema
+          unstable.obs-studio
+          #unstable.handbrake
+          #unstable.gnome-decoder
+          unstable.video-trimmer
+          unstable.vokoscreen-ng
+        ]
+        else []
+      );
   };
 }

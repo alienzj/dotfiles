@@ -6,7 +6,6 @@
 # overblown. Sure, macros aren't namespaced, cargo bypasses crates.io, and there
 # is no formal proof of your claims for safety, but who said you have to solve
 # all the world's problems to be wonderful?
-
 {
   config,
   options,
@@ -14,14 +13,11 @@
   pkgs,
   ...
 }:
-
 with lib;
-with lib.my;
-let
+with lib.my; let
   devCfg = config.modules.dev;
   cfg = devCfg.rust;
-in
-{
+in {
   options.modules.dev.rust = {
     enable = mkBoolOpt false;
     xdg.enable = mkBoolOpt devCfg.xdg.enable;
@@ -33,7 +29,7 @@ in
         pkgs.rustup
         pkgs.rust-analyzer
       ];
-      env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
+      env.PATH = ["$(${pkgs.yarn}/bin/yarn global bin)"];
       environment.shellAliases = {
         rs = "rustc";
         rsp = "rustup";
@@ -44,7 +40,7 @@ in
     (mkIf cfg.xdg.enable {
       env.RUSTUP_HOME = "$XDG_DATA_HOME/rustup";
       env.CARGO_HOME = "$XDG_DATA_HOME/cargo";
-      env.PATH = [ "$CARGO_HOME/bin" ];
+      env.PATH = ["$CARGO_HOME/bin"];
     })
   ];
 }

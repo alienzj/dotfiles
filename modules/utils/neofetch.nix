@@ -1,9 +1,14 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.utils.neofetch;
-    configDir = config.dotfiles.configDir;
+with lib.my; let
+  cfg = config.modules.utils.neofetch;
+  configDir = config.dotfiles.configDir;
 in {
   options.modules.utils.neofetch = with types; {
     enable = mkBoolOpt false;

@@ -48,18 +48,20 @@
 #      nixos-install --root /mnt --flake .#linode --impure
 #
 # 8. Reboot into "Boot" profile.
-
-{ modulesPath, config, lib, pkgs, ... }:
-
-with lib;
 {
+  modulesPath,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
     ./server.nix
   ];
 
-  environment.systemPackages =
-    with pkgs; [ inetutils mtr sysstat git ];
+  environment.systemPackages = with pkgs; [inetutils mtr sysstat git];
 
   modules = {
     editors = {
@@ -77,10 +79,10 @@ with lib;
   boot = {
     kernelModules = [];
     # Needed for LISH (part 1)
-    kernelParams = [ "console=ttyS0" ];
+    kernelParams = ["console=ttyS0"];
     extraModulePackages = [];
     initrd = {
-      availableKernelModules = [ "virtio_pci" "ahci" "sd_mod" ];
+      availableKernelModules = ["virtio_pci" "ahci" "sd_mod"];
       kernelModules = [];
     };
     loader = {
@@ -112,5 +114,5 @@ with lib;
     device = "/dev/sda";
     fsType = "ext4";
   };
-  swapDevices = [ { device = "/dev/sdb"; } ];
+  swapDevices = [{device = "/dev/sdb";}];
 }

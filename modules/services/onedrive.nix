@@ -1,10 +1,13 @@
 # https://nixos.wiki/wiki/OneDrive
-
-{ options, config, lib, ... }:
-
+{
+  options,
+  config,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.onedrive;
+with lib.my; let
+  cfg = config.modules.services.onedrive;
 in {
   options.modules.services.onedrive = {
     enable = mkBoolOpt false;

@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop;
+with lib.my; let
+  cfg = config.modules.desktop;
 in {
   config = mkIf config.services.xserver.enable {
     assertions = [
@@ -11,30 +16,32 @@ in {
         message = "Can't have more than one desktop environment enabled at a time";
       }
       {
-        assertion =
-          let srv = config.services;
-          in srv.xserver.enable ||
-             srv.sway.enable ||
-             !(anyAttrs
-               (n: v: isAttrs v &&
-                      anyAttrs (n: v: isAttrs v && v.enable))
-               cfg);
+        assertion = let
+          srv = config.services;
+        in
+          srv.xserver.enable
+          || srv.sway.enable
+          || !(anyAttrs
+            (n: v:
+              isAttrs v
+              && anyAttrs (n: v: isAttrs v && v.enable))
+            cfg);
         message = "Can't enable a desktop app without a desktop environment";
       }
     ];
 
     user.packages = with pkgs; [
-      feh       # image viewer
+      feh # image viewer
       xclip
       xdotool
       xorg.xwininfo
-      libqalculate  # calculator cli w/ currency conversion
+      libqalculate # calculator cli w/ currency conversion
       (makeDesktopItem {
         name = "scratch-calc";
         desktopName = "Calculator";
         icon = "calc";
         exec = ''scratch "${tmux}/bin/tmux new-session -s calc -n calc qalc"'';
-        categories = [ "Development" ];
+        categories = ["Development"];
       })
     ];
 
@@ -45,10 +52,10 @@ in {
         ubuntu_font_family
         dejavu_fonts
         symbola
-	      noto-fonts
-	      noto-fonts-cjk
-	      noto-fonts-emoji
-	      #fira
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+        #fira
       ];
     };
 
@@ -113,7 +120,7 @@ in {
     ];
 
     # Try really hard to get QT to respect my GTK theme.
-    env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
+    env.GTK_DATA_PREFIX = ["${config.system.path}"];
     env.QT_QPA_PLATFORMTHEME = "gnome";
     env.QT_STYLE_OVERRIDE = "kvantum";
 

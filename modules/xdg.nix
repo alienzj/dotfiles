@@ -2,9 +2,11 @@
 #
 # Set up and enforce XDG compliance. Other modules will take care of their own,
 # but this takes care of the general cases.
-
-{ config, home-manager, ... }:
 {
+  config,
+  home-manager,
+  ...
+}: {
   ### A tidy $HOME is a tidy mind
   home-manager.users.${config.user.name}.xdg = {
     enable = true;
@@ -26,10 +28,10 @@
       # These are the defaults, and xdg.enable does set them, but due to load
       # order, they're not set before environment.variables are set, which could
       # cause race conditions.
-      XDG_CACHE_HOME  = "$HOME/.cache";
+      XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME   = "$HOME/.local/share";
-      XDG_BIN_HOME    = "$HOME/.local/bin";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_BIN_HOME = "$HOME/.local/bin";
       #XDG_DOCUMENTS_DIR = "$HOME/documents";
     };
     variables = {
@@ -42,10 +44,10 @@
         repl $XDG_CONFIG_HOME/aspell/en.prepl;
       '';
       CUDA_CACHE_PATH = "$XDG_CACHE_HOME/nv";
-      HISTFILE        = "$XDG_DATA_HOME/bash/history";
-      INPUTRC         = "$XDG_CONFIG_HOME/readline/inputrc";
-      LESSHISTFILE    = "$XDG_CACHE_HOME/lesshst";
-      WGETRC          = "$XDG_CONFIG_HOME/wgetrc";
+      HISTFILE = "$XDG_DATA_HOME/bash/history";
+      INPUTRC = "$XDG_CONFIG_HOME/readline/inputrc";
+      LESSHISTFILE = "$XDG_CACHE_HOME/lesshst";
+      WGETRC = "$XDG_CONFIG_HOME/wgetrc";
 
       # Tools I don't use
       # SUBVERSION_HOME = "$XDG_CONFIG_HOME/subversion";

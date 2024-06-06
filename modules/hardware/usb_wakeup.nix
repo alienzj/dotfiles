@@ -1,17 +1,27 @@
 # source:
 # https://discourse.nixos.org/t/stop-mouse-from-waking-up-the-computer/12539
 # https://raw.githubusercontent.com/9999years/nix-config/main/modules/usb-wakeup-disable.nix
-
 # Don't let USB devices wake the computer from sleep by adding a
 # `{ vendor = "...."; product = "...."; }` attrset to the
 # `hardware.usb.wakeupDisabled` configuration option.
-
-{ config, pkgs, lib, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (builtins) length;
-  inherit (lib)
-    concatStringsSep optionalString optional toLower forEach types mkOption
-    hasInfix;
+  inherit
+    (lib)
+    concatStringsSep
+    optionalString
+    optional
+    toLower
+    forEach
+    types
+    mkOption
+    hasInfix
+    ;
   cfg = config.hardware.usb.wakeupDisabled;
 
   vendorProductStr = types.strMatching "^[0-9a-fA-F]{4}$";
@@ -27,21 +37,24 @@ let
     All strings are converted to lowercase.
   '';
 
-  udevRules = pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules"
-    (concatStringsSep "\n" (forEach cfg (devCfg:
-      let wakeStr = if devCfg.wakeup then "enabled" else "disabled";
-      in concatStringsSep ", " [
+  udevRules =
+    pkgs.writeTextDir "etc/udev/rules.d/90-usb-wakeup-configure.rules"
+    (concatStringsSep "\n" (forEach cfg (devCfg: let
+      wakeStr =
+        if devCfg.wakeup
+        then "enabled"
+        else "disabled";
+    in
+      concatStringsSep ", " [
         ''ACTION=="add"''
         ''ATTRS{idVendor}=="${toLower devCfg.vendor}"''
         ''ATTRS{idProduct}=="${toLower devCfg.product}"''
         ''ATTR{power/wakeup}="${wakeStr}"''
       ])));
-
 in {
   options.hardware.usb.wakeupDisabled = mkOption {
-    description =
-      "Prevent USB devices from waking the computer from sleep/hibernation.";
-    default = [ ];
+    description = "Prevent USB devices from waking the computer from sleep/hibernation.";
+    default = [];
     type = types.listOf (types.submodule {
       options = {
         vendor = mkOption {
@@ -68,5 +81,5 @@ in {
     });
   };
 
-  config = { services.udev.packages = optional (length cfg != 0) udevRules; };
+  config = {services.udev.packages = optional (length cfg != 0) udevRules;};
 }

@@ -6,7 +6,6 @@
 #
 # Welcome to ground zero. Where the whole flake gets set up and all its modules
 # are loaded.
-
 {
   description = "A grossly incandescent nixos config.";
 
@@ -40,75 +39,75 @@
     #nur.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      ...
-    }:
-    let
-      inherit (lib.my) mapModules mapModulesRec mapHosts;
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    ...
+  }: let
+    inherit (lib.my) mapModules mapModulesRec mapHosts;
 
-      system = "x86_64-linux";
+    system = "x86_64-linux";
 
-      mkPkgs =
-        pkgs: extraOverlays:
-        import pkgs {
-          inherit system;
-          config.allowUnfree = true; # forgive me Stallman senpai
-          overlays = extraOverlays ++ (lib.attrValues self.overlays);
-          config = {
-            permittedInsecurePackages = [
-              #"electron-19.1.9"
-              #"zotero-6.0.27"
-              "openssl-1.1.1w"
-            ];
-          };
+    mkPkgs = pkgs: extraOverlays:
+      import pkgs {
+        inherit system;
+        config.allowUnfree = true; # forgive me Stallman senpai
+        overlays = extraOverlays ++ (lib.attrValues self.overlays);
+        config = {
+          permittedInsecurePackages = [
+            #"electron-19.1.9"
+            #"zotero-6.0.27"
+            "openssl-1.1.1w"
+          ];
         };
-      pkgs = mkPkgs nixpkgs [ self.overlay ];
-      pkgs' = mkPkgs nixpkgs-unstable [ ];
-
-      lib = nixpkgs.lib.extend (
-        self: super: {
-          my = import ./lib {
-            inherit pkgs inputs;
-            lib = self;
-          };
-        }
-      );
-    in
-    {
-      lib = lib.my;
-
-      overlay = final: prev: {
-        unstable = pkgs';
-        my = self.packages."${system}";
       };
+    pkgs = mkPkgs nixpkgs [self.overlay];
+    pkgs' = mkPkgs nixpkgs-unstable [];
 
-      overlays = mapModules ./overlays import;
+    lib = nixpkgs.lib.extend (
+      self: super: {
+        my = import ./lib {
+          inherit pkgs inputs;
+          lib = self;
+        };
+      }
+    );
+  in {
+    lib = lib.my;
 
-      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { });
+    overlay = final: prev: {
+      unstable = pkgs';
+      my = self.packages."${system}";
+    };
 
-      nixosModules = {
+    overlays = mapModules ./overlays import;
+
+    packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});
+
+    nixosModules =
+      {
         dotfiles = import ./.;
-      } // mapModulesRec ./modules import;
+      }
+      // mapModulesRec ./modules import;
 
-      nixosConfigurations = mapHosts ./hosts { };
+    nixosConfigurations = mapHosts ./hosts {};
 
-      devShell."${system}" = import ./shell.nix { inherit pkgs; };
+    devShell."${system}" = import ./shell.nix {inherit pkgs;};
 
-      templates = {
+    templates =
+      {
         full = {
           path = ./.;
           description = "A grossly incandescent nixos config";
         };
-      } // import ./templates;
-      defaultTemplate = self.templates.full;
+      }
+      // import ./templates;
+    defaultTemplate = self.templates.full;
 
-      defaultApp."${system}" = {
-        type = "app";
-        program = ./bin/hey;
-      };
+    defaultApp."${system}" = {
+      type = "app";
+      program = ./bin/hey;
     };
+  };
 }

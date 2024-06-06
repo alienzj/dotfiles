@@ -1,8 +1,13 @@
-{ config, options, pkgs, lib, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.earlyoom;
+with lib.my; let
+  cfg = config.modules.services.earlyoom;
 in {
   options.modules.services.earlyoom = {
     enable = mkBoolOpt false;

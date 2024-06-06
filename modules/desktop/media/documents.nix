@@ -1,5 +1,4 @@
 # modules/desktop/media/docs.nix
-
 {
   options,
   config,
@@ -7,13 +6,10 @@
   pkgs,
   ...
 }:
-
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.media.documents;
-in
-{
+in {
   options.modules.desktop.media.documents = {
     enable = mkBoolOpt false;
     pdf.enable = mkBoolOpt false;
@@ -43,8 +39,7 @@ in
         thunar-volman
       ];
     })
- 
-    # TODO calibre/evince/zathura dotfiles
 
+    # TODO calibre/evince/zathura dotfiles
   ]);
 }

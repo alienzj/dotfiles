@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.youtube-tui;
+with lib.my; let
+  cfg = config.modules.desktop.media.youtube-tui;
 in {
   options.modules.desktop.media.youtube-tui = {
     enable = mkBoolOpt false;

@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.apps.transmission;
+with lib.my; let
+  cfg = config.modules.desktop.apps.transmission;
 in {
   options.modules.desktop.apps.transmission = {
     enable = mkBoolOpt false;

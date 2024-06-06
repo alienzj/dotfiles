@@ -1,11 +1,14 @@
-{ options, config, lib, pkgs, ... }:
-
-with lib;
-with lib.my;
-let
-  cfg = config.modules.science.bioinfo;
-in
 {
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+with lib.my; let
+  cfg = config.modules.science.bioinfo;
+in {
   options.modules.science.bioinfo = with types; {
     enable = mkBoolOpt false;
   };

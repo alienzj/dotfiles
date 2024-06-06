@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.utils.youdl;
+with lib.my; let
+  cfg = config.modules.utils.youdl;
 in {
   options.modules.utils.youdl = with types; {
     enable = mkBoolOpt false;

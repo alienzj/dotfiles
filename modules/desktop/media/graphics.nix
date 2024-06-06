@@ -4,7 +4,6 @@
 # difficult to replace and its open source alternatives don't *quite* cut it,
 # but enough that I can do a fraction of it on Linux. For the rest I have a
 # second computer dedicated to design work (and gaming).
-
 {
   config,
   options,
@@ -12,14 +11,11 @@
   pkgs,
   ...
 }:
-
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.media.graphics;
   configDir = config.dotfiles.configDir;
-in
-{
+in {
   options.modules.desktop.media.graphics = {
     enable = mkBoolOpt false;
     tools.enable = mkBoolOpt true;
@@ -30,48 +26,53 @@ in
   };
 
   config = mkIf cfg.enable {
-    user.packages =
-      with pkgs;
+    user.packages = with pkgs;
       (
-        if cfg.tools.enable then
-          [
-            font-manager # so many damned fonts...
-            imagemagick # for image manipulation from the shell
-            eyedropper
-            gnome-obfuscate
-            gnome3.eog
-          ]
-        else
-          [ ]
+        if cfg.tools.enable
+        then [
+          font-manager # so many damned fonts...
+          imagemagick # for image manipulation from the shell
+          eyedropper
+          gnome-obfuscate
+          gnome3.eog
+        ]
+        else []
       )
       ++
-
-        # replaces illustrator & indesign
-        (if cfg.vector.enable then [ unstable.inkscape ] else [ ])
+      # replaces illustrator & indesign
+      (
+        if cfg.vector.enable
+        then [unstable.inkscape]
+        else []
+      )
       ++
-
-        # Replaces photoshop
-        (
-          if cfg.raster.enable then
-            [
-              darktable
-              drawing
-              krita
-              gimp
-              #gimpPlugins.resynthesizer  # content-aware scaling in gimp
-              curtail
-            ]
-          else
-            [ ]
-        )
+      # Replaces photoshop
+      (
+        if cfg.raster.enable
+        then [
+          darktable
+          drawing
+          krita
+          gimp
+          #gimpPlugins.resynthesizer  # content-aware scaling in gimp
+          curtail
+        ]
+        else []
+      )
       ++
-
-        # Sprite sheets & animation
-        (if cfg.sprites.enable then [ aseprite-unfree ] else [ ])
+      # Sprite sheets & animation
+      (
+        if cfg.sprites.enable
+        then [aseprite-unfree]
+        else []
+      )
       ++
-
-        # 3D modelling
-        (if cfg.models.enable then [ unstable.blender ] else [ ]);
+      # 3D modelling
+      (
+        if cfg.models.enable
+        then [unstable.blender]
+        else []
+      );
 
     home.configFile = mkIf cfg.raster.enable {
       "GIMP/2.10" = {

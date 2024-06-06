@@ -1,12 +1,16 @@
-{ config, options, pkgs, lib, my, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  my,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.services.rathole-server-pacman;
   configFile = cfg.configFile;
-in
-{
+in {
   options.modules.services.rathole-server-pacman = {
     enable = mkOption {
       type = types.bool;
@@ -28,9 +32,9 @@ in
   config = mkIf cfg.enable {
     systemd.services.rathole-s-pacman = {
       description = "rathole server Daemon";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.rathole ];
+      after = ["network.target"];
+      wantedBy = ["multi-user.target"];
+      path = [pkgs.rathole];
       serviceConfig.PrivateTmp = true;
       script = ''
         exec rathole -s ${configFile}

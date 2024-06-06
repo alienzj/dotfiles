@@ -1,11 +1,14 @@
-{ config, options, lib, pkgs, ... }:
-
-with lib;
-with lib.my;
-let
-  cfg = config.modules.desktop.apps.geph;
-in
 {
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+with lib.my; let
+  cfg = config.modules.desktop.apps.geph;
+in {
   options.modules.desktop.apps.geph = {
     enable = mkBoolOpt false;
   };
@@ -22,7 +25,7 @@ in
         genericName = "Open Geph GUI";
         icon = "io.geph.GephGui";
         exec = "env WEBKIT_DISABLE_COMPOSITING_MODE=1 GDK_SCALE=1 ${geph.gui}/bin/gephgui-wry";
-        categories = [ "Network" ];
+        categories = ["Network"];
       })
     ];
   };

@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.netease-cloud-music;
+with lib.my; let
+  cfg = config.modules.desktop.media.netease-cloud-music;
 in {
   options.modules.desktop.media.netease-cloud-music = {
     enable = mkBoolOpt false;

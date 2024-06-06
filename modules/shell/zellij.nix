@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.shell.zellij;
+with lib.my; let
+  cfg = config.modules.shell.zellij;
 in {
   options.modules.shell.zellij = with types; {
     enable = mkBoolOpt false;
@@ -10,7 +15,7 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = [ 
+      user.packages = [
         pkgs.zellij
       ];
     }

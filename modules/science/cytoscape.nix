@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.science.cytoscape;
+with lib.my; let
+  cfg = config.modules.science.cytoscape;
 in {
   options.modules.science.cytoscape = with types; {
     enable = mkBoolOpt false;

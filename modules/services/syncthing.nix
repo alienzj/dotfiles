@@ -1,8 +1,13 @@
-{ config, options, pkgs, lib, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.syncthing;
+with lib.my; let
+  cfg = config.modules.services.syncthing;
 in {
   options.modules.services.syncthing = {
     enable = mkBoolOpt false;
@@ -19,7 +24,7 @@ in {
       settings.folders = {};
     };
 
-    networking.firewall.allowedTCPPorts = [ 8384 22000 ];
-    networking.firewall.allowedUDPPorts = [ 22000 21027 ];
+    networking.firewall.allowedTCPPorts = [8384 22000];
+    networking.firewall.allowedUDPPorts = [22000 21027];
   };
 }

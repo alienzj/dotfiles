@@ -1,14 +1,17 @@
 ## reference
 ## https://github.com/nix-community/home-manager/blob/master/modules/programs/wezterm.nix
-
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.term.wezterm;
-    tomlFormat = pkgs.formats.toml {};
-    configDir = config.dotfiles.configDir;
-
+with lib.my; let
+  cfg = config.modules.desktop.term.wezterm;
+  tomlFormat = pkgs.formats.toml {};
+  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.term.wezterm = {
     enable = mkBoolOpt false;
@@ -43,7 +46,7 @@ in {
 
     colorSchemes = mkOption {
       type = types.attrsOf (tomlFormat.type);
-      default = { };
+      default = {};
       example = literalExpression ''
         myCoolTheme = {
           ansi = [
@@ -73,7 +76,6 @@ in {
     };
   };
 
-
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       wezterm
@@ -102,8 +104,10 @@ in {
     ##   }) cfg.colorSchemes;
 
     home.configFile = {
-      "wezterm" = { source = "${configDir}/wezterm"; recursive = true; };
+      "wezterm" = {
+        source = "${configDir}/wezterm";
+        recursive = true;
+      };
     };
-
   };
 }

@@ -1,16 +1,18 @@
 # modules/browser/brave.nix --- https://publishers.basicattentiontoken.org
 #
 # A FOSS and privacy-minded browser.
-
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.desktop.browsers.brave;
   configDir = config.dotfiles.configDir;
-in
-{
+in {
   options.modules.desktop.browsers.brave = {
     enable = mkBoolOpt false;
   };
@@ -24,7 +26,7 @@ in
         genericName = "Open a private Brave window";
         icon = "brave";
         exec = "${brave}/bin/brave --incognito";
-        categories = [ "Network" ];
+        categories = ["Network"];
       })
       (makeDesktopItem {
         name = "brave-proxy-pacman";
@@ -35,7 +37,7 @@ in
         #exec = "${brave}/bin/brave --proxy-server=\"socks5://127.0.0.1:1080\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist.pac\"";
         #exec = "${brave}/bin/brave --proxy-server=\"socks5://127.0.0.1:1080\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist_2.pac\"";
         #exec = "${brave}/bin/brave --proxy-server=\"socks5://127.0.0.1:1080\" --proxy-pac-url=\"https://raw.sevencdn.com/petronny/gfwlist2pac/master/gfwlist.pac\"";
-        categories = [ "Network" ];
+        categories = ["Network"];
       })
       (makeDesktopItem {
         name = "brave-proxy-geph";
@@ -46,7 +48,7 @@ in
         #exec = "${brave}/bin/brave --proxy-server=\"socks5://127.0.0.1:9909\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist.pac\"";
         #exec = "${brave}/bin/brave --proxy-server=\"socks5://127.0.0.1:9909\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist_2.pac\"";
         #exec = "${brave}/bin/brave --proxy-server=\"socks5://127.0.0.1:9909\" --proxy-pac-url=\"https://raw.sevencdn.com/petronny/gfwlist2pac/master/gfwlist.pac\"";
-        categories = [ "Network" ];
+        categories = ["Network"];
       })
       (makeDesktopItem {
         name = "brave-private-proxy-pacman";
@@ -57,7 +59,7 @@ in
         #exec = "${brave}/bin/brave --incognito --proxy-server=\"socks5://127.0.0.1:1080\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist.pac\"";
         #exec = "${brave}/bin/brave --incognito --proxy-server=\"socks5://127.0.0.1:1080\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist_2.pac\"";
         #exec = "${brave}/bin/brave --incognito --proxy-server=\"socks5://127.0.0.1:1080\" --proxy-pac-url=\"https://raw.sevencdn.com/petronny/gfwlist2pac/master/gfwlist.pac\"";
-        categories = [ "Network" ];
+        categories = ["Network"];
       })
       (makeDesktopItem {
         name = "brave-private-proxy-geph";
@@ -68,7 +70,7 @@ in
         #exec = "${brave}/bin/brave --incognito --proxy-server=\"socks5://127.0.0.1:9909\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist.pac\"";
         #exec = "${brave}/bin/brave --incognito --proxy-server=\"socks5://127.0.0.1:9909\" --proxy-pac-url=\"file://home/alienzj/.config/gfw2pac/gfwlist_2.pac\"";
         #exec = "${brave}/bin/brave --incognito --proxy-server=\"socks5://127.0.0.1:9909\" --proxy-pac-url=\"https://raw.sevencdn.com/petronny/gfwlist2pac/master/gfwlist.pac\"";
-        categories = [ "Network" ];
+        categories = ["Network"];
       })
     ];
 

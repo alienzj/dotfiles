@@ -1,9 +1,14 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.browsers.chromium;
-    configDir = config.dotfiles.configDir;
+with lib.my; let
+  cfg = config.modules.desktop.browsers.chromium;
+  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.browsers.chromium = {
     enable = mkBoolOpt false;

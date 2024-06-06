@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.science.ai;
+with lib.my; let
+  cfg = config.modules.science.ai;
 in {
   options.modules.science.ai = with types; {
     enable = mkBoolOpt false;
@@ -12,12 +17,12 @@ in {
     {
       user.packages = with pkgs; [
         unstable.ollama
-	unstable.llama-cpp
-	#unstable.lmstudio
+        unstable.llama-cpp
+        #unstable.lmstudio
         #unstable.aichat
         #unstable.chatgpt-cli
-	#unstable.shell_gpt
-	#unstable.chatblade
+        #unstable.shell_gpt
+        #unstable.chatblade
       ];
     }
   ]);

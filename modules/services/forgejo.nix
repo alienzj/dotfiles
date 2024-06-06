@@ -6,12 +6,16 @@
 #
 # Resources
 #   https://forgejo.org/docs/latest/
-
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.forgejo;
+with lib.my; let
+  cfg = config.modules.services.forgejo;
 in {
   options.modules.services.forgejo = {
     enable = mkBoolOpt false;
@@ -25,7 +29,7 @@ in {
       group = "forgejo";
       isSystemUser = true;
     };
-    user.extraGroups = [ "forgejo" ];
+    user.extraGroups = ["forgejo"];
 
     services.forgejo = {
       enable = true;
@@ -37,7 +41,7 @@ in {
       database = {
         type = "postgres"; # default: sqlite3
         user = "git";
-	name = "git";
+        name = "git";
       };
 
       settings = {
@@ -49,7 +53,7 @@ in {
         service.ENABLE_BASIC_AUTHENTICATION = false;
 
         # Only log what's important, but Info is necessary for fail2ban to work
-	log.LEVEL = "Info";
+        log.LEVEL = "Info";
       };
 
       dump.interval = "daily";

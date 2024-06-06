@@ -1,8 +1,13 @@
-{ config, options, pkgs, lib, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.lockscreen;
+with lib.my; let
+  cfg = config.modules.services.lockscreen;
 in {
   options.modules.services.lockscreen = {
     enable = mkBoolOpt false;

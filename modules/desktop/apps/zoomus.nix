@@ -1,9 +1,14 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.apps.zoomus;
-    configDir = config.dotfiles.configDir;
+with lib.my; let
+  cfg = config.modules.desktop.apps.zoomus;
+  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.apps.zoomus = {
     enable = mkBoolOpt false;
@@ -17,6 +22,5 @@ in {
     home.configFile = {
       "zoomus.conf".source = "${configDir}/zoomus/zoomus.conf";
     };
- 
   };
 }

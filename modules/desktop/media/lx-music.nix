@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.lx-music;
+with lib.my; let
+  cfg = config.modules.desktop.media.lx-music;
 in {
   options.modules.desktop.media.lx-music = {
     enable = mkBoolOpt false;

@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.vlc;
+with lib.my; let
+  cfg = config.modules.desktop.media.vlc;
 in {
   options.modules.desktop.media.vlc = {
     enable = mkBoolOpt false;

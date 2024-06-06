@@ -1,8 +1,13 @@
-{ config, options, pkgs, lib, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.samba;
+with lib.my; let
+  cfg = config.modules.services.samba;
 in {
   options.modules.services.samba = {
     enable = mkBoolOpt false;
@@ -20,27 +25,27 @@ in {
 
       services.samba = {
         enable = true;
-	#package = pkgs.sambaFull; # support printer
-	openFirewall = true; # Automatically open firewall ports
+        #package = pkgs.sambaFull; # support printer
+        openFirewall = true; # Automatically open firewall ports
         securityType = "user";
         extraConfig = ''
-	  # printer config
-	  ##load printers = yes
-          ##printing = cups
-          ##printcap name = cups
+          # printer config
+          ##load printers = yes
+                 ##printing = cups
+                 ##printcap name = cups
 
-	  # general config
-          workgroup = magic.local
-          server string = smbnix
-          netbios name = smbnix
-          security = user 
-          #use sendfile = yes
-          #max protocol = smb2
-          # note: localhost is the ipv6 localhost ::1
-          hosts allow = 10.132.22. 192.168.0. 127.0.0.1 localhost
-          hosts deny = 0.0.0.0/0
-          guest account = nobody
-          map to guest = bad user
+          # general config
+                 workgroup = magic.local
+                 server string = smbnix
+                 netbios name = smbnix
+                 security = user
+                 #use sendfile = yes
+                 #max protocol = smb2
+                 # note: localhost is the ipv6 localhost ::1
+                 hosts allow = 10.132.22. 192.168.0. 127.0.0.1 localhost
+                 hosts deny = 0.0.0.0/0
+                 guest account = nobody
+                 map to guest = bad user
         '';
         shares = {
           ##printers = {

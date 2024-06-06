@@ -1,8 +1,13 @@
-{ config, options, pkgs, lib, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.rdp;
+with lib.my; let
+  cfg = config.modules.services.rdp;
 in {
   options.modules.services.rdp = {
     enable = mkBoolOpt false;
@@ -16,7 +21,7 @@ in {
 
       services.xrdp.enable = true;
       services.xrdp.defaultWindowManager = "none+bspwm";
-      networking.firewall.allowedTCPPorts = [ 3389 ];
+      networking.firewall.allowedTCPPorts = [3389];
       # Soon: services.xrdp.openFirewall = true;
     }
   ]);

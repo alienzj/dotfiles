@@ -1,9 +1,14 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.apps.rustdesk;
-    configDir = config.dotfiles.configDir;
+with lib.my; let
+  cfg = config.modules.desktop.apps.rustdesk;
+  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.apps.rustdesk = {
     enable = mkBoolOpt false;

@@ -1,11 +1,14 @@
-{ config, options, pkgs, lib, ... }:
-
-with lib;
-with lib.my;
-let
-  cfg = config.modules.services.home-assistant;
-in
 {
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
+with lib;
+with lib.my; let
+  cfg = config.modules.services.home-assistant;
+in {
   options.modules.services.home-assistant = {
     enable = mkBoolOpt false;
   };
@@ -29,7 +32,7 @@ in
     virtualisation.oci-containers = {
       backend = "podman";
       containers.homeassistant = {
-        volumes = [ "home-assistant:/config" ];
+        volumes = ["home-assistant:/config"];
         environment.TZ = "Asia/Hong_Kong";
 
         # Warning: if the tag does not change, the image will not be updated

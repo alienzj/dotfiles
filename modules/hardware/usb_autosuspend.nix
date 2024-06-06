@@ -2,17 +2,27 @@
 # https://discourse.nixos.org/t/stop-mouse-from-waking-up-the-computer/12539
 # https://raw.githubusercontent.com/9999years/nix-config/main/modules/usb-wakeup-disable.nix
 # https://discourse.nixos.org/t/external-mouse-and-keyboard-sleep-when-they-stay-untouched-for-a-few-seconds/14900/12
-
 # Set USB autosuspend to on
 # `{ vendor = "...."; product = "...."; }` attrset to the
 # `hardware.usb.autosuspendAlwaysOn` configuration option.
-
-{ config, pkgs, lib, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (builtins) length;
-  inherit (lib)
-    concatStringsSep optionalString optional toLower forEach types mkOption
-    hasInfix;
+  inherit
+    (lib)
+    concatStringsSep
+    optionalString
+    optional
+    toLower
+    forEach
+    types
+    mkOption
+    hasInfix
+    ;
   cfg = config.hardware.usb.autosuspendAlwaysOn;
 
   vendorProductStr = types.strMatching "^[0-9a-fA-F]{4}$";
@@ -28,21 +38,24 @@ let
     All strings are converted to lowercase.
   '';
 
-  udevRules = pkgs.writeTextDir "etc/udev/rules.d/90-usb-autosuspend-configure.rules"
-    (concatStringsSep "\n" (forEach cfg (devCfg:
-      let onStr = if devCfg.autosuspendOn then "on" else "auto";
-      in concatStringsSep ", " [
+  udevRules =
+    pkgs.writeTextDir "etc/udev/rules.d/90-usb-autosuspend-configure.rules"
+    (concatStringsSep "\n" (forEach cfg (devCfg: let
+      onStr =
+        if devCfg.autosuspendOn
+        then "on"
+        else "auto";
+    in
+      concatStringsSep ", " [
         ''ACTION=="add"''
         ''ATTRS{idVendor}=="${toLower devCfg.vendor}"''
         ''ATTRS{idProduct}=="${toLower devCfg.product}"''
         ''ATTR{power/control}="${onStr}"''
       ])));
-
 in {
   options.hardware.usb.autosuspendAlwaysOn = mkOption {
-    description =
-      "Let USB devices always autosuspend on";
-    default = [ ];
+    description = "Let USB devices always autosuspend on";
+    default = [];
     type = types.listOf (types.submodule {
       options = {
         vendor = mkOption {
@@ -69,5 +82,5 @@ in {
     });
   };
 
-  config = { services.udev.packages = optional (length cfg != 0) udevRules; };
+  config = {services.udev.packages = optional (length cfg != 0) udevRules;};
 }

@@ -1,12 +1,14 @@
-{ options, config, lib, pkgs, ... }:
-
-with lib;
-with lib.my;
-
-let
-  cfg = config.modules.desktop.vm.virt-manager;
-in
 {
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+with lib.my; let
+  cfg = config.modules.desktop.vm.virt-manager;
+in {
   options.modules.desktop.vm.virt-manager = {
     enable = mkBoolOpt false;
   };
@@ -31,7 +33,8 @@ in
                 #csmSupport = false;
                 httpSupport = true;
                 tpmSupport = true;
-              }).fd
+              })
+              .fd
             ];
           };
         };
@@ -56,6 +59,6 @@ in
       virtiofsd
     ];
 
-    user.extraGroups = [ "libvirtd" ];
+    user.extraGroups = ["libvirtd"];
   };
 }

@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.apps.libreoffice;
+with lib.my; let
+  cfg = config.modules.desktop.apps.libreoffice;
 in {
   options.modules.desktop.apps.libreoffice = {
     enable = mkBoolOpt false;
@@ -12,6 +17,5 @@ in {
     user.packages = with pkgs; [
       libreoffice-fresh
     ];
-
   };
 }

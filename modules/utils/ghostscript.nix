@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.utils.ghostscript;
+with lib.my; let
+  cfg = config.modules.utils.ghostscript;
 in {
   options.modules.utils.ghostscript = with types; {
     enable = mkBoolOpt false;

@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.apps.goldendict;
+with lib.my; let
+  cfg = config.modules.desktop.apps.goldendict;
 in {
   options.modules.desktop.apps.goldendict = {
     enable = mkBoolOpt false;

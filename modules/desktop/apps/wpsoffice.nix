@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.apps.wpsoffice;
+with lib.my; let
+  cfg = config.modules.desktop.apps.wpsoffice;
 in {
   options.modules.desktop.apps.wpsoffice = {
     enable = mkBoolOpt false;

@@ -1,31 +1,36 @@
 ## reference
 ## https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/shadowsocks.nix
-
-{ config, options, pkgs, lib, my, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  my,
+  ...
+}:
 with lib;
-with lib.my;
-let
+with lib.my; let
   cfg = config.modules.services.shadowsocks-server-pacman;
-  opts = {
-    server = cfg.localAddress;
-    server_port = cfg.port;
-    method = cfg.encryptionMethod;
-    mode = cfg.mode;
-    user = "nobody";
-    fast_open = cfg.fastOpen;
-  } // optionalAttrs (cfg.plugin != null) {
-    plugin = cfg.plugin;
-    plugin_opts = cfg.pluginOpts;
-  } // optionalAttrs (cfg.password != null) {
-    password = cfg.password;
-  } // cfg.extraConfig;
+  opts =
+    {
+      server = cfg.localAddress;
+      server_port = cfg.port;
+      method = cfg.encryptionMethod;
+      mode = cfg.mode;
+      user = "nobody";
+      fast_open = cfg.fastOpen;
+    }
+    // optionalAttrs (cfg.plugin != null) {
+      plugin = cfg.plugin;
+      plugin_opts = cfg.pluginOpts;
+    }
+    // optionalAttrs (cfg.password != null) {
+      password = cfg.password;
+    }
+    // cfg.extraConfig;
 
   configFile = pkgs.writeText "shadowsocks_pacman.json" (builtins.toJSON opts);
-
-in
-
-{
+in {
   ##### Interfaces
   options.modules.services.shadowsocks-server-pacman = {
     enable = mkOption {
@@ -38,7 +43,7 @@ in
 
     localAddress = mkOption {
       type = types.str;
-      default ="[::0]"; # "0.0.0.0"
+      default = "[::0]"; # "0.0.0.0"
       description = lib.mdDoc ''
         Local addresses to which the server binds.
       '';
@@ -69,7 +74,7 @@ in
     };
 
     mode = mkOption {
-      type = types.enum [ "tcp_only" "tcp_and_udp" "udp_only" ];
+      type = types.enum ["tcp_only" "tcp_and_udp" "udp_only"];
       default = "tcp_and_udp";
       description = lib.mdDoc ''
         Relay protocols.
@@ -134,22 +139,28 @@ in
       shadowsocks-v2ray-plugin
     ];
 
-    assertions = singleton
-      { assertion = cfg.password == null || cfg.passwordFile == null;
+    assertions =
+      singleton
+      {
+        assertion = cfg.password == null || cfg.passwordFile == null;
         message = "Cannot use both password and passwordFile for shadowsocks-rust";
       };
 
     systemd.services.shadowsocks-rust-server-pacman = {
       description = "shadowsocks-rust server Daemon";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.shadowsocks-rust ] ++ optional (cfg.plugin != null) cfg.plugin ++ optional (cfg.passwordFile != null) pkgs.jq;
+      after = ["network.target"];
+      wantedBy = ["multi-user.target"];
+      path = [pkgs.shadowsocks-rust] ++ optional (cfg.plugin != null) cfg.plugin ++ optional (cfg.passwordFile != null) pkgs.jq;
       serviceConfig.PrivateTmp = true;
       script = ''
         ${optionalString (cfg.passwordFile != null) ''
           cat ${configFile} | jq --arg password "$(cat "${cfg.passwordFile}")" '. + { password: $password }' > /tmp/shadowsocks_pacman.json
         ''}
-        exec ssservice server -c ${if cfg.passwordFile != null then "/tmp/shadowsocks_pacman.json" else configFile}
+        exec ssservice server -c ${
+          if cfg.passwordFile != null
+          then "/tmp/shadowsocks_pacman.json"
+          else configFile
+        }
       '';
     };
   };
