@@ -26,6 +26,8 @@ with lib.my; let
     "editor.fontSize" = 15;
     "editor.fontLigatures" = true;
 
+    "[shellscript]"."editor.defaultFormatter" = "foxundermoon.shell-format";
+
     "files.trimTrailingWhitespace" = false;
 
     "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font Mono";
