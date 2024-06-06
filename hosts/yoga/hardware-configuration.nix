@@ -192,20 +192,22 @@
   };
 
   networking = {
-    nameservers = ["223.5.5.5" "8.8.8.8"];
-
-    #networkmanager.enable = true;
-    firewall = {
+    networkmanager = {
       enable = true;
-      allowedTCPPorts = [22 80 443 3389 8080];
-      allowedUDPPorts = [22 80 443 3389 8080];
+      #wifi.backend = "iwd"; # not good, now use wpa_supplicant
+      plugins = with pkgs; [
+        networkmanager-fortisslvpn
+        networkmanager-iodine
+        networkmanager-l2tp
+        networkmanager-openconnect
+        networkmanager-openvpn
+        networkmanager-vpnc
+        networkmanager-sstp
+      ];
     };
-
-    # Network
     interfaces.lan = {
       useDHCP = true;
     };
-
     #wireless = {
     #  interfaces = [ "lan" ];
     #  iwd = {
@@ -226,6 +228,12 @@
     wireless = {
       enable = true;
       userControlled.enable = true;
+    };
+
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [22 80 443 3389 8080];
+      allowedUDPPorts = [22 80 443 3389 8080];
     };
   };
 
