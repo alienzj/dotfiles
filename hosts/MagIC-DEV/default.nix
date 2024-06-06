@@ -1,14 +1,11 @@
 # MagIC-APP -- MagIC APP server
-
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-with lib.my;
-{
+with lib.my; {
   imports = [
     ../server.nix
     ../home.nix

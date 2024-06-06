@@ -7,10 +7,8 @@
   pkgs,
   modulesPath,
   ...
-}:
-
-{
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+}: {
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   # Kernel
   boot = {
@@ -24,7 +22,7 @@
       "sd_mod"
       "sr_mod"
     ];
-    initrd.kernelModules = [ ];
+    initrd.kernelModules = [];
     kernelModules = [
       "tun"
       "vfio"
@@ -44,7 +42,7 @@
       #"usb.core.autosuspend=3600"  # 5 sencond # it seems no effect
     ];
 
-    extraModulePackages = [ ];
+    extraModulePackages = [];
     #extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
     extraModprobeConfig = lib.mkMerge [
@@ -129,7 +127,7 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   # Power management
-  environment.systemPackages = [ pkgs.acpi ];
+  environment.systemPackages = [pkgs.acpi];
   #services.upower.enable = true;
   powerManagement = {
     enable = true;
@@ -184,7 +182,7 @@
     fsType = "ext4";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512"; } ];
+  swapDevices = [{device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";}];
 
   # Network
   #https://nixos.org/manual/nixos/stable/#sec-rename-ifs
@@ -194,20 +192,22 @@
   };
 
   networking = {
-    nameservers = [ "223.5.5.5" "8.8.8.8" ];
+    nameservers = ["223.5.5.5" "8.8.8.8"];
     #networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 3389 8080 ];
-      allowedUDPPorts = [ 22 80 443 3389 8080 ];
+      allowedTCPPorts = [22 80 443 3389 8080];
+      allowedUDPPorts = [22 80 443 3389 8080];
     };
     # Network
     interfaces.lan = {
       useDHCP = false;
-      ipv4.addresses = [{
-        address = "192.168.1.2";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "192.168.1.2";
+          prefixLength = 24;
+        }
+      ];
     };
     # Gateway
     defaultGateway = {
@@ -226,7 +226,7 @@
   #};
 
   # User
-  user.extraGroups = [ "tss" "video" ];
+  user.extraGroups = ["tss" "video"];
 
   # Platform
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

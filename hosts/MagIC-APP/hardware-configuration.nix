@@ -1,18 +1,22 @@
-{ config, lib, pkgs, modulesPath, ... }:
-
 {
-  imports = [ ];
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: {
+  imports = [];
 
   # Kernel
   boot = {
-    initrd.availableKernelModules = [ "ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod" ];
-    initrd.kernelModules = [ "cifs" ];
-    kernelModules = [ ];
-    extraModulePackages = [ ]; 
+    initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod"];
+    initrd.kernelModules = ["cifs"];
+    kernelModules = [];
+    extraModulePackages = [];
   };
 
   # Display
-  services.xserver.videoDrivers = [ "vmware" ];
+  services.xserver.videoDrivers = ["vmware"];
 
   # Virtualisation
   virtualisation.vmware.guest.enable = true;
@@ -24,7 +28,7 @@
     "/" = {
       device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
-      options = [ "noatime" ];
+      options = ["noatime"];
     };
     "/boot" = {
       device = "/dev/disk/by-label/BOOT";
@@ -36,12 +40,12 @@
     };
   };
 
-  swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
+  swapDevices = [{device = "/dev/disk/by-label/swap";}];
 
   # Networking
   networking = {
     domain = "magic.local";
-    nameservers = [ "1.1.1.1" "8.8.8.8" "10.132.2.30" "10.132.2.31" ];
+    nameservers = ["1.1.1.1" "8.8.8.8" "10.132.2.30" "10.132.2.31"];
 
     #networkmanager.enable = true;
 
@@ -50,18 +54,22 @@
     # Network
     interfaces.ens192 = {
       useDHCP = false;
-      ipv4.addresses = [{
-        address = "10.132.2.151";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.132.2.151";
+          prefixLength = 24;
+        }
+      ];
     };
     # DATA
     interfaces.ens224 = {
       useDHCP = false;
-      ipv4.addresses = [{
-        address = "192.168.1.221";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "192.168.1.221";
+          prefixLength = 24;
+        }
+      ];
     };
 
     # Gateway

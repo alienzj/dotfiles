@@ -1,9 +1,10 @@
 # Discourse configuration
 # Reference: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/web-apps/discourse.nix
-
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   modules.services.discourse.enable = true;
 
   services.discourse = {
@@ -14,8 +15,8 @@
       username = "biocore";
       fullName = "Jie Zhu";
       passwordFile = config.age.secrets.discourse-at-MagIC-APP-admin-secret.path;
-    };    
-     
+    };
+
     plugins = with config.services.discourse.package.plugins; [
       discourse-chat-integration
       discourse-checklist
@@ -36,7 +37,7 @@
       outgoing = {
         serverAddress = "in-v3.mailjet.com";
         port = 587;
-        domain = "magic-inno.hk";  # ??
+        domain = "magic-inno.hk"; # ??
         #username = config.age.secrets.discourse-at-MagIC-APP-mailjet-smtp-api.path;
         username = "4c61ab3f9e649680c30769a2a9877f27";
         passwordFile = config.age.secrets.discourse-at-MagIC-APP-mailjet-smtp-secret.path;
@@ -95,5 +96,5 @@
     group = "discourse";
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 ];
+  networking.firewall.allowedTCPPorts = [80];
 }

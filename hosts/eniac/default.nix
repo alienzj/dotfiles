@@ -3,15 +3,13 @@
   config,
   lib,
   ...
-}:
-
-{
+}: {
   imports = [
     ../home.nix
     ./hardware-configuration.nix
   ];
 
-  disabledModules = [ "services/networking/jotta-cli.nix" ];
+  disabledModules = ["services/networking/jotta-cli.nix"];
 
   ## Modules
   modules = {

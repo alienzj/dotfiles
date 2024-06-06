@@ -1,14 +1,16 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   modules.services.gitea.enable = true;
 
   services.gitea = {
     appName = "Gitea at MagIC";
 
-    domain = "localhost";                  # services.gitea.settings.server.DOMAIN
-    rootUrl = "http://10.132.2.151:3000";  # services.gitea.settings.server.ROOT_URL
-    disableRegistration = false;           # services.gitea.settings.service.DISABLE_REGISTRATION
+    domain = "localhost"; # services.gitea.settings.server.DOMAIN
+    rootUrl = "http://10.132.2.151:3000"; # services.gitea.settings.server.ROOT_URL
+    disableRegistration = false; # services.gitea.settings.service.DISABLE_REGISTRATION
 
     database = {
       passwordFile = config.age.secrets.gitea-at-MagIC-APP-database-secret.path;
@@ -25,10 +27,10 @@
     # Refer to <https://docs.gitea.io/en-us/config-cheat-sheet/> for details on supported values
     settings = {
       #server = {
-	#PROTOCOL = "http";
-	#HTTP_ADDR = "0.0.0.0";
-	#HTTP_PORT = 3000;
-        #SSH_DOMAIN = "magic-inno.hk";
+      #PROTOCOL = "http";
+      #HTTP_ADDR = "0.0.0.0";
+      #HTTP_PORT = 3000;
+      #SSH_DOMAIN = "magic-inno.hk";
       #};
       mailer = {
         ENABLED = false;

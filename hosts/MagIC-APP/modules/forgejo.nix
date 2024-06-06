@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   modules.services.forgejo.enable = true;
 
   services.forgejo = {
@@ -23,8 +25,8 @@
       server = {
         DOMAIN = "localhost";
         SSH_DOMAIN = "10.132.2.151";
-	ROOT_URL = "http://10.132.2.151:3000";
-	DISABLE_REGISTRATION = false;
+        ROOT_URL = "http://10.132.2.151:3000";
+        DISABLE_REGISTRATION = false;
       };
       mailer = {
         ENABLED = true;
@@ -72,5 +74,5 @@
     "d ${config.services.forgejo.dump.backupDir} 750 git forgejo - -"
   ];
 
-  networking.firewall.allowedTCPPorts = [ 3000 ];
+  networking.firewall.allowedTCPPorts = [3000];
 }
