@@ -19,8 +19,8 @@ in {
       zoom-us
     ];
 
-    home.configFile = {
-      "zoomus.conf".source = "${configDir}/zoomus/zoomus.conf";
-    };
+    #home.configFile = {
+    #  "zoomus.conf".source = "${configDir}/zoomus/zoomus.conf";
+    #};
   };
 }
