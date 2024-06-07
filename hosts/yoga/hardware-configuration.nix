@@ -84,7 +84,7 @@
   # powertop vs tlp ??
   #services.upower.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
-  nix.settings.max-jobs = lib.mkDefault 16;
+  nix.settings.max-jobs = lib.mkDefault 8;
   powerManagement = {
     enable = true;
     powertop.enable = true;
@@ -172,17 +172,22 @@
     fsType = "vfat";
   };
 
-  fileSystems."/tmp" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = ["noatime" "nodev" "size=32G"];
-  };
-
   swapDevices = [
     {
       device = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357";
     }
   ];
+
+  # https://github.com/NixOS/nixpkgs/issues/23912
+  #fileSystems."/tmp" = {
+  #  device = "tmpfs";
+  #  fsType = "tmpfs";
+  #  options = ["noatime" "nodev" "size=12G"];
+  #};
+  #services.logind.extraConfig = ''
+  #  RuntimeDirectorySize=12G
+  #'';
+  boot.tmp.tmpfsSize = "80%"; # avoid no space left when rebuild
 
   # Network
   #https://nixos.org/manual/nixos/stable/#sec-rename-ifs
@@ -192,9 +197,11 @@
   };
 
   networking = {
+    interfaces.lan = {
+      useDHCP = true;
+    };
     networkmanager = {
       enable = true;
-      #wifi.backend = "iwd"; # not good, now use wpa_supplicant
       plugins = with pkgs; [
         networkmanager-fortisslvpn
         networkmanager-iodine
@@ -204,30 +211,6 @@
         networkmanager-vpnc
         networkmanager-sstp
       ];
-    };
-    interfaces.lan = {
-      useDHCP = true;
-    };
-    #wireless = {
-    #  interfaces = [ "lan" ];
-    #  iwd = {
-    #    enable = true;
-    #	   settings = {
-    #      Network = {
-    #        EnableIPv6 = true;
-    #	       RoutePriorityOffset = 300;
-    #	     };
-    #	     Settings = {
-    #        AutoConnect = true;
-    #	       #Hidden = false;
-    #	       #AlwaysRandomizeAddress = false;
-    #	     };
-    #	   };
-    #  };
-    #};
-    wireless = {
-      enable = true;
-      userControlled.enable = true;
     };
 
     firewall = {
