@@ -21,6 +21,7 @@
         zoomus.enable = true;
         libreoffice.enable = true;
         wpsoffice.enable = true;
+        thunderbird.enable = true;
         transmission.enable = true;
         filezilla.enable = true;
         scrcpy.enable = true;
