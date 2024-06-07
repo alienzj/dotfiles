@@ -33,7 +33,7 @@
       # idle audio card after one second
       "options snd_hda_amd power_save=1"
       # enable wifi power saving (keep uapsd off to maintain low latencies)
-      "options iwlwifi power_save=1 uapsd_disable=1"
+      "options iwlwifi power_save=1 uapsd_disable=1 11n_disable=1 wd_disable=1"
 
       # VM
       "options kvm_amd nested=1"
@@ -84,7 +84,10 @@
   # powertop vs tlp ??
   #services.upower.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
-  nix.settings.max-jobs = lib.mkDefault 8;
+  nix.settings = {
+    cores = lib.mkDefault 12;
+    max-jobs = lib.mkDefault 8;
+  };
   powerManagement = {
     enable = true;
     powertop.enable = true;
@@ -184,6 +187,10 @@
   #  fsType = "tmpfs";
   #  options = ["noatime" "nodev" "size=12G"];
   #};
+
+  # TODO
+  # FIXME
+  # Increase size of /run/user/1000 to 80% of RAM
   #services.logind.extraConfig = ''
   #  RuntimeDirectorySize=12G
   #'';
