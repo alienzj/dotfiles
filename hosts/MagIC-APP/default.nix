@@ -60,7 +60,11 @@ with lib.my; {
       nginx.enable = true;
       docker.enable = true;
       earlyoom.enable = true;
-      hedgedoc.enable = true;
+      hedgedoc = {
+        enable = true;
+        host = "10.132.2.151";
+        port = 8001;
+      };
     };
     utils = {
       htop.enable = true;
