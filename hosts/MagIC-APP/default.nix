@@ -60,6 +60,7 @@ with lib.my; {
       nginx.enable = true;
       docker.enable = true;
       earlyoom.enable = true;
+      hedgedoc.enable = true;
     };
     utils = {
       htop.enable = true;
