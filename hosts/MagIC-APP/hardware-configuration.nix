@@ -50,6 +50,7 @@
     #networkmanager.enable = true;
 
     firewall.enable = true;
+    firewall.allowedTCPPorts = [8000 8888];
 
     # Network
     interfaces.ens192 = {
