@@ -24,28 +24,41 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    services.hedgedoc = {
-      enable = true;
-      settings = {
-        db = {
-          username = "hedgedoc";
-          database = "hedgedoc";
-          dialect = "postgres";
-          host = "/run/postgresql";
-        };
+  config =
+    mkIf cfg.enable
+    (
+      mkMerge [
+        {
+          services.hedgedoc = {
+            enable = true;
+            settings = {
+              db = {
+                username = "hedgedoc";
+                database = "hedgedoc";
+                dialect = "postgres";
+                host = "/run/postgresql";
+              };
+              #domain = "docs.alienzj.tech"; This is useful if you are trying to run hedgedoc behind a reverse proxy
+              host = cfg.host;
+              port = cfg.port;
+              #protocolUseSSL = true;
+              allowGravatar = true;
+            };
+          };
 
-        #domain = "docs.alienzj.tech"; This is useful if you are trying to run hedgedoc behind a reverse proxy
+          services.postgresql = {
+            ensureDatabases = ["hedgedoc"];
+            ensureUsers = [
+              {
+                name = "hedgedoc";
+                ensureDBOwnership = true;
+                #ensurePermissions."DATABASE hedgedoc" = "ALL PRIVILEGES";
+              }
+            ];
+          };
 
-        host = cfg.host;
-        port = cfg.port;
-
-        #protocolUseSSL = true;
-
-        allowGravatar = true;
-      };
-    };
-
-    networking.firewall.allowedTCPPorts = [cfg.port];
-  };
+          networking.firewall.allowedTCPPorts = [cfg.port];
+        }
+      ]
+    );
 }
