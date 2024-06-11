@@ -14,10 +14,6 @@ with lib.my; let
 in {
   options.modules.services.hedgedoc = {
     enable = mkBoolOpt false; # "activate the hedgeDoc markdown editor service";
-    nginx.enable = mkBoolOpt false; # "activate nginx";
-    nginx.subdomain = mkOption {
-      type = types.str;
-    };
   };
 
   config = mkIf cfg.enable (
@@ -50,10 +46,6 @@ in {
 
         networking.firewall.allowedTCPPorts = [3013];
       }
-
-      (mkIf cfg.nginx.enable (mkSubdomain cfg.nginx.subdomain port))
-
-      (mkIf cfg.nginx.enable (mkVPNSubdomain cfg.nginx.subdomain port))
     ]
   );
 }
