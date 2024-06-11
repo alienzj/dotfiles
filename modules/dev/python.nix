@@ -15,31 +15,6 @@ with lib;
 with lib.my; let
   devCfg = config.modules.dev;
   cfg = devCfg.python;
-
-  my-python-packages = p:
-    with p; [
-      pip
-      black
-      setuptools
-      pylint
-      poetry-core
-      flask
-      django
-      #dash
-      plotly
-      requests
-      ipython
-      jupyter
-      jupyterlab
-      pandas
-      numpy
-      matplotlib
-      seaborn
-      scipy
-      openai
-      openaiauth
-    ];
-  python-with-my-packages = pkgs.python311.withPackages my-python-packages;
 in {
   options.modules.dev.python = {
     enable = mkBoolOpt false;
@@ -49,47 +24,13 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [
-        #python-with-my-packages
-
         python311
-        pipenv
         python311Packages.pip
-        python311Packages.cython
-        python311Packages.isort
-        python311Packages.pyflakes
-        python311Packages.pytest
-        python311Packages.nose
+        python311Packages.ipython
         python311Packages.black
         python311Packages.setuptools
         python311Packages.pylint
-        python311Packages.poetry-core
-        python311Packages.ipython
-        python311Packages.grip
-        python311Packages.flask
-        python311Packages.django
-        #python311Packages.dash
-        python311Packages.plotly
-        python311Packages.requests
-        python311Packages.jupyter
-        python311Packages.jupyterlab
-        python311Packages.pandas
-        python311Packages.numpy
-        python311Packages.matplotlib
-        python311Packages.seaborn
-        python311Packages.scipy
-        python311Packages.mkdocs
-        python311Packages.neoteroi-mkdocs
-        python311Packages.mkdocs-material
-        python311Packages.mkdocs-material-extensions
-        python311Packages.mkdocs-jupyter
-
-        #python311Packages.openai
-        #python311Pacakges.openaiauth
-        #python311Packages.tiktoken
-        #python311Packages.openai-whisper
-        #python311Packages.torch
-        #python311Packages.tensorflow
-        #python311Packages.keras
+        python311Packages.poetry
       ];
 
       environment.shellAliases = {
