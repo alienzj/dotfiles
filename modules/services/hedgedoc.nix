@@ -69,7 +69,7 @@ in {
               };
             };
 
-            #environmentFile = cfg.environmentFile;
+            environmentFile = cfg.environmentFile;
           };
 
           services.postgresql = {
