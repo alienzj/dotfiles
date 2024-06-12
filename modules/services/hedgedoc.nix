@@ -43,7 +43,7 @@ in {
               port = cfg.port;
 
               # CMD_DOMAIN
-              domain = "localhost";
+              domain = cfg.host;
               # CMD_PROTOCOL_USESSL
               # only applied when domain is set
               protocolUseSSL = true;
@@ -54,10 +54,9 @@ in {
               urlAddPort = true;
 
               # CMD_ALLOW_ORIGIN
-              allowOrigin = [
-                "localhost"
-                cfg.host
-              ];
+              #allowOrigin = [
+              #  cfg.host
+              #];
 
               # CMD_ALLOW_GRAVATAR
               allowGravatar = true;
