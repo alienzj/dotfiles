@@ -35,14 +35,14 @@ in {
               host = cfg.host;
               port = cfg.port;
               ## This is useful if you are trying to run hedgedoc behind a reverse proxy
-              domain = "hedgedoc.example.com";
+              #domain = "hedgedoc.example.com";
               ## This is useful if you are trying to run hedgedoc behind a reverse proxy.
               ## Only applied if {option}`domain` is set.
-              protocolUseSSL = true;
+              #protocolUseSSL = true;
               allowGravatar = true;
               allowOrigin = [
                 "localhost"
-                "hedgedoc.example.com"
+                #"hedgedoc.example.com"
               ];
 
               db = {
@@ -67,30 +67,30 @@ in {
             ];
           };
 
-          services.nginx = {
-            enable = true;
+          #services.nginx = {
+          #  enable = true;
 
-            # Use recommended settings
-            recommendedGzipSettings = true;
-            recommendedOptimisation = true;
-            recommendedProxySettings = true;
-            recommendedTlsSettings = true;
+          # Use recommended settings
+          #  recommendedGzipSettings = true;
+          #  recommendedOptimisation = true;
+          #  recommendedProxySettings = true;
+          #  recommendedTlsSettings = true;
 
-            # Only allow PFS-enabled ciphers with AES256
-            sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+          #  # Only allow PFS-enabled ciphers with AES256
+          #  sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
-            virtualHosts."hedgedoc.example.com" = {
-              forceSSL = true;
-              enableACME = true;
-              root = "/var/www/hedgedoc";
-              locations."/".proxyPass = "http://10.132.2.151:8001";
-              locations."/socket.io/" = {
-                proxyPass = "http://10.132.2.151:8001";
-                proxyWebsockets = true;
-                extraConfig = "proxy_ssl_server_name on;";
-              };
-            };
-          };
+          #  virtualHosts."hedgedoc.example.com" = {
+          #    forceSSL = true;
+          #    enableACME = true;
+          #    root = "/var/www/hedgedoc";
+          #    locations."/".proxyPass = "http://10.132.2.151:8001";
+          #    locations."/socket.io/" = {
+          #      proxyPass = "http://10.132.2.151:8001";
+          #      proxyWebsockets = true;
+          #      extraConfig = "proxy_ssl_server_name on;";
+          #    };
+          #  };
+          #};
 
           networking.firewall.allowedTCPPorts = [cfg.port];
         }
