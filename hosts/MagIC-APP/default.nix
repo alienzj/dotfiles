@@ -64,6 +64,7 @@ with lib.my; {
         enable = true;
         host = "10.132.2.151";
         port = 8001;
+        environmentFile = "/home/alienzj/toolkits/ohconfig/hedgedoc/env";
       };
     };
     utils = {

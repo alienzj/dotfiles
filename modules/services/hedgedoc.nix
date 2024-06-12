@@ -22,6 +22,9 @@ in {
       type = types.port;
       default = 8001;
     };
+    environmentFile = mkOption {
+      type = types.path;
+    };
   };
 
   config =
@@ -32,18 +35,31 @@ in {
           services.hedgedoc = {
             enable = true;
             settings = {
+              # https://docs.hedgedoc.org/configuration/#hedgedoc-location
+
+              # CMD_HOST
               host = cfg.host;
+              # CMD_PORT
               port = cfg.port;
-              ## This is useful if you are trying to run hedgedoc behind a reverse proxy
-              #domain = "hedgedoc.example.com";
-              ## This is useful if you are trying to run hedgedoc behind a reverse proxy.
-              ## Only applied if {option}`domain` is set.
-              #protocolUseSSL = true;
-              allowGravatar = true;
+
+              # CMD_DOMAIN
+              domain = "localhost";
+              # CMD_PROTOCOL_USESSL
+              # only applied when domain is set
+              protocolUseSSL = true;
+
+              # CMD_URL_ADDPORT
+              # set to add port on callback URL (ports 80 or 443 won't be applied)
+              # only applied when domain is set
+              urlAddPort = true;
+
+              # CMD_ALLOW_ORIGIN
               allowOrigin = [
                 "localhost"
-                #"hedgedoc.example.com"
               ];
+
+              # CMD_ALLOW_GRAVATAR
+              allowGravatar = true;
 
               db = {
                 username = "hedgedoc";
@@ -53,7 +69,7 @@ in {
               };
             };
 
-            #environmentFile = "";
+            #environmentFile = cfg.environmentFile;
           };
 
           services.postgresql = {
