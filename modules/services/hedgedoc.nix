@@ -43,10 +43,10 @@ in {
               port = cfg.port;
 
               # CMD_DOMAIN
-              domain = "localhost";
+              #domain = "localhost";
               # CMD_PROTOCOL_USESSL
               # only applied when domain is set
-              protocolUseSSL = true;
+              #protocolUseSSL = true;
 
               # CMD_URL_ADDPORT
               # set to add port on callback URL (ports 80 or 443 won't be applied)
@@ -54,9 +54,9 @@ in {
               #urlAddPort = true;
 
               # CMD_ALLOW_ORIGIN
-              allowOrigin = [
-                "localhost"
-              ];
+              #allowOrigin = [
+              #  "localhost"
+              #];
 
               # CMD_ALLOW_GRAVATAR
               allowGravatar = true;
