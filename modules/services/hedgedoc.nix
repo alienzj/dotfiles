@@ -32,24 +32,32 @@ in {
           services.hedgedoc = {
             enable = true;
             settings = {
-              db = {
-                username = "hedgedoc";
-                database = "hedgedoc";
-                dialect = "postgres";
-                host = "/run/postgresql";
-              };
-              #domain = "docs.alienzj.tech"; This is useful if you are trying to run hedgedoc behind a reverse proxy
               host = cfg.host;
               port = cfg.port;
-              useSSL = false;
-              protocolUseSSL = false;
+
+              ## This is useful if you are trying to run hedgedoc behind a reverse proxy
+              #domain = "docs.alienzj.tech";
+              ## This is useful if you are trying to run hedgedoc behind a reverse proxy.
+              ## Only applied if {option}`domain` is set.
+              #protocolUseSSL = true;
+              #useSSL = false;
+
               allowGravatar = true;
               allowOrigin = [
                 "localhost"
                 "127.0.0.1"
                 cfg.host
               ];
+
+              db = {
+                username = "hedgedoc";
+                database = "hedgedoc";
+                dialect = "postgres";
+                host = "/run/postgresql";
+              };
             };
+
+            #environmentFile = "";
           };
 
           services.postgresql = {
