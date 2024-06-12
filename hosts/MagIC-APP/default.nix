@@ -83,5 +83,5 @@ with lib.my; {
   programs.nix-ld.enable = true;
 
   ## Security
-  #security.acme.defaults.email = "alienchuj@gmail.com";
+  security.acme.defaults.email = "alienchuj@gmail.com";
 }
