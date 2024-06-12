@@ -46,7 +46,7 @@ in {
               domain = cfg.host;
               # CMD_PROTOCOL_USESSL
               # only applied when domain is set
-              protocolUseSSL = true;
+              protocolUseSSL = false;
 
               # CMD_URL_ADDPORT
               # set to add port on callback URL (ports 80 or 443 won't be applied)
