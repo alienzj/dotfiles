@@ -41,8 +41,14 @@ in {
               #domain = "docs.alienzj.tech"; This is useful if you are trying to run hedgedoc behind a reverse proxy
               host = cfg.host;
               port = cfg.port;
-              #protocolUseSSL = true;
+              useSSL = false;
+              protocolUseSSL = false;
               allowGravatar = true;
+              allowOrigin = [
+                "localhost"
+                "127.0.0.1"
+                cfg.host
+              ];
             };
           };
 
