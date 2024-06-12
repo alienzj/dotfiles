@@ -51,7 +51,7 @@ in {
               # CMD_URL_ADDPORT
               # set to add port on callback URL (ports 80 or 443 won't be applied)
               # only applied when domain is set
-              urlAddPort = true;
+              #urlAddPort = true;
 
               # CMD_ALLOW_ORIGIN
               allowOrigin = [
