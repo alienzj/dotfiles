@@ -20,8 +20,8 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        (mkIf cfg.ebook.enable calibre)
-        (mkIf cfg.pdf.enable evince)
+        (mkIf cfg.ebook.enable calibre librum)
+        (mkIf cfg.pdf.enable evince sioyek)
         #zathura
       ];
     }
