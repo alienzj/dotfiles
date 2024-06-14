@@ -1,3 +1,5 @@
+# reference
+## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/package-management/conda/default.nix
 {
   options,
   config,
@@ -16,7 +18,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        (conda.override {installationPath = "~/.conda/envs/base";})
+        (conda.override {installationPath = "~/.conda/envs/env-base";})
       ];
     }
   ]);

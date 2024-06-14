@@ -40,6 +40,8 @@ with lib.my; {
         xdg.enable = true;
       };
       web.enable = true;
+      conda.enable = true;
+      mamba.enable = true;
     };
     editors = {
       default = "nvim";
