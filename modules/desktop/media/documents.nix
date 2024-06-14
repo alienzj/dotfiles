@@ -19,14 +19,20 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs; [
-        (mkIf cfg.ebook.enable calibre librum)
-        (mkIf cfg.pdf.enable evince sioyek)
-        #zathura
-      ];
+      user.packages = with pkgs;
+        (
+          if cfg.ebook.enable
+          then [calibre librum]
+          else []
+        )
+        ++ (
+          if cfg.pdf.enable
+          then [evince sioyek]
+          else []
+        );
     }
 
-    (mkIf (cfg.file.enable) {
+    (mkIf cfg.file.enable {
       services.gvfs.enable = true;
       services.tumbler.enable = true;
 
