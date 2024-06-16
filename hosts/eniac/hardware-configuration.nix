@@ -92,7 +92,7 @@
   '';
 
   # CPU
-  nix.settings.max-jobs = lib.mkDefault 16;
+  nix.settings.max-jobs = lib.mkDefault 12;
   hardware.cpu.amd.updateMicrocode = true;
 
   # Power management
@@ -100,7 +100,7 @@
   #services.upower.enable = true;
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = lib.mkDefault "performance";
+    cpuFreqGovernor = "ondemand";
     powertop.enable = true;
   };
   #services.thermald.enable = true;
