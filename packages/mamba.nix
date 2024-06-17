@@ -8,9 +8,9 @@
   extraPkgs ? [],
 }:
 # simply call `mamba-shell` to activate the FHS env,
-# and then use conda commands as normal:
-# $ conda-shell
-# $ mamba install snakemake
+# and then use micromamba commands as normal:
+# $ mamba-shell
+# $ micromamba install snakemake
 let
   name = "mamba";
 in
