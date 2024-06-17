@@ -10,12 +10,12 @@
 with lib;
 with lib.my; let
   cfg = config.modules.dev.mamba;
-  mambafhs = pkgs.buildFHSUserEnv {
+  mambafhs = pkgs.buildFHSEnv {
     name = "mamba-shell";
-    targetPkgs = pkgs: (builtins.concatList [[pkgs.micromamba] cfg.extraPkgs]);
+    targetPkgs = pkgs: (builtins.concatLists [[pkgs.micromamba] cfg.extraPkgs]);
     profile = ''
       set -e
-      eval "$(micromamba shell hook --shell=bash)"
+      eval "$(micromamba shell hook --shell=posix)"
       export MAMBA_ROOT_PREFIX="${cfg.mambaRootPrefix}"
       if ! test -d $MBA_ROOT_PREFIX/envs/env-base; then
           micromamba create --yes -q -n env-base
@@ -47,7 +47,7 @@ in {
       #})
 
       # using a more simpler way
-      mambafhs.env
+      mambafhs
     ];
   };
 }
