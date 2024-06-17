@@ -50,14 +50,11 @@
       "options kvm_amd nested=1"
       "options kvm_amd emulate_invalid_guest_state=0"
       "options kvm ignore_msrs=1"
+      # idle audio card after one second
+      #"options snd_hda_amd power_save=1"
+      # enable wifi power saving (keep uapsd off to maintain low latencies)
+      #"options iwlwifi power_save=1 uapsd_disable=1"
     ];
-    #extraModprobeConfig = lib.mkMerge [
-    #  # idle audio card after one second
-    #  #"options snd_hda_amd power_save=1"
-    #  # enable wifi power saving (keep uapsd off to maintain low latencies)
-    #  #"options iwlwifi power_save=1 uapsd_disable=1"
-    ##];
-
     #crashDump.enable = true; # will build whole linux kernel, disable it
   };
 
@@ -75,35 +72,25 @@
     #sensors.enable = true;
     nvidia.enable = true;
     #https://discourse.nixos.org/t/usb-mouse-and-keyboard-poweroff-too-soon-udev/22459
-    power.enable = true; # install powertop
     #mouse.enable = true;
   };
-
-  services.udev.extraRules = ''
-    # keyboard autosuspand
-    ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="720000"
-
-    # mouse autosuspand
-    ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="720000"
-  '';
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 12;
   hardware.cpu.amd.updateMicrocode = true;
-
-  # Power management
-  environment.systemPackages = [pkgs.acpi];
-  #services.upower.enable = true;
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "ondemand";
-    powertop.enable = true;
-  };
-  #services.thermald.enable = true;
+  # monitors the temperature of the CPU and other components in the system
+  #services.thermald = {
+  #  enable = true; # Enable thermald service
+  #  config = {
+  #    sensors = ["coretemp"]; # List of sensors to monitor
+  #    thresholds = {
+  #      core0 = {
+  #        critical = 75; # Temperature in Celsius
+  #        emergency = 80;
+  #      };
+  #    };
+  #  };
+  #};
 
   # Displays
   services.xserver = {
@@ -112,9 +99,10 @@
     xkb.layout = "us";
     serverFlagsSection = ''
       Option "StandbyTime" "0"
-      Option "SuspendTime" "0"
-      Option "OffTime" "0"
-      Option "BlankTime" "0"
+      Option "SuspendTime" "40"
+      Option "HibernateTime" "60"
+      Option "OffTime" "80"
+      Option "BlankTime" "30"
     '';
   };
 
@@ -152,6 +140,54 @@
   };
 
   swapDevices = [{device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";}];
+
+  # TODO
+  # FIXME
+  # Power management
+  #services.upower.enable = true;
+  modules.hardware.power.enable = true;
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "ondemand";
+    powertop.enable = true;
+  };
+  # Sleep, suspend, and hibernation
+  # please note that encrypted swap devices or swap files are not yet supported for hibernation.
+  # test and use hibernation with following command:
+  # systemctl hibernate
+  boot.resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
+  # go into hibernate after specific suspend time
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=1h
+  '';
+  #services.udev.extraRules = ''
+  #  # keyboard autosuspand
+  #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="720000"
+
+  #  # mouse autosuspand
+  #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="720000"
+  #'';
+  services.logind = {
+    # Configure the behavior of the power and suspend keys
+    powerKey = "suspend";
+    suspendKey = "suspend";
+    hibernateKey = "hibernate";
+  };
+  services.timesyncd = {
+    enable = true;
+    servers = ["ntp.aliyun.com"];
+    extraConfig = "
+      [Time]
+      WakeSystem=daily
+      WakeTime=10:00
+      SleepSystem=daily
+      SleepTime=02:00
+    ";
+  };
 
   # Network
   #https://nixos.org/manual/nixos/stable/#sec-rename-ifs

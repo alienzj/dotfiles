@@ -14,8 +14,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      unstable.powertop
+    environment.systemPackages = [
+      pkgs.acpi
+      pkgs.powertop
     ];
   };
 }
