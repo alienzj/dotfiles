@@ -36,8 +36,12 @@ with lib.my; {
         xdg.enable = true;
       };
       web.enable = true;
-      conda.enable = true;
-      mamba.enable = true;
+      conda = {
+        enable = true;
+        installationPath = "/home/alienzj/.conda/envs/env-base";
+        extraPkgs = [gcc];
+      };
+      #mamba.enable = true;
     };
     editors = {
       default = "nvim";
