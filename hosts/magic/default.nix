@@ -128,6 +128,11 @@
         installationPath = "/home/alienzj/.conda/envs/env-base";
         extraPkgs = [pkgs.gcc];
       };
+      mamba = {
+        enable = true;
+        mambaRootPrefix = "/home/alienzj/.mamba";
+        extraPkgs = [pkgs.gcc];
+      };
       ruby.enable = true;
       web.enable = true;
     };
