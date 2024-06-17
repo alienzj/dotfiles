@@ -124,7 +124,6 @@
       haskell.enable = true;
       zeal.enable = true;
       conda.enable = true;
-      mamba.enable = true;
       ruby.enable = true;
       web.enable = true;
     };
