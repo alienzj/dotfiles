@@ -7,8 +7,10 @@
   ...
 }:
 with lib;
+with builtins;
 with lib.my; let
   cfg = config.modules.desktop.im.qqwechat;
+  license = fetchurl https://raw.githubusercontent.com/nix-community/nur-combined/master/repos/xddxdd/pkgs/uncategorized/wechat-uos/license.tar.gz;
 in {
   options.modules.desktop.im.qqwechat = with types; {
     enable = mkBoolOpt false;
@@ -21,9 +23,10 @@ in {
 
     user.packages = with pkgs; [
       # pkgs.xdg-user-dirs
-      config.nur.repos.xddxdd.wechat-uos
+      #config.nur.repos.xddxdd.wechat-uos
+
       unstable.qq
-      #unstable.wechat-uos
+      (unstable.wechat-uos.override {uosLicense = license;})
     ];
 
     environment.sessionVariables = {

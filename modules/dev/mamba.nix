@@ -1,5 +1,6 @@
 # reference
 ## https://wiki.nixos.org/wiki/Python#Using_micromamba
+## https://mamba.readthedocs.io/en/latest/user_guide/configuration.html
 {
   options,
   config,
