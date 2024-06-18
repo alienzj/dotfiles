@@ -56,9 +56,8 @@
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
         config = {
           permittedInsecurePackages = [
-            #"electron-19.1.9"
-            #"zotero-6.0.27"
             "openssl-1.1.1w"
+            "electron-28.3.3"
           ];
         };
       };
