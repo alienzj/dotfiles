@@ -33,11 +33,6 @@
       "acpi_call"
     ];
 
-    # https://discourse.nixos.org/t/external-mouse-and-keyboard-sleep-when-they-stay-untouched-for-a-few-seconds/14900/10
-    ## energy savings
-    #"mitigations=off"
-    #"mem_sleep_default=deep"
-    #"pcie_aspm.policy=powersupersave"
     kernelParams = [
       # didn't work
       #"usb.core.autosuspend=-1" # disable autosuspend
@@ -55,7 +50,6 @@
       # enable wifi power saving (keep uapsd off to maintain low latencies)
       #"options iwlwifi power_save=1 uapsd_disable=1"
     ];
-    #crashDump.enable = true; # will build whole linux kernel, disable it
   };
 
   # Firmware
@@ -96,8 +90,11 @@
   '';
 
   # CPU
-  nix.settings.max-jobs = lib.mkDefault 12;
-  hardware.cpu.amd.updateMicrocode = true;
+  nix.settings = {
+    cores = lib.mkDefault 12;
+    max-jobs = lib.mkDefault 8;
+  };
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Displays
   services.xserver = {
@@ -105,11 +102,10 @@
     exportConfiguration = true;
     xkb.layout = "us";
     serverFlagsSection = ''
-      Option "StandbyTime" "0"
-      Option "SuspendTime" "0"
-      Option "HibernateTime" "0"
-      Option "OffTime" "0"
-      Option "BlankTime" "0"
+      Option "StandbyTime" "20"
+      Option "SuspendTime" "30"
+      Option "OffTime" "45"
+      Option "BlankTime" "45"
     '';
   };
 
