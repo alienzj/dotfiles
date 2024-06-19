@@ -88,10 +88,8 @@ with lib.my; {
   ];
 
   # Console setup
-  console.font = "ter-i32b";
-  console.packages = with pkgs; [
-    terminus_font
-  ];
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+  console.earlySetup = lib.mkDefault true;
 
   #find "$(nix eval --raw 'nixpkgs#kbd')/share/keymaps" -name '*.map.gz'
   console.keyMap = "us";
