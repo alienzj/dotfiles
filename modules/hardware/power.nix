@@ -1,8 +1,9 @@
 # reference
+## https://www.kernel.org/doc/html/latest/admin-guide/pm/
 ## https://wiki.archlinux.org/title/Category:Power_management
 ## https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
-## TODO
-## FIXME
+## https://wiki.nixos.org/wiki/Power_Management
+## https://github.com/huataihuang/cloud-atlas-draft/blob/master/os/linux/redhat/system_administration/systemd/hibernate_with_fedora_in_laptop.md
 {
   options,
   config,
@@ -22,6 +23,11 @@ in {
     isPC = mkBoolOpt false;
     isServer = mkBoolOpt false;
     cpuFreqGovernor = mkOpt types.str "ondemand"; # performance
+
+    ## 设置Hibernate休眠模式关键点是设置足够存储笔记本内存内容的swap空间，否则会导致hibernate失败
+    ## adjust swap size if you using LVM
+    ## https://baldpenguin.blogspot.com/2016/03/enabling-hibernation-in-fedora-23.html
+    ## https://github.com/huataihuang/cloud-atlas-draft/tree/master/os/linux/storage/device-mapper/lvm
     resumeDevice = mkOpt types.str "/dev/disk/by-label/swap";
   };
 
@@ -29,6 +35,7 @@ in {
     {
       environment.systemPackages = with pkgs; [
         acpi
+        # Powertop is a power analysis tool
         powertop
       ];
 
@@ -39,6 +46,14 @@ in {
       };
     }
 
+    ## https://wiki.archlinux.org/title/Laptop_Mode_Tools
+    ### Laptop Mode Tools is a laptop power saving package for Linux systems.
+    ### It is the primary way to enable the Laptop Mode feature of the Linux kernel, which lets your hard drive spin down.
+    ### In addition, it allows you to tweak a number of other power-related settings using a simple configuration file.
+    ### Combined with acpid and CPU frequency scaling, LMT provides most users with a complete notebook power management suite.
+
+    ## Nixos: https://wiki.nixos.org/wiki/Laptop
+    ### A common tool used to save power on laptops is TLP, which has sensible defaults for most laptops.
     (mkIf cfg.isLaptop {
       services.tlp = {
         enable = true;
@@ -60,19 +75,20 @@ in {
         };
       };
 
-      services.auto-cpufreq = {
-        enable = true;
-        settings = {
-          battery = {
-            governor = "powersave";
-            turbo = "never";
-          };
-          charger = {
-            governor = "performance";
-            turbo = "auto";
-          };
-        };
-      };
+      ### Another tool used for power management is auto-cpufreq which aims to replace TLP.
+      #services.auto-cpufreq = {
+      #  enable = true;
+      #  settings = {
+      #    battery = {
+      #      governor = "powersave";
+      #      turbo = "never";
+      #    };
+      #    charger = {
+      #      governor = "performance";
+      #      turbo = "auto";
+      #    };
+      #  };
+      #};
 
       ## screen brightness
       programs.light.enable = true;
@@ -95,7 +111,12 @@ in {
       };
     })
 
-    (mkIf cfg.isPC {
-      })
+    # TODO
+    #(mkIf cfg.isPC {
+    #  })
+
+    # TODO
+    #(mkIf cfg.isServer {
+    #  })
   ]);
 }
