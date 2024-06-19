@@ -14,17 +14,42 @@
 
   # Kernel
   boot = {
-    initrd.availableKernelModules = ["xhci_pci" "vfio-pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sr_mod"];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "vfio-pci"
+      "ahci"
+      "nvme"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+      "sr_mod"
+    ];
     initrd.kernelModules = ["i915"];
-    kernelModules = ["tun" "vfio" "vfio_immmu_type1" "virtio" "vfio_pci" "kvm-intel"];
-    extraModulePackages = [];
+    kernelModules = [
+      "tun"
+      "vfio"
+      "vfio_immmu_type1"
+      "virtio"
+      "vfio_pci"
+      "kvm-intel"
+      "acpi_call"
+    ];
+
     supportedFilesystems = lib.mkForce ["ntfs" "cifs"];
+
+    kernelParams = [
+      # didn't work
+      #"usb.core.autosuspend=-1" # disable autosuspend
+      #"usb.core.autosuspend=3600"  # 5 sencond # it seems no effect
+    ];
 
     extraModprobeConfig = ''
       options kvm_intel nested=1
       options kvm_intel emulate_invalid_guest_state=0
       options kvm ignore_msrs=1
     '';
+
+    extraModulePackages = with config.boot.kernelPackages; [acpi_call];
   };
 
   # Firmware
@@ -39,9 +64,7 @@
       intel-media-driver
     ];
   };
-  environment.variables = {
-    VDPAU_DRIVER = "va_gl";
-  };
+  environment.variables.VDPAU_DRIVER = "va_gl";
 
   # Custom hardware options
   modules.hardware = {
@@ -53,13 +76,20 @@
     };
     mouse.enable = true;
     dualmonitor.enable = true; # dual monitor
+
+    # power management
+    power = {
+      enable = true;
+      isPC = true;
+      cpuFreqGovernor = "performance";
+      resumeDevice = "/dev/disk/by-uuid/29706bb2-5983-4597-a450-4b4c370c8023";
+    };
   };
 
   # CPU
-  nix.settings.max-jobs = lib.mkDefault 16;
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "performance";
+  nix.settings = {
+    cores = lib.mkDefault 12;
+    max-jobs = lib.mkDefault 8;
   };
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
@@ -70,10 +100,10 @@
     exportConfiguration = true;
     xkb.layout = "us";
     serverFlagsSection = ''
-      Option "StandbyTime" "0"
-      Option "SuspendTime" "0"
-      Option "OffTime" "0"
-      Option "BlankTime" "0"
+      Option "StandbyTime" "20"
+      Option "SuspendTime" "30"
+      Option "OffTime" "45"
+      Option "BlankTime" "45"
     '';
   };
 
