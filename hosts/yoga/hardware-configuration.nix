@@ -11,14 +11,23 @@
 
   # Kernel
   boot = {
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "usb_storage" "sd_mod"];
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "usb_storage"
+      "sd_mod"
+    ];
 
     # "loading `amdgpu` kernelModule at stage 1.
     initrd.kernelModules = ["amdgpu"];
 
-    kernelModules = ["kvm-amd" "tun" "virtio" "acpi_call"];
+    kernelModules = [
+      "kvm-amd"
+      "tun"
+      "virtio"
+      "acpi_call"
+    ];
 
-    ## https://kvark.github.io/linux/framework/2021/10/17/framework-nixos.html
     ## energy savings
     kernelParams = [
       "mem_sleep_default=deep"
@@ -93,11 +102,11 @@
   };
 
   # CPU
-  hardware.cpu.amd.updateMicrocode = true;
   nix.settings = {
     cores = lib.mkDefault 12;
     max-jobs = lib.mkDefault 8;
   };
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Displays
   services.xserver = {
@@ -106,6 +115,12 @@
     #dpi = 168; # enable hidpi module
     exportConfiguration = true;
     xkb.layout = "us";
+    serverFlagsSection = ''
+      Option "StandbyTime" "20"
+      Option "SuspendTime" "30"
+      Option "OffTime" "45"
+      Option "BlankTime" "45"
+    '';
   };
 
   services.libinput = {
