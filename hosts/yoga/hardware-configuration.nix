@@ -75,75 +75,23 @@
     };
     #sensors.enable = true;
     #mouse.enable = true;
-    power.enable = true; # install powertop
+
+    # power management
+    power = {
+      enable = true;
+      isLaptop = true;
+      lightUpKey = 63;
+      lightDownKey = 64;
+      cpuFreqGovernor = "ondemand";
+      resumeDevice = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357";
+    };
   };
 
-  # Power management
-  # TODO
-  # FIXME
-  # powertop vs tlp ??
-  #services.upower.enable = true;
+  # CPU
   hardware.cpu.amd.updateMicrocode = true;
   nix.settings = {
     cores = lib.mkDefault 12;
     max-jobs = lib.mkDefault 8;
-  };
-  powerManagement = {
-    enable = true;
-    powertop.enable = true;
-    #cpuFreqGovernor = lib.mkDefault "ondemand";
-  };
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-      CPU_MIN_PERF_ON_AC = 0;
-      CPU_MAX_PERF_ON_AC = 100;
-      CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 20;
-
-      #Optional helps save long term battery health
-      START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
-      STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-    };
-  };
-  services.auto-cpufreq = {
-    enable = true;
-    settings = {
-      battery = {
-        governor = "powersave";
-        turbo = "never";
-      };
-      charger = {
-        governor = "performance";
-        turbo = "auto";
-      };
-    };
-  };
-
-  # screen brightness
-  programs.light.enable = true;
-  services.actkbd = {
-    enable = true;
-    bindings = [
-      #{ keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-      #{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-      {
-        keys = [63];
-        events = ["key"];
-        command = "/run/current-system/sw/bin/light -U 10";
-      }
-      {
-        keys = [64];
-        events = ["key"];
-        command = "/run/current-system/sw/bin/light -A 10";
-      }
-    ];
   };
 
   # Displays
