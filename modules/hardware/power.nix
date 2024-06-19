@@ -2,7 +2,9 @@
 ## https://www.kernel.org/doc/html/latest/admin-guide/pm/
 ## https://wiki.archlinux.org/title/Category:Power_management
 ## https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
+## https://wiki.archlinux.org/title/Power_management/Wakeup_triggers
 ## https://wiki.nixos.org/wiki/Power_Management
+## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/config/power-management.nix
 ## https://github.com/huataihuang/cloud-atlas-draft/blob/master/os/linux/redhat/system_administration/systemd/hibernate_with_fedora_in_laptop.md
 {
   options,
@@ -36,6 +38,9 @@ in {
       environment.systemPackages = with pkgs; [
         acpi
         # Powertop is a power analysis tool
+        ## https://wiki.archlinux.org/title/Powertop
+        ## gerenate report
+        ## powertop --html=powerreport.html
         powertop
       ];
 
@@ -43,7 +48,31 @@ in {
         enable = true;
         cpuFreqGovernor = cfg.cpuFreqGovernor;
         powertop.enable = true;
+
+        ## TODO
+        ## FIXME
+        ## Commands executed after the system resumes from suspend-to-RAM.
+        ##resumeCommands = "";
+        ## Commands executed when the machine powers up.  That is,
+        ## they're executed both when the system first boots and when
+        ## it resumes from suspend or hibernation.
+        ##powerUpCommands = ''${pkgs.hdparm}/sbin/hdparm -B 255 /dev/sda'';
+        ## Commands executed when the machine powers down.  That is,
+        ## they're executed both when the system shuts down and when
+        ## it goes to suspend or hibernation.
+        ##powerDownCommands = ''${pkgs.hdparm}/sbin/hdparm -B 255 /dev/sda'';
       };
+
+      # Hibernation
+      ## Hibernation requires a configured swap device.
+      ## go to hibernation by running: systemctl hibernate
+      boot.resumeDevice = cfg.resumeDevice;
+
+      ## Go into hibernate after specific suspend time
+      ## system will go from suspend into hibernate after 1 hour
+      #systemd.sleep.extraConfig = ''
+      #  HibernateDelaySec=1h
+      #'';
     }
 
     ## https://wiki.archlinux.org/title/Laptop_Mode_Tools
@@ -52,9 +81,14 @@ in {
     ### In addition, it allows you to tweak a number of other power-related settings using a simple configuration file.
     ### Combined with acpid and CPU frequency scaling, LMT provides most users with a complete notebook power management suite.
 
+    ## https://wiki.archlinux.org/title/Hdparm
+    ## hdparm and sdparm are command line utilities to set and view hardware parameters of hard disk drives
+
     ## Nixos: https://wiki.nixos.org/wiki/Laptop
     ### A common tool used to save power on laptops is TLP, which has sensible defaults for most laptops.
+
     (mkIf cfg.isLaptop {
+      ## https://wiki.archlinux.org/title/TLP
       services.tlp = {
         enable = true;
         settings = {
@@ -90,6 +124,10 @@ in {
       #  };
       #};
 
+      ## TODO
+      ## DPMS
+      ### https://wiki.archlinux.org/title/Display_Power_Management_Signaling
+
       ## screen brightness
       programs.light.enable = true;
       services.actkbd = {
@@ -111,12 +149,45 @@ in {
       };
     })
 
-    # TODO
+    ## TODO
     #(mkIf cfg.isPC {
     #  })
 
-    # TODO
+    ## TODO
     #(mkIf cfg.isServer {
     #  })
+
+    ## TODO
+    ## https://wiki.archlinux.org/title/Wake-on-LAN
+
+    ## TODO
+    ## http://blog.lujun9972.win/blog/2018/12/31/%E4%BD%BF%E7%94%A8rtcwake%E5%AE%9A%E6%97%B6%E5%94%A4%E9%86%92linux/index.html
+    ## Sleep in time
+    ## Wake up in time
   ]);
 }
+# Summary
+## reference
+## http://blog.lujun9972.win/blog/2018/06/21/linux%E5%AE%9A%E6%97%B6%E4%BC%91%E7%9C%A0/
+## 目前大概由三种类型的休眠:
+### suspend(suspend to RAM)
+### 指的是除了内存以外的大部分机器部件都进入断电状态
+### 这种休眠状态恢复速度特别快，但由于内存中的数据并没有被保存下来
+### 因此这个状态的系统并没有进入真正意义上的休眠状态，还在持续耗电
+### hibernate(suspend to disk)
+### 这种休眠会将内存中的系统状态写入交换空间内
+### 当系统启动时就可以从交换空间内读回系统状态
+### 这种情况下系统可以完全断电,但由于要保存/读取系统状态到/从交换空间，因此速度会比较慢，而且需要进行一些配置
+### hybrid(suspend to both)
+### 结合了上面两种休眠类型
+### 它像 hibernate 一样将系统状态存入交换空间内
+### 同时也像 suspend 一样并不关闭电源
+### 这种，在电源未耗尽之前，它能很快的从休眠状态恢复
+### 而若休眠期间电源耗尽，则它可以从交换空间中恢复系统状态
+# Finally
+## man systemd-sleep
+### systemd-suspend.service
+### systemd-hibernate.service
+### systemd-hybrid-sleep.service
+### /usr/lib/systemd/system-sleep
+
