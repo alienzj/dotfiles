@@ -30,6 +30,7 @@
       "virtio"
       "vfio_pci"
       "kvm-amd"
+      "acpi_call"
     ];
 
     # https://discourse.nixos.org/t/external-mouse-and-keyboard-sleep-when-they-stay-untouched-for-a-few-seconds/14900/10
@@ -43,8 +44,7 @@
       #"usb.core.autosuspend=3600"  # 5 sencond # it seems no effect
     ];
 
-    extraModulePackages = [];
-    #extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+    extraModulePackages = with config.boot.kernelPackages; [acpi_call];
 
     extraModprobeConfig = lib.mkMerge [
       "options kvm_amd nested=1"
@@ -98,19 +98,6 @@
   # CPU
   nix.settings.max-jobs = lib.mkDefault 12;
   hardware.cpu.amd.updateMicrocode = true;
-  # monitors the temperature of the CPU and other components in the system
-  #services.thermald = {
-  #  enable = true; # Enable thermald service
-  #  config = {
-  #    sensors = ["coretemp"]; # List of sensors to monitor
-  #    thresholds = {
-  #      core0 = {
-  #        critical = 75; # Temperature in Celsius
-  #        emergency = 80;
-  #      };
-  #    };
-  #  };
-  #};
 
   # Displays
   services.xserver = {
