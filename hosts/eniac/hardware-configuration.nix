@@ -73,7 +73,27 @@
     nvidia.enable = true;
     #https://discourse.nixos.org/t/usb-mouse-and-keyboard-poweroff-too-soon-udev/22459
     #mouse.enable = true;
+
+    # power management
+    power = {
+      enable = true;
+      isPC = true;
+      cpuFreqGovernor = "performance";
+      resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
+    };
   };
+
+  services.udev.extraRules = ''
+    # keyboard autosuspand
+    ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="216000"
+
+    # mouse autosuspand
+    ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="2160000"
+  '';
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 12;
@@ -99,10 +119,10 @@
     xkb.layout = "us";
     serverFlagsSection = ''
       Option "StandbyTime" "0"
-      Option "SuspendTime" "40"
-      Option "HibernateTime" "60"
-      Option "OffTime" "80"
-      Option "BlankTime" "30"
+      Option "SuspendTime" "0"
+      Option "HibernateTime" "0"
+      Option "OffTime" "0"
+      Option "BlankTime" "0"
     '';
   };
 
@@ -140,54 +160,6 @@
   };
 
   swapDevices = [{device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";}];
-
-  # TODO
-  # FIXME
-  # Power management
-  #services.upower.enable = true;
-  modules.hardware.power.enable = true;
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "ondemand";
-    powertop.enable = true;
-  };
-  # Sleep, suspend, and hibernation
-  # please note that encrypted swap devices or swap files are not yet supported for hibernation.
-  # test and use hibernation with following command:
-  # systemctl hibernate
-  boot.resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
-  # go into hibernate after specific suspend time
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=1h
-  '';
-  #services.udev.extraRules = ''
-  #  # keyboard autosuspand
-  #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
-  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
-  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="720000"
-
-  #  # mouse autosuspand
-  #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
-  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
-  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="720000"
-  #'';
-  services.logind = {
-    # Configure the behavior of the power and suspend keys
-    powerKey = "suspend";
-    suspendKey = "suspend";
-    hibernateKey = "hibernate";
-  };
-  services.timesyncd = {
-    enable = true;
-    servers = ["ntp.aliyun.com"];
-    extraConfig = "
-      [Time]
-      WakeSystem=daily
-      WakeTime=10:00
-      SleepSystem=daily
-      SleepTime=02:00
-    ";
-  };
 
   # Network
   #https://nixos.org/manual/nixos/stable/#sec-rename-ifs
