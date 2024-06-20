@@ -60,6 +60,7 @@
     "net.ipv4.tcp_fastopen" = 3;
     # Bufferbloat mitigations + slight improvement in throughput & latency
     "net.ipv4.tcp_congestion_control" = "bbr";
+    # default: fq_codel, # pfifo_fast
     "net.core.default_qdisc" = "cake";
   };
   boot.kernelModules = ["tcp_bbr"];
