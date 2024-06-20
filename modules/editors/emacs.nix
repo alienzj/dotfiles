@@ -28,7 +28,7 @@ in {
 
     user.packages = with pkgs; [
       ## Emacs itself
-      binutils # native-comp needs 'as', provided by this
+      #binutils # native-comp needs 'as', provided by this
       # 28.2 + native-comp
       #((emacsPackagesFor emacsNativeComp).emacsWithPackages
       #((emacsPackagesFor emacs).emacsWithPackages
@@ -41,12 +41,12 @@ in {
       poppler
 
       ## Doom dependencies
-      git
+      #git
       (ripgrep.override {withPCRE2 = true;})
       gnutls # for TLS connectivity
 
       ## Optional dependencies
-      fd # faster projectile indexing
+      #fd
       imagemagick # for image-dired
       (mkIf (config.programs.gnupg.agent.enable)
         pinentry-emacs) # in-emacs gnupg prompts
@@ -63,6 +63,8 @@ in {
       sqlite
       # :lang latex & :lang org (latex previews)
       texlive.combined.scheme-full
+      ghostscript
+      pandoc
       #texlive.combined.scheme-medium
       #texlive.combined.scheme-small
       # :lang beancount

@@ -44,15 +44,7 @@ in {
     user.packages = with pkgs; [
       zsh
       nix-zsh-completions
-      bat
-      eza
       fasd
-      fd
-      fzf
-      jq
-      ripgrep
-      tldr
-      shfmt
     ];
 
     env = {

@@ -73,18 +73,32 @@ with lib.my; {
 
   # Just the bear necessities...
   environment.systemPackages = with pkgs; [
+    coreutils-full
+    binutils
     bind
     cached-nix-shell
+    hydra-check
     git
     vim
+    neovim
     wget
+    curl
     gnumake
-    unzip
     bc
     ripgrep
     htop
+    btop
+    bat
+    eza
     fd
+    fzf
+    jq
     tokei
+    diskus
+    pigz
+    unzip
+    tldr
+    shfmt
   ];
 
   # Console setup

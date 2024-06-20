@@ -21,6 +21,14 @@ in {
       programs.mtr.enable = true;
     }
 
+    {
+      user.packag = with pkgs; [
+        unstable.bandwhich
+        unstable.zenith
+        unstable.sniffnet
+      ];
+    }
+
     # TODO
     ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/mtr-exporter.nix
     (mkIf cfg.exporterEnable {

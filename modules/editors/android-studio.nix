@@ -18,6 +18,8 @@ in {
       android-tools
       android-file-transfer
       android-studio
+
+      payload-dumper-go
     ];
   };
 }

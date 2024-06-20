@@ -22,6 +22,13 @@ in {
 
     services.xserver.videoDrivers = ["nvidia"];
 
+    user.packages = with pkgs; [
+      unstable.nvtopPackages.full
+      unstable.gpu-viewer
+      unstable.gpustat
+      unstable.nvitop
+    ];
+
     environment.systemPackages = with pkgs; [
       # Respect XDG conventions, damn it!
       (writeScriptBin "nvidia-settings" ''
