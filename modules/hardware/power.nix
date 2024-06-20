@@ -19,11 +19,12 @@ with lib.my; let
 in {
   options.modules.hardware.power = with types; {
     enable = mkBoolOpt false;
-    isLaptop = mkBoolOpt false;
-    lightUpKey = mkOpt types.int 63;
-    lightDownKey = mkOpt types.int 64;
-    isPC = mkBoolOpt false;
-    isServer = mkBoolOpt false;
+    pm.enable = mkBoolOpt false;
+    laptop.enable = mkBoolOpt false;
+    laptop.lightUpKey = mkOpt types.int 63;
+    laptop.lightDownKey = mkOpt types.int 64;
+    pc.enable = mkBoolOpt false;
+    server.enable = mkBoolOpt false;
     cpuFreqGovernor = mkOpt types.str "ondemand"; # performance
 
     ## 设置Hibernate休眠模式关键点是设置足够存储笔记本内存内容的swap空间，否则会导致hibernate失败
@@ -34,7 +35,7 @@ in {
   };
 
   config = mkIf cfg.enable (mkMerge [
-    {
+    (mkIf cfg.pm.enable {
       environment.systemPackages = with pkgs; [
         acpi
         # Powertop is a power analysis tool
@@ -73,7 +74,7 @@ in {
       #systemd.sleep.extraConfig = ''
       #  HibernateDelaySec=1h
       #'';
-    }
+    })
 
     ## https://wiki.archlinux.org/title/Laptop_Mode_Tools
     ### Laptop Mode Tools is a laptop power saving package for Linux systems.
@@ -87,7 +88,7 @@ in {
     ## Nixos: https://wiki.nixos.org/wiki/Laptop
     ### A common tool used to save power on laptops is TLP, which has sensible defaults for most laptops.
 
-    (mkIf cfg.isLaptop {
+    (mkIf cfg.laptop.enable {
       ## https://wiki.archlinux.org/title/TLP
       services.tlp = {
         enable = true;
@@ -136,12 +137,12 @@ in {
           #{ keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
           #{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
           {
-            keys = [cfg.lightUpKey];
+            keys = [cfg.laptop.lightUpKey];
             events = ["key"];
             command = "/run/current-system/sw/bin/light -U 10";
           }
           {
-            keys = [cfg.lightDownKey];
+            keys = [cfg.laptop.lightDownKey];
             events = ["key"];
             command = "/run/current-system/sw/bin/light -A 10";
           }
@@ -155,7 +156,7 @@ in {
 
     ## TODO
     ### https://github.com/nix-community/srvos/blob/main/nixos/server/default.nix
-    (mkIf cfg.isServer {
+    (mkIf cfg.server.enable {
       systemd = {
         # Given that our systems are headless, emergency mode is useless.
         # We prefer the system to attempt to continue booting so

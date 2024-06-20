@@ -80,7 +80,8 @@
     # power management
     power = {
       enable = true;
-      isPC = true;
+      pm.enable = true;
+      pc.enable = true;
       cpuFreqGovernor = "performance";
       resumeDevice = "/dev/disk/by-uuid/29706bb2-5983-4597-a450-4b4c370c8023";
     };

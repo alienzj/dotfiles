@@ -78,17 +78,16 @@ with lib.my; {
       };
     };
     utils = {
-      htop.enable = true;
       neofetch.enable = true;
-      pandoc.enable = true;
-      ghostscript.enable = true;
-      disk.enable = true;
+      traceroute.enable = true;
     };
   };
 
   # Local config
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
+  services.pcscd.enable = true; # for gpg-agent
+  services.timesyncd.enable = true; # to sync time
 
   # Run unpatched dynamic binaries on NixOS
   programs.nix-ld.enable = true;

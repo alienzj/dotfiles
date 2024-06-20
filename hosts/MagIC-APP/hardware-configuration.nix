@@ -18,6 +18,23 @@
     };
   };
 
+  # Hardware
+  modules.hardware = {
+    # power management
+    power = {
+      enable = true;
+      pm.enable = false;
+      server.enable = true;
+      cpuFreqGovernor = "performance";
+    };
+  };
+
+  # CPU
+  nix.settings = {
+    cores = lib.mkDefault 8;
+    max-jobs = lib.mkDefault 4;
+  };
+
   # Display
   services.xserver.videoDrivers = ["vmware"];
 

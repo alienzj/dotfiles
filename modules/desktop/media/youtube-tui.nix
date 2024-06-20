@@ -15,7 +15,9 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      youtube-tui
+      unstable.youtube-tui
+      unstable.you-get
+      unstable.yt-dlp
     ];
   };
 }

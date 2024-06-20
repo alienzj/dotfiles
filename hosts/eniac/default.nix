@@ -95,6 +95,7 @@
       };
     };
     science = {
+      ds.enable = true;
       ai.enable = true;
       cytoscape.enable = true;
       bioinfo.enable = true;
@@ -226,12 +227,8 @@
       onedrive.enable = false;
     };
     utils = {
-      htop.enable = true;
       neofetch.enable = true;
-      pandoc.enable = true;
-      ghostscript.enable = true;
-      disk.enable = true;
-      youdl.enable = true;
+      traceroute.enable = true;
     };
     theme.active = "alucard";
   };
