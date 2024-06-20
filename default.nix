@@ -62,7 +62,8 @@ with lib.my; {
   boot = {
     kernelPackages = mkDefault pkgs.linuxPackages_latest;
     loader = {
-      #timeout = 60; # press t when boot
+      timeout = 60;
+      # Only enable during install
       efi.canTouchEfiVariables = mkDefault true;
       systemd-boot = {
         enable = true;
@@ -73,9 +74,10 @@ with lib.my; {
 
   # Just the bear necessities...
   environment.systemPackages = with pkgs; [
-    coreutils-full
+    coreutils
     binutils
     bind
+    strace
     cached-nix-shell
     hydra-check
     git
