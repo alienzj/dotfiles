@@ -13,10 +13,18 @@ with lib.my; let
 in {
   options.modules.utils.traceroute = with types; {
     enable = mkBoolOpt false;
+    exporterEnable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
-    programs.mtr.enable = true;
-    services.mtr-exporter.enable = true;
-  };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      programs.mtr.enable = true;
+    }
+
+    # TODO
+    ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/mtr-exporter.nix
+    (mkIf cfg.exporterEnable {
+      services.mtr-exporter.enable = true;
+    })
+  ]);
 }
