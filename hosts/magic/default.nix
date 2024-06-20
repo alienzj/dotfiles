@@ -212,6 +212,7 @@
       ghostscript.enable = true;
       disk.enable = true;
       youdl.enable = true;
+      traceroute.enable = true;
     };
     theme.active = "alucard";
   };
