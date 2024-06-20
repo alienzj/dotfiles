@@ -1,3 +1,5 @@
+# reference
+## https://github.com/nix-community/srvos/blob/main/nixos/mixins/nginx.nix
 {
   config,
   options,
@@ -25,10 +27,13 @@ in {
         enable = true;
 
         # Use recommended settings
+        statusPage = true;
+        recommendedBrotliSettings = true;
         recommendedGzipSettings = true;
         recommendedOptimisation = true;
         recommendedProxySettings = true;
         recommendedTlsSettings = true;
+        recommendedZstdSettings = true;
 
         # Reduce the permitted size of client requests, to reduce the likelihood
         # of buffer overflow attacks. This can be tweaked on a per-vhost basis,
@@ -36,6 +41,11 @@ in {
         clientMaxBodySize = "256k"; # default 10m
         # Significantly speed up regex matchers
         appendConfig = ''pcre_jit on;'';
+
+        # Nginx sends all the access logs to /var/log/nginx/access.log by default.
+        # instead of going to the journal!
+        # commonHttpConfig = "access_log syslog:server=unix:/dev/log;";
+
         commonHttpConfig = ''
           client_body_buffer_size  4k;       # default: 8k
           large_client_header_buffers 2 4k;  # default: 4 8k
@@ -49,6 +59,27 @@ in {
               ~image/                    max;
           }
         '';
+
+        resolver.addresses = let
+          isIPv6 = addr: builtins.match ".*:.*:.*" addr != null;
+          escapeIPv6 = addr:
+            if isIPv6 addr
+            then "[${addr}]"
+            else addr;
+          cloudflare = ["1.1.1.1" "2606:4700:4700::1111"];
+          resolvers =
+            if config.networking.nameservers == []
+            then cloudflare
+            else config.networking.nameservers;
+        in
+          map escapeIPv6 resolvers;
+
+        sslDhparam = config.security.dhparams.params.nginx.path;
+      };
+
+      security.dhparams = {
+        enable = true;
+        params.nginx = {};
       };
     })
 
