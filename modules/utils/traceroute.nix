@@ -22,7 +22,7 @@ in {
     }
 
     {
-      user.packag = with pkgs; [
+      user.packages = with pkgs; [
         unstable.bandwhich
         unstable.zenith
         unstable.sniffnet

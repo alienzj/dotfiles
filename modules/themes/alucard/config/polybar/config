@@ -73,10 +73,10 @@ font-4 = "Font Awesome 6 Free Regular:style=Regular:pixelsize=11;2"
 font-5 = "Font Awesome 6 Brands Regular:style=Regular:pixelsize=11;2"
 font-6 = "Material Icons: style=Regular: pixelsize=11;2"
 
-modules-left = pulseaudio pad bluetooth pad cpu memory pad fs
+modules-left = pulseaudio pad bluetooth pad cpu memory pad fs pad fcitx5
 ;modules-left = pulseaudio-control-input pad pulseaudio-control-output pad bluetooth pad cpu memory pad fs pad fcitx5
 modules-center = bspwm
-modules-right = redshift pad network pad pad network-up pad network-down pad battery pad date pad syncthing
+modules-right = network pad pad network-up pad network-down pad battery pad date pad redshift pad syncthing
 
 ;tray-position = center
 ;tray-padding = 2
@@ -140,7 +140,7 @@ modules-center = bspwm
 ;tray-scale = 0.5
 ;tray-maxsize = 28
 
-
+# https://github.com/polybar/polybar/wiki/Module:-bspwm
 [module/bspwm]
 type = internal/bspwm
 pin-workspaces = true
@@ -292,6 +292,11 @@ bar-load-fill = |
 bar-load-empty = ¦
 bar-load-empty-foreground = ${colors.fg-alt}
 
+warn-percentage = 90
+
+label = CPU %percentage%%
+label-warn = CPU %percentage%%
+
 
 [module/memory]
 type = internal/memory
@@ -418,9 +423,13 @@ ramp-volume-2 = 
 
 [module/battery]
 type = internal/battery
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
 battery = BAT0
 adapter = ADP1
 full-at = 98
+low-at = 10
 
 format-charging = <animation-charging> <label-charging>
 format-charging-underline = #ffb52a
@@ -483,7 +492,6 @@ exec = ~/.config/polybar/modules/bluetooth
 tail = true
 click-left = ~/.config/polybar/modules/bluetooth --toggle &
 format = 
-;format =  
 format-foreground = ${colors.fg}
 
 
@@ -491,7 +499,6 @@ format-foreground = ${colors.fg}
 type = custom/script
 exec = echo 1
 exec-if = systemctl is-active syncthing
-;format = ""
 format = 
 format-foreground = ${colors.fg}
 interval = 30
