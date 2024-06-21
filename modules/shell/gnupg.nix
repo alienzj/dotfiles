@@ -1,3 +1,6 @@
+# reference
+## https://github.com/ryan4yin/nix-config/tree/main/home/base/tui/gpg
+## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/gnupg.nix
 {
   config,
   options,
@@ -14,6 +17,8 @@ in {
     cacheTTL = mkOpt int 3600; # 1hr
   };
 
+  # TODO
+  ## more detailed configuration
   config = mkIf cfg.enable {
     environment.variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
 

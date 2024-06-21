@@ -1,4 +1,6 @@
 # modules/agenix.nix -- encrypt secrets in nix store
+# reference
+## https://wiki.nixos.org/wiki/Agenix
 {
   options,
   config,

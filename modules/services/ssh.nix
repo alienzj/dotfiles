@@ -1,3 +1,6 @@
+# reference
+## https://wiki.nixos.org/wiki/SSH_public_key_authentication
+## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/ssh.nix
 {
   options,
   config,
@@ -43,5 +46,8 @@ in {
       ]
       else []
     );
+
+    # TODO
+    ## detailed ssh configuration
   };
 }
