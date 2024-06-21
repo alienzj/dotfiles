@@ -17,6 +17,7 @@
       bspwm.enable = true;
       hidpi.enable = true;
       apps = {
+        net.enable = true;
         rofi.enable = true;
         zoomus.enable = true;
         libreoffice.enable = true;
