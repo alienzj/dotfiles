@@ -143,37 +143,74 @@
   ];
 
   # Network
-  #https://nixos.org/manual/nixos/stable/#sec-rename-ifs
-  systemd.network.links."10-lan" = {
-    matchConfig.PermanentMACAddress = "a4:bb:6d:e2:d3:c8";
-    linkConfig.Name = "lan";
+
+  ## networking.useNetworkd
+  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/tasks/network-interfaces.nix
+  ### Whether we should use networkd as the network configuration backend or
+  ### the legacy script based system. Note that this option is experimental,
+  ### enable at your own risk.
+
+  ## networking.networkmanager.enable ??
+  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/networkmanager.nix
+  ### Whether to use NetworkManager to obtain an IP address and other
+  ### configuration for all network interfaces that are not manually
+  ### configured. If enabled, a group `networkmanager`
+  ### will be created. Add all users that should have permission
+  ### to change network settings to this group.
+
+  ## https://wiki.nixos.org/wiki/Systemd/networkd
+  ## https://nixos.org/manual/nixos/stable/#sec-rename-ifs
+
+  systemd.network = {
+    ### Whether to enable networkd or not
+    enable = true;
+    links."10-lan" = {
+      matchConfig.PermanentMACAddress = "a4:bb:6d:e2:d3:c8";
+      linkConfig.Name = "lan";
+    };
+
+    networks."10-lan" = {
+      ### Whether to manage network configuration using {command}`systemd-network`.
+      enable = true;
+      matchConfig.Name = "lan";
+      matchConfig.Type = "ether";
+      address = ["10.132.22.122/24"];
+
+      #gateway = ["10.132.2.254"];
+      routes = [
+        # create default routes for both IPv6 and IPv4
+        #{ routeConfig.Gateway = "fe80::1"; }
+        {routeConfig.Gateway = "10.132.2.254";}
+        # or when the gateway is not on the same network
+        #{
+        #  routeConfig = {
+        #    Gateway = "172.31.1.1";
+        #    GatewayOnLink = true;
+        #  };
+        #}
+      ];
+
+      dns = ["8.8.8.8" "10.132.2.30" "10.132.2.31"];
+
+      # make the routes on this interface a dependency for network-online.target
+      linkConfig.RequiredForOnline = "routable";
+    };
   };
 
+  # Firewall
+  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/firewall.nix
+  ### Whether to enable the firewall.  This is a simple stateful
+  ### firewall that blocks connection attempts to unauthorised TCP
+  ### or UDP ports on this machine.
   networking = {
-    domain = "magic.local";
-    nameservers = ["1.1.1.1" "8.8.8.8" "10.132.2.30" "10.132.2.31"];
-
-    #networkmanager.enable = true;
+    # Docker and libvirt use iptables
+    nftables.enable = false;
     firewall = {
       enable = true;
+      allowPing = true;
+      pingLimit = "--limit 1/minute --limit-burst 5";
       allowedTCPPorts = [22 80 443 3389 8080];
       allowedUDPPorts = [22 80 443 3389 8080];
-    };
-
-    # Network
-    interfaces.lan = {
-      useDHCP = false;
-      ipv4.addresses = [
-        {
-          address = "10.132.22.122";
-          prefixLength = 24;
-        }
-      ];
-    };
-    # Gateway
-    defaultGateway = {
-      address = "10.132.22.254";
-      interface = "lan";
     };
   };
 
