@@ -9,7 +9,10 @@ if [[ $? -eq 0 ]]; then
 fi
 
 #icon=""
-icon="🌞"
+#icon="🌞"
+#icon="☀️"
+
+icon=""
 
 # OPTIONAL: Append ' ${temp}K' after $icon
 if [[ -z $temp ]]; then

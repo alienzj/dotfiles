@@ -15,7 +15,6 @@ with lib.my; let
   secretsFile = "${secretsDir}/secrets.nix";
 in {
   imports = [agenix.nixosModules.age];
-  #environment.systemPackages = [ agenix.defaultPackage.x86_64-linux ];
   environment.systemPackages = [agenix.packages.x86_64-linux.default];
 
   age = {
@@ -28,11 +27,18 @@ in {
             owner = mkDefault config.user.name;
           }) (import secretsFile)
       else {};
+
     identityPaths =
       options.age.identityPaths.default
       ++ (filter pathExists [
         "${config.user.home}/.ssh/id_ed25519"
         "${config.user.home}/.ssh/id_rsa"
       ]);
+
+    #identityPaths = [
+    #  # using the host key for decryption
+    #  # the host key is generated on every host locally by openssh, and will never leave the host.
+    #  "/etc/ssh/ssh_host_ed25519_key"
+    #];
   };
 }

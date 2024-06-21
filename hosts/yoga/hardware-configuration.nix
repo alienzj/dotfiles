@@ -189,6 +189,11 @@
       ];
     };
 
+    nameservers = [
+      "119.29.29.29" # DNSPod
+      "223.5.5.5" # AliDNS
+    ];
+
     firewall = {
       enable = true;
       allowedTCPPorts = [22 80 443 3389 8080];

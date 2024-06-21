@@ -153,7 +153,10 @@
   };
 
   networking = {
-    nameservers = ["223.5.5.5" "8.8.8.8"];
+    nameservers = [
+      "119.29.29.29" # DNSPod
+      "223.5.5.5" # AliDNS
+    ];
     #networkmanager.enable = true;
     firewall = {
       enable = true;

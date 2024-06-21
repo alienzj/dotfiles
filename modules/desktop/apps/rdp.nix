@@ -16,7 +16,6 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       remmina
-      gnome-connections
       freerdp
     ];
   };
