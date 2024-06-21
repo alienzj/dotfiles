@@ -42,7 +42,7 @@ in {
 
       ## Doom dependencies
       #git
-      (ripgrep.override {withPCRE2 = true;})
+      #(ripgrep.override {withPCRE2 = true;})
       gnutls # for TLS connectivity
 
       ## Optional dependencies

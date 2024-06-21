@@ -74,33 +74,65 @@ with lib.my; {
 
   # Just the bear necessities...
   environment.systemPackages = with pkgs; [
+    # core
     coreutils
     binutils
-    bind
-    strace
-    cached-nix-shell
-    hydra-check
-    git
-    vim
-    neovim
-    wget
-    curl
-    gnumake
-    bc
-    ripgrep
-    htop
-    btop
+
+    # ls
     bat
     eza
-    fd
+
+    # serarch
+    (ripgrep.override {withPCRE2 = true;})
+    ast-grep
     fzf
+    fd
     jq
+
+    # edit
+    vim
+    neovim
+    shfmt
+
+    # network
+    wget
+    curl
+    strace
+    hyperfine
+    gping
+    doggo
+
+    # dev
+    gnumake
+    git
+    delta
+
+    # monitor
+    htop
+    btop
+
+    # calculator
+    bc
     tokei
+
+    # disk
     diskus
+    ncdu
     pigz
     unzip
+
+    # man
     tldr
-    shfmt
+
+    # nix
+    cached-nix-shell
+    hydra-check
+    nix-output-monitor
+    hydra-check
+    nix-index
+    nix-init
+    nix-melt
+    nix-tree
   ];
 
   # Console setup
