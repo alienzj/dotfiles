@@ -101,6 +101,7 @@ with lib.my; {
     hyperfine
     gping
     doggo
+    dnsutils
 
     # dev
     gnumake
