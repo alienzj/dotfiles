@@ -161,52 +161,32 @@
   ### to change network settings to this group.
 
   ## https://wiki.nixos.org/wiki/Systemd/networkd
-  ## https://nixos.org/manual/nixos/stable/#sec-rename-ifs
-
   systemd.network = {
-    ### Whether to enable networkd or not
+    ### whether to enable networkd or not
     enable = true;
-    ### No need for ether network
+    ### no need for ether network
     wait-online.enable = false;
 
+    ## https://nixos.org/manual/nixos/stable/#sec-rename-ifs
     links."10-lan" = {
+      enable = true;
       matchConfig.PermanentMACAddress = "10:7b:44:8e:fe:b4";
       linkConfig.Name = "lan";
     };
 
     networks."10-lan" = {
-      ### Whether to manage network configuration using {command}`systemd-network`.
       enable = true;
       matchConfig.Name = "lan";
       matchConfig.Type = "ether";
       address = ["192.168.1.2/24"];
-      routes = [
-        # create default routes for both IPv6 and IPv4
-        #{ routeConfig.Gateway = "fe80::1"; }
-        {routeConfig.Gateway = "192.168.1.1";}
-        # or when the gateway is not on the same network
-        #{
-        #  routeConfig = {
-        #    Gateway = "172.31.1.1";
-        #    GatewayOnLink = true;
-        #  };
-        #}
-      ];
+      gateway = ["192.168.1.1"];
       dns = [
         # DNSpod
         "119.29.29.29"
         # aliyun DNS
         "223.5.5.5"
       ];
-
-      # TODO
-      # IPv6 configuration
-      networkConfig = {
-        # start a DHCP Client for IPv4 Addressing/Routing
-        #DHCP = "ipv4";
-        # accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
-        IPv6AcceptRA = true;
-      };
+      ntp = ["ntp7.aliyun.com"];
 
       # make the routes on this interface a dependency for network-online.target
       linkConfig.RequiredForOnline = "routable";
