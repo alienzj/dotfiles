@@ -180,12 +180,14 @@
       matchConfig.Type = "ether";
       address = ["192.168.1.2/24"];
       gateway = ["192.168.1.1"];
-      #dns = [
-      #  # DNSpod
-      #  "119.29.29.29"
-      #  # aliyun DNS
-      #  "223.5.5.5"
-      #];
+      dns = [
+        # aliyun DNS
+        "223.5.5.5"
+        # Google DNS
+        "8.8.8.8"
+        # DNSpod
+        "119.29.29.29"
+      ];
       ntp = ["ntp7.aliyun.com" "ntp.aliyun.com"];
 
       # make the routes on this interface a dependency for network-online.target
@@ -194,21 +196,21 @@
   };
 
   ## https://wiki.nixos.org/wiki/Systemd/resolved
-  networking.nameservers = [
-    "223.5.5.5"
-    "8.8.8.8"
-  ];
+  #networking.nameservers = [
+  #  "223.5.5.5"
+  #  "8.8.8.8"
+  #];
 
-  services.resolved = {
-    enable = true;
-    dnssec = "true";
-    domains = ["~."];
-    fallbackDns = [
-      "223.5.5.5"
-      "8.8.8.8"
-    ];
-    dnsovertls = "true";
-  };
+  #services.resolved = {
+  #  enable = true;
+  #  dnssec = "true";
+  #  domains = ["~."];
+  #  fallbackDns = [
+  #    "223.5.5.5"
+  #    "8.8.8.8"
+  #  ];
+  #  dnsovertls = "true";
+  #};
 
   # Firewall
   ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/firewall.nix
