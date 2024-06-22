@@ -180,17 +180,34 @@
       matchConfig.Type = "ether";
       address = ["192.168.1.2/24"];
       gateway = ["192.168.1.1"];
-      dns = [
-        # DNSpod
-        "119.29.29.29"
-        # aliyun DNS
-        "223.5.5.5"
-      ];
+      #dns = [
+      #  # DNSpod
+      #  "119.29.29.29"
+      #  # aliyun DNS
+      #  "223.5.5.5"
+      #];
       ntp = ["ntp7.aliyun.com"];
 
       # make the routes on this interface a dependency for network-online.target
       linkConfig.RequiredForOnline = "routable";
     };
+  };
+
+  ## https://wiki.nixos.org/wiki/Systemd/resolved
+  networking.nameservers = [
+    "223.5.5.5"
+    "119.29.29.29"
+  ];
+
+  services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = ["~."];
+    fallbackDns = [
+      "223.5.5.5"
+      "119.29.29.29"
+    ];
+    dnsovertls = "true";
   };
 
   # Firewall
