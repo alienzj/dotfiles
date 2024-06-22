@@ -186,7 +186,7 @@
       #  # aliyun DNS
       #  "223.5.5.5"
       #];
-      ntp = ["ntp7.aliyun.com"];
+      ntp = ["ntp7.aliyun.com" "ntp.aliyun.com"];
 
       # make the routes on this interface a dependency for network-online.target
       linkConfig.RequiredForOnline = "routable";
@@ -196,7 +196,7 @@
   ## https://wiki.nixos.org/wiki/Systemd/resolved
   networking.nameservers = [
     "223.5.5.5"
-    "119.29.29.29"
+    "8.8.8.8"
   ];
 
   services.resolved = {
@@ -205,7 +205,7 @@
     domains = ["~."];
     fallbackDns = [
       "223.5.5.5"
-      "119.29.29.29"
+      "8.8.8.8"
     ];
     dnsovertls = "true";
   };
