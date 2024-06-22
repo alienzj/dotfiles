@@ -10,10 +10,6 @@
     ./hardware-configuration.nix
   ];
 
-  disabledModules = [
-    "services/networking/jotta-cli.nix"
-  ];
-
   ## Modules
   modules = {
     desktop = {
