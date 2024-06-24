@@ -176,8 +176,12 @@ in {
               "{connection_file}"
             ];
             language = "R";
-            extraPaths = "${env.sitePackages}/IRkernel/kernelspec/kernel.js";
-            logo64 = "${env.sitePackages}/IRkernel/kernelspec/logo-64x64.png";
+            #/home/alienzj/R/x86_64-redhat-linux-gnu-library/4.4/IRkernel/kernelspec/
+            #  ├── kernel.js
+            #  ├── kernel.json
+            #  ├── logo-64x64.png
+            #  └── logo-svg.svg
+            logo64 = "${env}/lib/R/library/IRkernel/kernelspec/logo-64x64.png";
           };
         };
       };
