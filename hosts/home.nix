@@ -23,7 +23,14 @@ in {
   ## Location config -- since Toronto is my 127.0.0.1
   # time.timeZone = mkDefault "America/Toronto";
   time.timeZone = mkDefault "Asia/Hong_Kong";
-  i18n.defaultLocale = mkDefault "en_US.UTF-8";
+
+  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/config/i18n.nix
+  i18n = {
+    defaultLocale = mkDefault "en_US.UTF-8";
+    extraLocaleSettings = mkDefault {
+      LC_ALL = "en_US.UTF-8";
+    };
+  };
 
   # For redshift, mainly
   location =
