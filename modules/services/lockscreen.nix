@@ -1,3 +1,5 @@
+# reference
+## https://github.com/betterlockscreen/betterlockscreen
 {
   config,
   options,
@@ -32,6 +34,13 @@ in {
           icon = "system-lock-screen";
           exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --blur --lock";
         })
+
+        (makeDesktopItem {
+          name = "going-to-sleep";
+          desktopName = "Systemd Sleep";
+          icon = "system-sleep";
+          exec = "systemctl suspend";
+        })
       ];
 
       #services.screen-locker = {
@@ -41,6 +50,27 @@ in {
       #    concatStringsSep " " cfg.arguments
       #  }";
       #};
+
+      ## https://github.com/betterlockscreen/betterlockscreen/blob/next/system/betterlockscreen%40.service
+      systemd.services.betterlockscreen = {
+        description = "Lock screen when going to sleep/suspend";
+        before = ["sleep.target" "suspend.target"];
+        wantedBy = ["sleep.target" "suspend.target"];
+        serviceConfig = {
+          Type = "simple";
+          Environment = "DISPLAY=:0";
+          ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --blur --lock";
+          TimeoutSec = "infinity";
+        };
+      };
+
+      ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/x11/xautolock.nix
+      services.xserver.xautolock = {
+        enable = true;
+        time = 25;
+        locker = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --blur --lock";
+        #killer = "/run/current-system/systemd/bin/systemctl suspend";
+      };
     }
   ]);
 }

@@ -1,3 +1,5 @@
+# reference
+## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/development/rstudio-server/default.nix
 {
   config,
   options,
