@@ -85,6 +85,22 @@
       cpuFreqGovernor = "performance";
       resumeDevice = "/dev/disk/by-uuid/29706bb2-5983-4597-a450-4b4c370c8023";
     };
+
+    # network management
+    network = {
+      enable = true;
+      networkd.enable = true;
+      MACAddress = "a4:bb:6d:e2:d3:c8";
+      IPAddress = ["10.132.22.122/24"];
+      RouteGateway = ["10.132.22.254"];
+      DomainNameServer = [
+        # aliyun DNS
+        "223.5.5.5"
+        # Google DNS
+        "8.8.8.8"
+      ];
+      NTP = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+    };
   };
 
   # CPU
@@ -142,92 +158,7 @@
     {device = "/dev/disk/by-uuid/29706bb2-5983-4597-a450-4b4c370c8023";}
   ];
 
-  # Network
-
-  ## networking.useNetworkd
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/tasks/network-interfaces.nix
-  ### Whether we should use networkd as the network configuration backend or
-  ### the legacy script based system. Note that this option is experimental,
-  ### enable at your own risk.
-
-  ## networking.networkmanager.enable ??
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/networkmanager.nix
-  ### Whether to use NetworkManager to obtain an IP address and other
-  ### configuration for all network interfaces that are not manually
-  ### configured. If enabled, a group `networkmanager`
-  ### will be created. Add all users that should have permission
-  ### to change network settings to this group.
-
-  ## https://wiki.nixos.org/wiki/Systemd/networkd
-  ## https://nixos.org/manual/nixos/stable/#sec-rename-ifs
-
-  systemd.network = {
-    ### Whether to enable networkd or not
-    enable = true;
-    links."10-lan" = {
-      matchConfig.PermanentMACAddress = "a4:bb:6d:e2:d3:c8";
-      linkConfig.Name = "lan";
-    };
-
-    networks."10-lan" = {
-      ### Whether to manage network configuration using {command}`systemd-network`.
-      enable = true;
-      matchConfig.Name = "lan";
-      matchConfig.Type = "ether";
-      address = ["10.132.22.122/24"];
-
-      #gateway = ["10.132.2.254"];
-      routes = [
-        # create default routes for both IPv6 and IPv4
-        #{ routeConfig.Gateway = "fe80::1"; }
-        {routeConfig.Gateway = "10.132.2.254";}
-        # or when the gateway is not on the same network
-        #{
-        #  routeConfig = {
-        #    Gateway = "172.31.1.1";
-        #    GatewayOnLink = true;
-        #  };
-        #}
-      ];
-
-      dns = ["8.8.8.8" "10.132.2.30" "10.132.2.31"];
-
-      # make the routes on this interface a dependency for network-online.target
-      linkConfig.RequiredForOnline = "routable";
-    };
-  };
-
-  # Firewall
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/firewall.nix
-  ### Whether to enable the firewall.  This is a simple stateful
-  ### firewall that blocks connection attempts to unauthorised TCP
-  ### or UDP ports on this machine.
-  networking = {
-    # Docker and libvirt use iptables
-    nftables.enable = false;
-    firewall = {
-      enable = true;
-      allowPing = true;
-      pingLimit = "--limit 1/minute --limit-burst 5";
-      allowedTCPPorts = [22 80 443 3389 8080];
-      allowedUDPPorts = [22 80 443 3389 8080];
-    };
-  };
-
-  #system.activationScripts = {
-  #  rfkillUnblockBluetooth = {
-  #    text = ''
-  #    rfkill unblock bluetooth
-  #    '';
-  #    deps = [];
-  #  };
-  #};
-
   # User
-  # https://nixos.wiki/wiki/TPM
-  #security.tpm2.enable = true;
-  #security.tpm2.pkcs11.enable = true;  # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
-  #security.tpm2.tctiEnvironment.enable = true;  # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
   user.extraGroups = ["tss" "video"]; # tss group has access to TPM devices
 
   # Platform
