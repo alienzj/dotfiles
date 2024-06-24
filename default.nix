@@ -66,7 +66,7 @@ with lib.my; {
       # Only enable during install
       efi.canTouchEfiVariables = mkDefault true;
       systemd-boot = {
-        enable = true;
+        enable = lib.mkDefault true;
         configurationLimit = 7;
       };
     };

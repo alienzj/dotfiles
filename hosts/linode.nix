@@ -89,7 +89,8 @@ with lib; {
       timeout = 10;
       grub = {
         enable = true;
-        version = 2;
+        # no effect
+        # version = 2;
         device = "/dev/sda";
         copyKernels = true;
         fsIdentifier = "provided";

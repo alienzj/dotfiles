@@ -166,7 +166,11 @@
       adb.enable = true;
       syncthing.enable = true;
       rstudio-server.enable = true;
-      jupyterhub.enable = true;
+      jupyterhub = {
+        enable = true;
+        adminUser = "alienzj";
+        allowedUser = ["alienzj"];
+      };
       ssh.enable = true;
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
