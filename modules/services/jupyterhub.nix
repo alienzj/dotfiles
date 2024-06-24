@@ -176,12 +176,15 @@ in {
               "{connection_file}"
             ];
             language = "R";
-            #/home/alienzj/R/x86_64-redhat-linux-gnu-library/4.4/IRkernel/kernelspec/
-            #  ├── kernel.js
-            #  ├── kernel.json
-            #  ├── logo-64x64.png
-            #  └── logo-svg.svg
-            logo64 = "${env}/lib/R/library/IRkernel/kernelspec/logo-64x64.png";
+
+            ### /nix/store/fmfkx19rgwqnf8f9nqmcdacig2vig1x9-r-IRkernel-1.3.2/library/IRkernel/kernelspec
+            ### ├── kernel.js
+            ### ├── kernel.json
+            ### ├── logo-64x64.png
+            ### └── logo-svg.svg
+            ### TODO
+            ### FIXME
+            #logo64 = "${pkgs.unstable.rPackages.IRkernel}/IRkernel/kernelspec/logo-64x64.png";
           };
         };
       };
