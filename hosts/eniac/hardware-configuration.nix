@@ -76,6 +76,24 @@
       cpuFreqGovernor = "performance";
       resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
     };
+
+    # network management
+    network = {
+      enable = true;
+      networkd.enable = true;
+      MACAddress = "10:7b:44:8e:fe:b4";
+      IPAddress = ["192.168.1.2/24"];
+      RouteGateway = ["192.168.1.1"];
+      DomainNameServer = [
+        # aliyun DNS
+        "223.5.5.5"
+        # Google DNS
+        "8.8.8.8"
+        # DNSpod
+        "119.29.29.29"
+      ];
+      NTP = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+    };
   };
 
   services.udev.extraRules = ''
@@ -144,99 +162,6 @@
   };
 
   swapDevices = [{device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";}];
-
-  # Network
-  ## networking.useNetworkd
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/tasks/network-interfaces.nix
-  ### Whether we should use networkd as the network configuration backend or
-  ### the legacy script based system. Note that this option is experimental,
-  ### enable at your own risk.
-
-  ## networking.networkmanager.enable ??
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/networkmanager.nix
-  ### Whether to use NetworkManager to obtain an IP address and other
-  ### configuration for all network interfaces that are not manually
-  ### configured. If enabled, a group `networkmanager`
-  ### will be created. Add all users that should have permission
-  ### to change network settings to this group.
-
-  ## https://wiki.nixos.org/wiki/Systemd/networkd
-  systemd.network = {
-    ### whether to enable networkd or not
-    enable = true;
-    ### no need for ether network
-    wait-online.enable = false;
-
-    ## https://nixos.org/manual/nixos/stable/#sec-rename-ifs
-    links."10-lan" = {
-      enable = true;
-      matchConfig.PermanentMACAddress = "10:7b:44:8e:fe:b4";
-      linkConfig.Name = "lan";
-    };
-
-    networks."10-lan" = {
-      enable = true;
-      matchConfig.Name = "lan";
-      matchConfig.Type = "ether";
-      address = ["192.168.1.2/24"];
-      gateway = ["192.168.1.1"];
-      dns = [
-        # aliyun DNS
-        "223.5.5.5"
-        # Google DNS
-        "8.8.8.8"
-        # DNSpod
-        "119.29.29.29"
-      ];
-      ntp = ["ntp7.aliyun.com" "ntp.aliyun.com"];
-
-      # make the routes on this interface a dependency for network-online.target
-      linkConfig.RequiredForOnline = "routable";
-    };
-  };
-
-  ## https://wiki.nixos.org/wiki/Systemd/resolved
-  #networking.nameservers = [
-  #  "223.5.5.5"
-  #  "8.8.8.8"
-  #];
-
-  #services.resolved = {
-  #  enable = true;
-  #  dnssec = "true";
-  #  domains = ["~."];
-  #  fallbackDns = [
-  #    "223.5.5.5"
-  #    "8.8.8.8"
-  #  ];
-  #  dnsovertls = "true";
-  #};
-
-  # Firewall
-  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/firewall.nix
-  ### Whether to enable the firewall.  This is a simple stateful
-  ### firewall that blocks connection attempts to unauthorised TCP
-  ### or UDP ports on this machine.
-  networking = {
-    # Docker and libvirt use iptables
-    nftables.enable = false;
-    firewall = {
-      enable = true;
-      allowPing = true;
-      pingLimit = "--limit 1/minute --limit-burst 5";
-      allowedTCPPorts = [22 80 443 3389 8080];
-      allowedUDPPorts = [22 80 443 3389 8080];
-    };
-  };
-
-  #system.activationScripts = {
-  #  rfkillUnblockBluetooth = {
-  #    text = ''
-  #    rfkill unblock bluetooth
-  #    '';
-  #    deps = [];
-  #  };
-  #};
 
   # User
   user.extraGroups = ["tss" "video"];
