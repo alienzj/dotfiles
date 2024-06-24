@@ -85,7 +85,7 @@
       IPAddress = ["192.168.1.2/24"];
       RouteGateway = ["192.168.1.1"];
       DomainNameServer = ["223.5.5.5" "8.8.8.8" "119.29.29.29"];
-      NTP = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+      NetworkTimeServer = ["ntp7.aliyun.com" "ntp.aliyun.com"];
     };
   };
 
