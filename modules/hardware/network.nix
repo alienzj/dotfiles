@@ -31,14 +31,7 @@ in {
     MACAddress = mkOpt types.str "10:7b:44:8e:fe:b4";
     IPAddress = mkOpt listOf types.str [""];
     RouteGateway = mkOpt listOf types.str [""];
-    DomainNameServer = mkOpt listOf types.str [
-      # aliyun DNS
-      "223.5.5.5"
-      # Google DNS
-      "8.8.8.8"
-      # DNSpod
-      "119.29.29.29"
-    ];
+    DomainNameServer = mkOpt listOf types.str ["223.5.5.5" "8.8.8.8" "119.29.29.29"];
     NTP = mkOpt listOf types.str ["ntp7.aliyun.com" "ntp.aliyun.com"];
   };
 
