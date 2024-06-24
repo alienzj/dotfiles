@@ -1,5 +1,7 @@
 # reference
 ## https://github.com/betterlockscreen/betterlockscreen
+## TODO
+## betterlockscreen -u modules/themes/alucard/config/wallpaper.png --display 1 -u ~/pictures/The_hunt_for_a_healthy_microbiome.webp --display 2
 {
   config,
   options,
@@ -32,14 +34,14 @@ in {
           name = "better-lock-display";
           desktopName = "Better Lock screen";
           icon = "system-lock-screen";
-          exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --blur --lock";
+          exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --dimblur --lock";
         })
 
         (makeDesktopItem {
-          name = "going-to-sleep";
-          desktopName = "Systemd Sleep";
-          icon = "system-sleep";
-          exec = "systemctl suspend";
+          name = "better-lock-and-sleep";
+          desktopName = "Better Lock screen and Sleep";
+          icon = "system-lock-screen";
+          exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --suspend";
         })
       ];
 
@@ -58,8 +60,7 @@ in {
         wantedBy = ["sleep.target" "suspend.target"];
         serviceConfig = {
           Type = "simple";
-          Environment = "DISPLAY=:0";
-          ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --blur --lock";
+          ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --dimblur --lock";
           TimeoutSec = "infinity";
         };
       };
@@ -68,7 +69,7 @@ in {
       services.xserver.xautolock = {
         enable = true;
         time = 25;
-        locker = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --blur --lock";
+        locker = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --dimblur --lock";
         #killer = "/run/current-system/systemd/bin/systemctl suspend";
       };
     }
