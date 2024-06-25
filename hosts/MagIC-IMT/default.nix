@@ -73,6 +73,11 @@ with lib.my; {
       docker.enable = true;
       earlyoom.enable = true;
       rstudio-server.enable = true;
+      jupyterhub = {
+        enable = true;
+        adminUser = "alienzj";
+        allowedUser = ["alienzj"];
+      };
     };
     utils = {
       neofetch.enable = true;

@@ -29,6 +29,8 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
+      networking.firewall.allowedTCPPorts = [cfg.port];
+
       services.jupyterhub = {
         enable = true;
         host = cfg.host;
