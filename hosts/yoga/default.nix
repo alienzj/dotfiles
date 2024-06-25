@@ -139,8 +139,6 @@
       go.enable = true;
       haskell.enable = true;
       zeal.enable = true;
-      conda.enable = true;
-      mamba.enable = true;
       conda = {
         enable = true;
         installationPath = "/home/alienzj/.conda/envs/env-base";
