@@ -17,7 +17,7 @@ in {
     enable = mkBoolOpt false;
     inactiveInterval = mkOption {
       type = types.int;
-      default = 10;
+      default = 20;
     };
     arguments = mkOption {
       type = types.listOf types.str;
@@ -68,7 +68,7 @@ in {
       ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/x11/xautolock.nix
       services.xserver.xautolock = {
         enable = true;
-        time = 25;
+        time = cfg.inactiveInterval;
         locker = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --dimblur --lock";
         #killer = "/run/current-system/systemd/bin/systemctl suspend";
       };
