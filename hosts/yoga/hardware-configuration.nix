@@ -60,22 +60,20 @@
   # Hardware
   # GPU
   # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
-  hardware = {
-    opengl = {
-      extraPackages = with pkgs; [
-        vaapiVdpau
-        libvdpau-va-gl
-        # opencl
-        rocmPackages.clr.icd
-        rocmPackages.clr
-        amdvlk
-      ];
-      opengl.extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
-      ];
-      driSupport = true;
-      driSupport32Bit = true;
-    };
+  hardware.opengl = {
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      libvdpau-va-gl
+      # opencl
+      rocmPackages.clr.icd
+      rocmPackages.clr
+      amdvlk
+    ];
+    extraPackages32 = with pkgs; [
+      driversi686Linux.amdvlk
+    ];
+    driSupport = true;
+    driSupport32Bit = true;
   };
   environment.variables.AMD_VULKAN_ICD = lib.mkDefault "RADV";
 
