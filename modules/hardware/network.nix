@@ -28,6 +28,7 @@ in {
     enable = mkBoolOpt false;
     networkd.enable = mkBoolOpt false;
     networkmanager.enable = mkBoolOpt false;
+    wireless.enable = mkBoolOpt false;
     MACAddress = mkOpt types.str "10:7b:44:8e:fe:b4";
     IPAddress = mkOption {
       type = with types; listOf types.str;
@@ -65,6 +66,16 @@ in {
           allowedUDPPorts = [22 80 443 3389 8080];
         };
       };
+
+      # rename interface
+      systemd.network = {
+        ## https://nixos.org/manual/nixos/stable/#sec-rename-ifs
+        links."10-lan" = {
+          enable = true;
+          matchConfig.PermanentMACAddress = cfg.MACAddress;
+          linkConfig.Name = "lan";
+        };
+      };
     }
 
     # used in ether network
@@ -74,13 +85,6 @@ in {
         enable = true;
         ### no need for ether network
         wait-online.enable = false;
-
-        ## https://nixos.org/manual/nixos/stable/#sec-rename-ifs
-        links."10-lan" = {
-          enable = true;
-          matchConfig.PermanentMACAddress = cfg.MACAddress;
-          linkConfig.Name = "lan";
-        };
 
         networks."10-lan" = {
           enable = true;
@@ -97,7 +101,36 @@ in {
       };
     })
 
+    # used in wlan network
+    (mkIf cfg.wireless.enable {
+      system.activationScripts = {
+        rfkillUnblockWlan = {
+          text = ''
+            rfkill unblock wlan
+          '';
+          deps = [];
+        };
+      };
+    })
+
+    # used in wlan network
     (mkIf cfg.networkmanager.enable {
-      })
+      networking = {
+        interfaces.lan.useDHCP = true;
+        networkmanager = {
+          enable = true;
+          plugins = with pkgs; [
+            networkmanager-fortisslvpn
+            networkmanager-iodine
+            networkmanager-l2tp
+            networkmanager-openconnect
+            networkmanager-openvpn
+            networkmanager-vpnc
+            networkmanager-sstp
+          ];
+        };
+        nameservers = cfg.DomainNameServer;
+      };
+    })
   ]);
 }

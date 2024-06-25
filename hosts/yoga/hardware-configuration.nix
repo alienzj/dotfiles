@@ -100,6 +100,15 @@
       cpuFreqGovernor = "ondemand";
       resumeDevice = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357";
     };
+
+    # network management
+    network = {
+      enable = true;
+      wireless.enable = true;
+      networkmanager.enable = true;
+      MACAddress = "3c:9c:0f:17:58:95";
+      DomainNameServer = ["10.132.2.30" "10.132.2.31" "8.8.8.8" "223.5.5.5"];
+    };
   };
 
   # CPU
@@ -164,51 +173,6 @@
   #  RuntimeDirectorySize=12G
   #'';
   boot.tmp.tmpfsSize = "80%"; # avoid no space left when rebuild
-
-  # Network
-  #https://nixos.org/manual/nixos/stable/#sec-rename-ifs
-  systemd.network.links."10-lan" = {
-    matchConfig.PermanentMACAddress = "3c:9c:0f:17:58:95";
-    linkConfig.Name = "lan";
-  };
-
-  networking = {
-    interfaces.lan = {
-      useDHCP = true;
-    };
-    networkmanager = {
-      enable = true;
-      plugins = with pkgs; [
-        networkmanager-fortisslvpn
-        networkmanager-iodine
-        networkmanager-l2tp
-        networkmanager-openconnect
-        networkmanager-openvpn
-        networkmanager-vpnc
-        networkmanager-sstp
-      ];
-    };
-
-    nameservers = [
-      "119.29.29.29" # DNSPod
-      "223.5.5.5" # AliDNS
-    ];
-
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [22 80 443 3389 8080];
-      allowedUDPPorts = [22 80 443 3389 8080];
-    };
-  };
-
-  system.activationScripts = {
-    rfkillUnblockWlan = {
-      text = ''
-        rfkill unblock wlan
-      '';
-      deps = [];
-    };
-  };
 
   # User
   # https://nixos.wiki/wiki/TPM
