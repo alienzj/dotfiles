@@ -183,6 +183,12 @@
       adb.enable = true; # android
       #calibre.enable = true;
       syncthing.enable = true;
+      rstudio-server.enable = true;
+      jupyterhub = {
+        enable = true;
+        adminUser = "alienzj";
+        allowedUser = ["alienzj"];
+      };
       ssh = {
         enable = true;
       };
