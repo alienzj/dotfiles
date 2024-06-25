@@ -179,9 +179,13 @@
     services = {
       adb.enable = true; # android
       syncthing.enable = true;
-      ssh = {
+      rstudio-server.enable = true;
+      jupyterhub = {
         enable = true;
+        adminUser = "alienzj";
+        allowedUser = ["alienzj"];
       };
+      ssh.enable = true;
       docker.enable = true;
       # Needed occasionally to help the parental units with PC problems
       rdp.enable = true; # remote desktop
