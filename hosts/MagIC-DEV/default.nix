@@ -71,6 +71,11 @@ with lib.my; {
       earlyoom.enable = true;
       syncthing.enable = true;
       rstudio-server.enable = true;
+      jupyterhub = {
+        enable = true;
+        adminUser = "alienzj";
+        allowedUser = ["alienzj"];
+      };
     };
     utils = {
       neofetch.enable = true;
