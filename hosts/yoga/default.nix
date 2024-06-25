@@ -231,7 +231,7 @@
     };
     utils = {
       neofetch.enable = true;
-      traceroute = true;
+      traceroute.enable = true;
     };
     theme.active = "alucard";
   };
