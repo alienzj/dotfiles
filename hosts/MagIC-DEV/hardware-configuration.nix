@@ -69,16 +69,14 @@
     ### Whether to enable the firewall.  This is a simple stateful
     ### firewall that blocks connection attempts to unauthorised TCP
     ### or UDP ports on this machine.
-    networking = {
-      # Docker and libvirt use iptables
-      nftables.enable = false;
-      firewall = {
-        enable = true;
-        allowPing = true;
-        pingLimit = "--limit 1/minute --limit-burst 5";
-        allowedTCPPorts = [22 80 443 3389 8080];
-        allowedUDPPorts = [22 80 443 3389 8080];
-      };
+    # Docker and libvirt use iptables
+    nftables.enable = false;
+    firewall = {
+      enable = true;
+      allowPing = true;
+      pingLimit = "--limit 1/minute --limit-burst 5";
+      allowedTCPPorts = [22 80 443 3389 8080];
+      allowedUDPPorts = [22 80 443 3389 8080];
     };
 
     # Network
