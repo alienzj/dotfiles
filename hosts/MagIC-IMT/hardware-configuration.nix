@@ -51,12 +51,17 @@
       device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
     };
-    "/srv" = {
-      device = "/dev/disk/by-label/DATA";
+    "/home" = {
+      device = "/dev/disk/by-label/home";
       fsType = "ext4";
-      options = ["noatime"];
+    };
+    "/srv" = {
+      device = "/dev/disk/by-label/data";
+      fsType = "ext4";
     };
   };
+
+  swapDevices = [{device = "/dev/disk/by-label/swap";}];
 
   # Networking
   networking = {
