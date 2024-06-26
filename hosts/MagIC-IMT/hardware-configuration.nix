@@ -10,7 +10,8 @@
   # Kernel
   boot = {
     initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod"];
-    initrd.kernelModules = ["cifs"];
+    initrd.kernelModules = ["cifs" "nfs"];
+    initrd.supportedFilesystems = ["nfs"];
     kernelModules = [];
     extraModulePackages = [];
     kernel.sysctl = {
@@ -21,6 +22,7 @@
   # Hardware
   modules.hardware = {
     # power management
+    fs.enable = true;
     power = {
       enable = true;
       pm.enable = false;
@@ -61,6 +63,14 @@
     "/srv" = {
       device = "/dev/disk/by-label/data";
       fsType = "ext4";
+    };
+    "/mnt/nfs1_external" = {
+      device = "192.168.1.170:/export/nfs1_external";
+      fsType = "nfs";
+    };
+    "/mnt/nfs2_external" = {
+      device = "192.168.1.171:/export/nfs2_external";
+      fsType = "nfs";
     };
   };
 
