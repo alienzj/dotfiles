@@ -10,7 +10,8 @@
   # Kernel
   boot = {
     initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod"];
-    initrd.kernelModules = ["cifs"];
+    initrd.kernelModules = ["cifs" "nfs"];
+    initrd.supportedFilesystems = ["nfs"];
     kernelModules = [];
     extraModulePackages = [];
     kernel.sysctl = {
@@ -20,6 +21,8 @@
 
   # Hardware
   modules.hardware = {
+    fs.enable = true;
+
     # power management
     power = {
       enable = true;
@@ -53,6 +56,35 @@
     "/boot" = {
       device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
+    };
+    "/mnt/nfs1_external" = {
+      device = "192.168.1.170:/export/nfs1_external";
+      fsType = "nfs";
+    };
+    "/mnt/nfs2_external" = {
+      device = "192.168.1.171:/export/nfs2_external";
+      fsType = "nfs";
+    };
+    "/mnt/magic_archive_read" = {
+      device = "//10.132.2.98/magic_archive_read";
+      fsType = "cifs";
+      options = let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0664,dir_mode=0775,vers=3.0,soft,rsize=8192,wsize=8192,mfsymlinks";
+      in ["${automount_opts},credentials=/etc/nixos/smb-secrets-ResearchNAS,uid=2000,gid=3000"];
+    };
+    "/mnt/magic_archive_bcl" = {
+      device = "//10.132.2.98/magic_archive_bcl";
+      fsType = "cifs";
+      options = let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0664,dir_mode=0775,vers=3.0,soft,rsize=8192,wsize=8192,mfsymlinks";
+      in ["${automount_opts},credentials=/etc/nixos/smb-secrets-ResearchNAS,uid=2000,gid=3000"];
+    };
+    "/mnt/magic_archive_report" = {
+      device = "//10.132.2.98/magic_archive_report";
+      fsType = "cifs";
+      options = let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0664,dir_mode=0775,vers=3.0,soft,rsize=8192,wsize=8192,mfsymlinks";
+      in ["${automount_opts},credentials=/etc/nixos/smb-secrets-ResearchNAS,uid=2000,gid=3000"];
     };
   };
 

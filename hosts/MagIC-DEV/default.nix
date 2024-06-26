@@ -41,12 +41,12 @@ with lib.my; {
       web.enable = true;
       conda = {
         enable = true;
-        installationPath = "/home/alienzj/.conda/envs/env-base";
+        installationPath = "~/.conda/envs/env-base";
         extraPkgs = [pkgs.gcc];
       };
       mamba = {
         enable = true;
-        mambaRootPrefix = "/home/alienzj/.mamba";
+        mambaRootPrefix = "~/.mamba";
         extraPkgs = [pkgs.gcc];
       };
     };

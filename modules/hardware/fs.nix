@@ -26,7 +26,8 @@ in {
         exfat # Windows drives
         ntfs3g # Windows drives
         hfsprogs # MacOS drives
-        nfs-utils
+        nfs-utils # NFS
+        cifs-utils # SMB
       ];
     }
 

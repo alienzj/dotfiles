@@ -21,8 +21,9 @@
 
   # Hardware
   modules.hardware = {
-    # power management
     fs.enable = true;
+
+    # power management
     power = {
       enable = true;
       pm.enable = false;
