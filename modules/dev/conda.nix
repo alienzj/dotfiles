@@ -27,7 +27,7 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         (conda.override {
           installationPath = cfg.installationPath;
           extraPkgs = cfg.extraPkgs;

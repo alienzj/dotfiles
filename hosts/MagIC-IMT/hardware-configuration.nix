@@ -13,6 +13,9 @@
     initrd.kernelModules = ["cifs"];
     kernelModules = [];
     extraModulePackages = [];
+    kernel.sysctl = {
+      "kernel.unprivileged_userns_clone" = 1; # for conda and mamba
+    };
   };
 
   # Hardware

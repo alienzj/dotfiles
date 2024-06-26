@@ -40,7 +40,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       # using packages/mamba.nix
       #(my.mamba.override {
       #  mambaRootPrefix = cfg.mambaRootPrefix;
