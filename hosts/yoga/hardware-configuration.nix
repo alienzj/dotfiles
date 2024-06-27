@@ -105,7 +105,7 @@
       wireless.enable = true;
       networkmanager.enable = true;
       MACAddress = "3c:9c:0f:17:58:95";
-      DomainNameServer = ["10.132.2.30" "10.132.2.31" "8.8.8.8" "223.5.5.5"];
+      DomainNameServer = ["223.5.5.5" "8.8.8.8"];
     };
   };
 
