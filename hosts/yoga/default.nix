@@ -26,7 +26,7 @@
         filezilla.enable = true;
         scrcpy.enable = true;
         thunderbird.enable = true;
-        rustdesk.enable = true;
+        rustdesk.enable = false;
         geph.enable = true;
         rdp.enable = true;
         goldendict.enable = true;
