@@ -18,7 +18,7 @@ with lib.my; let
       set -e
       eval "$(micromamba shell hook --shell=posix)"
       export MAMBA_ROOT_PREFIX="${cfg.mambaRootPrefix}"
-      if ! test -d $MBA_ROOT_PREFIX/envs/env-base; then
+      if [ ! -d $MBA_ROOT_PREFIX/envs/env-base ]; then
           micromamba create --yes -q -n env-base
       fi
       micromamba activate env-base
