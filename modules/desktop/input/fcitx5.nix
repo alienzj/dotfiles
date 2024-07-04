@@ -9,19 +9,19 @@ with lib;
 with lib.my; let
   cfg = config.modules.desktop.input.fcitx5;
   configDir = config.dotfiles.configDir;
-  #fcitx5Package = pkgs.fcitx5-with-addons.override { inherit (cfg) addons; };
+  fcitx5Package = pkgs.libsForQt5.fcitx5-with-addons.override {inherit (cfg) addons;};
 in {
   options = {
     modules.desktop.input.fcitx5 = {
       enable = mkBoolOpt false;
-      #  addons = mkOption {
-      #    type = with types; listOf package;
-      #    default = [ ];
-      #    example = literalExpression "with pkgs; [ fcitx5-rime ]";
-      #    description = ''
-      #      Enabled Fcitx5 addons.
-      #    '';
-      #  };
+      addons = mkOption {
+        type = with types; listOf package;
+        default = [pkgs.fcitx5-rime];
+        example = literalExpression "with pkgs; [ fcitx5-rime ]";
+        description = ''
+          Enabled Fcitx5 addons.
+        '';
+      };
     };
   };
 
@@ -29,17 +29,8 @@ in {
     {
       i18n.inputMethod = {
         enabled = "fcitx5";
-        #fcitx.engines = with pkgs; [ rime ];
-        fcitx5.addons = with pkgs; [
-          fcitx5-rime
-          fcitx5-mozc
-          fcitx5-chinese-addons
-          fcitx5-gtk
-        ];
+        package = fcitx5Package;
       };
-
-      #i18n.inputMethod.enabled = "fcitx5";
-      #i18n.inputMethod.package = fcitx5Package;
 
       #home.configFile = {
       #  "fcitx5" = {
@@ -53,16 +44,17 @@ in {
         GTK_IM_MODULE = "fcitx";
         QT_IM_MODULE = "fcitx";
         XMODIFIERS = "@im=fcitx";
+        QT_PLUGIN_PATH = "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}${fcitx5Package}/${pkgs.qt6.qtbase.qtPluginPrefix}";
       };
 
-      #systemd.user.services.fcitx5-daemon = {
-      #  Unit = {
-      #    Description = "Fcitx5 input method editor";
-      #    PartOf = [ "graphical-session.target" ];
-      #  };
-      #  Service.ExecStart = "${fcitx5Package}/bin/fcitx5";
-      #  Install.WantedBy = [ "graphical-session.target" ];
-      #};
+      systemd.user.services.fcitx5-daemon = {
+        Unit = {
+          description = "Fcitx5 input method editor";
+          PartOf = ["graphical.target"];
+        };
+        Service.ExecStart = "${fcitx5Package}/bin/fcitx5";
+        Install.WantedBy = ["graphical.target"];
+      };
     }
   ]);
 }

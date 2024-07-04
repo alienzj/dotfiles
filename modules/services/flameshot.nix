@@ -11,9 +11,9 @@ with lib.my; let
   iniFormat = pkgs.formats.ini {};
   settings = {
     General = {
-      disabledTrayIcon = false;
-      showStartupLaunchMessage = true;
-      savePath = "/home/alienzj/pictures/flameshot";
+      disabledTrayIcon = true;
+      showStartupLaunchMessage = false;
+      savePath = cfg.savePath;
       saveAsFileExtension = ".png";
       ignoreUpdateToVersion = true;
     };
@@ -22,6 +22,7 @@ with lib.my; let
 in {
   options.modules.services.flameshot = {
     enable = mkBoolOpt false;
+    savePath = mkOpt types.str "~/pictures/flameshot";
   };
 
   config = mkIf cfg.enable {
@@ -31,15 +32,15 @@ in {
       shutter
 
       (makeDesktopItem {
-        name = "Flameshot Screen";
-        desktopName = "Flameshot Screen";
+        name = "Flameshot One Monitor";
+        desktopName = "Flameshot One Monitor";
         icon = "flameshot";
         exec = "${pkgs.flameshot}/bin/flameshot gui";
       })
 
       (makeDesktopItem {
-        name = "Flameshot Capture";
-        desktopName = "Flameshot Capture";
+        name = "Flameshot Dual Monitor";
+        desktopName = "Flameshot Dual Monitor";
         icon = "flameshot";
         exec = "env QT_SCREEN_SCALE_FACTORS=\"1;1\" ${pkgs.flameshot}/bin/flameshot gui";
       })
@@ -50,12 +51,22 @@ in {
     };
 
     systemd.user.services.flameshot = {
-      description = "flameshot daemon";
-      after = ["graphical-session-pre.target" "tray.target"];
-      path = [pkgs.flameshot];
-      script = ''
-        exec flameshot
-      '';
+      description = "Flameshot daemon";
+      after = ["graphical.target"];
+      wantedBy = ["graphical.target"];
+      serviceConfig = {
+        ExecStart = "${pkgs.flameshot}/bin/flameshot";
+        Restart = "on-abort";
+
+        # Sandboxing
+        LockPersonality = true;
+        MemoryDenyWriteExecute = true;
+        NoNewPrivileges = true;
+        PrivateUsers = true;
+        RestrictNamespaces = true;
+        SystemCallArchitectures = "native";
+        SystemCallFilter = "@system-service";
+      };
     };
   };
 }

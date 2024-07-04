@@ -184,7 +184,10 @@
         enable = true;
         inactiveInterval = 10;
       };
-      flameshot.enable = true;
+      flameshot = {
+        enable = true;
+        savePath = "/home/alienzj/pictures/flameshot";
+      };
       proxychains = {
         enable = true;
         type = "socks5";

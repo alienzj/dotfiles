@@ -204,7 +204,10 @@
         enable = true;
         inactiveInterval = 10;
       };
-      flameshot.enable = true;
+      flameshot = {
+        enable = true;
+        savePath = "/home/alienzj/pictures/flameshot";
+      };
       #transmission.enable = true;
       proxychains = {
         enable = true;
