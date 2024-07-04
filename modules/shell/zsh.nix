@@ -41,7 +41,7 @@ in {
       promptInit = "";
     };
 
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       zsh
       nix-zsh-completions
       fasd

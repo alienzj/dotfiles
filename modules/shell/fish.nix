@@ -52,7 +52,7 @@ in {
       promptInit = "";
     };
 
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       fish
       starship
     ];
