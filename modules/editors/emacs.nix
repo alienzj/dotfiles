@@ -52,7 +52,12 @@ in {
         pinentry-emacs) # in-emacs gnupg prompts
       zstd # for undo-fu-session/undo-tree compression
       graphviz # dot
+
+      # nix
       nixfmt-rfc-style
+      #nix-nil
+      #nixd-lsp
+      #rnix-lsp
 
       ## Module dependencies
       # :checkers spell
