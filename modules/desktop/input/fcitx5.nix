@@ -18,7 +18,7 @@ in {
     {
       i18n.inputMethod = {
         enabled = "fcitx5";
-        addons = [pkgs.fcitx5-rime];
+        fcitx5.addons = [pkgs.fcitx5-rime];
       };
 
       systemd.user.services.fcitx5-daemon = {
