@@ -44,6 +44,8 @@ in {
       fzf
       fishPlugins.grc
       grc
+      fish
+      starship
     ];
 
     programs.fish = {
@@ -51,11 +53,6 @@ in {
       useBabelfish = false;
       promptInit = "";
     };
-
-    environment.systemPackages = with pkgs; [
-      fish
-      starship
-    ];
 
     env = {
       FISHDOTDIR = "$XDG_CONFIG_HOME/fish";
