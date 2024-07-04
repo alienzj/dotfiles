@@ -56,7 +56,7 @@
   services.fwupd.enable = true;
 
   # NixOS Hardware options
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       vaapiIntel

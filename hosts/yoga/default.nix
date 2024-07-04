@@ -89,11 +89,7 @@
         discord.enable = true;
         qqwechat.enable = true;
       };
-      input = {
-        fcitx5 = {
-          enable = true;
-        };
-      };
+      input.fcitx5.enable = true;
     };
     science = {
       ds.enable = true;

@@ -60,7 +60,7 @@
   # Hardware
   # GPU
   # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
-  hardware.opengl = {
+  hardware.graphics = {
     extraPackages = with pkgs; [
       vaapiVdpau
       libvdpau-va-gl

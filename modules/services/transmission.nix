@@ -17,7 +17,7 @@ in {
   config = mkIf cfg.enable {
     services.transmission = {
       enable = true;
-      home = "${config.user.home}/torrents";
+      home = "${config.user.home}/downloads/torrents";
       settings = {
         incomplete-dir-enabled = true;
         rpc-whitelist = "127.0.0.1,192.168.*.*";
