@@ -17,8 +17,8 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = [
-        #pkgs.zeal
-        pkgs.zeal-qt6
+        pkgs.unstable.zeal
+        #pkgs.unstable.zeal-qt6
       ];
     }
   ]);
