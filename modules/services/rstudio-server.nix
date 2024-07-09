@@ -47,6 +47,8 @@ with lib.my; let
       forcats
       writexl
       flextable
+      gt
+      gtExtras
       randomForest
       curatedMetagenomicData
       SummarizedExperiment
@@ -63,6 +65,9 @@ with lib.my; let
       glue
       V8
       languageserver
+      rlang
+      insight
+      cutpointr
     ];
   };
 in {
