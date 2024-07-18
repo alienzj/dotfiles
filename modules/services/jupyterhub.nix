@@ -108,6 +108,7 @@ in {
                 repr
                 IRkernel
                 IRdisplay
+
                 tidyverse
                 tidymodels
                 infer
@@ -139,10 +140,18 @@ in {
                 ggalluvial
                 ggstar
                 ggnewscale
+                ggdensity
+                ggside
+                #ggsankey
+                ggblend
+
+                #microshades
                 coin
                 forcats
                 writexl
                 flextable
+                gt
+                gtExtras
                 randomForest
                 curatedMetagenomicData
                 SummarizedExperiment
@@ -159,6 +168,10 @@ in {
                 glue
                 V8
                 languageserver
+                rlang
+                insight
+                cutpointr
+                svglite
               ];
             };
           in {

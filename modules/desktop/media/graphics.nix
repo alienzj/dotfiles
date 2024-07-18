@@ -34,7 +34,7 @@ in {
           imagemagick # for image manipulation from the shell
           eyedropper
           gnome-obfuscate
-          gnome3.eog
+          eog
         ]
         else []
       )

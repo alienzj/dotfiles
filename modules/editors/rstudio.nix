@@ -8,6 +8,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.editors.rstudio;
+  configDir = config.dotfiles.configDir;
   rstudio-with-packages = pkgs.unstable.rstudioWrapper.override {
     packages = with pkgs.unstable.rPackages; [
       tidyverse
@@ -41,6 +42,13 @@ with lib.my; let
       ggalluvial
       ggstar
       ggnewscale
+      ggdensity
+      ggside
+      #gsankey
+      ggblend
+      ggh4x
+
+      #microshades
       coin
       forcats
       writexl
@@ -66,6 +74,7 @@ with lib.my; let
       rlang
       insight
       cutpointr
+      svglite
     ];
   };
 in {

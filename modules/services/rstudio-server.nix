@@ -43,6 +43,13 @@ with lib.my; let
       ggalluvial
       ggstar
       ggnewscale
+      ggdensity
+      ggside
+      #ggsankey
+      ggblend
+      ggh4x
+
+      #microshades
       coin
       forcats
       writexl
@@ -68,6 +75,7 @@ with lib.my; let
       rlang
       insight
       cutpointr
+      svglite
     ];
   };
 in {
