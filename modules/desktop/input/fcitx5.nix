@@ -29,7 +29,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       i18n.inputMethod = {
-        enable = "true";
+        enable = true;
         type = "fcitx5";
 
         # way 1
