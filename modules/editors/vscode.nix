@@ -130,7 +130,8 @@ in {
 
             # rust
             rust-lang.rust-analyzer
-            serayuzgur.crates
+            #serayuzgur.crates
+            fill-labs.dependi
             tamasfe.even-better-toml
             jscearcy.rust-doc-viewer
             zhangyue.rust-mod-generator
