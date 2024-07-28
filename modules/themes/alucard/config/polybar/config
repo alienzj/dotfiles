@@ -324,7 +324,7 @@ bar-used-empty-foreground = ${colors.fg-alt}
 
 [module/network]
 type = internal/network
-interface = lan
+interface = ${env:LAN} 
 interval = 3.0
 
 # 
@@ -353,7 +353,7 @@ ramp-signal-4-foreground = ${colors.fg}
 
 [module/network-up]
 type = internal/network
-interface = lan
+interface = ${env:LAN} 
 interval = 4.0
 label-connected = "%upspeed%"
 ;format-connected-prefix = " "
@@ -369,7 +369,7 @@ format-disconnected-foreground = ${colors.alert}
 
 [module/network-down]
 type = internal/network
-interface = lan
+interface = ${env:LAN} 
 interval = 4.0
 label-connected = "%downspeed%"
 ;format-connected-prefix = " "
