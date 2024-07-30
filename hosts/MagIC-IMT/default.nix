@@ -80,7 +80,7 @@ with lib.my; {
       };
     };
     utils = {
-      neofetch.enable = true;
+      sysinfo.enable = true;
       traceroute.enable = true;
     };
   };

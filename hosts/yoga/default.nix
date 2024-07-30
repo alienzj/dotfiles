@@ -235,7 +235,7 @@
       onedrive.enable = false;
     };
     utils = {
-      neofetch.enable = true;
+      sysinfo.enable = true;
       traceroute.enable = true;
     };
     theme.active = "alucard";

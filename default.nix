@@ -110,7 +110,6 @@ with lib.my; {
 
     # monitor
     htop
-    btop
 
     # calculator
     bc
