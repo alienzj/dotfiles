@@ -20,7 +20,8 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        unstable.zotero-beta
+        unstable.zotero
+        #unstable.zotero-beta
         unstable.zotero-translation-server
       ];
     }
