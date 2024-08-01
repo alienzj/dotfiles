@@ -10,32 +10,104 @@ with lib.my; let
   cfg = config.modules.dev.r;
   r-with-packages = pkgs.unstable.rWrapper.override {
     packages = with pkgs.unstable.rPackages; [
-      tidyverse
-      tidymodels
-      infer
+      # infrastructure
+      ## lang
+      rlang
+      languageserver
+      lobstr
+      waldo
+      ## development
       devtools
       remotes
-      feather
-      httr
-      jsonlite
-      xml2
-      stringi
-      curl
-      shiny
-      knitr
+      pak
+      pkgdepends
+      pkgbuild
+      pkgconfig
       rmarkdown
+      pagedown
+      knitr
       tinytex
+      ## report
+      roxygen2
+      pkgdown
+      ## benchmark
+      bench
+      testthat
+      ## format
+      styler
+      lintr
+      ## system
+      callr
+      fs
+      processx
+      ## utils
+      here
+      yaml
       ymlthis
-      vegan
-      ggtree
-      ggtreeExtra
-      tidytree
-      MicrobiotaProcess
-      MicrobiomeProfiler
-      clusterProfiler
-      enrichplot
-      dada2
-      DECIPHER
+      usethis
+      withr
+      cli
+      optparse
+      sessioninfo
+      progress
+
+      # data structure and functions
+      ## maps
+      fastmap
+      ## functions
+      slider
+      ## regrex
+      rex
+      ## cpp
+      cpp11
+
+      # tidy data manipulation
+      ## core
+      magrittr
+      purrr
+      ## read and write
+      xopen
+      readr
+      readxl
+      writexl
+      vroom
+      haven
+      feather
+      nanoparquet
+      jsonlite
+      ## data frame
+      tibble
+      dplyr
+      reshape2
+      dtplyr
+      dbplyr
+      multidplyr
+      tidyr
+      glue
+      ## string
+      stringr
+      stringi
+      reprex
+      ## factors
+      forcats
+      ## dates
+      lubridate
+      hms
+      ## web data
+      rvest
+      httr
+      httr2
+      xml2
+      curl
+      V8
+
+      # tidy data visualization
+      ## interactive
+      shiny
+      ## general
+      scales
+      svglite
+      ggplot2
       ggpubr
       ggplotify
       ggalluvial
@@ -43,43 +115,94 @@ with lib.my; let
       ggnewscale
       ggdensity
       ggside
-      #gsankey
+      ggsankeyfier
       ggblend
       ggh4x
       gghalves
-      #dunn.test
+      ggsignif
+      ## tree
+      tidytree
+      ggtree
+      ggtreeExtra
+      ## heatmap
+      ComplexHeatmap
+      circlize
+      ## correlation
       cowplot
+      ## table summary
       gtsummary
-      geepack
-      broom
-
-      #microshades
-      coin
-      forcats
-      writexl
       flextable
       gt
       gtExtras
+      ## color
+      #microshades
+
+      # tidy modeling and test
+      ## preprocess
+      modeldata
+      modeldatatoo
+      recipes
+      rsample
+      applicable
+      themis
+      ## interface
+      parsnip
+      bonsai
+      censored
+      multilevelmod
+      tidyclust
+      discrim
+      rules
+      ## functions
+      brulee
+      ## test
+      dunn_test
+      ## linear models
+      geepack
+      ## classification and regression
       randomForest
-      curatedMetagenomicData
-      SummarizedExperiment
-      Rcpp
-      Rcpp11
-      Maaslin2
-      pkgconfig
-      ComplexHeatmap
-      circlize
-      pagedown
-      reshape2
-      yaml
-      optparse
-      glue
-      V8
-      languageserver
-      rlang
-      insight
+      poissonreg
+      ## prediction
+      tidypredict
+      ## running
+      modeldb
+      ## statistical inference
+      infer
+      ## correlation
+      corr
+      ## tuning
+      tune
+      finetune
+      dials
+      ## performance
+      yardstick
+      ## others
       cutpointr
-      svglite
+      coin
+      ## workflow
+      orbital
+      stacks
+      butcher
+      workflows
+      workflowsets
+      ## summary
+      insight
+      probably
+      broom
+
+      # bioinformatics
+      ## general
+      SummarizedExperiment
+      clusterProfiler
+      enrichplot
+      ## microbiome
+      vegan
+      curatedMetagenomicData
+      MicrobiotaProcess
+      MicrobiomeProfiler
+      Maaslin2
+      dada2
+      DECIPHER
     ];
   };
 in {
