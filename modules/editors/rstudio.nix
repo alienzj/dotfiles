@@ -52,6 +52,7 @@ with lib.my; let
       cowplot
       gtsummary
       geepack
+      broom
 
       #microshades
       coin
