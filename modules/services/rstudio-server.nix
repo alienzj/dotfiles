@@ -48,6 +48,11 @@ with lib.my; let
       #ggsankey
       ggblend
       ggh4x
+      gghalves
+      #dunn.test
+      cowplot
+      gtsummary
+      geepack
 
       #microshades
       coin

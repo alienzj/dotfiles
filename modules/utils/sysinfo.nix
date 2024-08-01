@@ -20,19 +20,19 @@ in {
       unstable.neofetch
 
       # cpu
-      cpufetch
-      cpu-x
+      #cpufetch
+      #cpu-x
 
       # hardware
-      unstable.hardinfo
+      #unstable.hardinfo
 
       # recourse
-      unstable.mission-center
-      unstable.resources
+      #unstable.mission-center
+      #unstable.resources
       unstable.btop
 
       # disk
-      gnome-disk-utility
+      #gnome-disk-utility
     ];
 
     home.configFile = {
