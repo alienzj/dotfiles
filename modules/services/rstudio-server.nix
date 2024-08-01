@@ -171,7 +171,7 @@ with lib.my; let
       ## statistical inference
       infer
       ## correlation
-      corr
+      corrr
       ## tuning
       tune
       finetune
