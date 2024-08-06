@@ -198,12 +198,19 @@ with lib.my; let
       enrichplot
       ## microbiome
       vegan
+      DirichletMultinomial
       curatedMetagenomicData
       MicrobiotaProcess
       MicrobiomeProfiler
       Maaslin2
+      SIAMCAT
+      phyloseq
       dada2
+      decontam
       DECIPHER
+      fido
+      # remotes::install_github("mikemc/speedyseq")
+      # remotes::install_github("KarstensLab/microshades", dependencies = TRUE)
     ];
   };
 in {

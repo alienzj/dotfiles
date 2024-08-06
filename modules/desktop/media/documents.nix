@@ -22,7 +22,8 @@ in {
       user.packages = with pkgs;
         (
           if cfg.ebook.enable
-          then [calibre librum]
+          #then [calibre librum]
+          then [calibre]
           else []
         )
         ++ (
