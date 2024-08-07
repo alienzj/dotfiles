@@ -203,10 +203,10 @@
         enable = true;
         configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_magic_c.toml";
       };
-      rathole-client-awsman = {
-        enable = true;
-        configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_magic_c.toml";
-      };
+      #rathole-client-awsman = {
+      #  enable = true;
+      #  configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_magic_c.toml";
+      #};
       earlyoom.enable = true;
     };
     utils = {

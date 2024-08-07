@@ -218,10 +218,10 @@
         enable = true;
         configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_eniac_c.toml";
       };
-      rathole-client-awsman = {
-        enable = true;
-        configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_eniac_c.toml";
-      };
+      #rathole-client-awsman = {
+      #  enable = true;
+      #  configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_eniac_c.toml";
+      #};
       boinc.enable = false;
       slurm.enable = false;
       earlyoom.enable = true;

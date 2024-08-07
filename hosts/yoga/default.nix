@@ -224,10 +224,10 @@
         enable = true;
         configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_yoga_c.toml";
       };
-      rathole-client-awsman = {
-        enable = true;
-        configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_yoga_c.toml";
-      };
+      #rathole-client-awsman = {
+      #  enable = true;
+      #  configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_yoga_c.toml";
+      #};
       boinc.enable = false;
       slurm.enable = false;
       earlyoom.enable = true;
