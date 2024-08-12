@@ -203,6 +203,9 @@ in {
             christian-kohler.path-intellisense
             formulahendry.auto-close-tag
             batisteo.vscode-django
+
+            # janet
+            janet-lang.vscode-janet
           ])
           ++ (with extensions.open-vsx; [
             #ms-vscode.cpptools #error: attribute 'cpptools' missing
