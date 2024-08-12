@@ -57,6 +57,7 @@ in {
       # https://www.debugpoint.com/share-folder-virt-manager/
       # https://virtio-fs.gitlab.io/howto-windows.html
       # https://www.heiko-sieger.info/sharing-files-between-the-linux-host-and-a-windows-vm-using-virtiofs/
+      # https://github.com/virtio-win/kvm-guest-drivers-windows/wiki/Virtiofs:-Shared-file-system
       virtiofsd
     ];
 
