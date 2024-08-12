@@ -131,6 +131,8 @@
       };
       ruby.enable = true;
       web.enable = true;
+      php.enable = true;
+      janet.enable = true;
     };
     editors = {
       default = "nvim";
