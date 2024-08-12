@@ -56,6 +56,7 @@ in {
       # https://discourse.nixos.org/t/virt-manager-cannot-find-virtiofsd/26752
       # https://www.debugpoint.com/share-folder-virt-manager/
       # https://virtio-fs.gitlab.io/howto-windows.html
+      # https://www.heiko-sieger.info/sharing-files-between-the-linux-host-and-a-windows-vm-using-virtiofs/
       virtiofsd
     ];
 
