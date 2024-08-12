@@ -147,6 +147,7 @@
       web.enable = true;
       php.enable = true;
       janet.enable = true;
+      zig.enable = true;
     };
     editors = {
       default = "nvim";
