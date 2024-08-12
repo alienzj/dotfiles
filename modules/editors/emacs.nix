@@ -58,6 +58,12 @@ in {
       #nix-nil
       #nixd-lsp
       #rnix-lsp
+      dockfmt
+      rstfmt
+      plantuml
+
+      # gamedev: Godot's GDScript
+      gdtoolkit_4
 
       ## Module dependencies
       # :checkers spell

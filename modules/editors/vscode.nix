@@ -127,6 +127,7 @@ in {
             ms-vscode.cmake-tools
             ms-vscode.makefile-tools
             twxs.cmake
+            xaver.clang-format
 
             # rust
             rust-lang.rust-analyzer
@@ -172,6 +173,9 @@ in {
             # haskell
             haskell.haskell
             justusadam.language-haskell
+
+            # lisp
+            mattn.lisp
 
             # go
             golang.go
