@@ -1,3 +1,7 @@
+# reference
+## how to create a VM based on qemu + kvm + libvirt
+## https://github.com/winapps-org/winapps/blob/main/docs/libvirt.md
+
 {
   options,
   config,
