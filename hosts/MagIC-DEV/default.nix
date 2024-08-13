@@ -49,6 +49,10 @@ with lib.my; {
         mambaRootPrefix = "~/.mamba";
         extraPkgs = [pkgs.gcc];
       };
+      ruby.enable = true;
+      php.enable = true;
+      janet.enable = true;
+      zig.enable = true;
     };
     editors = {
       default = "nvim";
