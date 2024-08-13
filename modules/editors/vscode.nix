@@ -9,10 +9,11 @@
   ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+let
   cfg = config.modules.editors.vscode;
   extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux";
-  jsonFormat = pkgs.formats.json {};
+  jsonFormat = pkgs.formats.json { };
   vscodeUserSettings = {
     "workbench.iconTheme" = "material-icon-theme";
     "workbench.colorTheme" = "Catppuccin Macchiato";
@@ -44,6 +45,8 @@ with lib.my; let
     "editor.guides.indentation" = false;
 
     "[nix]"."editor.tabSize" = 2;
+    "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nixd";
 
     "window.restoreWindows" = "all";
     "window.menuBarVisibility" = "toggle";
@@ -57,7 +60,8 @@ with lib.my; let
     "update.mode" = "none";
     "extensions.autoCheckUpdates" = false;
   };
-in {
+in
+{
   options.modules.editors.vscode = {
     enable = mkBoolOpt false;
   };
@@ -100,6 +104,7 @@ in {
             bbenoist.nix
             kamadorueda.alejandra
             arrterian.nix-env-selector
+            jnoortheen.nix-ide
 
             # debug
             vadimcn.vscode-lldb

@@ -55,6 +55,8 @@ in {
 
       # nix
       nixfmt-rfc-style
+      #nixd
+      #nixdoc
       #nix-nil
       #nixd-lsp
       #rnix-lsp

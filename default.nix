@@ -133,6 +133,9 @@ with lib.my; {
     nix-init
     nix-melt
     nix-tree
+    nixd
+    nixdoc
+    nixpkgs-fmt
   ];
 
   # Console setup
