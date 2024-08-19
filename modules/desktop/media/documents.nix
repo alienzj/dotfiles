@@ -28,7 +28,7 @@ in {
         )
         ++ (
           if cfg.pdf.enable
-          then [evince sioyek]
+          then [evince sioyek poppler_utils pdfarranger]
           else []
         );
     }
