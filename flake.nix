@@ -18,11 +18,14 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Emacs
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-
     # Hardware
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    # Proxmox VE
+    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
+
+    # Emacs
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     # VSCodium
     # TODO
