@@ -82,7 +82,7 @@
   services.xserver = {
     enable = true;
     #videoDrivers = ["amdgpu"];
-    dpi = 96; # enable hidpi module
+    dpi = 120; # enable hidpi module
     exportConfiguration = true;
     xkb.layout = "us";
     serverFlagsSection = ''

@@ -26,6 +26,6 @@ else
     elif [ $COMPUTERNAME == "yoga" ]; then
         MONITOR="eDP" DPI=168 LAN="lan" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
     elif [ $COMPUTERNAME == "TenSunnyDay" ]; then
-        MONITOR="eDP-1" DPI=96 LAN="wlp0s20f3" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+        MONITOR="eDP-1" DPI=120 LAN="wlp0s20f3" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
     fi
 fi
