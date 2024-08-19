@@ -133,6 +133,7 @@
         port = 1080;
       };
       earlyoom.enable = true;
+      proxmox-ve.enable = true;
     };
     utils = {
       traceroute.enable = true;
