@@ -15,7 +15,8 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      unstable.element-desktop
+      #unstable.element-desktop
+      unstable.cinny-desktop
     ];
   };
 }
