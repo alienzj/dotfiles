@@ -73,14 +73,12 @@ in
       shfmt
       (vscode-with-extensions.override {
         vscode = vscode;
-        vscodeExtensions =
-          (with extensions.vscode-marketplace; [
-            # ui
+        vscodeExtensions = (with vscode-extensions; [
+	    # ui
             pkief.material-icon-theme
             catppuccin.catppuccin-vsc
             naumovs.color-highlight
             ibm.output-colorizer
-            wayou.vscode-todo-highlight
 
             # format
             esbenp.prettier-vscode
@@ -95,7 +93,6 @@ in
 
             # test
             ms-vscode.test-adapter-converter
-            hbenl.vscode-test-explorer
 
             # comments
             aaron-bond.better-comments
@@ -110,8 +107,6 @@ in
             vadimcn.vscode-lldb
 
             # shell
-            rogalmic.bash-debug
-            shakram02.bash-beautify
             foxundermoon.shell-format
 
             # python
@@ -139,20 +134,14 @@ in
             #serayuzgur.crates
             fill-labs.dependi
             tamasfe.even-better-toml
-            jscearcy.rust-doc-viewer
-            zhangyue.rust-mod-generator
-            swellaby.vscode-rust-test-adapter
-            conradludgate.rust-playground
 
             # docker
             ms-azuretools.vscode-docker
 
             # remote dev
             ms-vscode-remote.remote-ssh
-            ms-vscode.remote-explorer
             ms-vscode-remote.remote-ssh-edit
             ms-vscode-remote.remote-containers
-            ms-vscode.remote-server
 
             # vim keybindings
             vscodevim.vim
@@ -194,14 +183,10 @@ in
 
             # r
             reditorsupport.r
-            rdebugger.r-debugger
 
             # snakemake
-            snakemake.snakemake-lang
-            tfehlmann.snakefmt
 
             # nextflow
-            nextflow.nextflow
 
             # web
             octref.vetur
@@ -211,7 +196,21 @@ in
 
             # janet
             janet-lang.vscode-janet
-          ])
+	]) ++ (with extensions.vscode-marketplace; [
+            wayou.vscode-todo-highlight
+            rogalmic.bash-debug
+            shakram02.bash-beautify
+            jscearcy.rust-doc-viewer
+            zhangyue.rust-mod-generator
+            swellaby.vscode-rust-test-adapter
+            conradludgate.rust-playground
+            ms-vscode.remote-explorer
+            ms-vscode.remote-server
+            rdebugger.r-debugger
+            snakemake.snakemake-lang
+            tfehlmann.snakefmt
+            nextflow.nextflow
+         ])
           ++ (with extensions.open-vsx; [
             #ms-vscode.cpptools #error: attribute 'cpptools' missing
           ]);
