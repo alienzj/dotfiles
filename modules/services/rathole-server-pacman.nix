@@ -34,7 +34,7 @@ in {
       description = "rathole server Daemon";
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
-      path = [pkgs.rathole];
+      path = [pkgs.unstable.rathole];
       serviceConfig.PrivateTmp = true;
       script = ''
         exec rathole -s ${configFile}

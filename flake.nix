@@ -61,6 +61,7 @@
           permittedInsecurePackages = [
             "openssl-1.1.1w"
             "electron-28.3.3"
+	    "olm-3.2.16"
           ];
         };
       };
