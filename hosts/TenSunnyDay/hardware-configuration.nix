@@ -155,6 +155,7 @@
       allowedUDPPorts = [22 80 443 3389 8080];
     };
   };
+
   system.activationScripts = {
     rfkillUnblockWlan = {
       text = ''
@@ -179,4 +180,7 @@
     };
     nameservers = ["223.5.5.5" "8.8.8.8"];
   };
+  networking.bridges.vmbr0.interfaces = [ "wlp0s20f3" ];
+  networking.interfaces.vmbr0.useDHCP = lib.mkDefault true;
+
 }
