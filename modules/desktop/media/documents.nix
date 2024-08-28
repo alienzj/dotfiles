@@ -23,7 +23,7 @@ in {
         (
           if cfg.ebook.enable
           #then [calibre librum]
-          then [calibre]
+          then [calibre koreader]
           else []
         )
         ++ (
