@@ -89,7 +89,6 @@ with hey.lib; {
       # conscious systems, among other settings in modules/security.nix.
       kernelPackages = mkDefault pkgs.unstable.linuxKernel.packages.linux_6_8;
       loader = {
-        timeout = 60;
         efi.canTouchEfiVariables = mkDefault true;
         # To not overwhelm the boot screen.
         systemd-boot = {

@@ -29,7 +29,7 @@ with hey.lib;
           systemd-boot.enable = mkDefault true;
           # For much quicker boot up to NixOS. I can use `systemctl reboot
           # --boot-loader-entry=X` instead.
-          timeout = mkDefault 1;
+          timeout = mkDefault 24;
         };
 
         # For a truly silent boot!
