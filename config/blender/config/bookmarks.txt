@@ -5,5 +5,4 @@
 /home/alienzj/projects/ohblender/3d/
 [Recent]
 /home/alienzj/downloads/
-/home/alienzj/Downloads/
 /home/alienzj/projects/ohblender/models/
