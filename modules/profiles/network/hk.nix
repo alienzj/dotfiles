@@ -1,4 +1,5 @@
-# modules/profiles/network/ca.nix --- TODO
+# modules/profiles/network/hk.nix --- TODO
+# https://en.wikipedia.org/wiki/Hong_Kong
 {
   hey,
   lib,
@@ -13,7 +14,7 @@ with hey.lib;
 
     # For redshift, mainly
     location = {
-      latitude = 22.43;
-      longitude = 114.21;
+      latitude = 22.30;
+      longitude = 114.17;
     };
   }
