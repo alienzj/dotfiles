@@ -30,7 +30,7 @@ with hey.lib;
               wireguardPeerConfig = {
                 PublicKey = "kuv6kPygJbjcAbhogEst5m8XyKz9pn0XgyR7EcnveAU=";
                 AllowedIPs = ["10.0.0.0/24"];
-                Endpoint = "0.home.lissner.net:51820";
+                Endpoint = "0.home.alienzj.tech:51820";
               };
             }
           ];
@@ -41,7 +41,7 @@ with hey.lib;
           DHCP = "no";
           dns = ["10.0.0.1"];
           ntp = ["10.0.0.1"];
-          domains = ["home.lissner.net"];
+          domains = ["home.alienzj.tech"];
           networkConfig = {
             DNSSEC = false;
             DNSDefaultRoute = false;
