@@ -7,7 +7,7 @@ hlissner's hosts.
 + eniac
 + yoga
 + nixman
-+ awsman
++ awsman (removed)
 + magic
 + MagIC-APP
 + MagIC-DEV
