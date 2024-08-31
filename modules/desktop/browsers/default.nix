@@ -1,12 +1,13 @@
 {
-  options,
-  config,
+  hey,
   lib,
+  config,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.browsers;
 in {
   options.modules.desktop.browsers = {
@@ -14,6 +15,6 @@ in {
   };
 
   config = mkIf (cfg.default != null) {
-    env.BROWSER = cfg.default;
+    environment.sessionVariables.BROWSER = cfg.default;
   };
 }

@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.science.bioinfo;
 in {
   options.modules.science.bioinfo = with types; {
@@ -15,43 +16,43 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs; [
-        unstable.igv
-        unstable.bwa
-        unstable.blast
-        unstable.bowtie2
-        unstable.deeptools
-        unstable.diamond
-        unstable.jbrowse
-        unstable.fastp
-        unstable.hmmer
-        unstable.megahit
-        unstable.minimap2
-        unstable.mmseqs2
-        unstable.sambamba
-        unstable.samtools
-        unstable.seqtk
-        unstable.seqkit
-        unstable.SPAdes
-        unstable.sratoolkit
-        unstable.star
-        unstable.vcftools
-        unstable.bedtools
-        unstable.bcftools
-        unstable.bftools
-        #unstable.kent
-        unstable.gatk
-        unstable.hisat2
-        unstable.mafft
-        unstable.muscle
-        unstable.minia
-        unstable.clustal-omega
-        unstable.seaview
-        unstable.freebayes
-        unstable.mrbayes
-        unstable.raxml-mpi
-        unstable.veryfasttree
-        unstable.iqtree
+      user.packages = with pkgs.unstable; [
+        igv
+        bwa
+        blast
+        bowtie2
+        deeptools
+        diamond
+        jbrowse
+        fastp
+        hmmer
+        megahit
+        minimap2
+        mmseqs2
+        sambamba
+        samtools
+        seqtk
+        seqkit
+        SPAdes
+        sratoolkit
+        star
+        vcftools
+        bedtools
+        bcftools
+        bftools
+        #kent
+        gatk
+        hisat2
+        mafft
+        muscle
+        minia
+        clustal-omega
+        seaview
+        freebayes
+        mrbayes
+        raxml-mpi
+        veryfasttree
+        iqtree
         # TODO
         # unstable.ugene
       ];

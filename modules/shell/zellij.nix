@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.shell.zellij;
 in {
   options.modules.shell.zellij = with types; {

@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
   pkgs,
-  lib,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.syncthing;
 in {
   options.modules.services.syncthing = {
@@ -18,10 +19,8 @@ in {
       enable = true;
       openDefaultPorts = true;
       user = config.user.name;
-      group = "users";
-      configDir = "${config.user.home}/.config/syncthing";
-      dataDir = "${config.user.home}/.local/share/syncthing";
-      settings.folders = {};
+      configDir = "${config.home.configDir}/syncthing";
+      dataDir = "${config.home.dataDir}/syncthing";
     };
 
     networking.firewall.allowedTCPPorts = [8384 22000];

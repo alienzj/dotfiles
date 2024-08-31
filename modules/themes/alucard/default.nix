@@ -1,13 +1,14 @@
 # modules/themes/alucard/default.nix --- a regal dracula-inspired theme
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.theme;
 in {
   config = mkIf (cfg.active == "alucard") (mkMerge [

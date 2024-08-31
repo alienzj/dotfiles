@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.gaming.games;
 in {
   options.modules.desktop.gaming.games = with types; {
@@ -14,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
+    user.packages = with pkgs.unstable; [
       #worldofgoo
       mari0
       mar1d

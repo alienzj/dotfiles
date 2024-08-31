@@ -1,28 +1,28 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.im.discord;
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.im.discord = with types; {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      unstable.discord
-      unstable.betterdiscordctl
-      #unstable.betterdiscord-installer
+    user.packages = with pkgs.unstable; [
+      discord
+      betterdiscordctl
+      #betterdiscord-installer
     ];
 
     home.configFile = {
-      "discord/settings.json".source = "${configDir}/discord/settings.json";
+      "discord/settings.json".source = "${hey.configDir}/discord/settings.json";
     };
   };
 }

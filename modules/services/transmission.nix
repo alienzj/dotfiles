@@ -1,13 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
   pkgs,
-  lib,
-  my,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.transmission;
 in {
   options.modules.services.transmission = {

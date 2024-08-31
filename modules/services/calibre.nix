@@ -1,12 +1,12 @@
 {
-  options,
-  config,
+  hey,
   lib,
-  pkgs,
+  config,
+  options,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.calibre;
 in {
   options.modules.services.calibre = {

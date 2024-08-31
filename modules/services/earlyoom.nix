@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
   pkgs,
-  lib,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.earlyoom;
 in {
   options.modules.services.earlyoom = {

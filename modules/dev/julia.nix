@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   devCfg = config.modules.dev;
   cfg = devCfg.julia;
 in {

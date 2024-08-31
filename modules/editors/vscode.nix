@@ -1,19 +1,19 @@
 # reference
 ## https://github.com/nix-community/home-manager/blob/master/modules/programs/vscode.nix
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   inputs,
   ...
 }:
 with lib;
-with lib.my;
-let
+with hey.lib; let
   cfg = config.modules.editors.vscode;
   extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux";
-  jsonFormat = pkgs.formats.json { };
+  jsonFormat = pkgs.formats.json {};
   vscodeUserSettings = {
     "workbench.iconTheme" = "material-icon-theme";
     "workbench.colorTheme" = "Catppuccin Macchiato";
@@ -60,8 +60,7 @@ let
     "update.mode" = "none";
     "extensions.autoCheckUpdates" = false;
   };
-in
-{
+in {
   options.modules.editors.vscode = {
     enable = mkBoolOpt false;
   };
@@ -73,8 +72,9 @@ in
       shfmt
       (vscode-with-extensions.override {
         vscode = vscode;
-        vscodeExtensions = (with vscode-extensions; [
-	    # ui
+        vscodeExtensions =
+          (with vscode-extensions; [
+            # ui
             pkief.material-icon-theme
             catppuccin.catppuccin-vsc
             naumovs.color-highlight
@@ -196,7 +196,8 @@ in
 
             # janet
             janet-lang.vscode-janet
-	]) ++ (with extensions.vscode-marketplace; [
+          ])
+          ++ (with extensions.vscode-marketplace; [
             wayou.vscode-todo-highlight
             rogalmic.bash-debug
             shakram02.bash-beautify
@@ -210,7 +211,7 @@ in
             snakemake.snakemake-lang
             tfehlmann.snakefmt
             nextflow.nextflow
-         ])
+          ])
           ++ (with extensions.open-vsx; [
             #ms-vscode.cpptools #error: attribute 'cpptools' missing
           ]);

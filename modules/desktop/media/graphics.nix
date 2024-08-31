@@ -5,16 +5,16 @@
 # but enough that I can do a fraction of it on Linux. For the rest I have a
 # second computer dedicated to design work (and gaming).
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.media.graphics;
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.media.graphics = {
     enable = mkBoolOpt false;
@@ -22,63 +22,96 @@ in {
     raster.enable = mkBoolOpt true;
     vector.enable = mkBoolOpt true;
     sprites.enable = mkBoolOpt true;
-    models.enable = mkBoolOpt true;
+    design.enable = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs;
+    user.packages = with pkgs.unstable;
       (
-        if cfg.tools.enable
-        then [
-          font-manager # so many damned fonts...
-          imagemagick # for image manipulation from the shell
-          eyedropper
-          gnome-obfuscate
-          eog
+        optionals cfg.tools.enable
+        # CLI/scripting tools
+        [
+          imagemagick
+          # Optimizers
+          # LOSSLESS   LOSSY
+          optipng
+          pngquant
+          jpegoptim
+          libjpeg # (jpegtran)
+          gifsicle
         ]
-        else []
       )
       ++
-      # replaces illustrator & indesign
+      # Replaces Illustrator (maybe indesign?)
       (
-        if cfg.vector.enable
-        then [unstable.inkscape]
-        else []
+        optionals cfg.vector.enable
+        [
+          inkscape
+        ]
       )
       ++
-      # Replaces photoshop
+      # Replaces Photoshop
       (
-        if cfg.raster.enable
-        then [
-          darktable
-          drawing
-          krita
-          gimp
-          #gimpPlugins.resynthesizer  # content-aware scaling in gimp
-          curtail
+        optionals cfg.raster.enable
+        [
+          (gimp-with-plugins.override {
+            plugins = with gimpPlugins; [
+              bimp # batch image manipulation
+              # resynthesizer   # content-aware scaling in gimp
+              gmic # an assortment of extra filters
+            ];
+          })
+          krita # But Krita is better for digital illustration
         ]
-        else []
       )
       ++
       # Sprite sheets & animation
       (
-        if cfg.sprites.enable
-        then [aseprite-unfree]
-        else []
+        optionals cfg.sprites.enable
+        [
+          aseprite-unfree
+        ]
       )
       ++
-      # 3D modelling
+      # Replaces Adobe XD (or Sketch)
       (
-        if cfg.models.enable
-        then [unstable.blender]
-        else []
+        optionals cfg.design.enable
+        [
+          (
+            if config.modules.desktop.type == "wayland"
+            then
+              figma-linux.overrideAttrs (final: prev: {
+                postFixup = ''
+                  substituteInPlace $out/share/applications/figma-linux.desktop \
+                    --replace "Exec=/opt/figma-linux/figma-linux" \
+                              "Exec=$out/bin/${final.pname} --enable-features=UseOzonePlatform \
+                                                            --ozone-platform=wayland \
+                                                            --enable-vulkan \
+                                                            --enable-gpu-rasterization \
+                                                            --enable-oop-rasterization \
+                                                            --enable-gpu-compositing \
+                                                            --enable-accelerated-2d-canvas \
+                                                            --enable-zero-copy \
+                                                            --canvas-oop-rasterization \
+                                                            --disable-features=UseChromeOSDirectVideoDecoder \
+                                                            --enable-accelerated-video-decode \
+                                                            --enable-accelerated-video-encode \
+                                                            --enable-features=VaapiVideoDecoder,VaapiVideoEncoder,VaapiIgnoreDriverChecks,RawDraw,Vulkan \
+                                                            --enable-hardware-overlays \
+                                                            --enable-unsafe-webgpu"
+                '';
+              })
+            else figma-linux
+          )
+        ]
       );
 
     home.configFile = mkIf cfg.raster.enable {
       "GIMP/2.10" = {
-        source = "${configDir}/gimp";
+        source = "${hey.configDir}/gimp";
         recursive = true;
       };
+      # TODO Inkscape dotfiles
     };
   };
 }

@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.dev.r;
   r-with-packages = pkgs.unstable.rWrapper.override {
     packages = with pkgs.unstable.rPackages; [

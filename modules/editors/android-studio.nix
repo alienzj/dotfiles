@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.editors.android-studio;
 in {
   options.modules.editors.android-studio = {

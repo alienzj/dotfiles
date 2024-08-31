@@ -1,14 +1,14 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.awesomewm;
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.awesomewm = {
     enable = mkBoolOpt false;
@@ -41,7 +41,7 @@ in {
 
     home.configFile = {
       "awesome" = {
-        source = "${configDir}/awesome";
+        source = "${hey.configDir}/awesome";
         recursive = true;
       };
       "awesome/rc.lua".text = ''

@@ -1,13 +1,14 @@
 # Zeal is an offline documentation browser for software developers.
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.dev.zeal;
 in {
   options.modules.dev.zeal = with types; {

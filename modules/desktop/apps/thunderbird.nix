@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.apps.thunderbird;
 in {
   options.modules.desktop.apps.thunderbird = {
@@ -14,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
+    user.packages = with pkgs.unstable; [
       thunderbird
     ];
   };

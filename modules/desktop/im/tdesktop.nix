@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.im.tdesktop;
 in {
   options.modules.desktop.im.tdesktop = with types; {
@@ -14,8 +15,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      unstable.tdesktop
+    user.packages = with pkgs.unstable; [
+      tdesktop
     ];
   };
 }

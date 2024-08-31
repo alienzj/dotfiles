@@ -1,14 +1,15 @@
 # TODO
 # Artificial intelligence
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.science.ai;
 in {
   options.modules.science.ai = with types; {
@@ -17,14 +18,14 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs; [
-        unstable.ollama
-        unstable.llama-cpp
-        #unstable.lmstudio
-        #unstable.aichat
-        #unstable.chatgpt-cli
-        #unstable.shell_gpt
-        #unstable.chatblade
+      user.packages = with pkgs.unstable; [
+        ollama
+        llama-cpp
+        #lmstudio
+        #aichat
+        #chatgpt-cli
+        #shell_gpt
+        #chatblade
       ];
     }
   ]);

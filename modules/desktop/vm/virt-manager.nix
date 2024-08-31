@@ -1,16 +1,16 @@
 # reference
 ## how to create a VM based on qemu + kvm + libvirt
 ## https://github.com/winapps-org/winapps/blob/main/docs/libvirt.md
-
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.vm.virt-manager;
 in {
   options.modules.desktop.vm.virt-manager = {

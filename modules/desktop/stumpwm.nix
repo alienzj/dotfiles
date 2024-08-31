@@ -1,14 +1,14 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.stumpwm;
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.stumpwm = {
     enable = mkBoolOpt false;
@@ -35,7 +35,7 @@ in {
 
     # link recursively so other modules can link files in their folders
     home.configFile."stumpwm" = {
-      source = "${configDir}/stumpwm";
+      source = "${hey.configDir}/stumpwm";
       recursive = true;
     };
   };

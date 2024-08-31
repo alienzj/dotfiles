@@ -1,14 +1,15 @@
 # reference
 ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/development/jupyterhub/default.nix
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   devCfg = config.modules.services;
   cfg = devCfg.jupyterhub;
 in {

@@ -3,14 +3,15 @@
 # Zotero is a free and open-source reference management software to manage
 # bibliographic data and related research materials, such as PDF files.
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.noter.zotero;
 in {
   options.modules.desktop.noter.zotero = with types; {
@@ -19,10 +20,10 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs; [
-        unstable.zotero
-        #unstable.zotero-beta
-        unstable.zotero-translation-server
+      user.packages = with pkgs.unstable; [
+        #zotero-beta
+        zotero
+        zotero-translation-server
       ];
     }
   ]);

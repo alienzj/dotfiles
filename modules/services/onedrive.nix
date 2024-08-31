@@ -1,12 +1,13 @@
 # https://nixos.wiki/wiki/OneDrive
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.onedrive;
 in {
   options.modules.services.onedrive = {

@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.apps.transmission;
 in {
   options.modules.desktop.apps.transmission = {
@@ -14,8 +15,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      unstable.transmission_4-gtk
+    user.packages = with pkgs.unstable; [
+      transmission_4-gtk
     ];
   };
 }

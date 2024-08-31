@@ -1,50 +1,40 @@
-# https://wiki.nixos.org/wiki/Printing
+# modules/services/printing.nix
+#
+# Share the suffering.
 {
+  hey,
+  lib,
   config,
   options,
-  pkgs,
-  lib,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.printing;
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.services.printing = {
     enable = mkBoolOpt false;
-    sharing = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      services.printing = {
+  config = mkIf cfg.enable {
+    services.avahi = {
+      enable = true;
+      publish = {
         enable = true;
-        #drivers = [ pkgs.epson-escpr ];
-        #drivers = [
-        #  (writeTextDir "share/cups/model/Ricoh/Ricoh-IM_C6000-PDF-Ricoh.ppd" (builtins.readFile "${configDir}/printer/Ricoh-IM_C6000-PDF-Ricoh.ppd"))
-        #];
+        userServices = true;
       };
-    }
+    };
 
-    (mkIf cfg.sharing {
-      # Printer sharing
-      services.avahi = {
-        enable = true;
-        nssmdns4 = true;
-        openFirewall = true;
-        publish = {
-          enable = true;
-          userServices = true;
-        };
-      };
-      services.printing = {
-        listenAddresses = ["*:631"];
-        allowFrom = ["all"];
-        browsing = true;
-        defaultShared = true;
-        openFirewall = true;
-      };
-    })
-  ]);
+    services.printing = {
+      browsing = true;
+      listenAddresses = ["*:631"];
+      allowFrom = ["all"];
+      defaultShared = true;
+    };
+
+    networking.firewall = {
+      allowedUDPPorts = [631];
+      allowedTCPPorts = [631];
+    };
+  };
 }

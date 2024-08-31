@@ -1,17 +1,17 @@
 ## reference
 ## https://github.com/nix-community/home-manager/blob/master/modules/programs/wezterm.nix
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.term.wezterm;
   tomlFormat = pkgs.formats.toml {};
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.term.wezterm = {
     enable = mkBoolOpt false;
@@ -77,7 +77,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
+    user.packages = with pkgs.unstable; [
       wezterm
       #(makeDesktopItem {
       #  name = "wezterm";
@@ -105,7 +105,7 @@ in {
 
     home.configFile = {
       "wezterm" = {
-        source = "${configDir}/wezterm";
+        source = "${hey.configDir}/wezterm";
         recursive = true;
       };
     };

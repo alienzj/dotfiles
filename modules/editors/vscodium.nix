@@ -1,15 +1,16 @@
 # reference
 ## https://github.com/nix-community/home-manager/blob/master/modules/programs/vscode.nix
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   inputs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.editors.vscodium;
   extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux";
   jsonFormat = pkgs.formats.json {};

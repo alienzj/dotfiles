@@ -1,147 +1,183 @@
+# default.nix
 {
-  inputs,
-  config,
+  hey,
   lib,
+  options,
+  config,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; {
-  imports =
-    # I use home-manager to deploy files to $HOME; little else
-    [inputs.home-manager.nixosModules.home-manager]
-    # All my personal modules
-    ++ (mapModulesRec' (toString ./modules) import);
+with hey.lib; {
+  imports = mapModulesRec' ./modules import;
 
-  # Common config for all nixos machines; and to ensure the flake operates
-  # soundly
-  environment.variables.DOTFILES = config.dotfiles.dir;
-  environment.variables.DOTFILES_BIN = config.dotfiles.binDir;
+  options = with types; {
+    modules = {};
 
-  # Configure nix and nixpkgs
-  environment.variables.NIXPKGS_ALLOW_UNFREE = "1";
-  nix = let
-    filteredInputs = filterAttrs (n: _: n != "self") inputs;
-    nixPathInputs = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
-    registryInputs = mapAttrs (_: v: {flake = v;}) filteredInputs;
-  in {
-    package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
-    nixPath =
-      nixPathInputs
-      ++ [
-        "nixpkgs-overlays=${config.dotfiles.dir}/overlays"
-        "dotfiles=${config.dotfiles.dir}"
-      ];
-    registry =
-      registryInputs
-      // {
-        dotfiles.flake = inputs.self;
-      };
-    settings = {
-      substituters = ["https://nix-community.cachix.org"];
-      trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
-      auto-optimise-store = true;
-    };
-  };
-  system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
-  system.stateVersion = "24.11";
-
-  ## Some reasonable, global defaults
-  # This is here to appease 'nix flake check' for generic hosts with no
-  # hardware-configuration.nix or fileSystem config.
-  fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false
-  # here. Per-interface useDHCP will be mandatory in the future, so we enforce
-  # this default behavior here.
-  networking.useDHCP = mkDefault false;
-
-  # Use the latest kernel
-
-  boot = {
-    kernelPackages = mkDefault pkgs.linuxPackages_latest;
-    loader = {
-      timeout = 60;
-      # Only enable during install
-      efi.canTouchEfiVariables = mkDefault true;
-      systemd-boot = {
-        enable = lib.mkDefault true;
-        configurationLimit = 7;
-      };
-    };
+    # Creates a simpler, polymorphic alias for users.users.$USER.
+    user = mkOpt attrs {name = "";};
   };
 
-  # Just the bear necessities...
-  environment.systemPackages = with pkgs; [
-    # core
-    coreutils
-    binutils
+  config = {
+    assertions = [
+      {
+        assertion = config.user ? name;
+        message = "config.user.name is not set!";
+      }
+    ];
 
-    # ls
-    bat
-    eza
+    environment.sessionVariables = mkOrder 10 {
+      DOTFILES_HOME = hey.dir;
+      NIXPKGS_ALLOW_UNFREE = "1"; # Forgive me Stallman-senpai.
+    };
 
-    # serarch
-    (ripgrep.override {withPCRE2 = true;})
-    ast-grep
-    fzf
-    fd
-    jq
+    # FIXME: Make this optional
+    user = {
+      description = mkDefault "The primary user account";
+      extraGroups = ["wheel"];
+      isNormalUser = true;
+      home = "/home/${config.user.name}";
+      group = "users";
+      uid = 1000;
+    };
+    users.users.${config.user.name} = mkAliasDefinitions options.user;
 
-    # edit
-    vim
-    neovim
-    shfmt
+    ## Core, universal configuration for all NixOS machines.
+    # This is here to appease 'nix flake check' for generic hosts with no
+    # hardware-configuration.nix or fileSystem config.
+    fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
 
-    # network
-    wget
-    curl
-    strace
-    hyperfine
-    gping
-    doggo
-    dnsutils
+    nix = let
+      filteredInputs = filterAttrs (_: v: v ? outputs) hey.inputs;
+      nixPathInputs = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
+    in {
+      extraOptions = ''
+        warn-dirty = false
+        http2 = true
+        experimental-features = nix-command flakes
+      '';
+      nixPath =
+        nixPathInputs
+        ++ [
+          "nixpkgs-overlays=${hey.dir}/overlays"
+          "dotfiles=${hey.dir}"
+        ];
+      registry = mapAttrs (_: v: {flake = v;}) filteredInputs;
+      settings = {
+        substituters = [
+          "https://nix-community.cachix.org"
+          "https://hyprland.cachix.org"
+        ];
+        trusted-public-keys = [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        ];
+        trusted-users = ["root" config.user.name];
+        allowed-users = ["root" config.user.name];
+        auto-optimise-store = true;
+      };
+    };
 
-    # dev
-    gnumake
-    git
-    delta
+    system = {
+      configurationRevision = with hey.inputs; mkIf (hey ? rev) hey.rev;
+      stateVersion = "23.11";
+    };
 
-    # monitor
-    htop
+    boot = {
+      # initrd.systemd.enable = true;
+      # Prefer the latest kernel; this will be overridden on more security
+      # conscious systems, among other settings in modules/security.nix.
+      kernelPackages = mkDefault pkgs.unstable.linuxKernel.packages.linux_6_8;
+      loader = {
+        timeout = 60;
+        efi.canTouchEfiVariables = mkDefault true;
+        # To not overwhelm the boot screen.
+        systemd-boot = {
+          enable = lib.mkDefault true;
+          configurationLimit = 7;
+        };
+      };
+    };
+    # For unfree hardware my laptops/refurbed systems will likely have.
+    hardware.enableRedistributableFirmware = true;
 
-    # calculator
-    bc
-    tokei
+    # For `hey sync build-vm` (or `nixos-rebuild build-vm`)
+    virtualisation.vmVariant.virtualisation = {
+      memorySize = 2048; # default: 1024
+      cores = 2; # default: 1
+    };
 
-    # disk
-    diskus
-    ncdu
-    pigz
-    unzip
+    # Just the bear necessities...
+    #environment.systemPackages = with pkgs; [
+    #  # core
+    #  coreutils
+    #  binutils
+    #
+    #  # ls
+    #  bat
+    #  eza
+    #
+    #  # serarch
+    #  (ripgrep.override {withPCRE2 = true;})
+    #  ast-grep
+    #  fzf
+    #  fd
+    #  jq
+    #
+    #  # edit
+    #  vim
+    #  neovim
+    #  shfmt
+    #
+    #  # network
+    #  wget
+    #  curl
+    #  strace
+    #  hyperfine
+    #  gping
+    #  doggo
+    #  dnsutils
+    #
+    #  # dev
+    #  gnumake
+    #  git
+    #  delta
+    #
+    #  # monitor
+    #  htop
+    #
+    #  # calculator
+    #  bc
+    #  tokei
+    #
+    #  # disk
+    #  diskus
+    #  ncdu
+    #  pigz
+    #  unzip
+    #
+    #  # man
+    #  tldr
+    #
+    #  # nix
+    #  cached-nix-shell
+    #  hydra-check
+    #  nix-output-monitor
+    #  hydra-check
+    #  nix-index
+    #  nix-init
+    #  nix-melt
+    #  nix-tree
+    #  nixd
+    #  nixdoc
+    #  nixpkgs-fmt
+    #];
 
-    # man
-    tldr
+    ## Console setup
+    #console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+    #console.earlySetup = lib.mkDefault true;
 
-    # nix
-    cached-nix-shell
-    hydra-check
-    nix-output-monitor
-    hydra-check
-    nix-index
-    nix-init
-    nix-melt
-    nix-tree
-    nixd
-    nixdoc
-    nixpkgs-fmt
-  ];
-
-  # Console setup
-  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
-  console.earlySetup = lib.mkDefault true;
-
-  #find "$(nix eval --raw 'nixpkgs#kbd')/share/keymaps" -name '*.map.gz'
-  console.keyMap = "us";
+    ##find "$(nix eval --raw 'nixpkgs#kbd')/share/keymaps" -name '*.map.gz'
+    #console.keyMap = "us";
+  };
 }

@@ -1,15 +1,13 @@
-# reference
-## https://github.com/ryan4yin/nix-config/tree/main/home/base/tui/gpg
-## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/gnupg.nix
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.shell.gnupg;
 in {
   options.modules.shell.gnupg = with types; {
@@ -17,23 +15,32 @@ in {
     cacheTTL = mkOpt int 3600; # 1hr
   };
 
-  # TODO
-  ## more detailed configuration
   config = mkIf cfg.enable {
-    environment.variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
+    environment.sessionVariables.GNUPGHOME = "$HOME/.config/gnupg";
 
-    programs.gnupg.agent.enable = true;
+    # systemd.user.services.gpg-agent.serviceConfig.Environment = [
+    #   "GNUPGHOME=${config.home.configDir}/gnupg"
+    # ];
 
-    user.packages = [pkgs.tomb];
-
-    # HACK Without this config file you get "No pinentry program" on 20.03.
-    #      programs.gnupg.agent.pinentryFlavor doesn't appear to work, and this
-    #      is cleaner than overriding the systemd unit.
-    home.configFile."gnupg/gpg-agent.conf" = {
-      text = ''
-        default-cache-ttl ${toString cfg.cacheTTL}
-        pinentry-program ${pkgs.pinentry}/bin/pinentry
-      '';
+    programs.gnupg = {
+      agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-rofi.override {
+          rofi =
+            if config.modules.desktop.type == "wayland"
+            then pkgs.rofi-wayland-unwrapped
+            else pkgs.rofi;
+        };
+      };
+      # There's a release between 2.2 and 2.4 where GPG is broken. Rather than
+      # risk hitting it, I'm installing GnuPG from nixos-unstable.
+      package = pkgs.unstable.gnupg;
     };
+
+    home.configFile."gnupg/gpg-agent.conf".text = ''
+      default-cache-ttl ${toString cfg.cacheTTL}
+      allow-emacs-pinentry
+      allow-loopback-pinentry
+    '';
   };
 }

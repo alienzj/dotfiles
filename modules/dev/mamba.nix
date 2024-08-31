@@ -2,14 +2,15 @@
 ## https://wiki.nixos.org/wiki/Python#Using_micromamba
 ## https://mamba.readthedocs.io/en/latest/user_guide/configuration.html
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.dev.mamba;
   mambafhs = pkgs.buildFHSEnv {
     name = "mamba-shell";

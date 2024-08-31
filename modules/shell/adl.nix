@@ -3,14 +3,15 @@
 # To maintain my filty weeb habits, I need tools. Tools that make it easy to
 # watch animu and track 'em on anilist. Laziness > my weebery.
 {
-  options,
-  config,
+  hey,
   lib,
+  config,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.shell.adl;
 in {
   options.modules.shell.adl = {
@@ -20,12 +21,11 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       # Dependencies
-      my.trackma
-      my.anime-downloader
-      mpv
+      trackma
+      anime-downloader
 
       # The star of the show
-      my.adl
+      adl
     ];
   };
 }

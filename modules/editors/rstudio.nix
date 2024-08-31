@@ -1,14 +1,14 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.editors.rstudio;
-  configDir = config.dotfiles.configDir;
   rstudio-with-packages = pkgs.unstable.rstudioWrapper.override {
     packages = with pkgs.unstable.rPackages; [
       # infrastructure

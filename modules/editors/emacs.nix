@@ -1,48 +1,59 @@
 # Emacs is my main driver. I'm the author of Doom Emacs
-# https://github.com/hlissner/doom-emacs. This module sets it up to meet my
-# particular Doomy needs.
+# https://github.com/doomemacs. This module sets it up to meet my particular
+# Doomy needs.
 {
-  config,
+  hey,
   lib,
+  config,
   pkgs,
-  inputs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.editors.emacs;
-  configDir = config.dotfiles.configDir;
+  emacs = with pkgs;
+    (emacsPackagesFor
+      (
+        if config.modules.desktop.type == "wayland"
+        then emacs-pgtk
+        else emacs-git
+      ))
+    .emacsWithPackages (epkgs:
+      with epkgs; [
+        # treesit-grammars.with-all-grammars
+        vterm
+      ]);
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
-    doom = rec {
-      enable = mkBoolOpt false;
-      forgeUrl = mkOpt types.str "https://github.com";
-      repoUrl = mkOpt types.str "${forgeUrl}/doomemacs/doomemacs";
-      configRepoUrl = mkOpt types.str "${forgeUrl}/hlissner/doom-emacs-private";
-    };
+    # doom = rec {
+    #   enable = mkBoolOpt false;
+    #   forgeUrl = mkOpt types.str "https://github.com";
+    #   repoUrl = mkOpt types.str "${forgeUrl}/doomemacs/doomemacs";
+    #   configRepoUrl = mkOpt types.str "${forgeUrl}/hlissner/.doom.d";
+    # };
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [inputs.emacs-overlay.overlay];
+    nixpkgs.overlays = [
+      hey.inputs.emacs-overlay.overlays.default
+    ];
 
     user.packages = with pkgs; [
+      (mkLauncherEntry "Emacs (Debug Mode)" {
+        description = "Start Emacs in debug mode";
+        icon = "emacs";
+        exec = "${emacs}/bin/emacs --debug-init";
+      })
+
       ## Emacs itself
-      #binutils # native-comp needs 'as', provided by this
-      # 28.2 + native-comp
-      #((emacsPackagesFor emacsNativeComp).emacsWithPackages
-      #((emacsPackagesFor emacs).emacsWithPackages
-      ((emacsPackagesFor emacs-unstable).emacsWithPackages
-        (epkgs: [
-          epkgs.vterm
-          ##epkgs.pdf-tools
-          epkgs.melpaStablePackages.pdf-tools
-        ]))
-      poppler
+      binutils # native-comp needs 'as', provided by this
+      # HEAD + native-comp
+      emacs
 
       ## Doom dependencies
-      #git
-      #(ripgrep.override {withPCRE2 = true;})
+      git
+      ripgrep
       gnutls # for TLS connectivity
 
       ## Optional dependencies
@@ -51,7 +62,7 @@ in {
       (mkIf (config.programs.gnupg.agent.enable)
         pinentry-emacs) # in-emacs gnupg prompts
       zstd # for undo-fu-session/undo-tree compression
-      graphviz # dot
+      graphviz
 
       # nix
       nixfmt-rfc-style
@@ -63,9 +74,6 @@ in {
       dockfmt
       rstfmt
       plantuml
-
-      # gamedev: Godot's GDScript
-      gdtoolkit_4
 
       ## Module dependencies
       # :checkers spell
@@ -82,22 +90,17 @@ in {
       #texlive.combined.scheme-small
       # :lang beancount
       beancount
-      unstable.fava # HACK Momentarily broken on nixos-unstable
+      fava
+      # :lang nix
+      age
     ];
 
-    env.PATH = ["$XDG_CONFIG_HOME/emacs/bin"];
+    environment.variables.PATH = ["$XDG_CONFIG_HOME/emacs/bin"];
 
-    modules.shell.zsh.rcFiles = ["${configDir}/emacs/aliases.zsh"];
+    modules.shell.zsh.rcFiles = ["${hey.configDir}/emacs/aliases.zsh"];
 
-    fonts.packages = [pkgs.emacs-all-the-icons-fonts];
-
-    system.userActivationScripts = mkIf cfg.doom.enable {
-      installDoomEmacs = ''
-        if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-           git clone --depth=1 --single-branch "${cfg.doom.repoUrl}" "$XDG_CONFIG_HOME/emacs"
-           git clone "${cfg.doom.configRepoUrl}" "$XDG_CONFIG_HOME/doom"
-        fi
-      '';
-    };
+    fonts.packages = [
+      (pkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+    ];
   };
 }

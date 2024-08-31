@@ -1,15 +1,15 @@
 ## reference
 ## https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/shadowsocks.nix
 {
+  hey,
+  lib,
   config,
   options,
   pkgs,
-  lib,
-  my,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.shadowsocks-client-pacman;
   opts =
     {

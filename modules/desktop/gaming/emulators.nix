@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.gaming.emulators;
 in {
   options.modules.desktop.gaming.emulators = {
@@ -18,7 +19,7 @@ in {
   };
 
   config = {
-    user.packages = with pkgs; [
+    user.packages = with pkgs.unstable; [
       #(mkIf cfg.psx.enable epsxe)
       (mkIf cfg.ds.enable desmume)
       (mkIf (cfg.gba.enable

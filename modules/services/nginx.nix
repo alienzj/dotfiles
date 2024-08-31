@@ -1,15 +1,14 @@
-# reference
-## https://github.com/nix-community/srvos/blob/main/nixos/mixins/nginx.nix
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with builtins;
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.nginx;
 in {
   options.modules.services.nginx = {

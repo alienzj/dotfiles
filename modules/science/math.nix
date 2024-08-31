@@ -1,13 +1,14 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   inputs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.science.math;
 in {
   options.modules.science.math = with types; {
@@ -24,16 +25,15 @@ in {
 
     user.packages = with pkgs;
       (
-        if cfg.tools.enable
-        then [
+        optionals cfg.tools.enable
+        [
           unstable.wxmaxima
           unstable.geogebra
         ]
-        else []
       )
       ++ (
-        if cfg.wolframengine.enable
-        then [
+        optionals cfg.wolframengine.enable
+        [
           unstable.wolfram-engine
           #(unstable.wolfram-engine.override {
           #  lang = "en";
@@ -51,11 +51,10 @@ in {
 
           unstable.wolfram-notebook
         ]
-        else []
       )
       ++ (
-        if cfg.mathematica.enable
-        then [
+        optionals cfg.mathematica.enable
+        [
           (unstable.mathematica.override {
             cudaSupport = false;
             lang = "en";
@@ -77,23 +76,20 @@ in {
             };
           })
         ]
-        else []
       )
       ++ (
-        if cfg.matlab.enable
-        then [
+        optionals cfg.matlab.enable
+        [
           matlab
           matlab-mlint
           matlab-mex
         ]
-        else []
       )
       ++ (
-        if cfg.cplex.enable
-        then [
+        optionals cfg.cplex.enable
+        [
           unstable.cplex
         ]
-        else []
       );
   };
 }

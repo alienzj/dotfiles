@@ -1,17 +1,18 @@
 # modules/dev/cc.nix --- C & C++
 #
-# I love C. I tolerate C++. I adore C with a few choice C++ features tacked on.
-# Liking C/C++ seems to be an unpopular opinion. It's my guilty secret, so don't
-# tell anyone pls.
+# I like C. I tolerate C++. I like++ C with a few choice C++ features tacked on.
+# Liking C/C++ seems to be an unpopular opinion, so it's my guilty secret.
+# Don't tell anyone pls.
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   devCfg = config.modules.dev;
   cfg = devCfg.cc;
 in {
@@ -27,12 +28,15 @@ in {
         clang-tools
         gcc
         bear
-        gdb
-        lldb
         cmake
         ccls
         rtags
         llvmPackages.libcxx
+
+        # Respect XDG, damn it!
+        (mkWrapper gdb ''
+          wrapProgram "$out/bin/gdb" --add-flags '-q -x "$XDG_CONFIG_HOME/gdb/init"'
+        '')
       ];
     })
 

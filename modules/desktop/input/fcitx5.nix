@@ -1,14 +1,14 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.input.fcitx5;
-  configDir = config.dotfiles.configDir;
   # way 1
   #fcitx5Package =
   #  pkgs.libsForQt5.fcitx5-with-addons.override {inherit (cfg) addons;};

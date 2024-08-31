@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.apps.zoomus;
   configDir = config.dotfiles.configDir;
 in {
@@ -15,12 +16,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
+    user.packages = with pkgs.unstable; [
       zoom-us
     ];
 
     home.configFile = {
-      "zoomus.conf".source = "${configDir}/zoomus/zoomus.conf";
+      "zoomus.conf".source = "${hey.configDir}/zoomus/zoomus.conf";
     };
   };
 }

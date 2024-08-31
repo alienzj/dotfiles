@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.shell.direnv;
 in {
   options.modules.shell.direnv = {
@@ -14,7 +15,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = [pkgs.direnv];
-    modules.shell.zsh.rcInit = ''eval "$(direnv hook zsh)"'';
+    programs.direnv.enable = true;
   };
 }

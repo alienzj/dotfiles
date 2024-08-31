@@ -4,19 +4,20 @@
 # infinite knowledge and shelter me from ads, but bless my $HOME with
 # directories nobody needs and live long enough to turn into Chrome.
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.browsers.firefox;
 in {
   options.modules.desktop.browsers.firefox = with types; {
     enable = mkBoolOpt false;
-    profileName = mkOpt types.str config.user.name;
+    profileName = mkOpt str config.user.name;
 
     settings = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
       Firefox preferences to set in <filename>user.js</filename>
@@ -33,61 +34,89 @@ in {
 
     userChrome = mkOpt' lines "" "CSS Styles for Firefox's interface";
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
+
+    # TODO
+    # profiles = attrsOf (submodule ({ config, ... }: {
+    #   options = {
+    #     name = mkOpt str config._module.args.name;
+    #     default = mkOpt bool false;
+    #     settings = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
+    #       Firefox preferences to set in <filename>user.js</filename>
+    #     '';
+    #     extraConfig = mkOpt' lines "" ''
+    #       Extra lines to add to <filename>user.js</filename>
+    #     '';
+    #     userChrome  = mkOpt' lines "" "CSS Styles for Firefox's interface";
+    #     userContent = mkOpt' lines "" "Global CSS Styles for websites";
+    #   };
+    # }));
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
-      user.packages = with pkgs; [
-        unstable.firefox-bin
-        (makeDesktopItem {
-          name = "firefox-private";
-          desktopName = "Firefox (Private)";
-          genericName = "Open a private Firefox window";
+      programs.firefox = {
+        enable = true;
+        # nativeMessagingHosts.packages = with pkgs; [
+        #   tridactyl-native
+        # ];
+        policies = {
+          DontCheckDefaultBrowser = true;
+          DisablePocket = true;
+          DisableAppUpdate = true;
+        };
+      };
+
+      user.packages = with pkgs;
+      with hey.lib.pkgs; [
+        # Obey XDG, damn it!
+        (writeShellScriptBin "firefox" ''
+          export HOME="$XDG_FAKE_HOME"
+          exec "${config.programs.firefox.package}/bin/firefox" "$@"
+        '')
+
+        (mkLauncherEntry "Firefox (Private)" {
+          description = "Open a private Firefox window";
           icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox --private-window";
+          exec = "${config.programs.firefox.package}/bin/firefox --private-window";
           categories = ["Network"];
         })
-        (makeDesktopItem {
-          name = "firefox-proxy-pacman";
-          desktopName = "Firefox (Proxy pacman)";
-          genericName = "Open a Firefox window with proxy";
+        (mkLauncherEntry "Firefox (Proxy pacman)" {
+          description = "Open a Firefox window with proxy";
           icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
+          exec = "${config.programs.firefox.package}/bin/firefox -no-remote -P proxy";
           categories = ["Network"];
         })
-        (makeDesktopItem {
-          name = "firefox-proxy-geph";
-          desktopName = "Firefox (Proxy geph)";
-          genericName = "Open a Firefox window with proxy";
+        (mkLauncherEntry "Firefox (Proxy geph)" {
+          description = "Open a Firefox window with proxy";
           icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox -no-remote -P proxy";
+          exec = "${config.programs.firefox.package}/bin/firefox -no-remote -P proxy";
           categories = ["Network"];
         })
-        (makeDesktopItem {
-          name = "firefox-private-proxy-pacman";
-          desktopName = "Firefox (Private Proxy pacman)";
-          genericName = "Open a private Firefox window with proxy";
+        (mkLauncherEntry "Firefox (Private Proxy pacman)" {
+          description = "Open a private Firefox window with proxy";
           icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
+          exec = "${config.programs.firefox.package}/bin/firefox --private-window -no-remote -P proxy";
           categories = ["Network"];
         })
-        (makeDesktopItem {
-          name = "firefox-private-proxy-geph";
-          desktopName = "Firefox (Private Proxy geph)";
-          genericName = "Open a private Firefox window with proxy";
+        (mkLauncherEntry "Firefox (Private Proxy geph)" {
+          description = "Open a private Firefox window with proxy";
           icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox --private-window -no-remote -P proxy";
+          exec = "${config.programs.firefox.package}/bin/firefox --private-window -no-remote -P proxy";
           categories = ["Network"];
         })
       ];
 
-      # Prevent auto-creation of ~/Desktop. The trailing slash is necessary; see
-      # https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
-      env.XDG_DESKTOP_DIR = "$HOME/";
-
       modules.desktop.browsers.firefox.settings = {
-        # Default to dark theme in DevTools panel
-        "devtools.theme" = "dark";
+        # Allow svgs to take on theme colors
+        "svg.context-properties.content.enabled" = true;
+        # Pressing TAB from address bar shouldn't cycle through buttons before
+        # switching focus back to the webppage. Most of those buttons have
+        # dedicated shortcuts, so I don't need this level of tabstop granularity.
+        "browser.toolbars.keyboard_navigation" = false;
+
+        # Seriously. Stop popping up on every damn page. If I want it translated,
+        # I know where to find gtranslate/deepl/whatever!
+        "browser.translations.automaticallyPopup" = false;
         # Enable ETP for decent security (makes firefox containers and many
         # common security/privacy add-ons redundant).
         "browser.contentblocking.category" = "strict";
@@ -102,7 +131,7 @@ in {
         # Enable userContent.css and userChrome.css for our theme modules
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         # Stop creating ~/Downloads!
-        "browser.download.dir" = "${config.user.home}/downloads/firefox";
+        "browser.download.dir" = "${config.user.home}/downloads";
         # Don't use the built-in password manager. A nixos user is more likely
         # using an external one (you are using one, right?).
         "signon.rememberSignons" = false;
@@ -137,6 +166,9 @@ in {
         "browser.urlbar.shortcuts.tabs" = false;
         "browser.urlbar.showSearchSuggestionsFirst" = false;
         "browser.urlbar.speculativeConnect.enabled" = false;
+        # Since FF 113, you must press TAB twice to cycle through urlbar
+        # suggestions. This disables that.
+        "browser.urlbar.resultMenu.keyboardAccessible" = false;
         # https://bugzilla.mozilla.org/1642623
         "browser.urlbar.dnsResolveSingleWordsAfterSearch" = 0;
         # https://blog.mozilla.org/data/2021/09/15/data-and-firefox-suggest/
@@ -150,6 +182,7 @@ in {
         "browser.aboutConfig.showWarning" = false; # Warning when opening about:config
         "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
         "extensions.pocket.enabled" = false;
+        "extensions.unifiedExtensions.enabled" = false;
         "extensions.shield-recipe-client.enabled" = false;
         "reader.parse-on-load.enabled" = false; # "reader view"
 
@@ -255,35 +288,35 @@ in {
       };
 
       # Use a stable profile name so we can target it in themes
-      home.file = let
-        cfgPath = ".mozilla/firefox";
+      home = let
+        firefoxDir = "${config.home.fakeDir}/.mozilla/firefox";
       in {
-        "${cfgPath}/profiles.ini".text = ''
-                 [Profile0]
-                 Name=default
-                 IsRelative=1
-                 Path=${cfg.profileName}.default
-                 Default=1
+        file."${firefoxDir}/profiles.ini".text = ''
+          [Profile0]
+          Name=default
+          IsRelative=1
+          Path=${cfg.profileName}.default
+          Default=1
 
-                 [Profile1]
-                 Name=proxy
-                 IsRelative=1
-                 Path=proxy.pacman
+          [Profile1]
+          Name=proxy
+          IsRelative=1
+          Path=proxy.pacman
           Default=0
 
-                 [Profile2]
-                 Name=proxy
-                 IsRelative=1
-                 Path=proxy.geph
+          [Profile2]
+          Name=proxy
+          IsRelative=1
+          Path=proxy.geph
           Default=0
 
-                 [General]
-                 StartWithLastProfile=1
-                 Version=2
+          [General]
+          StartWithLastProfile=1
+          Version=2
         '';
 
         ## default profile
-        "${cfgPath}/${cfg.profileName}.default/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+        file."${firefoxDir}/${cfg.profileName}.default/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
           text = ''
             ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
@@ -293,30 +326,30 @@ in {
           '';
         };
 
-        "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
+        file."${firefoxDir}/${cfg.profileName}.default/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
           text = cfg.userChrome;
         };
 
-        "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css" = mkIf (cfg.userContent != "") {
+        file."${firefoxDir}/${cfg.profileName}.default/chrome/userContent.css" = mkIf (cfg.userContent != "") {
           text = cfg.userContent;
         };
 
         ## proxy.pacman profile
-        "${cfgPath}/proxy.pacman/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+        file."${firefoxDir}/proxy.pacman/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
           text = ''
-                   ${concatStrings (mapAttrsToList (name: value: ''
+            ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
               '')
               cfg.settings)}
             ${cfg.extraConfig}
-                   ${concatStrings (mapAttrsToList (name: value: ''
+              ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
               '')
               cfg.proxyConfigPacman)}
           '';
         };
 
-        #"${cfgPath}/proxy.default/prefs.js" =
+        #file."${firefoxDir}/proxy.default/prefs.js" =
         #  mkIf (cfg.proxyConfigPacman != {}) {
         #    text = ''
         #      ${concatStrings (mapAttrsToList (name: value: ''
@@ -325,30 +358,30 @@ in {
         #    '';
         #  };
 
-        "${cfgPath}/proxy.pacman/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
+        file."${firefoxDir}/proxy.pacman/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
           text = cfg.userChrome;
         };
 
-        "${cfgPath}/proxy.pacman/chrome/userContent.css" = mkIf (cfg.userContent != "") {
+        file."${firefoxDir}/proxy.pacman/chrome/userContent.css" = mkIf (cfg.userContent != "") {
           text = cfg.userContent;
         };
 
         ## proxy.geph profile
-        "${cfgPath}/proxy.geph/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+        file."${firefoxDir}/proxy.geph/user.js" = mkIf (cfg.settings != {} || cfg.extraConfig != "") {
           text = ''
-                   ${concatStrings (mapAttrsToList (name: value: ''
+            ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
               '')
               cfg.settings)}
             ${cfg.extraConfig}
-                   ${concatStrings (mapAttrsToList (name: value: ''
+              ${concatStrings (mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
               '')
               cfg.proxyConfigGeph)}
           '';
         };
 
-        #"${cfgPath}/proxy.geph/prefs.js" =
+        #file."${firefoxDir}/proxy.geph/prefs.js" =
         #  mkIf (cfg.proxyConfigGeph != {}) {
         #    text = ''
         #      ${concatStrings (mapAttrsToList (name: value: ''
@@ -357,11 +390,11 @@ in {
         #    '';
         #  };
 
-        "${cfgPath}/proxy.geph/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
+        file."${firefoxDir}/proxy.geph/chrome/userChrome.css" = mkIf (cfg.userChrome != "") {
           text = cfg.userChrome;
         };
 
-        "${cfgPath}/proxy.geph/chrome/userContent.css" = mkIf (cfg.userContent != "") {
+        file."${firefoxDir}/proxy.geph/chrome/userContent.css" = mkIf (cfg.userContent != "") {
           text = cfg.userContent;
         };
       };

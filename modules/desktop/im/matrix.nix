@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.im.matrix;
 in {
   options.modules.desktop.im.matrix = with types; {
@@ -14,9 +15,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      unstable.element-desktop
-      #unstable.cinny-desktop
+    user.packages = with pkgs.unstable; [
+      element-desktop
+      #cinny-desktop
     ];
   };
 }

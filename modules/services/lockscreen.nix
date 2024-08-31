@@ -3,14 +3,15 @@
 ## TODO
 ## betterlockscreen -u modules/themes/alucard/config/wallpaper.png --display 1 -u ~/pictures/The_hunt_for_a_healthy_microbiome.webp --display 2
 {
+  hey,
+  lib,
   config,
   options,
   pkgs,
-  lib,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.lockscreen;
 in {
   options.modules.services.lockscreen = {
@@ -30,16 +31,14 @@ in {
       user.packages = with pkgs; [
         betterlockscreen
 
-        (makeDesktopItem {
-          name = "better-lock-display";
-          desktopName = "Better Lock screen";
+        (mkLauncherEntry "Better lock screen" {
+          description = "Better lock screen";
           icon = "system-lock-screen";
           exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --wall --dimblur --lock";
         })
 
-        (makeDesktopItem {
-          name = "better-lock-and-sleep";
-          desktopName = "Better Lock screen and Sleep";
+        (mkLauncherEntry "Better lock screent and goto sleep" {
+          description = "Better lock screen and goto sleep";
           icon = "system-lock-screen";
           exec = "${pkgs.betterlockscreen}/bin/betterlockscreen --suspend";
         })

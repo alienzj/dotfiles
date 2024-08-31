@@ -2,14 +2,15 @@
 ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/web-apps/hedgedoc.nix
 ## https://wiki.nixos.org/wiki/Hedgedoc
 {
+  hey,
+  lib,
   config,
   options,
   pkgs,
-  lib,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.hedgedoc;
 in {
   options.modules.services.hedgedoc = {

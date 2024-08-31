@@ -1,14 +1,15 @@
 # reference
 ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/development/rstudio-server/default.nix
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.rstudio-server;
   rstudio-server-with-packages = pkgs.unstable.rstudioServerWrapper.override {
     packages = with pkgs.unstable.rPackages; [

@@ -1,13 +1,13 @@
 # Finally, a decent open alternative to Plex!
 {
-  options,
-  config,
+  hey,
   lib,
-  pkgs,
+  config,
+  options,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.jellyfin;
 in {
   options.modules.services.jellyfin = {

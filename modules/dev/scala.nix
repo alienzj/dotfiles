@@ -1,13 +1,13 @@
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
-  my,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   devCfg = config.modules.dev;
   cfg = devCfg.scala;
 in {

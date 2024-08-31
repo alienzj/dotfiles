@@ -1,14 +1,14 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.browsers.chromium;
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.browsers.chromium = {
     enable = mkBoolOpt false;
@@ -44,8 +44,8 @@ in {
     ];
 
     #home.configFile = {
-    #  "gfw2pac/gfwlist.pac".source = "${configDir}/gfw2pac/gfwlist.pac";
-    #  "gfw2pac/gfwlist_2.pac".source = "${configDir}/gfw2pac/gfwlist_2.pac";
+    #  "gfw2pac/gfwlist.pac".source = "${hey.configDir}/gfw2pac/gfwlist.pac";
+    #  "gfw2pac/gfwlist_2.pac".source = "${hey.configDir}/gfw2pac/gfwlist_2.pac";
     #};
   };
 }

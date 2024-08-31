@@ -1,12 +1,13 @@
 {
-  options,
-  config,
+  hey,
   lib,
+  config,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.term;
 in {
   options.modules.desktop.term = {
@@ -16,6 +17,6 @@ in {
   config = {
     services.xserver.desktopManager.xterm.enable = mkDefault (cfg.default == "xterm");
 
-    env.TERMINAL = cfg.default;
+    environment.sessionVariables.TERMINAL = cfg.default;
   };
 }

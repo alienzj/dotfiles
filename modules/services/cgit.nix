@@ -1,20 +1,21 @@
 {
-  options,
-  config,
+  hey,
   lib,
+  config,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.services.cgit;
   cgitrc = pkgs.writeText "cgitrc" ''
-    css=/static/cgit.css
-    logo=/static/cgit.png
-    favicon=/static/favicon.ico
-    root-title=Repositories
-    root-desc=Browse repositories
-    snapshots=tar.gz zip
+      css=/static/cgit.css
+      logo=/static/cgit.png
+      favicon=/static/favicon.ico
+      root-title=Repositories
+      root-desc=Browse repositories
+      snapshots=tar.gz zip
 
     readme=:README
     readme=:readme

@@ -1,14 +1,14 @@
 {
+  hey,
+  lib,
   config,
   options,
   pkgs,
-  lib,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.shell.fish;
-  configDir = config.dotfiles.configDir;
 in {
   options.modules.shell.fish = with types; {
     enable = mkBoolOpt false;
@@ -61,7 +61,7 @@ in {
 
     #home.configFile = {
     #  # Write it recursively so other modules can write files to it
-    #  "fish" = { source = "${configDir}/fish"; recursive = true; };
+    #  "fish" = { source = "${hey.configDir}/fish"; recursive = true; };
 
     #  "fish/extraconfig.fish".text = ''
     #    ${concatMapStrings (path: "source '${path}'\n") cfg.rcFiles}

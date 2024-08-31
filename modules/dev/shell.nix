@@ -5,15 +5,15 @@
 # mortals to question the will of the ancient ones. If they want shell programs,
 # they get shell programs.
 {
+  hey,
+  lib,
   config,
   options,
-  lib,
   pkgs,
-  my,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   devCfg = config.modules.dev;
   cfg = devCfg.shell;
 in {

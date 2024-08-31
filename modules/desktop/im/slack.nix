@@ -1,12 +1,13 @@
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.desktop.im.slack;
 in {
   options.modules.desktop.im.slack = with types; {
@@ -14,8 +15,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
-      unstable.slack
+    user.packages = with pkgs.unstable; [
+      slack
     ];
   };
 }
