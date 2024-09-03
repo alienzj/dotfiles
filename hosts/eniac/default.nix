@@ -247,7 +247,7 @@ with builtins; {
     shell = {
       #vaultwarden.enable = true;
       #pass.enable = true;
-      adl.enable = true;
+      #adl.enable = true;
       direnv.enable = true;
       git.enable = true;
       gnupg.enable = true;
