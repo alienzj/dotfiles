@@ -14,14 +14,15 @@
 ## systemd-networkd
 ### https://wiki.nixos.org/wiki/Systemd/networkd
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.hardware.network;
 in {
   options.modules.hardware.network = with types; {

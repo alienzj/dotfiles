@@ -7,14 +7,15 @@
 ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/config/power-management.nix
 ## https://github.com/huataihuang/cloud-atlas-draft/blob/master/os/linux/redhat/system_administration/systemd/hibernate_with_fedora_in_laptop.md
 {
+  hey,
+  lib,
   options,
   config,
-  lib,
   pkgs,
   ...
 }:
 with lib;
-with lib.my; let
+with hey.lib; let
   cfg = config.modules.hardware.power;
 in {
   options.modules.hardware.power = with types; {
