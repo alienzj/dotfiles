@@ -9,14 +9,22 @@
 with lib;
 with hey.lib; let
   cfg = config.modules.desktop.media.audio;
+  spicetify = pkgs.unstable.spicetify-cli;
 in {
+  imports = [
+    hey.modules.spicetify-nix.default
+  ];
+
   options.modules.desktop.media.audio = {
     enable = mkBoolOpt false;
     #tui.enable = mkBoolOpt false; # TODO
   };
 
   config = mkIf cfg.enable {
+    programs.spicetify.enable = true;
+
     user.packages = with pkgs; [
+      playerctl # To control it remotely.
       sayonara
       netease-cloud-music-gtk
       lx-music-desktop
@@ -26,7 +34,7 @@ in {
       # still occasionally need the official client for more sophisticated
       # search and the "made for you" playlists.
       #(spotify.override { deviceScaleFactor = 1.8; })
-      spotify
+      #spotify
 
       # # services.spotifyd doesn't work so we'll have to roll our own spotifyd +
       # # spotify-tui solution. The dbus interface doesn't work, though, so we
