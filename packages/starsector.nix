@@ -1,4 +1,5 @@
 {
+  self,
   lib,
   alsa-lib,
   fetchzip,

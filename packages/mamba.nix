@@ -1,6 +1,7 @@
 # reference
 ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/package-management/conda/default.nix
 {
+  self,
   lib,
   pkgs,
   buildFHSEnv,
