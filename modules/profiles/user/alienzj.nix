@@ -28,5 +28,8 @@ in
       #    then ''from="10.0.0.0/8" ${key} ${username}''
       #    else key)
       #];
+
+      # User
+      user.extraGroups = ["tss" "video"];
     }
   ])
