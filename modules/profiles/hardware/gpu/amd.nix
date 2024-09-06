@@ -9,11 +9,11 @@ with lib;
 with hey.lib; let
   hardware = config.modules.profiles.hardware;
 in
-  mkIf (any (s: hasPrefix "gpu/intel" s) hardware) (mkMerge [
+  mkIf (any (s: hasPrefix "gpu/amd" s) hardware) (mkMerge [
     {
       services.xserver = {
         enable = true;
-        videoDrivers = mkDefault ["intel"];
+        videoDrivers = ["amdgpu"];
         #dpi = 168; # enable hidpi module
         exportConfiguration = true;
         xkb.layout = "us";
@@ -25,16 +25,30 @@ in
         #'';
       };
 
-      hardware.graphics = {
+      services.libinput = {
         enable = true;
+        touchpad = {
+          tapping = true;
+          clickMethod = "clickfinger";
+          naturalScrolling = true;
+        };
+      };
+
+      hardware.graphics = {
         extraPackages = with pkgs; [
-          vaapiIntel
+          vaapiVdpau
           libvdpau-va-gl
-          intel-media-driver
+          # opencl
+          rocmPackages.clr.icd
+          rocmPackages.clr
+          amdvlk
+        ];
+        extraPackages32 = with pkgs; [
+          driversi686Linux.amdvlk
         ];
       };
 
-      environment.variables.VDPAU_DRIVER = "va_gl";
+      environment.variables.AMD_VULKAN_ICD = lib.mkDefault "RADV";
 
       environment = {
         systemPackages = with pkgs; [
