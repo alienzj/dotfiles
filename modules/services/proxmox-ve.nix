@@ -3,7 +3,6 @@
   lib,
   config,
   options,
-  inputs,
   ...
 }:
 with lib;
@@ -14,13 +13,13 @@ in {
     enable = mkBoolOpt false;
   };
 
-  imports = [inputs.proxmox-nixos.nixosModules.proxmox-ve];
+  imports = [hey.inputs.proxmox-nixos.nixosModules.proxmox-ve];
 
   config = mkIf cfg.enable {
     services.proxmox-ve = {
       enable = true;
     };
 
-    nixpkgs.overlays = [inputs.proxmox-nixos.overlays.x86_64-linux];
+    nixpkgs.overlays = [hey.inputs.proxmox-nixos.overlays.default];
   };
 }

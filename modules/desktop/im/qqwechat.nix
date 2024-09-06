@@ -3,7 +3,6 @@
   lib,
   options,
   config,
-  inputs,
   pkgs,
   ...
 }:
@@ -17,10 +16,10 @@ in {
     enable = mkBoolOpt false;
   };
 
-  imports = [inputs.nur.nixosModules.nur];
+  imports = [hey.inputs.nur.nixosModules.nur];
 
   config = mkIf cfg.enable {
-    #nixpkgs.overlays = [ inputs.nur.overlay ];
+    nixpkgs.overlays = [hey.inputs.nur.overlays.default];
 
     user.packages = with pkgs.unstable; [
       # pkgs.xdg-user-dirs

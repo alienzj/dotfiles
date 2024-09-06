@@ -4,7 +4,6 @@
   options,
   config,
   pkgs,
-  inputs,
   ...
 }:
 with lib;
@@ -21,7 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [inputs.nix-matlab.overlay];
+    nixpkgs.overlays = [hey.inputs.nix-matlab.overlays.default];
 
     user.packages = with pkgs;
       (

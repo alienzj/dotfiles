@@ -1,3 +1,5 @@
+# I use spotify for my music needs. Gone are the days where I'd manage 200gb+ of
+# local music; most of which I haven't heard or don't even like.
 {
   hey,
   lib,
@@ -15,9 +17,13 @@ in {
     hey.modules.spicetify-nix.default
   ];
 
-  options.modules.desktop.media.audio = {
+  options.modules.desktop.media.audio = with types; {
     enable = mkBoolOpt false;
     #tui.enable = mkBoolOpt false; # TODO
+
+    # spotify
+    spotify.theme = mkOpt str "";
+    spotify.colorscheme = mkOpt str "";
   };
 
   config = mkIf cfg.enable {

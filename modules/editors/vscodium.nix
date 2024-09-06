@@ -6,13 +6,12 @@
   config,
   options,
   pkgs,
-  inputs,
   ...
 }:
 with lib;
 with hey.lib; let
   cfg = config.modules.editors.vscodium;
-  extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux";
+  extensions = hey.inputs.nix-vscode-extensions.extensions."x86_64-linux";
   jsonFormat = pkgs.formats.json {};
   vscodeUserSettings = {
     "workbench.iconTheme" = "material-icon-theme";

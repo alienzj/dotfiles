@@ -95,7 +95,7 @@ in
     }
 
     (mkIf (config.modules.desktop.type != null) {
-      modules.desktop.apps.spotify.theme = cfg.active;
+      modules.desktop.media.audio.spotify.theme = cfg.active;
 
       programs.spicetify = let
         spkgs = hey.inputs.spicetify-nix.packages.${pkgs.system}.default;

@@ -53,7 +53,7 @@
     nix-matlab.url = "gitlab:doronbehar/nix-matlab";
     # NUR
     nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ {
