@@ -25,12 +25,9 @@ in {
     (mkIf cfg.enable {
       user.packages = with pkgs; [
         clang
-        clang-tools
         gcc
         bear
         cmake
-        ccls
-        rtags
         llvmPackages.libcxx
 
         # Respect XDG, damn it!

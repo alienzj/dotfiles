@@ -15,21 +15,19 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.postgresql.package = pkgs.postgresql_13;
+    services.postgresql.package = pkgs.postgresql;
 
     services.discourse = {
       enable = true;
-      enableACME = false;
-      #plugins = with config.services.discourse.package.plugins; [
-      #  discourse-akismet
-      #  discourse-chat-integration
-      #  discourse-checklist
-      #  discourse-canned-replies
-      #  discourse-github
-      #  discourse-assign
-      #  discourse-spoiler-alert
-      #  discourse-solved
-      #];
+      enableACME = true;
+      # plugins = with config.services.discourse.package.plugins; [
+      #   discourse-akismet
+      #   discourse-chat-integration
+      #   discourse-checklist
+      #   discourse-canned-replies
+      #   discourse-github
+      #   discourse-assign
+      # ];
     };
   };
 }

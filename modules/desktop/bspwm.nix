@@ -33,10 +33,8 @@ in {
     environment.systemPackages = with pkgs; [
       lightdm
       (polybar.override {
-        #alsaSupport = true;
         pulseSupport = true;
         nlSupport = true;
-        #mpdSupport = true;
       })
     ];
 

@@ -50,4 +50,4 @@ for file in $XDG_CONFIG_HOME/bspwm/rc.d/*; do
   source "$file"
 done
 
-xsetroot -cursor_name left_ptr
+#xsetroot -cursor_name left_ptr

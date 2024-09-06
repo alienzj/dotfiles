@@ -21,7 +21,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       xst # st + nice-to-have extensions
-      (mkLauncherEntry "Suckless Ternimal" {
+      (mkLauncherEntry "Suckless Terminal" {
         description = "Open default terminal application";
         icon = "utilities-terminal";
         exec = "${xst}/bin/xst";

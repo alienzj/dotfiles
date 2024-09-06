@@ -43,10 +43,6 @@ in
           '')
 
           cudaPackages.cudatoolkit # required for CUDA support
-
-          nvitop
-          gpustat
-          gpu-viewer
         ];
         variables = {
           CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";

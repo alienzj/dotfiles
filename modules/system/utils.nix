@@ -23,8 +23,6 @@ in {
       environment.systemPackages = with pkgs; [
         glances
         bandwhich # network utilization monitor
-        zenith
-        sniffnet
         hwinfo
         iftop
         ioping
@@ -36,8 +34,6 @@ in {
         sysstat # sar, iostat, pidstat
         unixtools.netstat
         usbutils # lsusb
-        neofetch
-        btop
       ];
     }
 

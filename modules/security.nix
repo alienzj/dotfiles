@@ -3,10 +3,6 @@
   config,
   ...
 }: {
-  config,
-  lib,
-  ...
-}: {
   ## System security tweaks
   # sets hidepid=2 on /proc (make process info visible only to owning user)
   # NOTE Was removed on nixpkgs-unstable because it doesn't do anything
@@ -61,7 +57,6 @@
     "net.ipv4.tcp_fastopen" = 3;
     # Bufferbloat mitigations + slight improvement in throughput & latency
     "net.ipv4.tcp_congestion_control" = "bbr";
-    # default: fq_codel, # pfifo_fast
     "net.core.default_qdisc" = "cake";
   };
   boot.kernelModules = ["tcp_bbr"];

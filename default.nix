@@ -91,12 +91,10 @@ with hey.lib; {
       loader = {
         efi.canTouchEfiVariables = mkDefault true;
         # To not overwhelm the boot screen.
-        systemd-boot = {
-          enable = lib.mkDefault true;
-          configurationLimit = 7;
-        };
+        systemd-boot.configurationLimit = mkDefault 10;
       };
     };
+
     # For unfree hardware my laptops/refurbed systems will likely have.
     hardware.enableRedistributableFirmware = true;
 
@@ -105,78 +103,5 @@ with hey.lib; {
       memorySize = 2048; # default: 1024
       cores = 2; # default: 1
     };
-
-    # Just the bear necessities...
-    #environment.systemPackages = with pkgs; [
-    #  # core
-    #  coreutils
-    #  binutils
-    #
-    #  # ls
-    #  bat
-    #  eza
-    #
-    #  # serarch
-    #  (ripgrep.override {withPCRE2 = true;})
-    #  ast-grep
-    #  fzf
-    #  fd
-    #  jq
-    #
-    #  # edit
-    #  vim
-    #  neovim
-    #  shfmt
-    #
-    #  # network
-    #  wget
-    #  curl
-    #  strace
-    #  hyperfine
-    #  gping
-    #  doggo
-    #  dnsutils
-    #
-    #  # dev
-    #  gnumake
-    #  git
-    #  delta
-    #
-    #  # monitor
-    #  htop
-    #
-    #  # calculator
-    #  bc
-    #  tokei
-    #
-    #  # disk
-    #  diskus
-    #  ncdu
-    #  pigz
-    #  unzip
-    #
-    #  # man
-    #  tldr
-    #
-    #  # nix
-    #  cached-nix-shell
-    #  hydra-check
-    #  nix-output-monitor
-    #  hydra-check
-    #  nix-index
-    #  nix-init
-    #  nix-melt
-    #  nix-tree
-    #  nixd
-    #  nixdoc
-    #  nixpkgs-fmt
-    #];
-
-    ## Console setup
-    #console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
-    #console.earlySetup = lib.mkDefault true;
-
-    ##find "$(nix eval --raw 'nixpkgs#kbd')/share/keymaps" -name '*.map.gz'
-    #console.keyMap = "us";
   };
 }
