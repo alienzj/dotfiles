@@ -19,7 +19,8 @@ in {
   imports = [hey.inputs.nur.nixosModules.nur];
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [hey.inputs.nur.overlays.default];
+    #nixpkgs.overlays = [ hey.inputs.nur.overlay ];
+    #nixpkgs.overlays = [hey.inputs.nur.overlays.default];
 
     user.packages = with pkgs.unstable; [
       # pkgs.xdg-user-dirs
