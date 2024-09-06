@@ -29,8 +29,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       i18n.inputMethod = {
-        enable = true;
-        type = "fcitx5";
+        enabled = "fcitx5";
 
         # way 1
         #package = lib.mkForce fcitx5Package;

@@ -54,7 +54,7 @@ in {
       promptInit = "";
     };
 
-    env = {
+    environment.variables = {
       FISHDOTDIR = "$XDG_CONFIG_HOME/fish";
       FISH_CACHE = "$XDG_CACHE_HOME/fish";
     };

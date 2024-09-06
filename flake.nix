@@ -26,8 +26,8 @@
     hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
     hyprlock.url = "github:hyprwm/Hyprlock";
     hyprlock.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # hypridle.url = "github:hyprwm/hypridle";
-    # hypridle.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    hypridle.url = "github:hyprwm/hypridle";
+    hypridle.inputs.nixpkgs.follows = "nixpkgs-unstable";
     waybar.url = "github:Alexays/Waybar";
     waybar.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
@@ -53,7 +53,7 @@
     nix-matlab.url = "gitlab:doronbehar/nix-matlab";
     # NUR
     nur.url = "github:nix-community/NUR";
-    #nur.inputs.nixpkgs.follows = "nixpkgs";
+    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ {

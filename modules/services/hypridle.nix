@@ -8,7 +8,7 @@
 }:
 with lib;
 with hey.lib; let
-  cfg = config.modules.services.swayidle;
+  cfg = config.modules.services.hypridle;
 in {
   options.modules.services.hypridle = with types; {
     enable = mkBoolOpt false;
@@ -31,10 +31,10 @@ in {
     ];
 
     nixpkgs.overlays = [
-      self.inputs.hypridle.overlays.default
+      hey.inputs.hypridle.overlays.default
     ];
 
-    systemd.user.services.swayidle = {
+    systemd.user.services.hypridle = {
       unitConfig = {
         Description = "Idle manager for Hyprland";
         PartOf = ["graphical-session.target"];

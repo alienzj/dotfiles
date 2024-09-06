@@ -25,16 +25,7 @@ in
         #'';
       };
 
-      services.libinput = {
-        enable = true;
-        touchpad = {
-          tapping = true;
-          clickMethod = "clickfinger";
-          naturalScrolling = true;
-        };
-      };
-
-      hardware.graphics = {
+      hardware.opengl = {
         extraPackages = with pkgs; [
           vaapiVdpau
           libvdpau-va-gl
