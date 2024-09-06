@@ -24,13 +24,13 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [
-        python37
-        python37Packages.pip
-        python37Packages.ipython
-        python37Packages.black
-        python37Packages.setuptools
-        python37Packages.pylint
-        python37Packages.poetry
+        python312
+        python312Packages.pip
+        python312Packages.ipython
+        python312Packages.black
+        python312Packages.setuptools
+        python312Packages.pylint
+        python312Packages.poetry
       ];
 
       environment.shellAliases = {
