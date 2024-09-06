@@ -1,6 +1,4 @@
-# eniac -- my primary powerhouse
-## CPU: AMD Ryzen 7 1700X (16) @ 3.400GHz
-## GPU: NVIDIA GeForce GTX 1080 Ti
+# magic -- my primary office PC
 {
   hey,
   lib,
@@ -22,7 +20,6 @@ with builtins; {
         "cpu/intel"
         "gpu/intel"
         "audio"
-        "audio/realtime"
         "hidpi"
         "ssd"
         "dualmonitor"
@@ -394,10 +391,10 @@ with builtins; {
     #networking.interfaces.eno1.useDHCP = true;
 
     # CPU
-    ##nix.settings = {
-    ##  cores = lib.mkDefault 12;
-    ##  max-jobs = lib.mkDefault 8;
-    ##};
+    nix.settings = {
+      cores = lib.mkDefault 12;
+      max-jobs = lib.mkDefault 8;
+    };
 
     # Disable all USB wakeup events to ensure restful sleep. This system has
     # many peripherals attached to it (shared between Windows and Linux) that
@@ -410,27 +407,6 @@ with builtins; {
       '';
       wantedBy = ["multi-user.target"];
     };
-
-    # services.xserver = {
-    #   # This must be done manually to ensure my screen spaces are arranged
-    #   # exactly as I need them to be *and* the correct monitor is "primary".
-    #   # Using xrandrHeads does not work.
-    #   monitorSection = ''
-    #     VendorName  "Unknown"
-    #     ModelName   "DELL U2515H"
-    #     HorizSync   30.0 - 113.0
-    #     VertRefresh 56.0 - 86.0
-    #     Option      "DPMS"
-    #   '';
-    #   screenSection = ''
-    #     Option "metamodes" "DP-5: nvidia-auto-select +0+31, HDMI-1: nvidia-auto-select +1920+0, DP-3: nvidia-auto-select +4480+31"
-    #     Option "SLI" "Off"
-    #     Option "MultiGPU" "Off"
-    #     Option "BaseMosaic" "off"
-    #     Option "Stereo" "0"
-    #     Option "nvidiaXineramaInfoOrder" "DFP-5"
-    #   '';
-    # };
 
     # Displays
     ##services.xserver = {
@@ -451,17 +427,17 @@ with builtins; {
     ##  ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output HDMI-0 --mode 3840x2160 --rate 60 --pos 0x0 --primary
     ##'';
 
-    # Mouse
-    #services.libinput = {
-    #  enable = true;
-    #  mouse.accelProfile = "flat";
-    #};
-
     #services.xserver.displayManager.setupCommands = ''
     #  LEFT='DP1'
     #  RIGHT='DP2'
     #  ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $RIGHT --mode 2560x1440 --rate 60 --pos 3840x0 --scale 1.2x1.2 --rotate inverted --rotate left --output $LEFT --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary
     #'';
+
+    # Mouse
+    #services.libinput = {
+    #  enable = true;
+    #  mouse.accelProfile = "flat";
+    #};
 
     # Filesystem
     fileSystems."/" = {
@@ -488,15 +464,6 @@ with builtins; {
 
     swapDevices = [{device = "/dev/disk/by-label/swap";}];
 
-    # User
-    user.extraGroups = ["tss" "video"];
-
-    # Mouse
-    #services.libinput = {
-    #  enable = true;
-    #  mouse.accelProfile = "flat";
-    #};
-
     # File System
     #fileSystems."/" = {
     #  device = "/dev/disk/by-uuid/b664f175-f1be-4e65-b5aa-81a2244136c7";
@@ -517,7 +484,17 @@ with builtins; {
     #  {device = "/dev/disk/by-uuid/29706bb2-5983-4597-a450-4b4c370c8023";}
     #];
 
-    #TODO
+    # Hibernation
+    ## Hibernation requires a configured swap device.
+    ## go to hibernation by running: systemctl hibernate
+    boot.resumeDevice = "/dev/disk/by-label/swap";
+
+    ## Go into hibernate after specific suspend time
+    ## system will go from suspend into hibernate after 1 hour
+    #systemd.sleep.extraConfig = ''
+    #  HibernateDelaySec=1h
+    #'';
+
     # power management
     #power = {
     #  enable = true;

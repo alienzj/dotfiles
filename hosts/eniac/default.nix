@@ -415,26 +415,17 @@ with builtins; {
       wantedBy = ["multi-user.target"];
     };
 
-    # services.xserver = {
-    #   # This must be done manually to ensure my screen spaces are arranged
-    #   # exactly as I need them to be *and* the correct monitor is "primary".
-    #   # Using xrandrHeads does not work.
-    #   monitorSection = ''
-    #     VendorName  "Unknown"
-    #     ModelName   "DELL U2515H"
-    #     HorizSync   30.0 - 113.0
-    #     VertRefresh 56.0 - 86.0
-    #     Option      "DPMS"
-    #   '';
-    #   screenSection = ''
-    #     Option "metamodes" "DP-5: nvidia-auto-select +0+31, HDMI-1: nvidia-auto-select +1920+0, DP-3: nvidia-auto-select +4480+31"
-    #     Option "SLI" "Off"
-    #     Option "MultiGPU" "Off"
-    #     Option "BaseMosaic" "off"
-    #     Option "Stereo" "0"
-    #     Option "nvidiaXineramaInfoOrder" "DFP-5"
-    #   '';
-    # };
+    #services.udev.extraRules = ''
+    #  # keyboard autosuspand
+    #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
+    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
+    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="3600000"
+
+    #  # mouse autosuspand
+    #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
+    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
+    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="3600000"
+    #'';
 
     # Displays
     ##services.xserver = {
@@ -486,7 +477,58 @@ with builtins; {
 
     swapDevices = [{device = "/dev/disk/by-label/swap";}];
 
-    # User
-    user.extraGroups = ["tss" "video"];
+    ## Filesystem
+    #fileSystems."/" = {
+    #  device = "/dev/disk/by-uuid/952cf267-a657-4abb-b121-5bebf3a103aa";
+    #  fsType = "ext4";
+    #};
+
+    #fileSystems."/boot" = {
+    #  device = "/dev/disk/by-uuid/C247-75AF";
+    #  fsType = "vfat";
+    #};
+
+    #fileSystems."/home" = {
+    #  device = "/dev/disk/by-uuid/0dcf7734-5d12-4b60-8632-6a75196a31a7";
+    #  fsType = "ext4";
+    #};
+
+    #fileSystems."/mnt/store" = {
+    #  device = "/dev/disk/by-uuid/294a32c8-a7ab-4646-86c4-277dafc708b7";
+    #  fsType = "ext4";
+    #};
+
+    #swapDevices = [{device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";}];
+
+    # Hibernation
+    ## Hibernation requires a configured swap device.
+    ## go to hibernation by running: systemctl hibernate
+    boot.resumeDevice = "/dev/disk/by-label/swap";
+
+    ## Go into hibernate after specific suspend time
+    ## system will go from suspend into hibernate after 1 hour
+    #systemd.sleep.extraConfig = ''
+    #  HibernateDelaySec=1h
+    #'';
+
+    # power management
+    #power = {
+    #  enable = true;
+    #  pm.enable = true;
+    #  pc.enable = true;
+    #  cpuFreqGovernor = "performance";
+    #  resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
+    #};
+
+    # network management
+    #network = {
+    #  enable = true;
+    #  networkd.enable = true;
+    #  MACAddress = "10:7b:44:8e:fe:b4";
+    #  IPAddress = ["192.168.1.2/24"];
+    #  RouteGateway = ["192.168.1.1"];
+    #  DomainNameServer = ["223.5.5.5" "8.8.8.8" "119.29.29.29"];
+    #  NetworkTimeServer = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+    #};
   };
 }
