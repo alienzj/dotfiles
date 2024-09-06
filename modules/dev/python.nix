@@ -30,7 +30,7 @@ in {
         python312Packages.black
         python312Packages.setuptools
         python312Packages.pylint
-        python312Packages.poetry
+        python312Packages.poetry-core
       ];
 
       environment.shellAliases = {
