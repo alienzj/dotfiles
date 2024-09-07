@@ -83,7 +83,6 @@ in {
                 torch
                 torchvision
                 torchaudio
-                torchsummary
               ]);
           in {
             displayName = "Python 3 for data science";

@@ -49,7 +49,10 @@ with modules; rec {
         config.allowUnfree = true;
         # A number of packages depend on python 2.7, but nixpkgs errors out when
         # it is pulled, so...
-        config.permittedInsecurePackages = ["python-2.7.18.6"];
+        config.permittedInsecurePackages = [
+          "python-2.7.18.6"
+          "openssl-1.1.1w"
+        ];
       };
 
     # Processes external arguments that bin/hey will feed to this flake (using
