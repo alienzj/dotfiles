@@ -10,7 +10,7 @@ zparseopts -E -F -D -- -flake=flake \
 local root="${root[2]:-/mnt}"
 local flake="${flake[2]:-$root/etc/dotfiles}"
 local host="${host[2]:-$HOST}"
-local user="${user[2]:-hlissner}"
+local user="${user[2]:-alienzj}"
 local dest="${dest[2]:-$root/home/$user/.config/dotfiles}"
 
 if [[ "$USER" == nixos ]]; then

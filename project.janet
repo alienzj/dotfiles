@@ -4,8 +4,8 @@
  :author "Henrik Lissner <contact@henrik.io>"
  :description "A control center for my dotfiles"
  :license "MIT"
- :url "https://github.com/hlissner/dotfiles"
- :repo "git+https://github.com/hlissner/dotfiles"
+ :url "https://github.com/alienzj/dotfiles"
+ :repo "git+https://github.com/alienzj/dotfiles"
  :dependencies [
    {:url "https://github.com/andrewchambers/janet-posix-spawn.git"}
    {:url "https://github.com/andrewchambers/janet-sh.git"}

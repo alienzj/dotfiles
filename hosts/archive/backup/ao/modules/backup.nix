@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # systemd = {
   #   services.backups = {
   #     description = "Backup /backups to NAS";
@@ -15,7 +18,7 @@
   #         echo "---- BACKUPING UP $1 TO $2 ----"
   #         rsync -rlptPJ --delete --delete-after \
   #             --chmod=go= \
-  #             --chown=hlissner:users \
+  #             --chown=alienzj:users \
   #             --exclude=lost+found/ \
   #             --exclude=@eaDir/ \
   #             --include=.git/ \

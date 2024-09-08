@@ -30,7 +30,7 @@ in {
     #   enable = mkBoolOpt false;
     #   forgeUrl = mkOpt types.str "https://github.com";
     #   repoUrl = mkOpt types.str "${forgeUrl}/doomemacs/doomemacs";
-    #   configRepoUrl = mkOpt types.str "${forgeUrl}/hlissner/.doom.d";
+    #   configRepoUrl = mkOpt types.str "${forgeUrl}/alienzj/doom.d";
     # };
   };
 
