@@ -158,8 +158,8 @@
     };
 
     useDHCP = false;
-    #interfaces.elan.useDHCP = true; # needed when use networkd
-    #interfaces.wlan.useDHCP = true; # needed when use networkmanager
+    #interfaces.ens192.useDHCP = true;
+    #interfaces.ens224.useDHCP = true;
 
     ### whether to enable networkd or not
     useNetworkd = true;
@@ -171,7 +171,7 @@
         "30-network" = {
           enable = true;
           name = "ens192";
-          networkConfig.DHCP = "no";
+          #networkConfig.DHCP = "no";
           networkConfig.IPv6PrivacyExtensions = "kernel";
           linkConfig.RequiredForOnline = "no"; # don't hang at boot (if dc'ed)
           dhcpV4Config.RouteMetric = 1024;
@@ -182,7 +182,7 @@
         "30-data" = {
           enable = true;
           name = "ens224";
-          networkConfig.DHCP = "no";
+          #networkConfig.DHCP = "no";
           networkConfig.IPv6PrivacyExtensions = "kernel";
           linkConfig.RequiredForOnline = "no"; # don't hang at boot (if dc'ed)
           dhcpV4Config.RouteMetric = 1024; # prefer wired
