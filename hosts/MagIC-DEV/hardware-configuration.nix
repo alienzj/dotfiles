@@ -96,18 +96,57 @@
   };
 
   # Networking
+  ## method: DHCP
+  #networking = {
+  #  domain = "magic.local";
+  #  nameservers = ["1.1.1.1" "8.8.8.8" "10.132.2.30" "10.132.2.31"];
+  #  #networkmanager.enable = true;
+  #
+  #  # Firewall
+  #  ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/firewall.nix
+  #  ### Whether to enable the firewall.  This is a simple stateful
+  #  ### firewall that blocks connection attempts to unauthorised TCP
+  #  ### or UDP ports on this machine.
+  #  # Docker and libvirt use iptables
+  #  nftables.enable = false;
+  #  firewall = {
+  #    enable = true;
+  #    allowPing = true;
+  #    pingLimit = "--limit 1/minute --limit-burst 5";
+  #    allowedTCPPorts = [22 80 443 3389 8080];
+  #    allowedUDPPorts = [22 80 443 3389 8080];
+  #  };
+  #
+  #  # Network
+  #  interfaces.ens192 = {
+  #    useDHCP = false;
+  #    ipv4.addresses = [
+  #      {
+  #        address = "10.132.2.152";
+  #        prefixLength = 24;
+  #      }
+  #    ];
+  #  };
+  #  # DATA
+  #  interfaces.ens224 = {
+  #    useDHCP = false;
+  #    ipv4.addresses = [
+  #      {
+  #        address = "192.168.1.222";
+  #        prefixLength = 24;
+  #      }
+  #    ];
+  #  };
+  #
+  #  # Gateway
+  #  defaultGateway = {
+  #    address = "10.132.2.254";
+  #    interface = "ens192";
+  #  };
+  #};
+
+  ## method: systemd-networkd
   networking = {
-    domain = "magic.local";
-    nameservers = ["1.1.1.1" "8.8.8.8" "10.132.2.30" "10.132.2.31"];
-
-    #networkmanager.enable = true;
-
-    #networkmanager.enable = true;
-    # Firewall
-    ### https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/networking/firewall.nix
-    ### Whether to enable the firewall.  This is a simple stateful
-    ### firewall that blocks connection attempts to unauthorised TCP
-    ### or UDP ports on this machine.
     # Docker and libvirt use iptables
     nftables.enable = false;
     firewall = {
@@ -118,33 +157,57 @@
       allowedUDPPorts = [22 80 443 3389 8080];
     };
 
-    # Network
-    interfaces.ens192 = {
-      useDHCP = false;
-      ipv4.addresses = [
-        {
-          address = "10.132.2.152";
-          prefixLength = 24;
-        }
-      ];
-    };
-    # DATA
-    interfaces.ens224 = {
-      useDHCP = false;
-      ipv4.addresses = [
-        {
-          address = "192.168.1.222";
-          prefixLength = 24;
-        }
-      ];
-    };
+    useDHCP = false;
+    #interfaces.elan.useDHCP = true; # needed when use networkd
+    #interfaces.wlan.useDHCP = true; # needed when use networkmanager
 
-    # Gateway
-    defaultGateway = {
-      address = "10.132.2.254";
-      interface = "ens192";
+    ### whether to enable networkd or not
+    useNetworkd = true;
+  };
+
+  systemd = {
+    network = {
+      networks = {
+        "30-network" = {
+          enable = true;
+          name = "ens192";
+          networkConfig.DHCP = "no";
+          networkConfig.IPv6PrivacyExtensions = "kernel";
+          linkConfig.RequiredForOnline = "no"; # don't hang at boot (if dc'ed)
+          dhcpV4Config.RouteMetric = 1024;
+          address = ["10.132.2.152"];
+          gateway = ["10.132.2.254"];
+          dns = ["10.132.2.30" "10.132.2.31" "8.8.8.8" "1.1.1.1"];
+        };
+        "30-data" = {
+          enable = true;
+          name = "ens224";
+          networkConfig.DHCP = "no";
+          networkConfig.IPv6PrivacyExtensions = "kernel";
+          linkConfig.RequiredForOnline = "no"; # don't hang at boot (if dc'ed)
+          dhcpV4Config.RouteMetric = 1024; # prefer wired
+          address = ["192.168.1.222"];
+        };
+      };
+
+      wait-online = {
+        anyInterface = true;
+        timeout = 30;
+
+        # The anyInterface setting is still finnicky for some networks, so I
+        # simply turn off the whole check altogether.
+        enable = false;
+      };
     };
   };
+
+  boot.initrd.systemd.network.wait-online = {
+    anyInterface = true;
+    timeout = 10;
+  };
+
+  # See systemd/systemd#10579
+  services.resolved.dnssec = "false";
 
   # Platform
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
