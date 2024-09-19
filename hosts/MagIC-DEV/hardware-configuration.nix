@@ -86,6 +86,13 @@
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0664,dir_mode=0775,vers=3.0,soft,rsize=8192,wsize=8192,mfsymlinks";
       in ["${automount_opts},credentials=/etc/nixos/smb-secrets-ResearchNAS,uid=2000,gid=3000"];
     };
+    "/mnt/microbio_research" = {
+      device = "//10.132.22.92/microbio_research";
+      fsType = "cifs";
+      options = let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0664,dir_mode=0775,vers=3.0,soft,rsize=8192,wsize=8192,mfsymlinks";
+      in ["${automount_opts},credentials=/etc/nixos/smb-secrets-MicrobioResearch,uid=2000,gid=100"];
+    };
   };
 
   # Networking
