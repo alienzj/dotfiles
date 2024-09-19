@@ -17,7 +17,9 @@ COMPUTERNAME=$(hostname)
 
 if [ $DUALMONITOR == "yes" ]; then
     if [ $COMPUTERNAME == "magic" ]; then
-        MONITOR="DP1" DPI=168 LAN="lan" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+        #MONITOR="DP1" DPI=168 LAN="elan" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+        #MONITOR="DP1" DPI=168 LAN="wlan" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+        MONITOR="DP1" DPI=168 LAN="wlp0s20f0u13" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
         MONITOR="DP2" polybar --reload next >$XDG_DATA_HOME/polybar_next.log 2>&1 &
     fi
 else

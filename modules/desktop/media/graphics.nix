@@ -21,7 +21,7 @@ in {
     tools.enable = mkBoolOpt true;
     raster.enable = mkBoolOpt true;
     vector.enable = mkBoolOpt true;
-    sprites.enable = mkBoolOpt true;
+    sprites.enable = mkBoolOpt false;
     models.enable = mkBoolOpt true;
   };
 
@@ -34,7 +34,6 @@ in {
           imagemagick # for image manipulation from the shell
           eyedropper
           gnome-obfuscate
-          eog
         ]
         else []
       )

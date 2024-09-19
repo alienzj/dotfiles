@@ -17,7 +17,7 @@ in {
     environment.systemPackages = with pkgs; [
       qemu
       quickemu
-      quickgui
+      #quickgui
     ];
   };
 }

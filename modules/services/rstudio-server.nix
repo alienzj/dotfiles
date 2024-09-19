@@ -101,7 +101,7 @@ with lib.my; let
       httr2
       xml2
       curl
-      V8
+      #V8
 
       # tidy data visualization
       ## interactive
@@ -132,10 +132,10 @@ with lib.my; let
       ## correlation
       cowplot
       ## table summary
-      gtsummary
-      flextable
-      gt
-      gtExtras
+      #gtsummary
+      #flextable
+      #gt
+      #gtExtras
       ## color
       #microshades
 

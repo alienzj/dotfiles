@@ -150,7 +150,7 @@
       vscode.enable = true;
       #vscodium.enable = true;
       rstudio.enable = true;
-      android-studio.enable = true;
+      android-studio.enable = true; 
     };
     shell = {
       adl.enable = true;

@@ -56,7 +56,7 @@
   services.fwupd.enable = true;
 
   # NixOS Hardware options
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
       vaapiIntel
@@ -87,16 +87,37 @@
     };
 
     # network management
+    #network = {
+    #  enable = true;
+    #  networkd.enable = true;
+    #  MACAddress = "a4:bb:6d:e2:d3:c8";
+    #  IPAddress = ["10.132.22.122/24"];
+    #  RouteGateway = ["10.132.22.254"];
+    #  DomainNameServer = ["10.132.2.30" "10.132.2.31" "8.8.8.8" "223.5.5.5"];
+    #  NetworkTimeServer = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+    #};
+
+    #network = {
+    #  enable = true;
+    #  networkd.enable = true;
+    #  wireless.enable = true;
+    #  wireless.interfaces = ["wlan"];    # wlp0s20f0u13
+    #  eLink.enable = true;
+    #  wLink.enable = true;
+    #  eMACAddress = "a4:bb:6d:e2:d3:c8"; # elan, wired
+    #  wMACAddress = "f0:09:0d:1d:8a:4a"; # wlan, wireless
+    #};
+
     network = {
       enable = true;
       networkd.enable = true;
-      MACAddress = "a4:bb:6d:e2:d3:c8";
-      IPAddress = ["10.132.22.122/24"];
-      RouteGateway = ["10.132.22.254"];
-      DomainNameServer = ["10.132.2.30" "10.132.2.31" "8.8.8.8" "223.5.5.5"];
-      NetworkTimeServer = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+      wireless.enable = true;
+      wireless.interfaces = ["wlp0s20f0u13"];    # wlp0s20f0u13
     };
   };
+
+  #networking.interfaces.elan.useDHCP = true; # needed when use networkd and wired
+  #networking.interfaces.wlan.useDHCP = true; # needed when use networkmanager and wireless
 
   # CPU
   nix.settings = {
@@ -121,10 +142,11 @@
 
   ## dual monitor
   ## https://github.com/NixOS/nixpkgs/issues/30796
+  ##${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $RIGHT --mode 2560x1440 --rate 60 --pos 3840x0 --scale 1.2x1.2 --rotate inverted --rotate left --output $LEFT --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary
   services.xserver.displayManager.setupCommands = ''
     LEFT='DP1'
     RIGHT='DP2'
-    ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $RIGHT --mode 2560x1440 --rate 60 --pos 3840x0 --scale 1.2x1.2 --rotate inverted --rotate left --output $LEFT --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary
+    ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $LEFT --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary --output $RIGHT --mode 2560x1440 --rate 60 --pos 3840x0 --scale 1.24x1.24 --right-of $LEFT
   '';
 
   # Mouse

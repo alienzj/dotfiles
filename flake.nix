@@ -11,9 +11,9 @@
 
   inputs = {
     # Core dependencies.
-    nixpkgs.url = "nixpkgs/nixos-unstable"; # primary nixpkgs
-    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable"; # for packages on the edge
-    home-manager.url = "github:rycee/home-manager/master";
+    nixpkgs.url = "nixpkgs/nixos-24.05"; # primary nixpkgs
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable"; # for packages on the edge
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -26,6 +26,8 @@
 
     # Emacs
     emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    emacs-overlay.inputs.nixpkgs-stable.follows = "nixpkgs";
 
     # VSCodium
     # TODO

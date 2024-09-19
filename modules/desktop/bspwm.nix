@@ -32,14 +32,16 @@ in {
       })
     ];
 
-    services.displayManager.defaultSession = "none+bspwm";
     services = {
-      picom.enable = true;
+      picom = {
+        enable = true;
+	package = pkgs.unstable.picom;
+      };
       redshift.enable = true;
+      displayManager.defaultSession = "none+bspwm";
       xserver = {
         enable = true;
         displayManager = {
-          #defaultSession = "none+bspwm";
           lightdm.enable = true;
           lightdm.greeters.mini.enable = true;
         };

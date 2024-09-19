@@ -32,12 +32,17 @@ in {
       # 28.2 + native-comp
       #((emacsPackagesFor emacsNativeComp).emacsWithPackages
       #((emacsPackagesFor emacs).emacsWithPackages
-      ((emacsPackagesFor emacs-unstable).emacsWithPackages
-        (epkgs: [
-          epkgs.vterm
-          ##epkgs.pdf-tools
-          epkgs.melpaStablePackages.pdf-tools
-        ]))
+      #((emacsPackagesFor emacs-unstable).emacsWithPackages
+      ((emacsPackagesFor emacs-git).emacsWithPackages
+        (epkgs: with epkgs; [
+          vterm
+          pdf-tools
+          melpaStablePackages.pdf-tools
+          treesit-grammars.with-all-grammars
+          mu4e
+      ]))
+      
+      binutils
       poppler
 
       ## Doom dependencies
@@ -63,9 +68,6 @@ in {
       dockfmt
       rstfmt
       plantuml
-
-      # gamedev: Godot's GDScript
-      gdtoolkit_4
 
       ## Module dependencies
       # :checkers spell

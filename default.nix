@@ -45,7 +45,7 @@ with lib.my; {
     };
   };
   system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
-  system.stateVersion = "24.11";
+  system.stateVersion = "24.05";
 
   ## Some reasonable, global defaults
   # This is here to appease 'nix flake check' for generic hosts with no
@@ -60,16 +60,18 @@ with lib.my; {
   # Use the latest kernel
 
   boot = {
-    kernelPackages = mkDefault pkgs.linuxPackages_latest;
+    #kernelPackages = mkDefault pkgs.linuxPackages_latest;
+    kernelPackages = mkDefault pkgs.unstable.linuxKernel.packages.linux_6_10;
     loader = {
       timeout = 60;
       # Only enable during install
       efi.canTouchEfiVariables = mkDefault true;
       systemd-boot = {
         enable = lib.mkDefault true;
-        configurationLimit = 7;
+        configurationLimit = 24;
       };
     };
+    #plymouth.enable = true;
   };
 
   # Just the bear necessities...

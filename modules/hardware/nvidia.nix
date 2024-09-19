@@ -14,7 +14,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    hardware.graphics = {
+    hardware.opengl = {
       enable = true;
     };
 
