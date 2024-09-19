@@ -8,8 +8,6 @@
   pkgs,
   ...
 }: {
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15_hardened;
-
   nix.gc = {
     automatic = true;
     dates = "weekly";
