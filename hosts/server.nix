@@ -30,7 +30,7 @@
   };
 
   ## Security tweaks
-  boot.kernelPackages = mkForce pkgs.unstable.linuxKernel.packages.linux_6_9_hardened;
+  boot.kernelPackages = lib.mkForce pkgs.unstable.linuxKernel.packages.linux_6_9_hardened;
   # Prevent replacing the running kernel w/o reboot
   security.protectKernelImage = true;
 }
