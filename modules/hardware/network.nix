@@ -32,7 +32,7 @@ in {
     wireless.interfaces = mkOption {
       type = with types; listOf types.str;
       default = ["wlan"];
-    }; 
+    };
     #eLink.enable = mkBoolOpt false;
     #wLink.enable = mkBoolOpt false;
     #eMACAddress = mkOpt types.str "";
@@ -77,11 +77,10 @@ in {
 
     # used in ether network
     (mkIf cfg.networkd.enable {
-
       networking = {
         useDHCP = false;
         ### whether to enable networkd or not
-	useNetworkd = true;
+        useNetworkd = true;
       };
       #networking.interfaces.elan.useDHCP = true; # needed when use networkd
       #networking.interfaces.wlan.useDHCP = true; # needed when use networkmanager
@@ -90,39 +89,39 @@ in {
         network = {
           # Automatically manage all wired/wireless interfaces.
 
-	  #links."30-elan" = {
-	  #  enable = cfg.eLink.enable;
-	  #  matchConfig.PermanentMACAddress = cfg.eMACAddress;
-	  #  linkConfig.Name = "elan";
-	  #};
-	  #links."30-wlan" = {
-	  #  enable = cfg.wLink.enable;
-	  #  matchConfig.PermanentMACAddress = cfg.wMACAddress;
-	  #  linkConfig.Name = "wlan";
-	  #};
+          #links."30-elan" = {
+          #  enable = cfg.eLink.enable;
+          #  matchConfig.PermanentMACAddress = cfg.eMACAddress;
+          #  linkConfig.Name = "elan";
+          #};
+          #links."30-wlan" = {
+          #  enable = cfg.wLink.enable;
+          #  matchConfig.PermanentMACAddress = cfg.wMACAddress;
+          #  linkConfig.Name = "wlan";
+          #};
 
-	  networks = {
+          networks = {
             "30-wired" = {
-	      enable = true;
-	      name = "en*";
-	      #matchConfig.Name = "elan";
-	      #matchConfig.Type = "ether";
-	      networkConfig.DHCP = "yes";
-              networkConfig.IPv6PrivacyExtensions = "kernel";
-              linkConfig.RequiredForOnline = "no"; # don't hang at boot (if dc'ed)
-              dhcpV4Config.RouteMetric = 1024;
-	    };
-	    "30-wireless" = {
               enable = true;
-              name = "wl*";
-	      #matchConfig.Name = "wlan";
-	      #matchConfig.Type = "wireless";
+              name = "en*";
+              #matchConfig.Name = "elan";
+              #matchConfig.Type = "ether";
               networkConfig.DHCP = "yes";
               networkConfig.IPv6PrivacyExtensions = "kernel";
               linkConfig.RequiredForOnline = "no"; # don't hang at boot (if dc'ed)
-              dhcpV4Config.RouteMetric = 2048;     # prefer wired
+              dhcpV4Config.RouteMetric = 1024;
             };
-	  };
+            "30-wireless" = {
+              enable = true;
+              name = "wl*";
+              #matchConfig.Name = "wlan";
+              #matchConfig.Type = "wireless";
+              networkConfig.DHCP = "yes";
+              networkConfig.IPv6PrivacyExtensions = "kernel";
+              linkConfig.RequiredForOnline = "no"; # don't hang at boot (if dc'ed)
+              dhcpV4Config.RouteMetric = 2048; # prefer wired
+            };
+          };
 
           wait-online = {
             anyInterface = true;
@@ -132,7 +131,6 @@ in {
             # simply turn off the whole check altogether.
             enable = false;
           };
-
 
           ### no need for ether network
           #wait-online.enable = false;
@@ -181,7 +179,6 @@ in {
       services.resolved.dnssec = "false";
     })
 
-
     # reference
     ## https://wiki.archlinux.org/title/Wpa_supplicant
     # used in wireless network
@@ -191,7 +188,7 @@ in {
     ### update_config=1
     ### p2p_disabled=1
     ### okc=1
-    
+
     ### network={
     ###         ssid="INNO2"
     ###         psk="HkstpInno2"
@@ -199,33 +196,33 @@ in {
     ### }
     (mkIf cfg.wireless.enable {
       environment.systemPackages = with pkgs; [
-        wpa_supplicant  # for wpa_cli
+        wpa_supplicant # for wpa_cli
       ];
-
 
       networking.wireless.interfaces = cfg.wireless.interfaces;
       networking.supplicant = listToAttrs (map
-        (int: nameValuePair int {
-          # Allow wpa_(cli|gui) to modify networks list
-          userControlled = {
-          enable = true;
-          group = "users";
-        };
-        configFile = {
-          path = "/etc/wpa_supplicant.d/${int}.conf";
-          writable = true;
-        };
-        extraConf = ''
-          ap_scan=1
-          p2p_disabled=1
-          okc=1
-        '';
-        })
+        (int:
+          nameValuePair int {
+            # Allow wpa_(cli|gui) to modify networks list
+            userControlled = {
+              enable = true;
+              group = "users";
+            };
+            configFile = {
+              path = "/etc/wpa_supplicant.d/${int}.conf";
+              writable = true;
+            };
+            extraConf = ''
+              ap_scan=1
+              p2p_disabled=1
+              okc=1
+            '';
+          })
         cfg.wireless.interfaces);
 
       systemd.tmpfiles.rules =
-        [ "d /etc/wpa_supplicant.d 700 root root - -" ] ++
-        (map (int: "f /etc/wpa_supplicant.d/${int}.conf 700 root root - -") cfg.wireless.interfaces);
+        ["d /etc/wpa_supplicant.d 700 root root - -"]
+        ++ (map (int: "f /etc/wpa_supplicant.d/${int}.conf 700 root root - -") cfg.wireless.interfaces);
 
       systemd.network.wait-online.ignoredInterfaces = cfg.wireless.interfaces;
       boot.initrd.systemd.network.wait-online.ignoredInterfaces = cfg.wireless.interfaces;
