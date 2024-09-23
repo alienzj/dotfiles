@@ -29,12 +29,9 @@
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
     emacs-overlay.inputs.nixpkgs-stable.follows = "nixpkgs";
 
-    # VSCodium
-    # TODO
+    # VSCode
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    # https://github.com/nix-community/nix-vscode-extensions/blob/master/template/flake.nix
-    #flake-utils.follows = "nix-vscode-extensions/flake-utils";
-    #nixpkgs.follows = "nix-vscode-extensions/nixpkgs";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     # Matlab
     nix-matlab.url = "gitlab:doronbehar/nix-matlab";
@@ -63,7 +60,7 @@
           permittedInsecurePackages = [
             "openssl-1.1.1w"
             "electron-28.3.3"
-	    "olm-3.2.16"
+            "olm-3.2.16"
           ];
         };
       };

@@ -30,6 +30,7 @@
         geph.enable = true;
         rdp.enable = true;
         goldendict.enable = true;
+        ventoy.enable = true;
       };
       browsers = {
         default = "brave";

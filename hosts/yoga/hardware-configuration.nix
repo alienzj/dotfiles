@@ -60,7 +60,7 @@
   # Hardware
   # GPU
   # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
-  hardware.graphics = {
+  hardware.opengl = {
     extraPackages = with pkgs; [
       vaapiVdpau
       libvdpau-va-gl
@@ -98,12 +98,19 @@
     };
 
     # network management
+    #network = {
+    #  enable = true;
+    #  wireless.enable = true;
+    #  networkmanager.enable = true;
+    #  MACAddress = "3c:9c:0f:17:58:95";
+    #  DomainNameServer = ["223.5.5.5" "8.8.8.8"];
+    #};
+
     network = {
       enable = true;
+      networkd.enable = true;
       wireless.enable = true;
-      networkmanager.enable = true;
-      MACAddress = "3c:9c:0f:17:58:95";
-      DomainNameServer = ["223.5.5.5" "8.8.8.8"];
+      wireless.interfaces = ["wlp0s20f0u13"]; # wlp0s20f0u13
     };
   };
 
