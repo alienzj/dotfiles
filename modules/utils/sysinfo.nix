@@ -33,6 +33,10 @@ in {
 
       # disk
       #gnome-disk-utility
+
+      pciutils
+      usbutils
+      lshw
     ];
 
     home.configFile = {

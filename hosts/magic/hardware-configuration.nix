@@ -119,6 +119,46 @@
   #networking.interfaces.elan.useDHCP = true; # needed when use networkd and wired
   #networking.interfaces.wlan.useDHCP = true; # needed when use networkmanager and wireless
 
+  services.udev.extraRules = ''
+    # USB power management
+    ## https://www.kernel.org/doc/Documentation/usb/power-management.txt
+    # USB devices
+    ## $ lsusb
+    ## $ ll /sys/bus/usb/devices/
+    ### Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    ### Bus 001 Device 002: ID 0bda:8771 Realtek Semiconductor Corp. Bluetooth Radio
+    ### Bus 001 Device 003: ID 046d:c542 Logitech, Inc. M185 compact wireless mouse
+    ### Bus 001 Device 004: ID 046d:085c Logitech, Inc. C922 Pro Stream Webcam
+    ### Bus 001 Device 007: ID 0c45:7692 Microdia USB Keyboard
+    ### Bus 001 Device 011: ID 2357:012e TP-Link 802.11ac NIC
+    ### Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+    ### Bus 002 Device 007: ID 0bc2:ab24 Seagate RSS LLC Backup Plus Portable Drive
+
+    # USB WIFI adapter autosuspand disabled
+    ## TP-Link 802.11ac NIC
+    ## $ grep 012e /sys/bus/usb/devices/*/idProduct
+    ### /sys/bus/usb/devices/1-13/idProduct:012e
+    ## cat /sys/bus/usb/devices/1-13/power/autosuspend
+    ### 2
+    ## cat /sys/bus/usb/devices/1-13/idProduct
+    ### 012e
+    ## cat /sys/bus/usb/devices/1-13/idVendor
+    ### 2357
+    ## driver
+    ### /sys/bus/usb/devices/1-13/1-13:1.0/driver/module/drivers/usb:rtw_8822bu
+
+    ## Bluetooth
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8771", ATTR{power/autosuspend}="-1"
+    ## Mouse
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c542", ATTR{power/autosuspend}="-1"
+    ## Webcam
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="085c", ATTR{power/autosuspend}="-1"
+    ## Keyboard
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0c45", ATTR{idProduct}=="7692", ATTR{power/autosuspend}="-1"
+    ## WIFI
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2357", ATTR{idProduct}=="012e", ATTR{power/autosuspend}="-1"
+  '';
+
   # CPU
   nix.settings = {
     cores = lib.mkDefault 12;

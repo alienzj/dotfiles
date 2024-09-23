@@ -27,6 +27,7 @@
         rustdesk.enable = true;
         geph.enable = true;
         rdp.enable = true;
+        ventoy.enable = true;
       };
       browsers = {
         default = "brave";
@@ -34,6 +35,17 @@
         firefox.enable = true;
         qutebrowser.enable = true;
         chromium.enable = true;
+      };
+      gaming = {
+        steam.enable = true;
+        emulators = {
+          #psx.enable = true;
+          ds.enable = true;
+          gb.enable = false;
+          gba.enable = false;
+          snes.enable = false;
+        };
+        games.enable = true;
       };
       media = {
         daw.enable = true;
