@@ -25,7 +25,7 @@
     },
     "crane": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1717383740,
@@ -236,7 +236,9 @@
       "inputs": {
         "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
       },
       "locked": {
         "lastModified": 1727055858,
@@ -328,22 +330,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1713805509,
-        "narHash": "sha256-YgSEan4CcrjivCNO5ZNzhg7/8ViLkZ4CB/GrGBVSudo=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "1e1dc66fe68972a76679644a5577828b6a7e8be4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1726838390,
         "narHash": "sha256-NmcVhGElxDbmEWzgXsyAjlRhUus/nEqPC5So7BOJLUM=",
         "owner": "NixOS",
@@ -357,7 +343,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1714656196,
         "narHash": "sha256-kjQkA98lMcsom6Gbhw8SYzmwrSo+2nruiTcTZp5jK7o=",
@@ -375,11 +361,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1727076083,
-        "narHash": "sha256-zxpNV5o7JY/2j1rKsG3VyCCkImJ//Q2T9pQITFqUMoc=",
+        "lastModified": 1727078243,
+        "narHash": "sha256-98swyTb0af9X/+9w31ftRHc556olBr2jciptE7EzCEo=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "bca3011ab052943280c53f2024abf9b993eafee2",
+        "rev": "9ff605f62f96c2f9ce8244a0a51557128fa8dc80",
         "type": "github"
       },
       "original": {
@@ -418,7 +404,7 @@
         "nix-matlab": "nix-matlab",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "proxmox-nixos": "proxmox-nixos"
