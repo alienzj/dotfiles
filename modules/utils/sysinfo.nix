@@ -34,9 +34,14 @@ in {
       # disk
       #gnome-disk-utility
 
-      pciutils
-      usbutils
-      lshw
+      unstable.pciutils
+      unstable.usbutils
+      unstable.lshw
+
+      # Probe for hardware, check operability and find drivers
+      # https://github.com/linuxhw/hw-probe
+      # https://linux-hardware.org/
+      unstable.hw-probe
     ];
 
     home.configFile = {
