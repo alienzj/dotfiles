@@ -36,7 +36,6 @@ in {
         python312Packages.grip
         python312Packages.pyflakes
         python312Packages.isort
-        python312Packages.nose
         python312Packages.pytest
         python312Packages.cython
       ];
