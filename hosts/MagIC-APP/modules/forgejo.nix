@@ -39,7 +39,10 @@
         #USER = config.age.secrets.forgejo-at-MagIC-APP-mailjet-smtp-api.path;
       };
     };
-    secrets.mailer.PASSWD = config.age.secrets.forgejo-at-MagIC-APP-mailjet-smtp-secret.path;
+    # nixos-unstable
+    #secrets.mailer.PASSWD = config.age.secrets.forgejo-at-MagIC-APP-mailjet-smtp-secret.path;
+    # nixos-24.05
+    mailerPasswordFile = config.age.secrets.forgejo-at-MagIC-APP-mailjet-smtp-secret.path;
   };
 
   age.secrets.forgejo-at-MagIC-APP-mailjet-smtp-api = {
