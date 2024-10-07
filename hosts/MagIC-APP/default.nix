@@ -74,6 +74,10 @@ with lib.my; {
       nginx.enable = true;
       docker.enable = true;
       earlyoom.enable = true;
+      rathole-client-pacman = {
+        enable = true;
+        configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_magicapp_c.toml";
+      };
       hedgedoc = {
         enable = true;
         host = "10.132.2.151";
