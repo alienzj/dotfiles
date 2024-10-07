@@ -18,6 +18,7 @@ in {
     user.packages = with pkgs; [
       # system
       unstable.neofetch
+      unstable.fastfetch
 
       # cpu
       #cpufetch
