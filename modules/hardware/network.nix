@@ -181,6 +181,10 @@ in {
 
     # reference
     ## https://wiki.archlinux.org/title/Wpa_supplicant
+    ## scan
+    ## scan_results
+    ## add_network
+    ## save_config
     # used in wireless network
     ## example
     ### sudo cat /etc/wpa_supplicant.d/wlp0s20f0u13.conf
@@ -227,14 +231,15 @@ in {
       systemd.network.wait-online.ignoredInterfaces = cfg.wireless.interfaces;
       boot.initrd.systemd.network.wait-online.ignoredInterfaces = cfg.wireless.interfaces;
 
-      #system.activationScripts = {
-      #  rfkillUnblockWlan = {
-      #    text = ''
-      #      rfkill unblock wlan
-      #    '';
-      #    deps = [];
-      #  };
-      #};
+      system.activationScripts = {
+        rfkillUnblockWlan = {
+          text = ''
+            rfkill unblock wifi
+            rfkill unblock wlan
+          '';
+          deps = [];
+        };
+      };
     })
 
     # only be used in wireless network
