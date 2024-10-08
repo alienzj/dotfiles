@@ -110,7 +110,7 @@
       enable = true;
       networkd.enable = true;
       wireless.enable = true;
-      wireless.interfaces = ["wlp0s20f0u13"]; # wlp0s20f0u13
+      wireless.interfaces = ["wlp1s0"];
     };
   };
 
