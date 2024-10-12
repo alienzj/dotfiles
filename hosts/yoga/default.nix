@@ -260,5 +260,5 @@
   #security.acme.defaults.email = "alienchuj@gmail.com";
 
   ## pacmantls
-  security.pki.certificates = [ "/home/alienzj/toolkits/ohconfig/openssl/pacmantls.ca.crt" ]
+  security.pki.certificates = [ "/home/alienzj/toolkits/ohconfig/openssl/pacmantls.ca.crt" ];
 }
