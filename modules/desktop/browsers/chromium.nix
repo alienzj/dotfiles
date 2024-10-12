@@ -30,7 +30,7 @@ in {
       #  desktopName = "Chromium Web Browser (Proxy)";
       #  genericName = "Open a Chromium window with proxy";
       #  icon = "chromium";
-      #  exec = "${brave}/bin/chromium --proxy-server=\"socks5://127.0.0.1:1080\"";
+      #  exec = "${brave}/bin/chromium --proxy-server=\"socks5://127.0.0.1:2080\"";
       #  categories = [ "Network" ];
       #})
       #(makeDesktopItem {
@@ -38,7 +38,7 @@ in {
       #  desktopName = "Chromium Web Browser (Private Proxy)";
       #  genericName = "Open a private Chromium window with proxy";
       #  icon = "brave";
-      #  exec = "${brave}/bin/chromium --incognito --proxy-server=\"socks5://127.0.0.1:1080\"";
+      #  exec = "${brave}/bin/chromium --incognito --proxy-server=\"socks5://127.0.0.1:2080\"";
       #  categories = [ "Network" ];
       #})
     ];

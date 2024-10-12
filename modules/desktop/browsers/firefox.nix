@@ -242,7 +242,7 @@ in {
       modules.desktop.browsers.firefox.proxyConfigPacman = {
         "network.proxy.no_proxies_on" = "127.0.0.1,localhost,192.168.50.84,aliyundrive.com,aliyun.com,jd.com,taobao.com,mi.com,.bilibili.com";
         "network.proxy.socks" = "127.0.0.1";
-        "network.proxy.socks_port" = 1080;
+        "network.proxy.socks_port" = 2080;
         "network.proxy.socks_remote_dns" = true;
         "network.proxy.type" = 1;
       };
