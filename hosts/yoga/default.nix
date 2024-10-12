@@ -217,12 +217,14 @@
       };
       shadowsocks-client-pacman = {
         enable = true;
-        remotePort = 5777;
+        #remotePort = 7775;
+        remotePort = 443;
         localAddress = "127.0.0.1";
         localPort = 1080;
         remoteAddressFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/server_pacman";
         passwordFile = "/home/alienzj/toolkits/ohconfig/shadowsocks/password_pacman";
         encryptionMethod = "chacha20-ietf-poly1305";
+	pluginOpts = "path=/pacmantls;host=example.com;tls";
       };
       rathole-client-pacman = {
         enable = true;
@@ -256,4 +258,7 @@
 
   ## Security
   #security.acme.defaults.email = "alienchuj@gmail.com";
+
+  ## pacmantls
+  security.pki.certificates = [ "/home/alienzj/toolkits/ohconfig/openssl/pacmantls.ca.crt" ]
 }
