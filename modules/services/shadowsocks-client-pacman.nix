@@ -127,7 +127,7 @@ in {
 
     plugin = mkOption {
       type = types.nullOr types.str;
-      default = "${pkgs.shadowsocks-v2ray-plugin}/bin/v2ray-plugin";
+      default = "${pkgs.unstable.shadowsocks-v2ray-plugin}/bin/v2ray-plugin";
       example = literalExpression ''"''${pkgs.shadowsocks-v2ray-plugin}/bin/v2ray-plugin"'';
       description = lib.mdDoc ''
         SIP003 plugin for shadowsocks
@@ -163,8 +163,8 @@ in {
   ###### implementation
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      shadowsocks-rust
-      shadowsocks-v2ray-plugin
+      unstable.shadowsocks-rust
+      unstable.shadowsocks-v2ray-plugin
     ];
 
     assertions =
@@ -178,7 +178,7 @@ in {
       description = "shadowsocks-rust client Daemon";
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
-      path = [pkgs.shadowsocks-rust] ++ optional (cfg.plugin != null) cfg.plugin ++ optional (cfg.passwordFile != null) pkgs.jq;
+      path = [pkgs.unstable.shadowsocks-rust] ++ optional (cfg.plugin != null) cfg.plugin ++ optional (cfg.passwordFile != null) pkgs.jq;
       serviceConfig.PrivateTmp = true;
       script = ''
         ${optionalString (cfg.passwordFile != null) ''
