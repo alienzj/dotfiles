@@ -15,8 +15,8 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      geph.gui
-      geph.cli
+      unstable.geph.gui
+      unstable.geph.cli
 
       # https://github.com/tauri-apps/tauri/issues/4315
       (makeDesktopItem {
