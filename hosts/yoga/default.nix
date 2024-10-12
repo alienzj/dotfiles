@@ -28,6 +28,7 @@
         thunderbird.enable = true;
         rustdesk.enable = false;
         geph.enable = true;
+	nekoray.enable = true;
         rdp.enable = true;
         goldendict.enable = true;
         ventoy.enable = true;
@@ -216,7 +217,7 @@
         port = 1080;
       };
       shadowsocks-client-pacman = {
-        enable = true;
+        enable = false;
         #remotePort = 7775;
         remotePort = 443;
         localAddress = "127.0.0.1";
