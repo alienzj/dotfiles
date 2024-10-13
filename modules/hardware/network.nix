@@ -69,8 +69,8 @@ in {
           enable = true;
           allowPing = true;
           pingLimit = "--limit 1/minute --limit-burst 5";
-          allowedTCPPorts = [22 80 443 3389 8080];
-          allowedUDPPorts = [22 80 443 3389 8080];
+          allowedTCPPorts = [22 80 443 3389 8080 1080 2080 3080 4080];
+          allowedUDPPorts = [22 80 443 3389 8080 1080 2080 3080 4080];
         };
       };
     }
