@@ -52,6 +52,7 @@ with modules; rec {
         config.permittedInsecurePackages = [
           "python-2.7.18.6"
           "openssl-1.1.1w"
+	  "olm-3.2.16"
         ];
       };
 

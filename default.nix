@@ -80,7 +80,7 @@ with hey.lib; {
 
     system = {
       configurationRevision = with hey.inputs; mkIf (hey ? rev) hey.rev;
-      stateVersion = "23.11";
+      stateVersion = "24.05";
     };
 
     boot = {

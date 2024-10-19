@@ -149,9 +149,9 @@ in {
                 coin
                 forcats
                 writexl
-                flextable
-                gt
-                gtExtras
+                #flextable
+                #gt
+                #gtExtras
                 randomForest
                 curatedMetagenomicData
                 SummarizedExperiment
@@ -166,7 +166,7 @@ in {
                 yaml
                 optparse
                 glue
-                V8
+                #V8
                 languageserver
                 rlang
                 insight

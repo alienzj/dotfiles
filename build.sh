@@ -1,16 +1,10 @@
-#nix flake update --impure
+export HEYENV="{\"user\":\"alienzj\",\"host\":\"eniac\",\"theme\":\"autumnal\",\"path\":\"/etc/dotfiles\", \"http_proxy\":\"socks5h://192.168.50.125:2080\", \"https_proxy\":\"socks5h://192.168.50.125:2080\"}"
 
-#env http_proxy=http://127.0.0.1:9910 https_proxy=http://127.0.0.1:9910 nixos-rebuild --flake /etc/dotfiles#eniac --option pure-eval no switch --show-trace
+export http_proxy=socks5h://192.168.50.125:2080
+export https_proxy=socks5h://192.168.50.125:2080
 
-
-export HEYENV="{\"user\":\"alienzj\",\"host\":\"eniac\",\"flake\":\"/etc/dotfiles\",\"theme\":\"autumnal\",\"path\":\"/etc/dotfiles\"}"
-
-export http_proxy=http://127.0.0.1:9910
-export https_proxy=http://127.0.0.1:9910
-
-sudo --preserve-env=HEYENV \
+sudo --preserve-env=HEYENV http_proxy=socks5h://192.168.50.125:2080 https_proxy=socks5h://192.168.50.125:2080 \
 	nixos-rebuild \
-	--show-trace \
 	--impure \
 	--flake .#eniac \
 	switch

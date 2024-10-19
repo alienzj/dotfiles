@@ -22,34 +22,40 @@ with builtins; {
         "cpu/amd"
         "gpu/nvidia"
         "audio"
-        "audio/realtime"
+        #"audio/realtime"
         "hidpi"
         "ssd"
+	"dualmonitor"
+	#"eniac"
       ];
     };
 
     desktop = {
       # X only
-      # bspwm.enable = true;
-      # term.default = "xst";
-      # term.st.enable = "true";
+      bspwm.enable = true;
+      term.default = "xst";
+      term.st.enable = true;
 
       # Wayland only
       hyprland = rec {
-        enable = true;
+        enable = false;
         monitors = [
           {
-            output = "HDMI-0";
-            position = "3840x2160";
+            output = "HDMI-A-2";
+            mode = "3840x2160@60";
+	    position = "0x0";
+	    scale = 2;
             primary = true;
           }
           #{ output = "DP-3";
           #  position = "0x2191"; }
           #{ output = "DP-2";
           #  position = "4480x2191"; }
-          #{ output = "HDMI-A-1";
-          #  mode = "3840x2160@120";
-          #  position = "1280x0"; }
+          { output = "HDMI-A-1";
+            mode = "3840x2160@60";
+            position = "3840x0"; 
+	    scale = 2;
+	  }
         ];
 
         extraConfig = ''
@@ -58,9 +64,8 @@ with builtins; {
           monitor = Unknown-1,disable
 
           # Bind fixed workspaces to external monitors
-          ##workspace = name:left, monitor:DP-3, default:true
-          ##workspace = name:right, monitor:DP-2, default:true
-          ##workspace = name:tv, monitor:HDMI-A-1, default:true, gapsout:4
+          workspace = name:left, monitor:HDMI-A-2, default:true
+          workspace = name:right, monitor:HDMI-A-1, default:true
 
           # Scroll by holding down a side button, because the wheel is broken
           ##device {
@@ -69,25 +74,26 @@ with builtins; {
           ##    scroll_button = 276
           ##}
 
-          ##exec-once = hyprctl keyword monitor HDMI-A-1,disable
+          #exec-once = hyprctl keyword monitor HDMI-A-1,disable
         '';
       };
 
-      term.default = "foot";
-      term.foot.enable = true;
+      #term.default = "foot";
+      #term.foot.enable = true;
       term.wezterm.enable = true;
 
       # Extra
       apps = {
         rofi.enable = true;
         filezilla.enable = true;
-        geph.enable = true;
+        geph.enable = false;
+	sing-box.enable = true;
         godot.enable = true;
-        goldendict.enable = true;
+        goldendict.enable = false;
         libreoffice.enable = true;
         wpsoffice.enable = true;
         zoomus.enable = true;
-        rustdesk.enable = true;
+        rustdesk.enable = false;
         #teamviewer.enable = true;
         #rdp.enable = true;
         #net.enable = true;
@@ -97,6 +103,7 @@ with builtins; {
         transmission.enable = true;
         #ue.enable = true;
         #unity3d.enable = true;
+	spotify.enable = true;
       };
 
       browsers = {
@@ -135,12 +142,12 @@ with builtins; {
         video = {
           enable = true;
           capture.enable = true;
-          editor.enable = true;
+          editor.enable = false;
           player.enable = true;
           tools.enable = true;
         };
         graphics = {
-          enable = true;
+          enable = true; 
           tools.enable = true;
           raster.enable = true;
           vector.enable = true;
@@ -150,11 +157,11 @@ with builtins; {
       };
 
       im = {
-        matrix.enable = true;
+        matrix.enable = false;
         tdesktop.enable = true;
         slack.enable = true;
-        discord.enable = true;
-        qqwechat.enable = true;
+        discord.enable = false;
+        #qqwechat.enable = false;
       };
 
       vm = {
@@ -184,10 +191,10 @@ with builtins; {
     dev = {
       cc.enable = true;
       lua.enable = true;
-      node = {
-        enable = true;
-        xdg.enable = true;
-      };
+      #node = {
+      #  enable = false;
+      #  xdg.enable = false;
+      #};
       rust = {
         enable = true;
         xdg.enable = true;
@@ -204,7 +211,7 @@ with builtins; {
         enable = true;
         xdg.enable = true;
       };
-      r.enable = true;
+      r.enable = false;
       julia.enable = true;
       go.enable = true;
       haskell.enable = true;
@@ -229,7 +236,7 @@ with builtins; {
     editors = {
       default = "nvim";
       emacs = rec {
-        enable = true;
+        enable = false;
         #doom = {
         #  enable = false;
         #  forgeUrl = "https://github.com";
@@ -238,9 +245,9 @@ with builtins; {
         #};
       };
       vim.enable = true;
-      vscode.enable = true;
+      vscode.enable = false;
       #vscodium.enable = true;
-      rstudio.enable = true;
+      rstudio.enable = false;
       android-studio.enable = true;
     };
 
@@ -252,7 +259,7 @@ with builtins; {
       git.enable = true;
       gnupg.enable = true;
       tmux.enable = true;
-      #zellij.enable = true;
+      zellij.enable = true;
       zsh.enable = true;
       fish.enable = true;
     };
@@ -260,9 +267,9 @@ with builtins; {
     services = {
       adb.enable = true; # android
       syncthing.enable = true;
-      rstudio-server.enable = true;
+      rstudio-server.enable = false;
       jupyterhub = {
-        enable = true;
+        enable = false;
         adminUser = "alienzj";
         allowedUser = ["alienzj"];
       };
@@ -288,7 +295,7 @@ with builtins; {
         port = 1080;
       };
       shadowsocks-client-pacman = {
-        enable = true;
+        enable = false;
         remotePort = 5777;
         localAddress = "127.0.0.1";
         localPort = 1080;
@@ -297,7 +304,7 @@ with builtins; {
         encryptionMethod = "chacha20-ietf-poly1305";
       };
       rathole-client-pacman = {
-        enable = true;
+        enable = false;
         configFile = "/home/alienzj/toolkits/ohconfig/rathole/pacman_eniac_c.toml";
       };
       #boinc.enable = true;
@@ -332,9 +339,9 @@ with builtins; {
     };
 
     user.packages = with pkgs; [
-      #unstable.guitarix
-      #gxplugins-lv2
-      #ladspaPlugins
+      unstable.guitarix
+      gxplugins-lv2
+      ladspaPlugins
 
       signal-desktop
     ];
@@ -395,7 +402,7 @@ with builtins; {
 
     boot.supportedFilesystems = ["ntfs"];
 
-    #networking.interfaces.eno1.useDHCP = true;
+    networking.interfaces.enp5s0.useDHCP = true;
 
     # CPU
     ##nix.settings = {
@@ -415,42 +422,6 @@ with builtins; {
       wantedBy = ["multi-user.target"];
     };
 
-    #services.udev.extraRules = ''
-    #  # keyboard autosuspand
-    #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
-    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
-    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="3600000"
-
-    #  # mouse autosuspand
-    #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
-    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
-    #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="3600000"
-    #'';
-
-    # Displays
-    ##services.xserver = {
-    ##  enable = true;
-    ##  exportConfiguration = true;
-    ##  xkb.layout = "us";
-    ##  serverFlagsSection = ''
-    ##    Option "StandbyTime" "20"
-    ##    Option "SuspendTime" "30"
-    ##    Option "OffTime" "45"
-    ##    Option "BlankTime" "45"
-    ##  '';
-    ##};
-
-    ## Single monitor
-    ## https://github.com/NixOS/nixpkgs/issues/30796
-    ##services.xserver.displayManager.setupCommands = ''
-    ##  ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output HDMI-0 --mode 3840x2160 --rate 60 --pos 0x0 --primary
-    ##'';
-
-    # Mouse
-    #services.libinput = {
-    #  enable = true;
-    #  mouse.accelProfile = "flat";
-    #};
 
     # Filesystem
     fileSystems."/" = {
@@ -475,35 +446,12 @@ with builtins; {
       fsType = "ext4";
     };
 
-    swapDevices = [{device = "/dev/disk/by-label/swap";}];
-
-    ## Filesystem
-    #fileSystems."/" = {
-    #  device = "/dev/disk/by-uuid/952cf267-a657-4abb-b121-5bebf3a103aa";
-    #  fsType = "ext4";
-    #};
-
-    #fileSystems."/boot" = {
-    #  device = "/dev/disk/by-uuid/C247-75AF";
-    #  fsType = "vfat";
-    #};
-
-    #fileSystems."/home" = {
-    #  device = "/dev/disk/by-uuid/0dcf7734-5d12-4b60-8632-6a75196a31a7";
-    #  fsType = "ext4";
-    #};
-
-    #fileSystems."/mnt/store" = {
-    #  device = "/dev/disk/by-uuid/294a32c8-a7ab-4646-86c4-277dafc708b7";
-    #  fsType = "ext4";
-    #};
-
-    #swapDevices = [{device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";}];
+    swapDevices = [];
 
     # Hibernation
     ## Hibernation requires a configured swap device.
     ## go to hibernation by running: systemctl hibernate
-    boot.resumeDevice = "/dev/disk/by-label/swap";
+    #boot.resumeDevice = "/dev/disk/by-label/swap";
 
     ## Go into hibernate after specific suspend time
     ## system will go from suspend into hibernate after 1 hour

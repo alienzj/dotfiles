@@ -34,7 +34,7 @@ in {
         seqtk
         seqkit
         SPAdes
-        sratoolkit
+        #sratoolkit
         star
         vcftools
         bedtools

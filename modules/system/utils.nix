@@ -34,6 +34,8 @@ in {
         sysstat # sar, iostat, pidstat
         unixtools.netstat
         usbutils # lsusb
+	htop
+	fastfetch
       ];
     }
 

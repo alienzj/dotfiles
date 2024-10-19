@@ -84,7 +84,7 @@ with hey.lib; let
       reshape2
       dtplyr
       dbplyr
-      multidplyr
+      #multidplyr
       tidyr
       glue
       ## string
@@ -102,7 +102,7 @@ with hey.lib; let
       httr2
       xml2
       curl
-      V8
+      #V8
 
       # tidy data visualization
       ## interactive
@@ -133,10 +133,10 @@ with hey.lib; let
       ## correlation
       cowplot
       ## table summary
-      gtsummary
-      flextable
-      gt
-      gtExtras
+      #gtsummary
+      #flextable
+      #gt
+      #gtExtras
       ## color
       #microshades
 

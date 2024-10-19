@@ -3,19 +3,13 @@
 # Sets up a hyprland-based desktop environment.
 #
 # TODO: Investigate bluetuith for bluetooth TUI
-{
-  hey,
-  heyBin,
-  lib,
-  options,
-  config,
-  pkgs,
-  ...
-}:
+
+{ hey, heyBin, lib, options, config, pkgs, ... }:
+
 with lib;
-with hey.lib; let
-  cfg = config.modules.desktop.hyprland;
-  primaryMonitor = findFirst (x: x.primary) {} cfg.monitors;
+with hey.lib;
+let cfg = config.modules.desktop.hyprland;
+    primaryMonitor = findFirst (x: x.primary) {} cfg.monitors;
 in {
   options.modules.desktop.hyprland = with types; {
     enable = mkBoolOpt false;
@@ -47,9 +41,9 @@ in {
     };
 
     idle = {
-      time = mkOpt int 600; # 10 min
-      autodpms = mkOpt int 1200; # 20 min
-      autolock = mkOpt int 2400; # 40 min
+      time = mkOpt int 600;       # 10 min
+      autodpms = mkOpt int 1200;   # 20 min
+      autolock = mkOpt int 2400;  # 40 min
       autosleep = mkOpt int 0;
     };
   };
@@ -81,10 +75,10 @@ in {
       # hypridle = {
       #   enable = true;
       #   settings = {
-      #     before_sleep_cmd = "${heyBin} hook sleep";
-      #     after_sleep_cmd = "${heyBin} hook wakeup";
-      #     lock_cmd = "${heyBin} hook lock";
-      #     unlock_cmd = "${heyBin} hook unlock";
+      #     before_sleep_cmd = "${heyBin} hook idle --on sleep";
+      #     after_sleep_cmd = "${heyBin} hook idle --off sleep";
+      #     lock_cmd = "${heyBin} hook idle --on lock";
+      #     unlock_cmd = "${heyBin} hook idle --off lock";
       #     ignore_dbus_inhibit = "false";
       #   };
       #   timeouts =
@@ -109,43 +103,33 @@ in {
       # };
       swayidle = {
         enable = true;
-        events =
-          {
-            before-sleep = "${heyBin} hook idle --on sleep";
-            after-resume = "${heyBin} hook idle --off sleep";
-            lock = "${heyBin} hook idle --on lock";
-            unlock = "${heyBin} hook idle --off lock";
-          }
-          // (optionalAttrs (cfg.idle.time > 0) {
-            idlehint = toString cfg.idle.time;
-          });
+        events = {
+          before-sleep = "${heyBin} hook idle --on sleep";
+          after-resume = "${heyBin} hook idle --off sleep";
+          lock = "${heyBin} hook idle --on lock";
+          unlock = "${heyBin} hook idle --off lock";
+        } // (optionalAttrs (cfg.idle.time > 0) {
+          idlehint = toString cfg.idle.time;
+        });
         timeouts =
-          (optionals (cfg.idle.time > 0) [
-            {
-              timeout = cfg.idle.time;
-              command = "${heyBin} hook idle --on";
-              resume = "${heyBin} hook idle --off";
-            }
-          ])
-          ++ (optionals (cfg.idle.autodpms > 0) [
-            {
-              timeout = cfg.idle.autodpms;
-              command = "${heyBin} hook idle --on dpms";
-              resume = "${heyBin} hook idle --off dpms";
-            }
-          ])
-          ++ (optionals (cfg.idle.autolock > 0) [
-            {
-              timeout = cfg.idle.autolock;
-              command = "loginctl lock-session";
-            }
-          ])
-          ++ (optionals (cfg.idle.autosleep > 0) [
-            {
-              timeout = cfg.idle.autosleep;
-              command = "systemctl suspend";
-            }
-          ]);
+          (optionals (cfg.idle.time > 0) [{
+            timeout = cfg.idle.time;
+            command = "${heyBin} hook idle --on";
+            resume = "${heyBin} hook idle --off";
+          }]) ++
+          (optionals (cfg.idle.autodpms > 0) [{
+            timeout = cfg.idle.autodpms;
+            command = "${heyBin} hook idle --on dpms";
+            resume = "${heyBin} hook idle --off dpms";
+          }]) ++
+          (optionals (cfg.idle.autolock > 0) [{
+            timeout = cfg.idle.autolock;
+            command = "loginctl lock-session";
+          }]) ++
+          (optionals (cfg.idle.autosleep > 0) [{
+            timeout = cfg.idle.autosleep;
+            command = "systemctl suspend";
+          }]);
       };
 
       waybar = {
@@ -170,34 +154,32 @@ in {
       hey.inputs.hyprpicker.overlays.default
     ];
 
-    environment.systemPackages = with pkgs;
-      [
-        # pkgs.unstable doesn't have nixpkgs.overlays applied, so any package
-        # referencing hyprland in their derivation must be installed from pkgs.
-        hyprlock # *fast* lock screen
-        hyprpicker # screen-space color picker
-        hyprshade # to apply shaders to the screen
-        hyprshot # instead of grim(shot) or maim/slurp
-      ]
-      ++ (with pkgs.unstable; [
-        mako # dunst for wayland
-        swaybg # feh (as a wallpaper manager)
+    environment.systemPackages = with pkgs; [
+      # pkgs.unstable doesn't have nixpkgs.overlays applied, so any package
+      # referencing hyprland in their derivation must be installed from pkgs.
+      hyprlock       # *fast* lock screen
+      hyprpicker     # screen-space color picker
+      hyprshade      # to apply shaders to the screen
+      hyprshot       # instead of grim(shot) or maim/slurp
+    ] ++ (with pkgs.unstable; [
+      mako           # dunst for wayland
+      swaybg         # feh (as a wallpaper manager)
 
-        ## Utilities
-        gromit-mpx # for drawing on the screen
-        pamixer # for volume control
-        wf-recorder # screencasting
-        wlr-randr # for monitors that hyprctl can't handle
-        xorg.xrandr # for XWayland windows
-      ]);
+      ## Utilities
+      gromit-mpx     # for drawing on the screen
+      pamixer        # for volume control
+      wf-recorder    # screencasting
+      wlr-randr      # for monitors that hyprctl can't handle
+      xorg.xrandr    # for XWayland windows
+    ]);
 
     systemd.user.targets.hyprland-session = {
       unitConfig = {
         Description = "Hyprland compositor session";
-        Documentation = ["man:systemd.special(7)"];
-        BindsTo = ["graphical-session.target"];
-        Wants = ["graphical-session-pre.target"];
-        After = ["graphical-session-pre.target"];
+        Documentation = [ "man:systemd.special(7)" ];
+        BindsTo = [ "graphical-session.target" ];
+        Wants = [ "graphical-session-pre.target" ];
+        After = [ "graphical-session-pre.target" ];
       };
     };
 
@@ -234,14 +216,14 @@ in {
           hey.do hyprlock --immediate
           sleep 0.1
           hey.do systemctl --user start hyprland-session.target
+          hey .play-sound startup
 
           # TODO: Theme module should handle this!
           local wallpaper=$XDG_DATA_HOME/wallpaper
           if [[ -f $wallpaper ]]; then
             hey.do swaybg -i $wallpaper &
-            sleep 0.5  # give it time to fade out
+            sleep 0.5
           fi
-          hey .play-sound startup
         '';
 
         # I'm using this instead of exec= lines in hyprland.conf so I can ensure
@@ -280,10 +262,9 @@ in {
         exec-once = hey hook startup
 
         ${concatStringsSep "\n" (map
-          (v:
-            if v.disable
-            then "monitor = ${v.output},disable"
-            else "monitor = ${v.output},${v.mode},${v.position},${toString v.scale}")
+          (v: if v.disable
+              then "monitor = ${v.output},disable"
+              else "monitor = ${v.output},${v.mode},${v.position},${toString v.scale}")
           cfg.monitors)}
 
         $PRIMARY_MONITOR = ${primaryMonitor.output or ""}
@@ -309,20 +290,18 @@ in {
       '';
       "hypr/hyprland.post.conf".text = cfg.extraConfig;
 
-      "hypr/hyprlock.conf".text = let
-        toHyprlockINI = n: v: ''
-          ${n} {
-            ${concatStringsSep "\n"
-            (mapAttrsToList (n: v: "${n} = ${toString v}") v)}
-          }
-        '';
-      in
-        concatStringsSep "\n" (flatten
+      "hypr/hyprlock.conf".text =
+        let toHyprlockINI = n: v: ''
+              ${n} {
+                ${concatStringsSep "\n"
+                  (mapAttrsToList (n: v: "${n} = ${toString v}") v)}
+              }
+            '';
+        in concatStringsSep "\n" (flatten
           (mapAttrsToList
-            (n: v:
-              if isAttrs v
-              then toHyprlockINI n v
-              else map (x: toHyprlockINI (removeSuffix "s" n) x) v)
+            (n: v: if isAttrs v
+                   then toHyprlockINI n v
+                   else map (x: toHyprlockINI (removeSuffix "s" n) x) v)
             (mergeAttrs' [
               {
                 general = {
@@ -334,26 +313,26 @@ in {
               cfg.hyprlock.settings
             ])));
 
-      "mako/config".text = let
-        toINI = mapAttrsToList (n: v: "${n}=${toString v}");
-      in ''
-        # config/mako/config -*- mode: ini -*-
-        # This was automatically generated by NixOS and my dotfiles
-        ${concatStringsSep "\n"
-          (toINI ({"output" = primaryMonitor.output or "";}
-              // (filterAttrs (_: v: ! isAttrs v) cfg.mako.settings)))}
+      "mako/config".text =
+        let toINI = mapAttrsToList (n: v: "${n}=${toString v}");
+        in ''
+          # config/mako/config -*- mode: ini -*-
+          # This was automatically generated by NixOS and my dotfiles
+          ${concatStringsSep "\n"
+            (toINI ({ "output" = (primaryMonitor.output or ""); }
+                    // (filterAttrs (_: v: ! isAttrs v) cfg.mako.settings)))}
 
-        ${concatStringsSep "\n"
-          (mapAttrsToList
-            (n: v: ''
-              [${n}]
-              ${concatStringsSep "\n" (toINI v)}
-            '')
-            (filterAttrs (_: v: isAttrs v) cfg.mako.settings))}
+          ${concatStringsSep "\n"
+            (mapAttrsToList
+              (n: v: ''
+                [${n}]
+                ${concatStringsSep "\n" (toINI v)}
+              '')
+              (filterAttrs (_: v: isAttrs v) cfg.mako.settings))}
 
-        [mode=dnd]
-        invisible=1
-      '';
+          [mode=dnd]
+          invisible=1
+        '';
     };
 
     user.packages = with pkgs; [

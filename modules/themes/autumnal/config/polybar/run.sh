@@ -38,21 +38,19 @@ else
 
     if [ $DUALMONITOR == "yes" ]; then
         if [ $COMPUTERNAME == "magic" ]; then
-            MONITOR="DP1" DPI=168 LAN="lan" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
-            MONITOR="DP2" polybar --reload next >$XDG_DATA_HOME/polybar_next.log 2>&1 &
-        fi
+            MONITOR="DP1" DPI=168 LAN="lan" polybar --reload main >$polybardir/polybar_primary.log 2>&1 &
+            MONITOR="DP2" polybar --reload next >$polybardir/polybar_next.log 2>&1 &
+        elif [ $COMPUTERNAME == "eniac" ]; then
+            MONITOR="HDMI-A-0" DPI=168 LAN="enp5s0" polybar --reload main >$polybardir/polybar_primary.log 2>&1 &
+            MONITOR="HDMI-A-1" DPI=168 polybar --reload next >$polybardir/polybar_primary.log 2>&1 &
+	fi
     else
-        if [ $COMPUTERNAME == "eniac" ]; then
-            MONITOR="HDMI-0" DPI=168 LAN="lan" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
-        elif [ $COMPUTERNAME == "yoga" ]; then
-            MONITOR="eDP" DPI=168 LAN="lan" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+        if [ $COMPUTERNAME == "yoga" ]; then
+            MONITOR="eDP" DPI=168 LAN="lan" polybar --reload main >$polybardir/polybar_primary.log 2>&1 &
         elif [ $COMPUTERNAME == "TenSunnyDay" ]; then
-            MONITOR="eDP-1" DPI=120 LAN="wlp0s20f3" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+            MONITOR="eDP-1" DPI=120 LAN="wlp0s20f3" polybar --reload main >$polybardir/polybar_primary.log 2>&1 &
         fi
     fi
 
   } &
 fi
-
-
-
