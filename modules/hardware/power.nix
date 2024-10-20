@@ -20,6 +20,7 @@ in {
   options.modules.hardware.power = with types; {
     enable = mkBoolOpt false;
     pm.enable = mkBoolOpt false;
+    hibernate.enable = mkBoolOpt false;
     laptop.enable = mkBoolOpt false;
     laptop.lightUpKey = mkOpt types.int 63;
     laptop.lightDownKey = mkOpt types.int 64;
@@ -31,7 +32,8 @@ in {
     ## adjust swap size if you using LVM
     ## https://baldpenguin.blogspot.com/2016/03/enabling-hibernation-in-fedora-23.html
     ## https://github.com/huataihuang/cloud-atlas-draft/tree/master/os/linux/storage/device-mapper/lvm
-    resumeDevice = mkOpt types.str "/dev/disk/by-label/swap";
+    #resumeDevice = mkOpt types.str "/dev/disk/by-label/swap";
+    resumeDevice = mkOpt types.str "";
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -63,7 +65,9 @@ in {
         ## it goes to suspend or hibernation.
         ##powerDownCommands = ''${pkgs.hdparm}/sbin/hdparm -B 255 /dev/sda'';
       };
+    })
 
+    (mkIf (cfg.hibernate.enable && cfg.resumeDevice != "") {
       # Hibernation
       ## Hibernation requires a configured swap device.
       ## go to hibernation by running: systemctl hibernate

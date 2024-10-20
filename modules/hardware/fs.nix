@@ -18,6 +18,8 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
+      boot.supportedFilesystems = ["ntfs" "cifs"];
+
       programs.udevil.enable = true;
 
       # Support for more filesystems, mostly to support external drives

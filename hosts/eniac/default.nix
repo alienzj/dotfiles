@@ -27,6 +27,7 @@
         scrcpy.enable = true;
         rustdesk.enable = true;
         geph.enable = true;
+        sing-box.enable = true;
         rdp.enable = true;
         goldendict.enable = true;
       };
@@ -203,13 +204,13 @@
       };
       #transmission.enable = true;
       proxychains = {
-        enable = true;
+        enable = false;
         type = "socks5";
         host = "127.0.0.1";
         port = 1080;
       };
       shadowsocks-client-pacman = {
-        enable = true;
+        enable = false;
         remotePort = 5777;
         localAddress = "127.0.0.1";
         localPort = 1080;

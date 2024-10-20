@@ -67,6 +67,7 @@
     nvidia.enable = true;
     #https://discourse.nixos.org/t/usb-mouse-and-keyboard-poweroff-too-soon-udev/22459
     #mouse.enable = true;
+    dualmonitor.enable = true;
 
     # power management
     power = {
@@ -74,32 +75,41 @@
       pm.enable = true;
       pc.enable = true;
       cpuFreqGovernor = "performance";
-      resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
+
+      hibernate = false;
+      #resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
     };
 
     # network management
+    #network = {
+    #  enable = true;
+    #  networkd.enable = true;
+    #  MACAddress = "10:7b:44:8e:fe:b4";
+    #  IPAddress = ["192.168.1.2/24"];
+    #  RouteGateway = ["192.168.1.1"];
+    #  DomainNameServer = ["223.5.5.5" "8.8.8.8" "119.29.29.29"];
+    #  NetworkTimeServer = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+    #};
     network = {
       enable = true;
       networkd.enable = true;
-      MACAddress = "10:7b:44:8e:fe:b4";
-      IPAddress = ["192.168.1.2/24"];
-      RouteGateway = ["192.168.1.1"];
-      DomainNameServer = ["223.5.5.5" "8.8.8.8" "119.29.29.29"];
-      NetworkTimeServer = ["ntp7.aliyun.com" "ntp.aliyun.com"];
+      wireless.enable = false;
+      #wireless.interfaces = ["wlp0s20f0u13"]; # wlp0s20f0u13
     };
   };
+  networking.interfaces.enp5s0.useDHCP = true;
 
-  services.udev.extraRules = ''
-    # keyboard autosuspand
-    ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="3600000"
+  #services.udev.extraRules = ''
+  #  # keyboard autosuspand
+  #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend}="-1"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/control}="on"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="0209", ATTR{power/autosuspend_delay_ms}="3600000"
 
-    # mouse autosuspand
-    ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="3600000"
-  '';
+  #  # mouse autosuspand
+  #  ##ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend}="-1"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/control}="on"
+  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="005e", ATTR{power/autosuspend_delay_ms}="3600000"
+  #'';
 
   # CPU
   nix.settings = {
@@ -123,8 +133,13 @@
 
   ## Single monitor
   ## https://github.com/NixOS/nixpkgs/issues/30796
+  #services.xserver.displayManager.setupCommands = ''
+  #  ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output HDMI-0 --mode 3840x2160 --rate 60 --pos 0x0 --primary
+  #'';
   services.xserver.displayManager.setupCommands = ''
-    ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output HDMI-0 --mode 3840x2160 --rate 60 --pos 0x0 --primary
+    LEFT='HDMI-A-2'
+    RIGHT='HDMI-A-1'
+    ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $LEFT --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary --output $RIGHT --mode 3840x2160 --rate 60 --pos 3840x0 --scale 1x1 --right-of $LEFT
   '';
 
   # Mouse
@@ -135,26 +150,28 @@
 
   # Filesystem
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/952cf267-a657-4abb-b121-5bebf3a103aa";
+    device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
+    options = ["noatime" "errors=remount-ro"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/C247-75AF";
+    device = "/dev/disk/by-label/BOOT";
     fsType = "vfat";
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/0dcf7734-5d12-4b60-8632-6a75196a31a7";
+    device = "/dev/disk/by-label/home";
     fsType = "ext4";
+    options = ["noatime"];
   };
 
   fileSystems."/mnt/store" = {
-    device = "/dev/disk/by-uuid/294a32c8-a7ab-4646-86c4-277dafc708b7";
+    device = "/dev/disk/by-label/store";
     fsType = "ext4";
   };
 
-  swapDevices = [{device = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";}];
+  swapDevices = [];
 
   # User
   user.extraGroups = ["tss" "video"];
