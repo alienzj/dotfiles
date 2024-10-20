@@ -67,8 +67,8 @@ in {
       };
     })
 
-    #(mkIf (cfg.hibernate.enable && cfg.resumeDevice != "") {
-    (mkIf cfg.hibernate.enable {
+    (mkIf (cfg.hibernate.enable && cfg.resumeDevice != "") {
+      #(mkIf cfg.hibernate.enable {
       # Hibernation
       ## Hibernation requires a configured swap device.
       ## go to hibernation by running: systemctl hibernate

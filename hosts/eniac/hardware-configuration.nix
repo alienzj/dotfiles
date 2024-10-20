@@ -75,8 +75,7 @@
       pm.enable = true;
       pc.enable = true;
       cpuFreqGovernor = "performance";
-
-      hibernate = false;
+      hibernate.enable = false;
       #resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
     };
 
