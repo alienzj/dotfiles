@@ -25,8 +25,8 @@
         transmission.enable = true;
         filezilla.enable = true;
         scrcpy.enable = true;
-        rustdesk.enable = true;
-        geph.enable = true;
+        rustdesk.enable = false;
+        geph.enable = false;
         sing-box.enable = true;
         rdp.enable = true;
         goldendict.enable = true;
@@ -117,10 +117,6 @@
         enable = true;
         xdg.enable = true;
       };
-      python = {
-        enable = true;
-        xdg.enable = true;
-      };
       shell = {
         enable = true;
         xdg.enable = true;
@@ -134,16 +130,26 @@
       go.enable = true;
       haskell.enable = true;
       zeal.enable = true;
-      conda = {
+
+      python = {
         enable = true;
-        installationPath = "/home/alienzj/.conda/envs/env-base";
+        xdg.enable = true;
+        nix-ld.enable = false; # failed
+        wrapProgram.enable = true;
+      };
+      # conda:~/.condanix/envs
+      # mamba:~/.mambanix/envs
+      conda = {
+        enable = false;
+        installationPath = "~/.condanix/envs/env-base";
         extraPkgs = [pkgs.gcc];
       };
       mamba = {
-        enable = true;
-        mambaRootPrefix = "/home/alienzj/.mamba";
+        enable = false;
+        mambaRootPrefix = "~/.mambanix";
         extraPkgs = [pkgs.gcc];
       };
+
       ruby.enable = true;
       web.enable = true;
       php.enable = true;

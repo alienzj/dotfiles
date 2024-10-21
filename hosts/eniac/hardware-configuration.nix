@@ -76,7 +76,7 @@
       pc.enable = true;
       cpuFreqGovernor = "performance";
       hibernate.enable = false;
-      #resumeDevice = "/dev/disk/by-uuid/e7e56401-3b27-4cb8-852b-9cc971f63512";
+      resumeDevice = "";
     };
 
     # network management
