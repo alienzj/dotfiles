@@ -94,6 +94,7 @@
       laptop.lightUpKey = 63;
       laptop.lightDownKey = 64;
       cpuFreqGovernor = "ondemand";
+      hibernate.enable = true;
       resumeDevice = "/dev/disk/by-uuid/bfc2ce50-8fd6-4aa8-9c8f-375dbed9e357";
     };
 

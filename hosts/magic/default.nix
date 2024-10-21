@@ -224,6 +224,7 @@
       #  configFile = "/home/alienzj/toolkits/ohconfig/rathole/awsman_magic_c.toml";
       #};
       earlyoom.enable = true;
+      home-assistant.enable = true;
     };
     utils = {
       sysinfo.enable = true;
