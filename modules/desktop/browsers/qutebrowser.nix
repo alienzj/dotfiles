@@ -35,7 +35,7 @@ in {
       })
       # For Brave adblock in qutebrowser, which is significantly better than the
       # built-in host blocking. Works on youtube and crunchyroll ads!
-      python311Packages.adblock
+      unstable.python311Packages.adblock
     ];
 
     home = {
@@ -52,7 +52,7 @@ in {
     # Install language dictionaries for spellcheck backends
     system.userActivationScripts.qutebrowserInstallDicts = concatStringsSep "\\\n" (map (lang: ''
         if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -type d -maxdepth 1 -name "${lang}*" 2>/dev/null | grep -q .; then
-          ${pkgs.python3}/bin/python ${pkg}/share/qutebrowser/scripts/dictcli.py install ${lang}
+          ${pkgs.unstable.python311}/bin/python ${pkg}/share/qutebrowser/scripts/dictcli.py install ${lang}
         fi
       '')
       cfg.dicts);

@@ -14,7 +14,7 @@ with lib.my; let
 in {
   options.modules.dev.conda = with types; {
     enable = mkBoolOpt false;
-    installationPath = mkOpt types.str "~/.conda/envs/env-base";
+    installationPath = mkOpt types.str "~/.condanix/envs/env-base";
     extraPkgs = mkOption {
       type = with types; listOf package;
       default = [pkgs.gcc];

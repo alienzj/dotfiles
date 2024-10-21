@@ -72,6 +72,7 @@ in {
               with pythonPackages; [
                 # core
                 ipykernel
+                pip
 
                 # data science
                 pandas
@@ -92,15 +93,22 @@ in {
                 scikit-bio
 
                 # AI
-                lightgbm
+                ## dmlc
                 xgboost
-                jax
-                keras
-                tensorflow
+                ## Microsoft
+                lightgbm
+                ## Meta
                 torch
                 torchvision
                 torchaudio
                 torchsummary
+                ## Google
+                jax
+                #keras # depend on tensorflow
+                # https://github.com/NixOS/nixpkgs/issues/329378
+                #tensorflow
+                tensorflow-bin
+                #tensorboard
               ]);
           in {
             displayName = "Python 3 for data science";

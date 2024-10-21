@@ -28,7 +28,7 @@ with lib.my; let
 in {
   options.modules.dev.mamba = with types; {
     enable = mkBoolOpt false;
-    mambaRootPrefix = mkOpt types.str "~/.mamba";
+    mambaRootPrefix = mkOpt types.str "~/.mambanix";
     extraPkgs = mkOption {
       type = with types; listOf package;
       default = [pkgs.gcc];
