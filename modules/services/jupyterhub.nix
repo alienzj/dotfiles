@@ -52,14 +52,14 @@ in {
         stateDirectory = "jupyterhub";
 
         # Python environment to run jupyterhub
-        jupyterhubEnv = pkgs.python3.withPackages (p:
+        jupyterhubEnv = pkgs.unstable.python311.withPackages (p:
           with p; [
             jupyterhub
             jupyterhub-systemdspawner
           ]);
 
         # Python environment to run jupyterlab
-        jupyterlabEnv = pkgs.python3.withPackages (p:
+        jupyterlabEnv = pkgs.unstable.python311.withPackages (p:
           with p; [
             jupyterhub
             jupyterlab
@@ -68,20 +68,39 @@ in {
         # python kernel
         kernels = {
           biopy = let
-            env = pkgs.python3.withPackages (pythonPackages:
+            env = pkgs.unstable.python311.withPackages (pythonPackages:
               with pythonPackages; [
+                # core
                 ipykernel
+
+                # data science
                 pandas
+                polars
+                xlsxwriter
                 numpy
+                scipy
+                scikit-learn
+                statsmodels
+
+                # plot
                 matplotlib
                 seaborn
-                scikit-learn
+                plotnine
+
+                # bioinformatics
+                biopython
+                scikit-bio
+
+                # AI
                 lightgbm
                 xgboost
-                statsmodels
+                jax
+                keras
+                tensorflow
                 torch
                 torchvision
                 torchaudio
+                torchsummary
               ]);
           in {
             displayName = "Python 3 for data science";
@@ -104,36 +123,65 @@ in {
           bioR = let
             env = pkgs.unstable.rWrapper.override {
               packages = with pkgs.unstable.rPackages; [
+                # infrastructure
+                ## lang
+                rlang
                 repr
                 IRkernel
                 IRdisplay
 
-                tidyverse
-                tidymodels
-                infer
+                ## development
                 devtools
                 remotes
-                feather
-                httr
-                jsonlite
-                xml2
-                stringi
-                curl
-                shiny
-                knitr
                 rmarkdown
-                tinytex
-                ymlthis
-                vegan
-                ggtree
-                ggtreeExtra
-                tidytree
-                MicrobiotaProcess
-                MicrobiomeProfiler
-                clusterProfiler
-                enrichplot
-                dada2
-                DECIPHER
+                knitr
+
+                ## benchmark
+                bench
+
+                ## format
+                styler
+                lintr
+
+                # data structure and functions
+                ## maps
+                fastmap
+
+                ## functions
+                slider
+
+                ## regrex
+                rex
+
+                ## cpp
+                cpp11
+
+                # tidy data manipulation
+                ## core
+                tidyverse
+
+                ## read and write
+                xopen
+                haven
+                feather
+                nanoparquet
+                jsonlite
+
+                ## web data
+                rvest
+                httr
+                httr2
+                xml2
+                curl
+                V8
+
+                # tidy data visualization
+                ## interactive
+                shiny
+
+                ## general
+                scales
+                svglite
                 ggpubr
                 ggplotify
                 ggalluvial
@@ -141,36 +189,55 @@ in {
                 ggnewscale
                 ggdensity
                 ggside
-                #ggsankey
+                ggsankeyfier
                 ggblend
+                ggh4x
+                gghalves
+                ggsignif
 
-                #microshades
-                coin
-                forcats
-                writexl
-                #flextable
-                #gt
-                #gtExtras
-                randomForest
-                curatedMetagenomicData
-                SummarizedExperiment
-                Rcpp
-                Rcpp11
-                Maaslin2
-                pkgconfig
+                ## tree
+                tidytree
+                ggtree
+                ggtreeExtra
+
+                ## heatmap
                 ComplexHeatmap
                 circlize
-                pagedown
-                reshape2
-                yaml
-                optparse
-                glue
-                #V8
-                languageserver
-                rlang
-                insight
-                cutpointr
-                svglite
+
+                ## correlation
+                cowplot
+
+                ## table summary
+                gtsummary
+                flextable
+                gt
+                gtExtras
+
+                ## color
+                #tidy modeling and test
+                tidymodels
+
+                # bioinformatics
+                ## general
+                SummarizedExperiment
+                clusterProfiler
+                enrichplot
+
+                ## microbiome
+                vegan
+                DirichletMultinomial
+                curatedMetagenomicData
+                MicrobiotaProcess
+                MicrobiomeProfiler
+                Maaslin2
+                SIAMCAT
+                phyloseq
+                dada2
+                decontam
+                DECIPHER
+                fido
+                # remotes::install_github("mikemc/speedyseq")
+                # remotes::install_github("KarstensLab/microshades", dependencies = TRUE)
               ];
             };
           in {

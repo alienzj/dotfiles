@@ -23,21 +23,21 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = with pkgs; [
-        python312
+      user.packages = with pkgs.unstable; [
+        python311
         poetry
         pipenv
-        python312Packages.pip
-        python312Packages.ipython
-        python312Packages.black
-        python312Packages.setuptools
-        python312Packages.pylint
-        python312Packages.poetry-core
-        python312Packages.grip
-        python312Packages.pyflakes
-        python312Packages.isort
-        python312Packages.pytest
-        python312Packages.cython
+        python311Packages.pip
+        python311Packages.ipython
+        python311Packages.black
+        python311Packages.setuptools
+        python311Packages.pylint
+        python311Packages.poetry-core
+        python311Packages.grip
+        python311Packages.pyflakes
+        python311Packages.isort
+        python311Packages.pytest
+        python311Packages.cython
       ];
 
       environment.shellAliases = {
