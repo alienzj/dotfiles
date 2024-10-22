@@ -136,8 +136,8 @@
   #  ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output HDMI-0 --mode 3840x2160 --rate 60 --pos 0x0 --primary
   #'';
   services.xserver.displayManager.setupCommands = ''
-    LEFT='HDMI-A-2'
-    RIGHT='HDMI-A-1'
+    LEFT='HDMI-1'
+    RIGHT='HDMI-0'
     ${pkgs.xorg.xrandr}/bin/xrandr --dpi 168 --output $LEFT --mode 3840x2160 --rate 60 --pos 0x0 --scale 1x1 --primary --output $RIGHT --mode 3840x2160 --rate 60 --pos 3840x0 --scale 1x1 --right-of $LEFT
   '';
 

@@ -20,8 +20,8 @@ if [ $DUALMONITOR == "yes" ]; then
         MONITOR="DP1" DPI=168 LAN="wlp0s20f0u13" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
         MONITOR="DP2" polybar --reload next >$XDG_DATA_HOME/polybar_next.log 2>&1 &
     elif [ $COMPUTERNAME == "eniac" ]; then
-        MONITOR="HDMI-A-2" DPI=168 LAN="enp5s0" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
-        MONITOR="HDMI-A-1" DPI=168 polybar --reload next >$XDG_DATA_HOME/polybar_next.log 2>&1 &
+        MONITOR="HDMI-1" DPI=168 LAN="enp5s0" polybar --reload primary >$XDG_DATA_HOME/polybar_primary.log 2>&1 &
+        MONITOR="HDMI-0" DPI=168 polybar --reload next >$XDG_DATA_HOME/polybar_next.log 2>&1 &
     fi
 else
     if [ $COMPUTERNAME == "yoga" ]; then
