@@ -128,7 +128,6 @@
       go.enable = true;
       haskell.enable = true;
       zeal.enable = true;
-
       python = {
         enable = true;
         xdg.enable = true;
@@ -138,16 +137,15 @@
       # conda:~/.condanix/envs
       # mamba:~/.mambanix/envs
       conda = {
-        enable = false;
+        enable = true;
         installationPath = "~/.condanix/envs/env-base";
         extraPkgs = [pkgs.gcc];
       };
       mamba = {
-        enable = false;
+        enable = true;
         mambaRootPrefix = "~/.mambanix";
         extraPkgs = [pkgs.gcc];
       };
-
       ruby.enable = true;
       web.enable = true;
       php.enable = true;

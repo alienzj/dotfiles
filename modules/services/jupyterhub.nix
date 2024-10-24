@@ -78,6 +78,7 @@ in {
                 pandas
                 polars
                 xlsxwriter
+                openpyxl
                 numpy
                 scipy
                 scikit-learn

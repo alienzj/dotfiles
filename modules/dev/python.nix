@@ -23,8 +23,19 @@ with lib.my; let
     with python-pkgs; [
       python
       pip
+
       conda
       conda-libmamba-solver
+      #$ conda create -n bioenv3.12 python=3.12
+      #CondaError: Conda has not been initialized.
+      #To enable full conda functionality, please run 'conda init'.
+      #For additional information, see 'conda init --help'.
+      #$conda init
+      #Cannot install xonsh wrapper without a python interpreter in prefix: /home/alienzj/.conda
+      #Cannot install xonsh wrapper without a python interpreter in prefix: /home/alienzj/.conda
+      #$error again
+      #very strange
+
       virtualenv
 
       black
@@ -54,6 +65,7 @@ with lib.my; let
       pandas
       polars
       xlsxwriter
+      openpyxl
       numpy
       scipy
       scikit-learn
